@@ -1,0 +1,178 @@
+
+================================================================================
+📈 COMPREHENSIVE WEEKLY WINS ANALYSIS
+📋 From Weekly Status Update Thread Replies
+================================================================================
+
+📊 Summary Statistics:
+   Total Thread Replies Analyzed: 19
+   Total Wins Identified: 16
+   High Confidence Wins: 1
+   Medium Confidence Wins: 15
+   Wins with Customer Names: 4
+   Wins with Quantifiable Metrics: 2
+
+────────────────────────────────────────────────────────────────────────────────
+⭐ HIGH CONFIDENCE WINS (Customer Name + Quantifiable Metrics)
+────────────────────────────────────────────────────────────────────────────────
+
+1. Anurag Sharma (2025-08-21)
+   👤 Customer: Lumen
+   📊 Metrics: 2 new enrollments for
+   Anurag
+• 2 new enrollments for Exp Builder EA: Lumen, Burnswick + Micron interested in evaluation.
+• LLMO deep dive to support customer conversations in APAC
+• Formalising VRA and Business growth programs for AEM with Prashant
+• Proposal for modernization discussed with Travel Port from 6.3 JEE to CS.
+• Providing guidance to simplify implementation of Soth African Police Service to expand Forms footprint and support renewal.
+
+────────────────────────────────────────────────────────────────────────────────
+📋 MEDIUM CONFIDENCE WINS (Customer Name OR Quantifiable Metrics OR Clear Impact)
+────────────────────────────────────────────────────────────────────────────────
+
+
+🎯 Customer-Facing Wins:
+
+1. Chris J (2026-01-16)
+   👤 Customer: NFCU
+   *Chris - Week of Jan 12*
+
+*Interactive Communications*
+• Worked with Utkarsha to prepare mocks for style sheets
+• Validated Style sheets requirements and mocks with the Field team
+• Did feature grooming for Associate UI requirements around content editing
+• Worked with Engineering to enable IC features on AEM Showcase env
+• Evangelised IC Editor, Communication builder and Associate UI features to ...
+
+2. Khushwant Singh (2025-09-19)
+   👤 Customer: UBS
+   • Delivered a joint AI Playground session with Anurag on "Building with Cursor and MCP Servers," driving awareness and adoption.
+• Unblocked Adobe Consulting and UBS by authoring critical Rich Text documentation for Document of Record.
+
+3. Chris J (2025-08-22)
+   👤 Customer: NFCU
+   Chris:
+• Pitched IC Editor to Deutshe bank, who are existing CM customer. They seem likely prospects atm
+• Discussed efficacy gains of IC Editor with NFCU, validating some hypothesis wrt the product
+• Worked with Utkarsha on grooming and defining certain mock requirements wrt IC Editor
+• Worked with Bhumika on closing some IC Editor doc requirements
+
+
+📝 Other Significant Wins:
+
+1. Ruchita Srivastava (2026-01-23)
+   *Ruchita (leave on 16 Jan)*
+• *AEM Forms as a Cloud Service*
+    ◦ Migrating content from EXL to AEM Live for EDS documents
+    ◦ Worked on January release notes and early access features
+• *AEM Forms 6.5 LTS*
+    ◦ Worked with Bhumika on publishing Install Turnkey and Upgrade Turnkey PDFs
+• *AEM Forms 6.5*
+    ◦ Worked on Transaction Reporting on JEE (added note)
+• *Miscellaneous*
+    ◦ Defined g...
+
+2. Khushwant Singh (2026-01-23)
+   • Shared the 2026 goals for the Forms Content Experience team with Anurag.
+• Preparing an overview deck of the AEM Forms Content Experience team's key activities in 2025 and plans for 2026 for leadership meetings. 	
+• Analysed AEM Forms brand visibility for "Forms Builder" intent. 
+• Analysed "DoR" terminology for visibility and customer intent perspective.  This part of activity to rename *Featur...
+
+3. Utkarsha Sharma (2026-01-22)
+   Handed over the designs for:
+• Dynamic Tables
+• Associate UI (Content Editing, Rearranging content, Workflow )
+Had a discussion with Devs for stylesheet UIs, understood some gaps, working on them, where defining the creation journey of stylesheet.
+ Working on Deck, defined the examples for each patterns including  AEM Forms & AEP AI Agent.
+
+4. Utkarsha Sharma (2026-01-19)
+   Week of Jan 12
+
+Created mocks to stylesheet 
+
+Had a discussion around the stylesheet mocks with devs 
+
+Had a call with sufyan and team for Associate UI (Content editing, Rearranging component & Fragments replacement) Both author and associate flows.
+
+Created mocks for Dynamic Table (IC)
+
+5. Bhumika Yadav (2026-01-16)
+   *Worked on:*
+• Completed *Release Notes article* for _AEM Forms 6.5 LTS SP1_
+• Authored *3 Setup Guide articles*
+• Authored *2 Troubleshooting articles*
+• Updated *AEM Forms 6.5 LTS SP1 PDF guides*
+• Updated *Supported Platforms* and *Technical Requirements* articles for:
+_AEM Forms 6.5_
+_AEM Forms 6.5 LTS_
+• Discussed and aligned on *Goals for 2026*
+• Currently working on *reviewing and addressin...
+
+6. Ruchita Srivastava (2026-01-15)
+   *Ruchita:*
+• Worked on:
+    ◦ Rule Editor – exposed the option for a complete response in the event payload (Ready to document)
+    ◦ Footnotes – enhancements to footnotes(Ready to document)
+    ◦ Defined goals for 2026 with Khushwant
+• Working on
+    ◦ Feedback to migrate content from EXL to AEM Live for EDS
+    ◦ Video for a text input format example (In Review)
+• Learning
+    ◦ Completed a cour...
+
+7. Bhumika Yadav (2025-12-11)
+   Worked on: 
+• Published all IC articles with updated images.
+• Updated 6.5.24.0 release article for release.
+• Working on IC feature article: Versioning, Copy and paste articles, will finish by Friday.
+Next week plan:
+• Will work on other IC feature article
+• Will work on IC video creation
+<@W4R4S9FS4> 
+
+8. Bhumika Yadav (2025-12-05)
+   *Last Week – Completed Tasks*
+• Worked on the *Associate UI article* (content enhancement + restructuring).
+• Updated *images across Interactive Communication articles* for accuracy and clarity.
+• Updated the *AEM 6.5 LTS Hotfix article* with latest fixes and details.
+• Worked on *AEM 6.5 Release Notes*, including review and content updates.
+*Next Week – Planned Tasks*
+• Create new *Interactive Co...
+
+9. Ruchita Srivastava (2025-12-05)
+   *Ruchita*
+*Last Week (2 weeks) :-*
+• Worked on and shared the following for the review:
+    ◦ Communication API article
+    ◦ JSON Web Token (JWT) Authentication article
+    ◦ OAuth Authentication article
+    ◦ Synchronous API tutorial steps
+• Written a blog on "*The Silent Shift in How the Web is Read: Understanding the Rise of Agentic Access" -* Shared for review with Khushwant
+*Next Week :-*
+ •...
+
+10. Khushwant Singh (2025-08-22)
+   📊 Metrics: first in
+   Khushwant
+
+• Contributed to research for to the AEM Forms vs Trustt battlecard, making it easier for sales teams to compare capabilities.
+• Delivered the draft Prompt Guide for Forms Experience Builder.  Our team is the first in AEM, and even across DX, to create such a resource. 
+• Made a version of the Release Notes Generator Agent available for teams reporting to Vikas to try out. Thanks to Anu...
+
+11. Bhumika Yadav (2025-08-22)
+   • Worked on Jira ticket: <https://jira.corp.adobe.com/browse/CQDOC-22969|CQDOC-22969>
+• Reviewed IC articles with Khushwant and Chris
+• Finalized IC content for publishing
+• Working on Jira ticket: <https://jira.corp.adobe.com/browse/CQDOC-22962|CQDOC-22962>
+
+12. Utkarsha Sharma (2025-08-22)
+   Jira tickets closed this week:
+•  Individual border Selection
+<https://jira.corp.adobe.com/browse/FORMS-21390>
+• Support for data.json in PDF Preview
+<https://jira.corp.adobe.com/browse/FORMS-21300>
+Jira tickets work in progress this week:
+• Support for Custom Component: Dynamic Page <https://jira.corp.adobe.com/browse/FORMS-21297>
+• Page preset - design tweaks
+
+================================================================================

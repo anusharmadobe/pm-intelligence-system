@@ -1,0 +1,433 @@
+[
+  {
+    "fields": {
+      "summary": "Enhance Forms Authoring UX for Better Integration Support",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Why This Matters\nCustomers Abbvie and Stericycle have highlighted the need for improved user experience when authoring forms, with a particular focus on better integration capabilities. This enhancement is crucial as it will streamline their workflows, making form creation and management more efficient and user-friendly.\n\n### Customer Need\nAbbvie and Stericycle have indicated through feedback and feature requests that the current form authoring UX lacks certain integration features. These improvements will address their needs for a more seamless and intuitive form creation process.\n\n### Signals\n- **Feature Request from Abbvie**: Need for better integration options in form authoring to enhance workflow efficiency.\n- **Feedback from Stericycle**: Desire for an improved user experience when creating and managing forms.\n\n### Customers Affected\n- Abbvie\n- Stericycle\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Abbvie*, Stericycle*\n- **Total Signals**: 2\n- **Signal Types**: feature_request, feedback\n\n## Scoring\n\n- **Impact Score**: 49/100\n- **Confidence Score**: 68.75/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure compatibility with existing form data structures. Consider potential impacts on form rendering performance. Collaboration with the integration team may be necessary to align on API requirements.\n\n---\n*Generated from opportunity: 6fd86142-8a24-477b-a84c-b870823676d4*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "feature-request",
+        "customer-feedback",
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users should be able to integrate external data sources directly into forms.\nAC2: The form authoring interface should provide intuitive drag-and-drop functionality.\nAC3: Users should be able to save and reuse form templates with integrated data sources.\nAC4: The system should provide real-time validation and feedback during form creation.\nAC5: Users should have access to contextual help and tooltips within the form authoring interface.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "Abbvie*, Stericycle*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "6fd86142-8a24-477b-a84c-b870823676d4",
+      "generatedAt": "2026-02-06T07:23:02.704Z",
+      "confidenceScore": 68.75
+    }
+  },
+  {
+    "fields": {
+      "summary": "Improve Automated Forms Conversion and Address Dark Theme Issue",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "LPL Financials and LPL Financial have reported multiple issues and feature requests related to the forms conversion process. Customers are experiencing challenges with automated forms conversion, including manual work to address gaps, flakiness requiring retries, and limitations with repeatable panels. Additionally, there's a dark theme issue causing forms to appear in dark mode based on system settings. These problems are impacting the speed, efficiency, and scalability of their forms management process in AEM.\n\n**Why this matters:**\n- Customers need a more reliable and efficient forms conversion process to reduce manual work and increase productivity.\n- Addressing the dark theme issue will improve the user experience and reduce confusion.\n- Enhancing the scalability and performance of the forms conversion process will support the growing number of forms handled by customers.\n\n**Customer Signals:**\n- Manual work required to address gaps in the automated conversion process\n- Dark theme issue makes forms appear in dark mode based on system settings\n- Form conversion flakiness requires retrying the conversion process\n- Manual effort required to delete repeated fields like account numbers\n- Limitation in converting repeatable panels multiple times\n\n---\n\n## Customer Evidence\n- **Affected Customers**: LPL Financials*, LPL Financial*\n- **Total Signals**: 5\n- **Signal Types**: feature_request, issue\n\n## Scoring\n\n- **Impact Score**: 46.69925001442312/100\n- **Confidence Score**: 83.5/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider reviewing the current automated forms conversion algorithms and addressing the dark theme issue. Dependencies may include the Forms Experience Builder, Adobe Sign Integration, and Core Components in AEM.\n\n---\n*Generated from opportunity: 0a8dd2e7-1fa4-4dc8-9ff0-756a4f069e1c*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "feature-request",
+        "customer-issue",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Automated forms conversion should handle repeatable panels without manual intervention.\nAC2: Forms should not appear in dark mode unless specified by the user.\nAC3: Conversion process should be reliable and not require repeated retries.\nAC4: Automated conversion should correctly handle and delete repeated fields.\nAC5: The forms conversion process should be scalable for a large number of forms.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "LPL Financials*, LPL Financial*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "0a8dd2e7-1fa4-4dc8-9ff0-756a4f069e1c",
+      "generatedAt": "2026-02-06T07:23:07.506Z",
+      "confidenceScore": 83.5
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enhance Forms Experience Builder with Automated Forms Conversion",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "## Context\n\nCustomers such as NFL, UPS.com, and Lumen have provided feedback requesting enhancements to the Forms Experience Builder. They specifically need improved automated forms conversion, better authoring UX, deeper integrations with core components, and support for migration from existing forms.\n\n## Why This Matters\n\nThese enhancements are crucial for improving the efficiency and satisfaction of customers who rely heavily on forms for their operations. Automating the forms conversion process and enhancing the authoring UX will save time and reduce errors, while better integrations and migration support will ensure smooth transitions and interoperability with existing systems.\n\n## Customer Signals\n- **NFL** (2025-10-15): Feedback on the need for better automated forms conversion and authoring UX.\n- **UPS.com** (2025-09-17): Request for enhanced integrations with core components.\n- **Lumen** (2025-08-13): Feedback on migration support for existing forms.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: NFL*, <http://UPS.com|UPS.com>*, Lumen*\n- **Total Signals**: 3\n- **Signal Types**: feedback\n\n## Scoring\n\n- **Impact Score**: 51/100\n- **Confidence Score**: 73.33333333333334/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider potential integration points with existing core components. Ensure thorough testing for the automated forms conversion feature to handle various form structures and data types.\n\n---\n*Generated from opportunity: 73507fbf-ddc3-47cc-81f5-d89e829fd113*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "1. Implement automated forms conversion in the Forms Experience Builder.\n2. Enhance the authoring UX to be more intuitive and user-friendly.\n3. Integrate Forms Experience Builder with core components (e.g., CRM, ERP).\n4. Provide robust migration support for existing forms.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "NFL*, <http://UPS.com|UPS.com>*, Lumen*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "73507fbf-ddc3-47cc-81f5-d89e829fd113",
+      "generatedAt": "2026-02-06T07:23:11.952Z",
+      "confidenceScore": 73.33333333333334
+    }
+  },
+  {
+    "fields": {
+      "summary": "Resolve ECID Deployment Issues and Enhance Form Submission Performance",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Customers Brusnwick and Brunswick have reported multiple issues and feature requests related to the deployment and functionality of ECID in forms. Currently, the deployment of ECID is pending, which is preventing rule editor updates. Additionally, there are performance issues where Cloudflare is blocking submissions for new forms. This impacts the authoring UX, migration, core components, data binding, integrations, and rendering & PDF capabilities.\n\n**Why this matters:**\n- **Business Impact:** The inability to deploy ECID and the performance issues with form submissions significantly hinder the customers' ability to efficiently manage their processes.\n- **Customer Experience:** These issues create a frustrating user experience, leading to potential delays in their projects and deployments.\n\n**Customer Needs:**\n- Successful deployment of ECID to enable rule editor updates.\n- Improved performance to prevent Cloudflare from blocking form submissions.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Brusnwick*, Brunswick*\n- **Total Signals**: 4\n- **Signal Types**: feature_request, issue, feedback\n\n## Scoring\n\n- **Impact Score**: 44.69925001442312/100\n- **Confidence Score**: 78.125/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure coordination with the Cloudflare team to address form submission blocking. Thorough testing is required to confirm that the ECID deployment does not interfere with existing functionalities. Performance testing to be conducted to ensure no regression.\n\n---\n*Generated from opportunity: 44bf14b6-c63a-48ce-9471-c6d663d8dffe*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "feature-request",
+        "customer-issue",
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "ECID deployment is successfully completed without preventing rule editor updates.\nCloudflare no longer blocks form submissions, ensuring smooth form submission process.\nPerformance improvements are verified through testing with no regression in form functionality.\nAuthoring UX is enhanced to provide a better user experience during form creation and updates.\nAll related components (data binding, integrations, rendering & PDF) are functioning correctly post-deployment.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "Brusnwick*, Brunswick*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "44bf14b6-c63a-48ce-9471-c6d663d8dffe",
+      "generatedAt": "2026-02-06T07:23:16.407Z",
+      "confidenceScore": 78.125
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enhance IC Editor UX for form authoring and migration",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Customers, including Toyota Financial Services and Ford, have provided feedback and feature requests highlighting the need for improvements in the IC Editor, particularly focused on form authoring and migration processes. Improving the user experience (UX) for these functionalities will enhance productivity and satisfaction for users.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Toyota Financial Services*, Ford*\n- **Total Signals**: 2\n- **Signal Types**: feedback, feature_request\n\n## Scoring\n\n- **Impact Score**: 40.69925001442312/100\n- **Confidence Score**: 67.5/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider any existing dependencies on legacy systems for form migration. Ensure compatibility with current IC Editor infrastructure and validate with real customer data.\n\n---\n*Generated from opportunity: da2fdbbd-1fb1-4dee-938f-ab5b9b1ba80c*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "feature-request",
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users can seamlessly author forms in the IC Editor without experiencing any lag or usability issues.\nAC2: Migration of forms from older versions to the new IC Editor should be smooth and error-free.\nAC3: Provide clear documentation and in-editor guidance on using the new features for form authoring and migration.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": "Toyota Financial Services*, Ford*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "da2fdbbd-1fb1-4dee-938f-ab5b9b1ba80c",
+      "generatedAt": "2026-02-06T07:23:19.823Z",
+      "confidenceScore": 67.5
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enhance Form Integration and Authoring UX for Brightline and NFL",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Opportunity\n\nWe have identified a cluster of 3 related signals from Brightline and NFL regarding the need for improved form integration and authoring UX in AEM. The feedback highlights the necessity for better support of end-to-end requirements and capabilities in form creation and management. This feature is crucial to ensure seamless integration and a user-friendly authoring experience.\n\n### Why This Matters\n\n- **Customer Satisfaction**: Enhancing form integration and authoring UX will directly address pain points reported by key customers, Brightline and NFL, leading to higher satisfaction and retention.\n- **Market Competitiveness**: Providing advanced form capabilities and a streamlined authoring process will position our product competitively in the market.\n- **Operational Efficiency**: Improved form management will reduce the time and effort required by customers to create and integrate forms, leading to operational efficiency.\n\n### Sample Signals\n\n- **Feedback from Brightline (2025-09-23)**: The customer emphasized the need for better AEM Forms support to meet their end-to-end requirements.\n- **Pain Point from NFL (2025-09-03)**: The customer highlighted specific issues with the current form integration and authoring experience.\n- **Next Action**: The customer will share a sample form, and the Adobe team will demonstrate the capabilities of AEM Forms.\n\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Brightline*, NFL*\n- **Total Signals**: 3\n- **Signal Types**: feedback, pain_point\n\n## Scoring\n\n- **Impact Score**: 42.69925001442312/100\n- **Confidence Score**: 63.33333333333333/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure compatibility with existing AEM components and consider dependencies on the current AEM Forms infrastructure. Potential integration with third-party systems used by Brightline and NFL may be required.\n\n---\n*Generated from opportunity: 560983d3-98af-40db-aa67-453d0e53c071*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "pain-point",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: AEM Forms should support the end-to-end requirements specified by Brightline and NFL.\nAC2: Enhance the authoring UX to make form creation and management more intuitive and user-friendly.\nAC3: Ensure seamless integration of forms with other core components of AEM.\nAC4: Provide comprehensive documentation and examples to guide customers in using the enhanced form features.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "Brightline*, NFL*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "560983d3-98af-40db-aa67-453d0e53c071",
+      "generatedAt": "2026-02-06T07:23:24.404Z",
+      "confidenceScore": 63.33333333333333
+    }
+  },
+  {
+    "fields": {
+      "summary": "Add Address Field Below First Name Field in Forms",
+      "issuetype": {
+        "name": "Story"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "## Background\nCustomers from LPL Financial and LPL Financials have reported issues with the placement of the address field on forms. Specifically, they need the address field to be added directly below the first name field, but it is not being positioned correctly. This feature is crucial as it affects the usability and data entry efficiency of the forms.\n\n## Why This Matters\nAccurate placement of form fields is critical for user experience and data accuracy. Misplacement can lead to user frustration and errors in data collection, impacting the overall performance and reliability of the system.\n\n## Customer Needs\n1. Address field should be positioned directly below the first name field on all forms.\n2. Ensure compatibility with the Forms Experience Builder.\n3. Automated testing tools should be updated to reflect this change.\n4. The migration process should be seamless and not affect existing forms.\n\n## Customer Signals\n- **Customer**: LPL Financial\n  - **Date**: 2025-09-02\n  - **Attendees**: Yash Bhavsar, <@W4RU5J3JR>, <@U0208FN960H>, <@W4RU708G5>, <@W4R4S9FS4>\n- **Customer**: LPL Financials\n  - **Date**: 2025-08-21\n  - **Attendees**: Mayank Agarwal, <@W4RU4N66R>, <@W4RU5J3JR>, <@W4RU708G5>, <@U0208FN960H>\n\n\n---\n\n## Customer Evidence\n- **Affected Customers**: LPL financial*, LPL Financials*\n- **Total Signals**: 2\n- **Signal Types**: feedback\n\n## Scoring\n\n- **Impact Score**: 40.69925001442312/100\n- **Confidence Score**: 67.5/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure compatibility with existing forms and the migration process. Update automated testing tools to reflect the new field placement. Coordinate with the Forms Experience Builder team for seamless integration.\n\n---\n*Generated from opportunity: 266ccedd-5a5d-47ef-9482-08696dd78ad2*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Address field is positioned directly below the first name field on all relevant forms.\nAC2: Forms Experience Builder reflects the address field placement correctly.\nAC3: Automated testing tools validate the placement of the address field.\nAC4: Migration process does not disrupt existing forms and data.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": "LPL financial*, LPL Financials*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "266ccedd-5a5d-47ef-9482-08696dd78ad2",
+      "generatedAt": "2026-02-06T07:23:29.774Z",
+      "confidenceScore": 67.5
+    }
+  },
+  {
+    "fields": {
+      "summary": "Improve User Experience for Form Submissions",
+      "issuetype": {
+        "name": "Story"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Customer feedback from Continental Tires and KrisShop indicates the need for an enhanced user experience when submitting forms. The current form submission process is causing friction for new users. This improvement aims to streamline the process, ensuring a seamless experience.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Continental Tires*, KrisShop*\n- **Total Signals**: 2\n- **Signal Types**: feedback\n\n## Scoring\n\n- **Impact Score**: 40.69925001442312/100\n- **Confidence Score**: 58.75/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure compatibility with existing form frameworks and consider potential impacts on backend validation processes. Testing should cover various browsers and devices.\n\n---\n*Generated from opportunity: 651583c0-d329-4d21-95ff-a4117bf9ad84*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users should be able to submit forms without encountering any errors.\nAC2: Form submission confirmation messages should be clear and informative.\nAC3: The form should be optimized for both desktop and mobile users.\nAC4: Error handling and validation messages should be user-friendly and guide the user on how to correct issues.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": "Continental Tires*, KrisShop*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "651583c0-d329-4d21-95ff-a4117bf9ad84",
+      "generatedAt": "2026-02-06T07:23:33.377Z",
+      "confidenceScore": 58.75
+    }
+  },
+  {
+    "fields": {
+      "summary": "Improve Data Binding and Form Handling for AEM Forms",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Why This Matters\n\nCustomers Charles Shwab and Charles Schwab have reported several issues and feature requests related to data binding and form handling in AEM Forms, particularly on Mac with HTML5 forms. These include font issues, caching problems, relative path references, and differences between on-prem and cloud versions.\n\n### Customer Needs\n\nCustomers need reliable and consistent data binding and form handling to ensure smooth operation and user experience. Addressing these issues will reduce blockers and improve satisfaction.\n\n### Context\n\n- **Customers Affected**: Charles Shwab, Charles Schwab\n- **Sources**: Slack\n- **Signal Types**: Feature Request\n- **Total Signals**: 2\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Charles Shwab*, Charles Schwab*\n- **Total Signals**: 2\n- **Signal Types**: feature_request\n\n## Scoring\n\n- **Impact Score**: 40.69925001442312/100\n- **Confidence Score**: 70/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider potential differences between on-prem and cloud versions for AEM forms. Ensure compatibility with both environments and test thoroughly on Mac systems.\n\n---\n*Generated from opportunity: 3df9c600-8d0b-4180-ac91-9178fdbaf7dc*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "feature-request",
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Resolve font issues on Mac with HTML5 forms.\nAC2: Implement HTML extensions for caching in version 6.5.\nAC3: Ensure CSS and JS references in HTML forms use absolute paths.\nAC4: Validate custom servlet and HTML5 form rendition strategy.\nAC5: Implement mechanism to hide certain parameters from the request and hide HTTP URLs used to fetch data.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "Charles Shwab*, Charles Schwab*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "3df9c600-8d0b-4180-ac91-9178fdbaf7dc",
+      "generatedAt": "2026-02-06T07:23:36.639Z",
+      "confidenceScore": 70
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enable PDF Preview with Filtered Data for NFCU",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\nNFCU has requested the ability to preview PDFs with filtered data. Currently, they receive data from FDM and want to render only a specific section of a template using a subset of data they select. This feature will enhance their authoring UX and integration capabilities.\n\n### Why this matters\nProviding NFCU with the ability to generate PDF previews with filtered data will significantly improve their workflow efficiency and accuracy. This will cater to their specific needs and improve user satisfaction.\n\n### What customers need\nNFCU needs the ability to:\n1. Select a subset of data from FDM.\n2. Render only the chosen section of a template with the selected data.\n3. Preview the PDF with the filtered data before finalizing the document.\n\n### Sample Signals\n1. [2025-07-29] Vijay Srivastva - NFCU wants pdf preview with filtered data, which they get from FDM.\n2. [2025-03-13] Vijay Srivastva - NFCU needs to render a section of a template using selected data.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: NFCU*\n- **Total Signals**: 3\n- **Signal Types**: feedback\n\n## Scoring\n\n- **Impact Score**: 31/100\n- **Confidence Score**: 65/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure compatibility with existing FDM data sources. Consider performance implications of real-time PDF rendering.\n\n---\n*Generated from opportunity: f28408e1-e5b6-433f-9845-6e020d027c67*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Allow users to select a subset of data from FDM.\nAC2: Enable rendering of only the selected section of a template.\nAC3: Provide a PDF preview feature with the filtered data.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": "NFCU*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "f28408e1-e5b6-433f-9845-6e020d027c67",
+      "generatedAt": "2026-02-06T07:23:40.367Z",
+      "confidenceScore": 65
+    }
+  }
+]

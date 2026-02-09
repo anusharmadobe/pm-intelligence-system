@@ -1,0 +1,45 @@
+{
+  "api_base": "http://localhost:3000",
+  "total_signals": 849,
+  "batch_size": 150,
+  "batch_count": 6,
+  "created_at": "2026-01-30T22:08:06.478Z",
+  "batches": [
+    {
+      "batch": 1,
+      "file": "batches/batch_001.json",
+      "prompt": "prompts/batch_001_prompt.txt",
+      "count": 150
+    },
+    {
+      "batch": 2,
+      "file": "batches/batch_002.json",
+      "prompt": "prompts/batch_002_prompt.txt",
+      "count": 150
+    },
+    {
+      "batch": 3,
+      "file": "batches/batch_003.json",
+      "prompt": "prompts/batch_003_prompt.txt",
+      "count": 150
+    },
+    {
+      "batch": 4,
+      "file": "batches/batch_004.json",
+      "prompt": "prompts/batch_004_prompt.txt",
+      "count": 150
+    },
+    {
+      "batch": 5,
+      "file": "batches/batch_005.json",
+      "prompt": "prompts/batch_005_prompt.txt",
+      "count": 150
+    },
+    {
+      "batch": 6,
+      "file": "batches/batch_006.json",
+      "prompt": "prompts/batch_006_prompt.txt",
+      "count": 99
+    }
+  ]
+}

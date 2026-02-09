@@ -1,0 +1,1279 @@
+{
+  "items": [
+    {
+      "signal_id": "bd1243fd-0607-4301-adda-4c0a40dbb93c",
+      "customers": [],
+      "features": [
+        { "name": "IC Render API", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Custom integration without FDM", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "32c9f487-6944-4887-b6ac-9331a921e9bd",
+      "customers": [],
+      "features": [
+        { "name": "Prefill via FDM", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Alternative configuration approach", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Check if data can be configured directly as prefill via FDM", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "829d5b7a-a7c2-4249-9c7c-530cf798480d",
+      "customers": [],
+      "features": [
+        { "name": "Render Service API", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Data flow clarification", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Clarify how data is pulled from customer system and passed to Render Service API", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "3bafee68-d767-47e1-aa16-7c32a0b17148",
+      "customers": [],
+      "features": [
+        { "name": "FDM JSON schema support", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Schema capabilities", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "44de55aa-8fc2-4037-9b6a-c7257077d617",
+      "customers": [],
+      "features": [
+        { "name": "FDM-based approach", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Preferred implementation approach", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "0cfbe3a2-4421-47c7-bbfd-ae483783ec7f",
+      "customers": [
+        { "name": "LPL", "confidence": 0.7 },
+        { "name": "KB", "confidence": 0.6 }
+      ],
+      "features": [
+        { "name": "JSON schema-based authoring without FDM", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Avoiding FDM in favor of direct JSON usage", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Guide on whether FDM JSON schema support is sufficient or additional JSON schema support is needed", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "e61ab822-9fbc-4de5-99b5-09a988994725",
+      "customers": [],
+      "features": [
+        { "name": "FDM custom prefill service", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Reuse platform capabilities", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Educate customer on using FDM instead of direct API-based JSON handling", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "5a6d34e9-e093-4e02-87e1-29cc897d7b06",
+      "customers": [],
+      "features": [
+        { "name": "IC Render API JSON input", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "API enhancement", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "IC Render API does not currently accept JSON input",
+          "category": "API limitation",
+          "severity": 3,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        { "text": "Update IC Render API to accept JSON data", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "eaed51d9-8ec7-4284-9cdd-5d075daddf2b",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Low-effort solution", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "0eeb5de8-7184-4929-95d6-4dca4bcc113d",
+      "customers": [],
+      "features": [
+        { "name": "IC Render Service JSON-to-XML flow", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Proposed architecture", "confidence": 0.9 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "a8fa3697-f90f-40d8-8f10-a32915fa0782",
+      "customers": [],
+      "features": [
+        { "name": "Direct JSON input support", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Schema constraints and review", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Potential restrictions when exposing JSON schema directly",
+          "category": "Design risk",
+          "severity": 2,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        { "text": "Perform spec review for exposing JSON input directly", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "330d1738-55b8-4c0b-86b9-881d18a24d9d",
+      "customers": [
+        { "name": "NFCU", "confidence": 0.9 }
+      ],
+      "features": [
+        { "name": "FDM without data source", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Custom JSON schema binding", "confidence": 0.9 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "db4f91c1-c748-4c38-bb7f-d3402270129c",
+      "customers": [],
+      "features": [
+        { "name": "FDM schema validation", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Avoid duplicating platform capabilities", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Ask customer to use FDM instead of adding JSON upload support in API", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "655d2098-4663-494a-8166-04a08b45b844",
+      "customers": [],
+      "features": [
+        { "name": "Render API with JSON input", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Feasibility of JSON support", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "537b9b06-e1d1-4cb9-ac71-d17a2c85099d",
+      "customers": [],
+      "features": [
+        { "name": "Render API OSGi APIs", "confidence": 0.6 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "1bdc7a7d-eefe-4c83-8315-157d08a489de",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Design decision input", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Share opinion on using JSON data", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "e38934da-a9f7-4419-aa33-d40a8380f351",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "b194d150-d42f-42a7-9b00-565bb6ddd070",
+      "customers": [],
+      "features": [
+        { "name": "Audit log purge configuration", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Operational maintenance", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "864761e7-dfd9-4fed-8e97-6ada7d8bc506",
+      "customers": [],
+      "features": [
+        { "name": "Audit log setup", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Documentation availability", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Provide documentation for setting up audit logs", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "ae7a0396-8613-4d5d-ab44-046cff48aad2",
+      "customers": [],
+      "features": [
+        { "name": "Audit logs (OOTB)", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Out-of-the-box capabilities", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "b952e39b-1405-4a94-9ade-7d5f67538ac6",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "57fbacfa-6fcc-4152-8b8a-9c8d0b20e146",
+      "customers": [
+        { "name": "LPL", "confidence": 0.9 }
+      ],
+      "features": [
+        { "name": "Form versioning and audit logs", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Governance and publishing workflow", "confidence": 0.9 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Provide recommendations on versioning, audit logs, and secure publishing workflow", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "15723a43-204e-4d11-8ead-7dc662eb7316",
+      "customers": [],
+      "features": [
+        { "name": "DAM asset versioning", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Existing capabilities clarification", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "e8d0b71e-dff4-4fc3-8f6e-6246bcd7d641",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "39faeafe-b680-4364-a2de-0452ede3e1ca",
+      "customers": [
+        { "name": "State of Pennsylvania", "confidence": 0.9 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Backward compatibility management", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Backward incompatible change requires updated private release",
+          "category": "Release management",
+          "severity": 3,
+          "confidence": 0.9
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "26a77dfc-833f-4a8b-bc58-ca466ae7b7a5",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Clarification request", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "c58451e1-49e2-4a5b-8022-b5a43449b115",
+      "customers": [],
+      "features": [
+        { "name": "AI-based translation (hackathon)", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Experimental AI use cases", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "e4f038d4-9502-47bc-882a-1785bb283521",
+      "customers": [],
+      "features": [
+        { "name": "Custom translation service (non-DC API)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Productization gap", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Custom translation service not productized as API",
+          "category": "Productization",
+          "severity": 2,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "f259f091-d45a-443b-a44f-eb8c0ca32d52",
+      "customers": [],
+      "features": [
+        { "name": "Document Cloud APIs vs custom POC", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "POC validation", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm whether POC used DC APIs or custom data flow", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "75ac9c6c-6127-487d-a6de-c180880a9d3b",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Positive feedback", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "b6fc5499-2673-407d-a890-d04c54bb9674",
+      "customers": [],
+      "features": [
+        { "name": "Document Cloud APIs", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Licensing dependency", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Hackathon solution may require additional Document Cloud license",
+          "category": "Licensing",
+          "severity": 2,
+          "confidence": 0.7
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "edab378f-9916-4846-8b11-30299589c46c",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Interest validation and repeatability", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "72c7707a-e63b-485e-a056-8de322caceb4",
+      "customers": [],
+      "features": [
+        { "name": "Word/Excel/PPT-based doc authoring POC", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Opportunity sizing and maintainability", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "PPT-based authoring expansion may be costly to maintain",
+          "category": "Maintainability",
+          "severity": 2,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "c2102425-74f1-4cef-ae72-1a014d89afac",
+      "customers": [],
+      "features": [
+        { "name": "PDF to PPTX via PDFG/exportPDF", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Format conversion feasibility", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "19dfa409-e88c-4dda-a1c6-e0e96ce23618",
+      "customers": [],
+      "features": [
+        { "name": "DoComm hackathon POC expansion", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Document authoring options", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "c6776bbb-9603-46ba-9b52-e92bc48c1055",
+      "customers": [],
+      "features": [
+        { "name": "PPT authoring with data merge", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Human error risk in template mapping", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Risk of human error when mapping Excel data to PPT templates",
+          "category": "Usability",
+          "severity": 2,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "ed002db1-1c77-4ed3-b15f-a6480eb4a60f",
+      "customers": [],
+      "features": [
+        { "name": "PDF to PPTX conversion", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Technical feasibility question", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "49a55263-312b-4204-ad8c-29561e21aadb",
+      "customers": [],
+      "features": [
+        { "name": "Dynamic personalized document generation", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Replacing Seismic", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "395b7219-0fd1-4689-8639-540416599d59",
+      "customers": [],
+      "features": [
+        { "name": "PPTX template support", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Build vs buy decision", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Low volume may not justify building PPTX data-merge support",
+          "category": "Business viability",
+          "severity": 2,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "4c00ff01-0674-4f18-9dbd-e273af879221",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Missing recording", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "9a4ea5f8-4462-4a56-87eb-3ad2ccf83d6a",
+      "customers": [],
+      "features": [
+        { "name": "Manual translation workflow", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Third-party dependency", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "a263d60e-ec6f-4cae-8888-5d4201b5dd40",
+      "customers": [],
+      "features": [
+        { "name": "Seismic platform content delivery", "confidence": 0.7 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "0f45e179-8e23-41fd-a979-eb219cdd6821",
+      "customers": [],
+      "features": [
+        { "name": "Language-specific document generation", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Localization workflow", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "42bbafd2-b180-41e8-9117-6e2cf1faa774",
+      "customers": [],
+      "features": [
+        { "name": "Internal request form", "confidence": 0.6 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "37cdd78a-3aba-4da9-89bb-74c4e0ead283",
+      "customers": [],
+      "features": [
+        { "name": "Internal SharePoint access", "confidence": 0.6 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "4f2bed8d-7786-48d2-8ae6-9c27479c44df",
+      "customers": [],
+      "features": [
+        { "name": "Excel-based data source", "confidence": 0.6 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "8f0c8979-9d4e-4ec9-9b50-0e26d087cb15",
+      "customers": [],
+      "features": [
+        { "name": "PPT template placeholders", "confidence": 0.7 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "b47c312e-68b5-4982-8219-f096e5339e67",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Read-only content delivery", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "e348bd37-fe1a-4e84-a903-078ac7912e73",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Sample output reference", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "ca1546db-588d-4bb2-8734-fb8d0434be84",
+      "customers": [],
+      "features": [
+        { "name": "Bi-annual document refresh workflow", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Internal and external document distribution", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "30e0f04a-a495-4155-bc40-d1ed4d56162d",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Reference form", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "b9f8b411-efee-4ad8-9c6a-53c1c928fa5f",
+      "customers": [],
+      "features": [
+        { "name": "Adaptive Forms Core Components enablement docs", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Documentation update", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "21e3d2cd-4f77-48a0-a176-61576bd7485b",
+      "customers": [],
+      "features": [
+        { "name": "Core Components enablement checks", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Improve discoverability via docs", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Add more robust checks in documentation to determine if core components are enabled", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "e2fb841b-bf25-404f-bb54-3a767862ff83",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Documentation correction", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Make required changes to documentation", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "0ac92728-8b6d-42f2-b22d-a225ab35a38a",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Need meeting recording", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Share meeting recording to understand context", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "936dad46-262f-4f08-ba1d-d3241d76ace8",
+      "customers": [
+        { "name": "Carpenter", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "Adaptive Forms Core Components docs", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Documentation simplification for beginners", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "Documentation too complex for non-expert developers",
+          "category": "Documentation",
+          "severity": 3,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        { "text": "Update documentation so new users don't take unnecessary steps to enable core components", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "8552d98a-154f-4b0c-9fed-25e445726deb",
+      "customers": [],
+      "features": [
+        { "name": "JSON data input", "confidence": 0.6 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "a02a8943-4a4b-4de2-9aa4-16209c5a864e",
+      "customers": [],
+      "features": [
+        { "name": "JSON data clarification", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Requirement clarification", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm whether JSON refers only to data in JSON format", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "ceff74bd-7403-4ae0-a6ab-547bcd027b2c",
+      "customers": [],
+      "features": [
+        { "name": "JSON to XML transformation", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Implementation simplification", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "aef67f51-051d-4f88-b804-5780f31a278d",
+      "customers": [],
+      "features": [
+        { "name": "JSON input without schema validation", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Input handling parity with XML", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "15ac64c3-fc22-48c6-acde-252a98942fd9",
+      "customers": [],
+      "features": [
+        { "name": "Output APIs JSON support", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Scope clarification", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "51234069-9312-4626-a60b-13064c754a57",
+      "customers": [
+        { "name": "LPL", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "JSON support in Output Service", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Timeline uncertainty", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm timeline for JSON support in Output Service after feasibility review", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "faeeb4c6-ae40-46a3-aea5-f12c64f04125",
+      "customers": [],
+      "features": [
+        { "name": "Output API JSON input", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Expectation management", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Clarify whether request is solely about JSON input or includes additional expectations", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "77f04893-3851-4384-8805-4b3877f16c60",
+      "customers": [
+        { "name": "LPL", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "Output Service JSON support", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Feasibility and effort assessment", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Share timelines for JSON support in Output Service if available", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "a8bf1489-5fe6-46ba-8e40-be4a8c183def",
+      "customers": [],
+      "features": [
+        { "name": "JSON input support in Output Service", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Platform consistency across services", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "Output Service lacks JSON input support while other services already support it",
+          "category": "Feature gap",
+          "severity": 3,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        { "text": "Support JSON input in Output Service using low-effort reuse path", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "5d8999fd-8a37-4818-afdb-514f84b70524",
+      "customers": [],
+      "features": [
+        { "name": "JSON input for Output API", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Decision pending", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm whether JSON input support for Output API is a hard requirement", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "f73222e9-0285-4937-9482-9843dc44c14c",
+      "customers": [],
+      "features": [
+        { "name": "JSON input support for Output API", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "VIP-driven feature request", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "4d341360-5d2b-4b99-bc1d-232cc992f5ee",
+      "customers": [],
+      "features": [
+        { "name": "XDP templates", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Artifact collection", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Attach shared XDPs to the thread", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "cfc1222a-e8f0-4623-ab10-32f772365f36",
+      "customers": [],
+      "features": [
+        { "name": "Custom components for foundation forms", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Customer enablement", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Assist customer by creating a sample custom component", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "46a19221-ff11-4bb8-86e3-89057137c216",
+      "customers": [],
+      "features": [
+        { "name": "Core Components vs EDS migration decision", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Architecture alignment", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "103a523a-6d44-4f7b-a3d0-50ecf6dbe1f1",
+      "customers": [],
+      "features": [
+        { "name": "Embedding Adaptive Forms block in Sites", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Increased complexity with mixed technologies", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Maintaining CC and block-based forms requires extra effort and dual technology management",
+          "category": "Complexity",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "3bfde5a2-9c93-4fed-b228-f33abd48b6de",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Rationale clarification", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "48c38ff9-d801-4eb0-9884-025a4cf1770e",
+      "customers": [],
+      "features": [
+        { "name": "UE vs CC recommendation", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Context-based technology choice", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "e734f4da-a0e4-4c90-9e3a-f7ae1d6febf3",
+      "customers": [
+        { "name": "Medtronics", "confidence": 0.7 }
+      ],
+      "features": [
+        { "name": "UE-XWalk based forms", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Leverage existing EDS license", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "1e313288-bf8d-40c5-8d01-7668ce4d040e",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Stakeholder inclusion", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Loop additional stakeholders into email communication", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "53f8ce98-1a69-4208-9b81-cb543e8a3c1b",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Process confirmation", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "f417e70e-cae2-465c-90b4-d0413562e314",
+      "customers": [],
+      "features": [
+        { "name": "Custom appearance widget (Cloud vs 6.5)", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Documentation applicability", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm whether 6.5 custom appearance documentation applies to Cloud", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "33d909f8-c998-4dd7-9e44-d39ca7fa8f8a",
+      "customers": [],
+      "features": [
+        { "name": "Auto-complete functionality", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Foundation vs Core Components decision", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "28e19a50-cddd-464d-881c-ba304106f823",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Flexibility in component choice", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "0bf961cf-702d-4cc8-813f-ef3f1833e56c",
+      "customers": [],
+      "features": [
+        { "name": "Custom appearance widget documentation", "confidence": 0.7 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "2272142c-d233-4619-8ee9-84d69110b253",
+      "customers": [],
+      "features": [
+        { "name": "Foundation components", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Component type clarification", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "9c8c9242-fe5b-44d1-8874-25acd185d15a",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Meeting scheduled", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "10cbaa4d-ce74-4b29-9c4e-beead3fa41e1",
+      "customers": [],
+      "features": [
+        { "name": "Custom component guidance", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Customer support request", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Assign someone to guide customer on creating a custom component", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "316c874c-2715-4c33-a26e-5d6155574579",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "9ae0b1ea-8cbe-4ff2-ad53-f3eca0fc7056",
+      "customers": [
+        { "name": "Brunswick", "confidence": 0.7 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Meeting notes reference", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "1c2bb1c5-4b62-45ed-8d56-1dcc5cb2eaa0",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Recording availability", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "14cd325c-95a8-4009-bf22-31ff9bfd3594",
+      "customers": [],
+      "features": [
+        { "name": "Auto-complete as core component", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Engagement planning", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm engagement start date and share relevant docs and recordings", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "f2e79041-37f0-41d5-844a-657ad9360fe4",
+      "customers": [],
+      "features": [
+        { "name": "Core Components-based implementation", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "VIP engagement alignment", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "49f75166-ac13-4358-b681-824105c0365a",
+      "customers": [],
+      "features": [
+        { "name": "Localized PDF generation via XDP", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Localization strategy", "confidence": 0.9 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Create sample XDP and localized data/schema files to demonstrate recommended approach", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "4fdcabb5-8e21-4685-8ff1-2df84a5da56a",
+      "customers": [],
+      "features": [
+        { "name": "XFA translation workflow", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Translation enablement", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "5155f7c5-0c31-4072-ad05-d721c6eb2911",
+      "customers": [],
+      "features": [
+        { "name": "XFA translation support", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Translation feature gap", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "No built-in translation option for XFA, causing high manual effort",
+          "category": "Feature gap",
+          "severity": 3,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        { "text": "Explore custom translation workflow for XFA to provide a starting point", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "1d8f1b92-f008-4f01-a417-a0c7f23a5207",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Customer collateral shared", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "cbac085b-6efa-4324-80a8-356eecbe435e",
+      "customers": [],
+      "features": [
+        { "name": "Designer issues (fonts, subforms, presets, overflow)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Customer-reported defects", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Multiple customer-reported Designer issues tracked via Jira",
+          "category": "Defect",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "76e410fe-c8cc-4dcd-8954-804fc03e10ce",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Issue tracking and follow-up", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Follow up on action items over email and raise Jiras with customer_reported label", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "b8d08306-fd3a-444a-b157-ae28eebe72ce",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "987cfc15-a4a0-42bf-a7ef-db15cd288a97",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Customer skill gap", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Customer lacks basic AEM/Forms knowledge, causing configuration errors",
+          "category": "Enablement",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "b57b1b8c-a8ec-41c9-ba57-fef1dad62ab5",
+      "customers": [],
+      "features": [
+        { "name": "Core Components setup", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Root cause analysis request", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Share RCA on why core component setup took long", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "ba4c18b5-d675-41cf-86c6-b0c5531c7441",
+      "customers": [
+        { "name": "Jet2", "confidence": 0.7 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Resource constraints", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    }
+  ]
+}

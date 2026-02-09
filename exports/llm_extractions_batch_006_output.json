@@ -1,0 +1,2100 @@
+{
+  "items": [
+    {
+      "signal_id": "9b706ed4-9843-449a-8f5a-50933b154d6e",
+      "customers": [
+        {
+          "name": "Jet2",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "VIP",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [
+        {
+          "name": "Scheduling delay due to resourcing",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [
+        {
+          "title": "Jet2 VIP moved to January due to resource limitation",
+          "category": "Resourcing",
+          "severity": 3,
+          "confidence": 0.75
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "c130a3d6-c77d-4042-8fe2-fc8e299e4de8",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Follow-up on hackathon work",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Get in touch to understand what was done as part of hackthon project and decide course of action",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "d7d9f83a-c9a6-4754-a180-445d324e23f6",
+      "customers": [],
+      "features": [
+        {
+          "name": "JSON input format for data input",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "JSON input use case evaluation",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Discuss JSON format for data input use case with the team and evaluate fit",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "7c364458-f50c-4a7b-b38c-00c2a7c7303e",
+      "customers": [],
+      "features": [
+        {
+          "name": "JSON support in Output service",
+          "confidence": 0.85
+        },
+        {
+          "name": "JSON input for data files",
+          "confidence": 0.85
+        },
+        {
+          "name": "Render PDFs from JSON",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Clarifying scope of JSON support",
+          "confidence": 0.8
+        },
+        {
+          "name": "Build on hackathon prototype",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Clarify whether JSON support is intended for templates or data files",
+          "confidence": 0.8
+        },
+        {
+          "text": "Consider extending JSON input support to handle complex and edge cases",
+          "confidence": 0.65
+        }
+      ]
+    },
+    {
+      "signal_id": "861da3d0-4938-415e-be99-4fc2626dba9b",
+      "customers": [],
+      "features": [
+        {
+          "name": "Form validation on Save/Submit",
+          "confidence": 0.8
+        },
+        {
+          "name": "Inbox task item identification",
+          "confidence": 0.75
+        },
+        {
+          "name": "Save behavior (do not close screen)",
+          "confidence": 0.75
+        },
+        {
+          "name": "Task reassignment",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Critical functional gaps in first form",
+          "confidence": 0.85
+        },
+        {
+          "name": "Inbox workflow usability",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [
+        {
+          "title": "No validation on Save in Inbox; validation happens only at submit",
+          "category": "Validation",
+          "severity": 4,
+          "confidence": 0.85
+        },
+        {
+          "title": "Partial validation before Save limited to some fields and initial state",
+          "category": "Validation",
+          "severity": 3,
+          "confidence": 0.8
+        },
+        {
+          "title": "Missing identification of task items in Inbox",
+          "category": "UX",
+          "severity": 3,
+          "confidence": 0.75
+        },
+        {
+          "title": "Save closes screen but should not close screen on save",
+          "category": "UX",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        {
+          "text": "Add validation on Save in Inbox (not only on submit)",
+          "confidence": 0.8
+        },
+        {
+          "text": "Provide identification of task items in Inbox",
+          "confidence": 0.75
+        },
+        {
+          "text": "Do not close screen on save",
+          "confidence": 0.75
+        },
+        {
+          "text": "Add option to re-assign task",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "5816cd64-dc6b-4faf-9176-462f0a96421d",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Tracked product issue in JIRA",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [
+        {
+          "title": "Product issue tracked in CQ-4360771",
+          "category": "Bug",
+          "severity": 3,
+          "confidence": 0.6
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "96609e77-d607-4489-80aa-334dc4caf3b5",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Preventing repeat issues via documentation",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Identify doc or product issues from the discussion to avoid such issues in future with other customers",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "468a6252-08f9-4adb-a338-295488148a56",
+      "customers": [],
+      "features": [
+        {
+          "name": "Local development environment setup (Docker microservices)",
+          "confidence": 0.7
+        },
+        {
+          "name": "EC Service Local SDK design",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [
+        {
+          "name": "Sharing setup documentation",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "8608cad5-6b27-4ac9-a3da-340ddcdb8a7a",
+      "customers": [],
+      "features": [
+        {
+          "name": "SDK setup documentation",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Documentation request",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Provide SDK set up documentation",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "8028c544-bfc8-409a-87ea-55e4e1120ce7",
+      "customers": [
+        {
+          "name": "customer",
+          "confidence": 0.45
+        }
+      ],
+      "features": [
+        {
+          "name": "DoR docker setup with AEM SDK (local machine, Windows)",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "Need public setup documentation",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Share any public wiki/doc to setup DoR docker with AEM SDK on Windows",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "e0d1cf67-92f0-4702-be2e-be82e646b637",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "ea2c817a-3c39-407a-a62d-21d5fad581d5",
+      "customers": [],
+      "features": [
+        {
+          "name": "API documentation",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Docs with change disclaimer",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "ecb20876-0b84-4811-8b4a-68093968dfdf",
+      "customers": [],
+      "features": [
+        {
+          "name": "Documentation sharing",
+          "confidence": 0.65
+        }
+      ],
+      "themes": [
+        {
+          "name": "Action item follow-through",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Acknowledge once documentation sharing action items are done",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "ff55272c-6557-459f-a0c8-be10af2fd0f3",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "1838d6a7-7f86-4fbf-91f6-ae74ea0c90ea",
+      "customers": [],
+      "features": [
+        {
+          "name": "Barcode forms translation",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "Translation impact assessment",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm barcode information is not affected by translation and clarify whether barcode-encoded data is translated or only captions/static text",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "d0123106-608f-446f-a5e6-c583d1660ca8",
+      "customers": [],
+      "features": [
+        {
+          "name": "FDM",
+          "confidence": 0.65
+        }
+      ],
+      "themes": [
+        {
+          "name": "Cross-team dependency for meeting",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Have someone from the FDM team join next meeting to answer questions",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "908b179e-daaf-46e1-bc7b-860bdef31159",
+      "customers": [],
+      "features": [
+        {
+          "name": "Forms Experience Builder feedback session",
+          "confidence": 0.65
+        }
+      ],
+      "themes": [
+        {
+          "name": "Meeting recording shared",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "621724f2-8786-418d-ab51-311e8ea7743f",
+      "customers": [],
+      "features": [
+        {
+          "name": "Marketo forms to Adaptive Forms (AF) migration",
+          "confidence": 0.8
+        },
+        {
+          "name": "Data->Marketo field selection",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Demo guidance",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Show both approaches: screenshot of existing Marketo forms to AF and Data->Marketo->select required fields",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "25ab10c5-37a1-4cd4-bee9-0bd57bbc2445",
+      "customers": [],
+      "features": [
+        {
+          "name": "Marketo forms to AF via Experience Builder",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Clarifying migration flow",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "afad7f5e-406e-4165-a9ea-d905df5e6c37",
+      "customers": [
+        {
+          "name": "Lumen",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "Marketo connector to Lumen",
+          "confidence": 0.85
+        },
+        {
+          "name": "Experience Builder",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Demo scheduling",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Demonstrate Marketo connector to Lumen by migrating an existing form using Experience Builder",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "4fa4a301-175d-4d06-8141-525246a5cdc4",
+      "customers": [],
+      "features": [
+        {
+          "name": "XDP versioning (DAM asset structure)",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Compatibility of approach across XDP creation methods",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "370b40da-541d-43be-aaf2-94f5eff204d3",
+      "customers": [],
+      "features": [
+        {
+          "name": "XDP created within system versioning",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Versioning parity for system-created XDP",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Add version creation for XDP created within the system similar to AF",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "c2074203-b150-4335-b7eb-d22f7b837db9",
+      "customers": [],
+      "features": [
+        {
+          "name": "XDP creation from FM UI Create button",
+          "confidence": 0.75
+        },
+        {
+          "name": "Versioning on JCR content node",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Versioning behavior clarification",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "48f2a560-02cf-4ce2-aebe-697dcaa3d58b",
+      "customers": [],
+      "features": [
+        {
+          "name": "XDP creation from FM UI Create button",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Versioning works if JCR structure remains same",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "66a02283-1787-4eb7-b91f-1bb42fd3c6d1",
+      "customers": [],
+      "features": [
+        {
+          "name": "AFv2 versioning in Forms Manager UI",
+          "confidence": 0.85
+        },
+        {
+          "name": "cq:page content versioning",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "OOTB versioning support differences (AFv2 vs AFv1)",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [
+        {
+          "title": "AFv1 is not versioned currently",
+          "category": "Feature Gap",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "db8d6ccd-48a1-4d14-84d6-c0aa3e8cb6da",
+      "customers": [],
+      "features": [
+        {
+          "name": "XDP versioning from FM UI Create button",
+          "confidence": 0.75
+        },
+        {
+          "name": "DAM vs Page node structures",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Avoid dual node structures for forms/assets",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [
+        {
+          "title": "Maintaining both DAM and Page nodes creates inconsistent functionality; should rely on one node structure",
+          "category": "Architecture",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        {
+          "text": "Rely on one node structure instead of maintaining both DAM and Page nodes",
+          "confidence": 0.65
+        }
+      ]
+    },
+    {
+      "signal_id": "c93c8c25-d2dd-4f24-9f55-725f51ed5135",
+      "customers": [],
+      "features": [
+        {
+          "name": "XDP create/edit via IC editor from FM UI",
+          "confidence": 0.85
+        },
+        {
+          "name": "XDP versioning during upload",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Versioning approach for XDP authored in-system",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "b60e4d9d-8738-43aa-826c-11ae7ef25db8",
+      "customers": [],
+      "features": [
+        {
+          "name": "XDP create/edit via IC editor from FM UI",
+          "confidence": 0.85
+        },
+        {
+          "name": "AF-like versioning approach",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Need versioning for in-system XDP creation",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [
+        {
+          "title": "XDP upload versioning approach will not cover XDP created within the system; needs AF-like versioning",
+          "category": "Feature Gap",
+          "severity": 4,
+          "confidence": 0.75
+        }
+      ],
+      "requests": [
+        {
+          "text": "Provide AF-like versioning for XDP created within the system (not only upload-based versioning)",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "47a02c9b-89e4-4133-aa74-96ee3024082e",
+      "customers": [],
+      "features": [
+        {
+          "name": "Versioning for DAM-uploaded assets",
+          "confidence": 0.7
+        },
+        {
+          "name": "Versioning for assets edited in AEM editor",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Versioning strategy question",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Define a different approach to handle versioning when assets are created/updated with an editor in AEM",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "71195b0b-ce2e-43e1-a277-37fab5d66e81",
+      "customers": [
+        {
+          "name": "customer",
+          "confidence": 0.45
+        }
+      ],
+      "features": [
+        {
+          "name": "XDP versioning",
+          "confidence": 0.85
+        },
+        {
+          "name": "Version button in FM UI",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Workaround usability and training burden",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [
+        {
+          "title": "XDP versioning workaround is difficult to train customer team on",
+          "category": "Usability",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        {
+          "text": "Expose a version button directly in FM UI to replace the difficult workaround",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "0a9d7978-26fa-4916-9a0c-8bb9ff7c6787",
+      "customers": [],
+      "features": [
+        {
+          "name": "XDP versioning via Assets",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "Workaround process documentation",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "89d033be-0d49-4b77-afbf-f09488868c23",
+      "customers": [
+        {
+          "name": "LPL",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "XDP versioning support",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "Customer commitment and best-practices documentation",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Collect and document best practices from Sites and Assets and create a tailored version for Forms covering full lifecycle",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "3691afb1-fb2a-4e46-adbe-5443019a3189",
+      "customers": [],
+      "features": [
+        {
+          "name": "FDM element reuse across assets",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Reuse and modularity",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Support usage of individual FDM elements in different assets",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "5e4026f6-5907-4bd5-8a87-ef87a6c0ba88",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "6bb8e58a-33b6-46ed-bb02-527109e0e6ef",
+      "customers": [
+        {
+          "name": "customer",
+          "confidence": 0.45
+        }
+      ],
+      "features": [
+        {
+          "name": "$record and $data fix",
+          "confidence": 0.65
+        },
+        {
+          "name": "Cloud migration",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [
+        {
+          "name": "Encourage move from on-prem to cloud",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Encourage customer to consider migrating to the cloud since fix is also available on cloud",
+          "confidence": 0.65
+        }
+      ]
+    },
+    {
+      "signal_id": "c3caf04f-2661-4b41-98a2-07bdd14d67fd",
+      "customers": [],
+      "features": [
+        {
+          "name": "Fonts enablement",
+          "confidence": 0.6
+        },
+        {
+          "name": "Pipeline build",
+          "confidence": 0.65
+        }
+      ],
+      "themes": [
+        {
+          "name": "Build/pipeline failure",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [
+        {
+          "title": "Pipeline failing after enabling fonts due to nfcu-specific build changes",
+          "category": "Build/CI",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "9bedfd87-7d8a-4d1e-aaa5-3a1549f953e1",
+      "customers": [],
+      "features": [
+        {
+          "name": "Roadmap presentation",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [
+        {
+          "name": "Roadmap communication",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "ce197326-ca0f-4546-9ed4-e374e19472c3",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "508e7057-9129-4e67-bc90-4d593b0c930b",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Access management",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "20fd1497-7fa1-4a08-8492-58a53f2b11c1",
+      "customers": [],
+      "features": [
+        {
+          "name": "Environment access/permissions",
+          "confidence": 0.8
+        },
+        {
+          "name": "AEP cloud config",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Access blockers",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [
+        {
+          "title": "Limited access to forms-pipeline org env; cannot update permissions or provide access for Harman to create AEP cloud config",
+          "category": "Access/Permissions",
+          "severity": 4,
+          "confidence": 0.75
+        }
+      ],
+      "requests": [
+        {
+          "text": "Create a new env in moonlight org accessible by majority, or provide sufficient access to Harman to create cloud config for AEP",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "9cf57f9c-3173-44b7-a7ea-d85444922bdf",
+      "customers": [],
+      "features": [
+        {
+          "name": "Admin access for cloud config",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "Access blocker",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [
+        {
+          "title": "Blocked creating cloud config due to missing admin access and inability to see global container",
+          "category": "Access/Permissions",
+          "severity": 4,
+          "confidence": 0.85
+        }
+      ],
+      "requests": [
+        {
+          "text": "Provide admin access needed to create a cloud config",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "2f6fe2d3-7646-4ef3-aca7-2bc6aa9fb77e",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Access management",
+          "confidence": 0.55
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "1579a856-70e4-43a2-958d-20450610c5ee",
+      "customers": [],
+      "features": [
+        {
+          "name": "Environment access/permissions",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Access request",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Give access to this environment",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "47de5f04-332c-43a0-9e00-b8ae00a02414",
+      "customers": [],
+      "features": [
+        {
+          "name": "IC availability on author environment",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "510408d1-6326-49c5-abea-d80a7e76e839",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Align on demo use case",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Align on the use case to present",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "78cb3deb-a4e9-431e-b567-30bd112736c4",
+      "customers": [],
+      "features": [
+        {
+          "name": "FDM and AEP integration",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Environment provisioning for integration work",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Share any environment that is set up so the team can create the FDM and AEP integration in it",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "70e231f9-c5f6-4fee-b864-d7858494b3da",
+      "customers": [],
+      "features": [
+        {
+          "name": "Adaptive Forms (AF)",
+          "confidence": 0.7
+        },
+        {
+          "name": "IC experience",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [
+        {
+          "name": "Different experiences across products",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "adb1e6c2-e574-4b6d-b05e-2615f4195610",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "deed8777-5ce4-4edc-ad04-ecd7dc144044",
+      "customers": [
+        {
+          "name": "customer",
+          "confidence": 0.45
+        }
+      ],
+      "features": [
+        {
+          "name": "FDM based on AEP/AJO screen recording",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Customer enablement material",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Create and share a small screen recording of FDM based on AEP/AJO next week for the customer",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "6cf34e78-afab-4f85-aefd-4f78c2867c27",
+      "customers": [],
+      "features": [
+        {
+          "name": "Integration via connector",
+          "confidence": 0.7
+        },
+        {
+          "name": "Integration via FDM",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Integration options",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "97c8323b-b982-432d-aaf5-11b0976c1710",
+      "customers": [],
+      "features": [
+        {
+          "name": "AEM Forms AEP connector",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Documentation reference shared",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "d60c66fc-80f1-4ca9-8c8a-cec142a1bb32",
+      "customers": [],
+      "features": [
+        {
+          "name": "FDM-only REST API integration",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Integration clarification",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm whether integration will be via FDM only and REST API based",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "12d450e2-f18a-4dd0-8fba-f2f562770472",
+      "customers": [],
+      "features": [
+        {
+          "name": "FDM and IC integration",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Need SME support",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Provide help on FDM and IC integration due to limited knowledge",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "24bea3ab-ab55-4a7b-8cd4-150c4d72c3a5",
+      "customers": [],
+      "features": [
+        {
+          "name": "AEP integration",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "2686535c-6028-47c8-aab8-2c27ec3daac7",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Meeting participation",
+          "confidence": 0.55
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Check if someone can join",
+          "confidence": 0.55
+        }
+      ]
+    },
+    {
+      "signal_id": "b3fed243-c7cf-4867-802a-0a41501451fb",
+      "customers": [],
+      "features": [
+        {
+          "name": "VIP meeting scheduling",
+          "confidence": 0.55
+        }
+      ],
+      "themes": [
+        {
+          "name": "Scheduling conflict",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [
+        {
+          "title": "Could not join GM VIP meeting due to conflicting VIP meeting and unawareness of timings",
+          "category": "Scheduling",
+          "severity": 2,
+          "confidence": 0.65
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "aaa6188b-b4c1-4541-93f1-7c62e1d24b43",
+      "customers": [],
+      "features": [
+        {
+          "name": "AEP-based FDM demo",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Meeting coordination",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Join the GMF meeting for the AEP-based FDM demo",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "7b4812a1-b67e-4da5-8729-973b231e8b61",
+      "customers": [],
+      "features": [
+        {
+          "name": "AEP & AJO connectors for data ingestion/prefill",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Clarifying connector use case (ingestion vs prefill)",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Clarify whether 'data ingestion' for AEP/AJO connectors is actually more of a prefill use case",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "916682eb-9493-4046-a14e-57b69b03f6b5",
+      "customers": [],
+      "features": [
+        {
+          "name": "IC",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "ceb94ed7-3050-4ca0-bf7c-a8b166c05dfc",
+      "customers": [],
+      "features": [
+        {
+          "name": "AEP Connector",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Scope clarification (AF vs IC)",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Clarify whether AEP Connector support is for Adaptive Form or IC",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "51ac1dd8-1902-49d2-af60-dd7f7c4a2a60",
+      "customers": [],
+      "features": [
+        {
+          "name": "FDM usage in IC",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Demo readiness",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Provide a generic working demo and use FDM in IC to complete the demo flow",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "bedef89a-9e66-4a12-a68b-e1c4a266a004",
+      "customers": [],
+      "features": [
+        {
+          "name": "AEP integration",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Use case definition for demo",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm whether there is a specific query/use case or a generic use case for pushing data into AEP",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "0d07454c-825b-478d-88fd-3aaf910b5fec",
+      "customers": [
+        {
+          "name": "customer",
+          "confidence": 0.45
+        }
+      ],
+      "features": [
+        {
+          "name": "AEP & AJO connector support",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Final customer meeting support",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Provide support for AEP & AJO connector on Thursday for final customer meeting in current engagement",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "0504dfd7-da81-40d4-be5e-6f71b83d7cbd",
+      "customers": [],
+      "features": [
+        {
+          "name": "AEM form embed component (iframe)",
+          "confidence": 0.75
+        },
+        {
+          "name": "AF1 embedded using div mode",
+          "confidence": 0.75
+        }
+      ],
+      "themes": [
+        {
+          "name": "Dynamic form loading based on dropdown selection",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "2bde6a7f-98b0-40d7-a3a1-f5d42ceb54e7",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Need more customer context",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Provide more context/details including the customer form URLs",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "82a9fa8a-41e4-419f-94b1-4c28b992a2fe",
+      "customers": [],
+      "features": [
+        {
+          "name": "Cloud Service benefits",
+          "confidence": 0.6
+        },
+        {
+          "name": "Experience Builder",
+          "confidence": 0.55
+        }
+      ],
+      "themes": [
+        {
+          "name": "Cloud upsell messaging",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Share benefits of cloud service (including that experience builder could help)",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "1a0a44fc-6b56-4ba7-875f-346e99364ccb",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Support workflow efficiency",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Create a GitHub issue for faster turnaround and to benefit the community",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "a7a4bbf8-416d-41c7-85b5-d0dd119f5816",
+      "customers": [],
+      "features": [
+        {
+          "name": "XDP sharing",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [
+        {
+          "name": "Customer content access constraints",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "7236c4a1-031b-4ffd-8875-2e3e185eaf09",
+      "customers": [],
+      "features": [
+        {
+          "name": "AEM 6.5 (on-prem)",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "On-prem vs cloud context",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "f3a9d18b-6709-4227-a0f0-26a322999b04",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "ce18bdc9-98b1-463d-b506-c40d74f88a28",
+      "customers": [],
+      "features": [
+        {
+          "name": "guideBridge APIs in Core Components vs AF1",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "API capability misconception",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [
+        {
+          "title": "Misconception that guideBridge has limited capabilities in Core Components vs AF1; APIs differ but support exists",
+          "category": "Documentation/Knowledge",
+          "severity": 2,
+          "confidence": 0.75
+        }
+      ],
+      "requests": [
+        {
+          "text": "Refer developers to existing GitHub issue/answers about guideBridge support differences",
+          "confidence": 0.65
+        }
+      ]
+    },
+    {
+      "signal_id": "b6638020-3805-47ee-b993-addadfe69993",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "0a9bca96-5d71-4a9e-b205-e1c233892a79",
+      "customers": [],
+      "features": [
+        {
+          "name": "XDP to AF conversion via GenAI",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Training data / examples needed",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Get the XDPs from them for XDP to AF via genai work",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "2ef3e393-8b83-4edb-8640-e58d1e77410a",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "a8542f40-ade8-4ed0-8585-3bee2a8a8ad4",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Implementation ownership clarification",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Connect with TAM again for more clarity",
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "signal_id": "ab6a3fbe-6cec-47b6-aeb2-a36344faa6b8",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Customer implementation planning",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Clarify whether they have a partner for implementation or own IT team, plus timelines/volumes/use-cases for expansion",
+          "confidence": 0.65
+        }
+      ]
+    },
+    {
+      "signal_id": "f26a43ab-b5a2-45f7-ad55-5d21b7720f60",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "407eedc6-4fe1-4c1f-8158-a71da8dfbc30",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "a2626aa3-5ac1-42e6-b3ed-8ebca7843e0a",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Metric validation over time",
+          "confidence": 0.55
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Check in next meeting if results are consistent for the last two weeks",
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "signal_id": "51fd162c-a370-45ba-aec5-046c7d714a4f",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Post-event performance monitoring",
+          "confidence": 0.55
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm whether lead sign up is still at an increased sustained rate post Wimbledon",
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "signal_id": "1f00664d-1641-4814-b5b6-f6578f3f4098",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "617d22ef-4238-4094-b913-172ea7807256",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "40356fcc-9060-49e4-8906-ebcfb526b6f0",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Customer working session",
+          "confidence": 0.55
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Reach out to them for a working session if needed",
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "signal_id": "65f32092-80a5-425a-a01d-880e2dc24142",
+      "customers": [],
+      "features": [
+        {
+          "name": "Form conversions",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "04fb594e-35a0-48f9-b232-957184c1ea75",
+      "customers": [],
+      "features": [
+        {
+          "name": "Form conversions",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [
+        {
+          "name": "Clarification question",
+          "confidence": 0.55
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm whether offshore team reaching out via email is for forms conversions",
+          "confidence": 0.65
+        }
+      ]
+    },
+    {
+      "signal_id": "ce49514a-905d-4317-9432-697233e25809",
+      "customers": [],
+      "features": [
+        {
+          "name": "Form searches in the builder",
+          "confidence": 0.75
+        },
+        {
+          "name": "Forms Experience Builder",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Builder onboarding and readiness",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [
+        {
+          "title": "Offshore team faced issues with form searches in the builder (now resolved)",
+          "category": "Usability",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "4cc4717e-a750-408d-b15f-77c5ea485f88",
+      "customers": [],
+      "features": [
+        {
+          "name": "Forms Experience Builder",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [
+        {
+          "name": "Status update request",
+          "confidence": 0.55
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Share updates on Forms Experience Builder and next setup of forms",
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "signal_id": "888e20af-acc6-4cef-8c09-b66aba7010d4",
+      "customers": [],
+      "features": [
+        {
+          "name": "VIP (upsell)",
+          "confidence": 0.55
+        }
+      ],
+      "themes": [
+        {
+          "name": "Upsell focus",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "82a6eff4-8503-413e-a6f6-452751be5b30",
+      "customers": [
+        {
+          "name": "Centene",
+          "confidence": 0.9
+        }
+      ],
+      "features": [],
+      "themes": [
+        {
+          "name": "Next steps request",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Provide next steps",
+          "confidence": 0.65
+        }
+      ]
+    },
+    {
+      "signal_id": "242f6844-a9c5-47aa-b2e2-9868a2d6cedd",
+      "customers": [
+        {
+          "name": "Centene",
+          "confidence": 0.9
+        }
+      ],
+      "features": [],
+      "themes": [
+        {
+          "name": "Account status and upsell potential",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Share updates on Centene and whether something is going on given Q4 upsell potential",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "86ef1370-3d60-4315-b038-a6e4b3f56ca2",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "ce49b5d5-bf3c-4b70-8907-ba1c438a2165",
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "Associate UI",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Roadmap/ETA confusion",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm/correct ETA for Associate UI (mentioned as Nov 30) and whether tomorrow's NFCU call will happen",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "1e213e9f-a2da-42cf-89e0-5b6a1c8a4cd3",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "487d447a-e891-42c7-978f-9018e7b8bff9",
+      "customers": [],
+      "features": [
+        {
+          "name": "Associate UI",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "af2eb0c3-ac26-490b-b7ea-e7071a484efe",
+      "customers": [],
+      "features": [
+        {
+          "name": "Convert XFA-based forms to AF",
+          "confidence": 0.7
+        },
+        {
+          "name": "XFA-based AF pitch",
+          "confidence": 0.65
+        }
+      ],
+      "themes": [
+        {
+          "name": "Migration guidance",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Pitch XFA-based AF to team converting XFA-based form to AF",
+          "confidence": 0.65
+        }
+      ]
+    },
+    {
+      "signal_id": "0d7fbbcd-2d42-439d-93e2-4edb4dfe9ec9",
+      "customers": [
+        {
+          "name": "UPS",
+          "confidence": 0.75
+        }
+      ],
+      "features": [],
+      "themes": [
+        {
+          "name": "Meeting invite forwarding",
+          "confidence": 0.55
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "e88144bc-0322-46b0-9162-84a14a9a0b0c",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "997d3e5d-f477-430e-821c-cc3b333ff923",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "2db73155-e438-4cdc-a5a6-9c4258dd38b0",
+      "customers": [
+        {
+          "name": "continental team",
+          "confidence": 0.5
+        }
+      ],
+      "features": [
+        {
+          "name": "CTA changes",
+          "confidence": 0.6
+        }
+      ],
+      "themes": [
+        {
+          "name": "Change resistance / stakeholder alignment",
+          "confidence": 0.65
+        }
+      ],
+      "issues": [
+        {
+          "title": "Continental team not convinced with the CTA changes",
+          "category": "Stakeholder Feedback",
+          "severity": 2,
+          "confidence": 0.65
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "055e4a5f-cf1d-4174-a111-5158629d9366",
+      "customers": [
+        {
+          "name": "continental team",
+          "confidence": 0.45
+        }
+      ],
+      "features": [
+        {
+          "name": "CTA changes",
+          "confidence": 0.55
+        }
+      ],
+      "themes": [
+        {
+          "name": "Follow-up on outcome",
+          "confidence": 0.6
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Share the final response if you heard back from them",
+          "confidence": 0.65
+        }
+      ]
+    }
+  ]
+}

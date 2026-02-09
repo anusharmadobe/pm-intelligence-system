@@ -1,0 +1,110 @@
+{
+  "items": [
+    {
+      "signal_id": "9bf9dd92-4484-4a03-b797-c50a35b25ba7",
+      "customers": [
+        { "name": "Constantia Teich", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "IC on CS custom demo", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "RFP progression", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Present a custom demo of IC on CS for next RFP stage", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "d53f20bc-db51-4dbc-8fa5-da61e723fea6",
+      "customers": [],
+      "features": [
+        { "name": "Migration from older CM to IC on CS", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Migration planning", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Pilot migration of a few letters via VIP engagement", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "115864f8-323f-452d-a51d-fd4ca7534240",
+      "customers": [
+        { "name": "INAIL", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "Accessibility-compliant form templates", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Accessibility compliance", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Accessibility issues in form structure affecting screen readers",
+          "category": "Accessibility",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "5c0b47f9-f9b4-4e94-a9e5-bcda046dd256",
+      "customers": [],
+      "features": [
+        { "name": "Scalable form migration and automation", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Scalability challenges", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Form framework does not scale for thousands of forms",
+          "category": "Scalability",
+          "severity": 4,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        { "text": "Provide an automated and scalable approach to migrate 2000-3000 forms", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "002fb8e6-4615-4c9a-b2e9-b1660f641972",
+      "customers": [
+        { "name": "Unipol", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "Communication Composer", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Migration from legacy system", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Migrate PDF generation use case from Pega to Adobe solution", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "ff7adef4-10e5-46eb-950e-3d6ceedf694a",
+      "customers": [
+        { "name": "NFCU", "confidence": 0.9 }
+      ],
+      "features": [
+        { "name": "FDM", "confidence": 0.6 },
+        { "name": "Render API", "confidence": 0.6 },
+        { "name": "Basic Rules", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "MVP readiness", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Share MVP feature availability timelines", "confidence": 0.6 }
+      ]
+    }
+  ]
+}

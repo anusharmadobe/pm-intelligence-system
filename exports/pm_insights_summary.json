@@ -1,0 +1,876 @@
+{
+  "top_themes": [
+    {
+      "theme": "Rendering & PDF",
+      "count": 13,
+      "signal_ids": [
+        "1752c135-37d1-4d14-b54e-abbb4b28836e",
+        "1b2065b5-10aa-477f-b88d-88b9ec6bdbc7",
+        "2878ad82-05fb-421d-b9ab-cb936e27f7c6",
+        "2d981266-4eae-4b91-8a11-2bacacd976f1",
+        "343ddf01-4282-4bd4-af8f-1330c41f6bcb",
+        "41349c69-d5b3-4ce1-8084-a5b17a29a595",
+        "4567fe90-0ba6-4d38-ae31-542a2ed0f442",
+        "47d60f96-2641-4110-84c7-df8e7f8bbefa",
+        "6a2984ac-73e1-4387-9e1d-c513d248b94e",
+        "bbee71da-efde-4e25-881b-12e476c22422",
+        "cb7b06a3-b1e4-4593-9186-f0cf1baec4a7",
+        "e6b49d54-357d-46d6-9ba6-898e1848cdcf",
+        "f4ea6951-e01e-4e78-a4eb-2a57b716b9f6"
+      ],
+      "snippets": [
+        "&gt; Pre-rendering scenario - NFCU wants pdf preview with filtered data, which they get from FDM. They want to render only a section of a template using the par",
+        "<@U031G7ZLRRC> Does our Documentation lists these Best practices around generating Accessible PDF?",
+        "<@W4RU4N66R> Yes, they have a single XSD that they use for binding fields in all the Forms. We have asked for more collateral to analyse the XDPs let me know wh",
+        "<@W4RU5J3JR> did a PoC for converting flat pdfs to XDPs via AFCS sometime back. <@W4R4VBWQG>, hope you have discussed with Gaurav on reusing that. cc: <@U0213T5",
+        "<@W9QMZFR39> Their existing Forms are in PDF or some other format?\nAlso it would be good to explore if there are any common fragments usecase across 3000 XDPs w",
+        "Env details : <http://nova:4502/>.\ncredentials : admin/admin\n\nFor trying out conversions -\n\u2022 Start by uploading the PDF document\n\u2022 convert the pdf using the AFC",
+        "For Pre-rendering scenario - they already have one UI at their to do data filtering and they want to get the data from fdm and list sections present in data and",
+        "Hi <@W4RSW3ECC>: We are waiting for their sandbox details to enable Communication Composer for them. <@W010NNJV7S8>: Have the details been shared?\nAlso, we'll d",
+        "I suspect this will be a long-ish engagement  - lets pls write use cases on doc/wiki. IIRC, there were 2 use cases - one where they are using 3rd party app for ",
+        "Pre-rendering scenario -  NFCU wants pdf preview with filtered data, which they get from FDM. They want to render only a section of a template using the part of",
+        "They have it in PDF and some JSON format. More details awaited.\nThey are using common fragments \u2014 as they say. We have asked for more collateral as Darshan said",
+        "what is the use case fir pre-rendering and post rendering web hooks ?",
+        "yes, we have 3 routes:\n\n1. pdf -> import in designer\n2. pdf -> acroform (option in Acrobat to identify fields)-> import in designer\n3. pdf/acroform -> AFCS -> x"
+      ]
+    },
+    {
+      "theme": "Authoring UX",
+      "count": 9,
+      "signal_ids": [
+        "002ee716-8a87-41b6-b4dc-c6b3e7c54da3",
+        "0c4429ad-c1d4-4c1d-be11-23427d480254",
+        "50f97799-5cf7-4c3c-91a8-5dd89106b5a3",
+        "7b6e209f-b5b9-4180-809e-af2413e9b3b9",
+        "97a6d94b-ef32-4516-80ff-49485aa58e7c",
+        "97dbdf29-59a3-4ac3-addc-c4ead1354cb3",
+        "aa01a5aa-5ff1-4013-8def-cf91b1f82484",
+        "e6b49d54-357d-46d6-9ba6-898e1848cdcf",
+        "f4ea6951-e01e-4e78-a4eb-2a57b716b9f6"
+      ],
+      "snippets": [
+        "&gt; Pre-rendering scenario - NFCU wants pdf preview with filtered data, which they get from FDM. They want to render only a section of a template using the par",
+        "<@W4R4S9FS4>, do we have any documentation to share with the customer on Forms Experience Builder Usage?",
+        "<@W4RT1UR2Q>, Naveen Sharma from LPL has filed and signed the survey. Please confirm.\nPost that we need to enable the Forms Experience Builder on following cust",
+        "<@W4RU708G5>, do we need to enable all these FTs mentioned in Canvas?",
+        "For Pre-rendering scenario - they already have one UI at their to do data filtering and they want to get the data from fdm and list sections present in data and",
+        "fyi,\nCustomer still didn't have clear understanding how the web service they are designing (for fetching data via FDM) will work and if it will have capability ",
+        "The FT for the Forms Experience builder is `FT_FORMS-7883`",
+        "We are working on the IC RM slide, which we can share with NFCU.\nRegarding new Requirements from NFCU, <@WE163TH43> can you please create a Tab in <https://adob",
+        "With Sandbox, you mean environment. right?  this is not CM sandbox program.\n\n&gt; email: <mailto:naveen.sharma@lplfinancial.com|naveen.sharma@lplfinancial.com>\n"
+      ]
+    },
+    {
+      "theme": "Migration",
+      "count": 8,
+      "signal_ids": [
+        "1b2065b5-10aa-477f-b88d-88b9ec6bdbc7",
+        "343ddf01-4282-4bd4-af8f-1330c41f6bcb",
+        "41349c69-d5b3-4ce1-8084-a5b17a29a595",
+        "4567fe90-0ba6-4d38-ae31-542a2ed0f442",
+        "47d60f96-2641-4110-84c7-df8e7f8bbefa",
+        "b810ef3b-1e56-4ccb-88a7-96a49fb71938",
+        "cb7b06a3-b1e4-4593-9186-f0cf1baec4a7",
+        "ffcc3d42-b6c8-4328-b160-532c77068f73"
+      ],
+      "snippets": [
+        "<@W4R4VBWQG>: Let us know if you are blocked anywhere or need any inputs. Also we can share the env details where we have exposed the AFCS &gt;&gt; xdp to try t",
+        "<@W4RU4N66R> Yes, they have a single XSD that they use for binding fields in all the Forms. We have asked for more collateral to analyse the XDPs let me know wh",
+        "<@W4RU5J3JR> did a PoC for converting flat pdfs to XDPs via AFCS sometime back. <@W4R4VBWQG>, hope you have discussed with Gaurav on reusing that. cc: <@U0213T5",
+        "<@W9QMZFR39> can you check if XDPs follow any standard format for representing field or subform?\n\nDo they also have XSD of this xdps and is there any common str",
+        "<@W9QMZFR39> Their existing Forms are in PDF or some other format?\nAlso it would be good to explore if there are any common fragments usecase across 3000 XDPs w",
+        "Env details : <http://nova:4502/>.\ncredentials : admin/admin\n\nFor trying out conversions -\n\u2022 Start by uploading the PDF document\n\u2022 convert the pdf using the AFC",
+        "I suspect this will be a long-ish engagement  - lets pls write use cases on doc/wiki. IIRC, there were 2 use cases - one where they are using 3rd party app for ",
+        "yes, we have 3 routes:\n\n1. pdf -> import in designer\n2. pdf -> acroform (option in Acrobat to identify fields)-> import in designer\n3. pdf/acroform -> AFCS -> x"
+      ]
+    },
+    {
+      "theme": "Data Binding",
+      "count": 4,
+      "signal_ids": [
+        "2878ad82-05fb-421d-b9ab-cb936e27f7c6",
+        "97dbdf29-59a3-4ac3-addc-c4ead1354cb3",
+        "e6b49d54-357d-46d6-9ba6-898e1848cdcf",
+        "f4ea6951-e01e-4e78-a4eb-2a57b716b9f6"
+      ],
+      "snippets": [
+        "&gt; Pre-rendering scenario - NFCU wants pdf preview with filtered data, which they get from FDM. They want to render only a section of a template using the par",
+        "For Pre-rendering scenario - they already have one UI at their to do data filtering and they want to get the data from fdm and list sections present in data and",
+        "fyi,\nCustomer still didn't have clear understanding how the web service they are designing (for fetching data via FDM) will work and if it will have capability ",
+        "Pre-rendering scenario -  NFCU wants pdf preview with filtered data, which they get from FDM. They want to render only a section of a template using the part of"
+      ]
+    },
+    {
+      "theme": "Access management",
+      "count": 2,
+      "signal_ids": [
+        "2f6fe2d3-7646-4ef3-aca7-2bc6aa9fb77e",
+        "508e7057-9129-4e67-bc90-4d593b0c930b"
+      ],
+      "snippets": [
+        "<@U05TSNKRNP8> added you to this.",
+        "<@U05TSNKRNP8> you are added to administrator group"
+      ]
+    },
+    {
+      "theme": "Integrations",
+      "count": 2,
+      "signal_ids": [
+        "985272b1-be2d-49c6-9618-14fe3b1487ac",
+        "e6b49d54-357d-46d6-9ba6-898e1848cdcf"
+      ],
+      "snippets": [
+        "&gt; Pre-rendering scenario - NFCU wants pdf preview with filtered data, which they get from FDM. They want to render only a section of a template using the par",
+        "<@W4RU708G5>: Marketo and Workfront anyway is EA so until the customer specifically request for it - we would not be enabling it . I have a query for these two\n"
+      ]
+    },
+    {
+      "theme": "Integration clarification",
+      "count": 2,
+      "signal_ids": [
+        "87e583e0-5040-4bba-afe7-58cb3154df96",
+        "d60c66fc-80f1-4ca9-8c8a-cec142a1bb32"
+      ],
+      "snippets": [
+        "<@WLWHN4TV3> As of now they are not aware of it but they mentioned that service exposes rest API end point. Let me know what additional information you need I c",
+        "Will the integration be via FDM only, right and it will be REST API based?"
+      ]
+    },
+    {
+      "theme": "Accessibility",
+      "count": 2,
+      "signal_ids": [
+        "373b0faa-9058-456e-aa08-e4a1f1526e8d",
+        "99eb8274-0666-4d33-ad35-1595a8ba8ba6"
+      ],
+      "snippets": [
+        "<@U061P671RN1> Have you also generated tagged interactive PDF?\ncc: <@W9QMZFR39>",
+        "Hi <@W9QMZFR39>, Please find the tag enabled pdf as attached."
+      ]
+    },
+    {
+      "theme": "Demo scheduling",
+      "count": 2,
+      "signal_ids": [
+        "afad7f5e-406e-4165-a9ea-d905df5e6c37",
+        "c5c07e09-1bcb-4bac-a17e-930fff29e8ff"
+      ],
+      "snippets": [
+        "<@U0213T59LMN>, <@U06NF880220>, <@U03N27GAZDZ> We need to demonstrate the *Marketo connector to Lumen* by migrating the existing form using Experience Builder. ",
+        "Received an update from SC team. Demo is scheduled for April 30, 2025. Pablo will do the demo and relay the feedback. We have provided the demo script and colla"
+      ]
+    },
+    {
+      "theme": "Automation",
+      "count": 2,
+      "signal_ids": [
+        "7ce31ce4-072a-4ebe-990a-d783cedc9488",
+        "9b280587-3021-4daa-a01a-b5b313baa997"
+      ],
+      "snippets": [
+        "&gt; I have scheduled a meeting tomorrow - to identify if we can automate the sling mapping and related use-case - to avoid the miss/regression in future.\nIt ca",
+        "FYI - I have scheduled a meeting tomorrow - to identify if we can automate the sling mapping and related use-case - to avoid the miss/regression in future."
+      ]
+    },
+    {
+      "theme": "Customer engagement",
+      "count": 2,
+      "signal_ids": [
+        "0782730c-1686-448c-9aa2-5de65e5d9f15",
+        "07959d39-abb1-4f59-b317-25bf22ad951e"
+      ],
+      "snippets": [
+        "NFCU want two meetings a week for more feature discussions.",
+        "Sure <@W4RU4N66R> in next call we can suggest that. We are having active discussion with State of Pennsylvania as well. Would you like us to pitch to them as we"
+      ]
+    },
+    {
+      "theme": "Documentation request",
+      "count": 2,
+      "signal_ids": [
+        "2c83285a-3448-42f4-be23-285a88417b31",
+        "8608cad5-6b27-4ac9-a3da-340ddcdb8a7a"
+      ],
+      "snippets": [
+        "<@U061P671RN1>, please help provide SDK set up documentation",
+        "<@WAM5KDYBZ>: Can you any documentation for Authenticated REST endpoint and having preprocessor functionality also ?"
+      ]
+    },
+    {
+      "theme": "Documentation availability",
+      "count": 2,
+      "signal_ids": [
+        "864761e7-dfd9-4fed-8e97-6ada7d8bc506",
+        "fae285be-dea0-48bb-b162-9a54b12b5cfa"
+      ],
+      "snippets": [
+        "<@W4R4VBWQG>, do we have doc/wiki for LPL now ?",
+        "<@W4SG81T9C>: This is to purge audit logs - is there any doc to setup audit logs ?"
+      ]
+    },
+    {
+      "theme": "Meeting coordination",
+      "count": 2,
+      "signal_ids": [
+        "2c16d140-788d-4197-abbe-acd92997727d",
+        "aaa6188b-b4c1-4541-93f1-7c62e1d24b43"
+      ],
+      "snippets": [
+        "<@W4RU4N66R> / <@U0213T59LMN>, we are waiting in GMF meeting for the AEP based FDM demo. Will anyone join?",
+        "<@W9QMZFR39> please add me to this meeting, planned for April 9 or 10"
+      ]
+    },
+    {
+      "theme": "Agreement coordination",
+      "count": 1,
+      "signal_ids": [
+        "6adb4adf-0698-457d-9354-0b44d8f12c31"
+      ],
+      "snippets": [
+        "<@W4RU4N66R>, <@W4SG81T9C> Let us know email ID of person to send the GenAI beta agreement."
+      ]
+    }
+  ],
+  "top_requests": [
+    {
+      "request": "Push customer to execute at least one batch",
+      "count": 2,
+      "signal_ids": [
+        "3e40277a-45ed-4dfb-9d67-681e3fe0a0f2",
+        "ed9a3d03-5e4e-4147-bcda-997cdf2444fc"
+      ],
+      "snippets": [
+        "&gt; Async support or batch is not a blocker and we are ready to support but we need to push customer to execute atleast 1 batch\n<@W4RU4N66R>: In that 19 forms ",
+        "Async support or batch is not a blocker and we are ready to support but we need to push customer to execute atleast 1 batch"
+      ],
+      "components": [
+        "AFCS"
+      ]
+    },
+    {
+      "request": "Acknowledge once documentation sharing action items are done",
+      "count": 1,
+      "signal_ids": [
+        "ecb20876-0b84-4811-8b4a-68093968dfdf"
+      ],
+      "snippets": [
+        "<@U038XFD63GS> for Action items on sharing the documentation, please ack once done"
+      ],
+      "components": [
+        "Forms Manager"
+      ]
+    },
+    {
+      "request": "Add recommendations and troubleshooting steps for Azure SQL server connections.",
+      "count": 1,
+      "signal_ids": [
+        "6ab6f5d5-b716-4a1c-8062-f258d50d156f"
+      ],
+      "snippets": [
+        "Hi <@U06NF880220>, <@U0213T59LMN>, <@W4RU4N66R>\nThis is a second customer in duration of a month, who has been facing SQL server connection issues. It would be "
+      ],
+      "components": [
+        "Integration - FDM"
+      ]
+    },
+    {
+      "request": "Add option to re-assign task",
+      "count": 1,
+      "signal_ids": [
+        "861da3d0-4938-415e-be99-4fc2626dba9b"
+      ],
+      "snippets": [
+        "Summary:\n\u2022 Their first form also has below critical gaps:\n    \u25e6 Partial validation before Save (limited to some fields and initial state), and no validation on "
+      ],
+      "components": [
+        "Forms - Workflow"
+      ]
+    },
+    {
+      "request": "Add participant to give a general demo",
+      "count": 1,
+      "signal_ids": [
+        "93a3c5b3-b81c-4307-9f94-5d7701c1530c"
+      ],
+      "snippets": [
+        "You can add me, i can show a general demo (since I don\u2019t know their use-case)"
+      ],
+      "components": [
+        "Forms Manager"
+      ]
+    },
+    {
+      "request": "Add participant to upcoming meeting",
+      "count": 1,
+      "signal_ids": [
+        "2c16d140-788d-4197-abbe-acd92997727d"
+      ],
+      "snippets": [
+        "<@W9QMZFR39> please add me to this meeting, planned for April 9 or 10"
+      ],
+      "components": [
+        "Forms Manager"
+      ]
+    },
+    {
+      "request": "Add more robust checks in documentation to determine if core components are enabled",
+      "count": 1,
+      "signal_ids": [
+        "21e3d2cd-4f77-48a0-a176-61576bd7485b"
+      ],
+      "snippets": [
+        "<@W4XTCQ07J>, Our documentation already mentions the below considerations:\n\n*Considerations*\n\u2022 When you create a fresh AEM Forms as a Cloud Service program, <ht"
+      ],
+      "components": [
+        "Adaptive Forms - Core Components"
+      ]
+    },
+    {
+      "request": "Add recommendations/troubleshooting steps for SQL server connection issues (WIP video to be added in Jan).",
+      "count": 1,
+      "signal_ids": [
+        "e9cee57a-2870-48e7-bf60-43dec6b6aad6"
+      ],
+      "snippets": [
+        "Hi <@W4SG81T9C>\nYes, we have created a ticket &amp; the configurations &amp; steps are already documented for Azure SQL server connection with AEM.\nA video will"
+      ],
+      "components": [
+        "Integration - FDM"
+      ]
+    },
+    {
+      "request": "Add the requester to offline and VIP discussions.",
+      "count": 1,
+      "signal_ids": [
+        "81bed79a-6de3-4b7e-9650-6929fe328f8a"
+      ],
+      "snippets": [
+        "Thanks <@W9QMZFR39>. Please add me to the offline and VIP discussions as well"
+      ],
+      "components": [
+        "Forms Manager"
+      ]
+    },
+    {
+      "request": "Add validation on Save in Inbox (not only on submit)",
+      "count": 1,
+      "signal_ids": [
+        "861da3d0-4938-415e-be99-4fc2626dba9b"
+      ],
+      "snippets": [
+        "Summary:\n\u2022 Their first form also has below critical gaps:\n    \u25e6 Partial validation before Save (limited to some fields and initial state), and no validation on "
+      ],
+      "components": [
+        "Forms - Workflow"
+      ]
+    },
+    {
+      "request": "Add version creation for XDP created within the system similar to AF",
+      "count": 1,
+      "signal_ids": [
+        "370b40da-541d-43be-aaf2-94f5eff204d3"
+      ],
+      "snippets": [
+        "I guess my point is not clear \u2014 For upload it will continue to work but for XDP created within the system (not uploaded), we will have to add create version sim"
+      ],
+      "components": [
+        "Designer"
+      ]
+    },
+    {
+      "request": "Adobe to follow up on MTAP requirements and offer co-creation opportunities (forms implementation planned for FY26).",
+      "count": 1,
+      "signal_ids": [
+        "3f1cb81b-c18d-41c3-8cc9-0d593daa0a08"
+      ],
+      "snippets": [
+        "<@W4XTCQ07J> here are some more\n\n\u2022 The MTAB app is used to open 70\u201380K job cards daily. It is English-only and built on Native tech. The typical update cycle of"
+      ],
+      "components": [
+        "Forms Manager"
+      ]
+    },
+    {
+      "request": "Affordable pricing approach for high-volume, low-complexity forms (concerns about per-submission pricing)",
+      "count": 1,
+      "signal_ids": [
+        "8f1c9649-c6a1-4652-a0ef-d9d3a3d5ec42"
+      ],
+      "snippets": [
+        "*\nGenerated by AI. Make sure to check for accuracy.\nMeeting notes:\n\u2022 *Current Forms Environment and Integration Challenges:* Tony J Fenner, Stephen, Brad R Tuck"
+      ],
+      "components": [
+        "Forms Manager"
+      ]
+    },
+    {
+      "request": "Align on the use case to present",
+      "count": 1,
+      "signal_ids": [
+        "510408d1-6326-49c5-abea-d80a7e76e839"
+      ],
+      "snippets": [
+        "And we can align on use case we want to present"
+      ],
+      "components": [
+        "Forms Manager"
+      ]
+    },
+    {
+      "request": "Ability to select environment region (Canada vs US) and manage advanced networking options accordingly",
+      "count": 1,
+      "signal_ids": [
+        "90ac9bd7-c786-4e0a-a07f-d4135e518e34"
+      ],
+      "snippets": [
+        "*\nGenerated by AI. Make sure to check for accuracy.\nMeeting notes:\n\u2022 *Repository Structure and Code Walkthrough:* Sakshi provided an overview of the restructure"
+      ],
+      "components": [
+        "Cloud Service Platform"
+      ]
+    }
+  ],
+  "top_issues": [
+    {
+      "title": "MasterPage option causing confusion during fragment creation",
+      "category": "usability",
+      "avg_severity": 2,
+      "count": 2,
+      "signal_ids": [
+        "d2b2508f-a331-4e7c-a9c0-106bbdc112bd",
+        "e18685ab-e6a9-40e8-b1c9-d2612858c7d0"
+      ],
+      "snippets": [
+        "*\n*Discussion Summary*\n\n*IC Editor Issue:* \nAs of now we don't have any open issue with Editor .\n\u2022 MasterPage Option: The MasterPage option in the editor is cau",
+        "*\n*Discussion Summary*\n\n*Issues with the Editor*\n1. *Resolved Issues:*\n    \u25e6 NFCU has confirmed that the earlier issues related to Fragment Width and PDF Previe"
+      ],
+      "components": [
+        "Adaptive Forms - Authoring",
+        "Rule Editor"
+      ]
+    },
+    {
+      "title": "Lost thousands of submissions during a service outage in VIP incident",
+      "category": "Reliability",
+      "avg_severity": 5,
+      "count": 1,
+      "signal_ids": [
+        "22ce9d66-a8cb-4c89-9635-3f545586fa4c"
+      ],
+      "snippets": [
+        "&gt; Shouldn't they be just implementing ETE form submit tests that run in their deployment pipeline?\n+1 We did propose that.\n\nTo provide more context on the or"
+      ],
+      "components": [
+        "Adaptive Forms - Runtime",
+        "Forms - Workflow"
+      ]
+    },
+    {
+      "title": "<@W4R4VBWQG>: Let us know if you are blocked anywhere or need any inputs",
+      "category": "blocker",
+      "avg_severity": 5,
+      "count": 1,
+      "signal_ids": [
+        "b810ef3b-1e56-4ccb-88a7-96a49fb71938"
+      ],
+      "snippets": [
+        "<@W4R4VBWQG>: Let us know if you are blocked anywhere or need any inputs. Also we can share the env details where we have exposed the AFCS &gt;&gt; xdp to try t"
+      ],
+      "components": [
+        "AFCS"
+      ]
+    },
+    {
+      "title": "All current forms blocked from UAT due to unresolved routing and model.json failures",
+      "category": "Release blocker",
+      "avg_severity": 5,
+      "count": 1,
+      "signal_ids": [
+        "00361868-63bf-44b3-b37c-23c49d995086"
+      ],
+      "snippets": [
+        "*\n\u2022 *URL Rewriting Issue:* Customer reported embedded form failures caused by model.json paths not being rewritten properly through Cloudflare and AEM filters.\n"
+      ],
+      "components": [
+        "Adaptive Forms - Core Components"
+      ]
+    },
+    {
+      "title": "Embedded form failures due to model.json paths not being rewritten properly through Cloudflare and AEM filters",
+      "category": "Routing/URL rewriting",
+      "avg_severity": 5,
+      "count": 1,
+      "signal_ids": [
+        "00361868-63bf-44b3-b37c-23c49d995086"
+      ],
+      "snippets": [
+        "*\n\u2022 *URL Rewriting Issue:* Customer reported embedded form failures caused by model.json paths not being rewritten properly through Cloudflare and AEM filters.\n"
+      ],
+      "components": [
+        "Adaptive Forms - Core Components",
+        "Edge Delivery"
+      ]
+    },
+    {
+      "title": "Four forms >40 pages in 19-form batch block generation of AF forms",
+      "category": "Conversion",
+      "avg_severity": 4,
+      "count": 1,
+      "signal_ids": [
+        "ed9a3d03-5e4e-4147-bcda-997cdf2444fc"
+      ],
+      "snippets": [
+        "&gt; Async support or batch is not a blocker and we are ready to support but we need to push customer to execute atleast 1 batch\n<@W4RU4N66R>: In that 19 forms "
+      ],
+      "components": [
+        "AFCS",
+        "CPDF"
+      ]
+    },
+    {
+      "title": "Blocked creating cloud config due to missing admin access and inability to see global container",
+      "category": "Access/Permissions",
+      "avg_severity": 4,
+      "count": 1,
+      "signal_ids": [
+        "9cf57f9c-3173-44b7-a7ea-d85444922bdf"
+      ],
+      "snippets": [
+        "<@U03Q109GQMT> will need admin access to create a cloud config , please help here . I can't see even global container . I am blocked here .\ncc <@W9QMZFR39> <@U0"
+      ],
+      "components": [
+        "Cloud Service Platform",
+        "Security"
+      ]
+    },
+    {
+      "title": "Intermittent inability to access Azure SQL database despite dedicated egress IP being whitelisted",
+      "category": "Database/Networking",
+      "avg_severity": 4,
+      "count": 1,
+      "signal_ids": [
+        "676b1a14-d093-4214-9b87-c24418936a64"
+      ],
+      "snippets": [
+        "*\nGenerated by AI. Make sure to check for accuracy.\nMeeting notes:\n\u2022 *Azure SQL Database Connectivity Troubleshooting:* Randy, Sakshi, Chad, Tim, and Speaker 1 "
+      ],
+      "components": [
+        "Integration - FDM"
+      ]
+    },
+    {
+      "title": "Current forms landscape is fragmented across AEM forms, fillable PDFs, and HTML forms, causing inefficiencies",
+      "category": "Platform/UX",
+      "avg_severity": 4,
+      "count": 1,
+      "signal_ids": [
+        "8f1c9649-c6a1-4652-a0ef-d9d3a3d5ec42"
+      ],
+      "snippets": [
+        "*\nGenerated by AI. Make sure to check for accuracy.\nMeeting notes:\n\u2022 *Current Forms Environment and Integration Challenges:* Tony J Fenner, Stephen, Brad R Tuck"
+      ],
+      "components": [
+        "Forms Manager",
+        "Designer",
+        "Mobile Forms"
+      ]
+    },
+    {
+      "title": "Create IC from PDF flow broken in AI Assistant",
+      "category": "functional",
+      "avg_severity": 4,
+      "count": 1,
+      "signal_ids": [
+        "965c54e6-3b97-4f36-9347-3ba900aca37f"
+      ],
+      "snippets": [
+        "<@U03Q109GQMT> Please fix the create IC from PDF flow from AI Assistant. If changes are required then we need to apply that on Tano's env also. We need to pick "
+      ],
+      "components": [
+        "Interactive Communications",
+        "GenAI"
+      ]
+    },
+    {
+      "title": "Customer SQL server connection is getting dropped and sometimes returning too many requests; custom servlet establishing connection was dropping",
+      "category": "Database/Performance",
+      "avg_severity": 4,
+      "count": 1,
+      "signal_ids": [
+        "51aa2059-0332-49b8-9b90-8ffc4e5c8441"
+      ],
+      "snippets": [
+        "*\nThis was for an escalated issue, where the customer's SQL server connection is getting dropped and sometimes returning too many requests.\nOn analysis it was f"
+      ],
+      "components": [
+        "Integration - FDM"
+      ]
+    },
+    {
+      "title": "Access to AEM forms is pending, preventing form creation despite Marketo connectors set up",
+      "category": "Access/Permissions",
+      "avg_severity": 4,
+      "count": 1,
+      "signal_ids": [
+        "4c9175b6-8416-4793-9ff9-6d2554c340cd"
+      ],
+      "snippets": [
+        "*\n*ECID Deployment and Rule Editor Updates:* Shraddha, Christy, and Andy discussed the deployment status of the ECID code, with Christy confirming the ECID depl"
+      ],
+      "components": [
+        "Forms Manager",
+        "Integration - DX"
+      ]
+    },
+    {
+      "title": "Form framework does not scale for thousands of forms",
+      "category": "Scalability",
+      "avg_severity": 4,
+      "count": 1,
+      "signal_ids": [
+        "5c0b47f9-f9b4-4e94-a9e5-bcda046dd256"
+      ],
+      "snippets": [
+        "*\n*Major pain points for Customer that we need to handle in VIP Engagement:*\n\u2022 *Scalability Issues:* Scalability has been identified as a major challenge, it ta"
+      ],
+      "components": [
+        "Adaptive Forms - Authoring",
+        "Forms Manager"
+      ]
+    },
+    {
+      "title": "Azure SQL connection succeeds from Canada Central but not from other regions, indicating possible regional restriction",
+      "category": "Database/Networking",
+      "avg_severity": 4,
+      "count": 1,
+      "signal_ids": [
+        "3c723601-da20-4aa5-b926-4faf413a5d31"
+      ],
+      "snippets": [
+        "*\nGenerated by AI. Make sure to check for accuracy.\nMeeting notes:\n\u2022 *Azure SQL Server Connectivity and Regional Restrictions:* Sakshi, Randy Reisling, and Shra"
+      ],
+      "components": [
+        "Integration - FDM",
+        "Cloud Service Platform"
+      ]
+    },
+    {
+      "title": "Cloudflare is blocking submissions for new forms; need a permanent solution",
+      "category": "Submission/Security",
+      "avg_severity": 4,
+      "count": 1,
+      "signal_ids": [
+        "7949e7df-8d98-4a20-bd44-d9a08c9ff2f6"
+      ],
+      "snippets": [
+        "*\n*ECID Function Deployment and Rule Modification:* Shraddha updated Andy and Joseph on the deployment of the new ECID async function, which will require a subs"
+      ],
+      "components": [
+        "Adaptive Forms - Runtime",
+        "Edge Delivery"
+      ]
+    }
+  ],
+  "top_features": [
+    {
+      "feature": "Forms Experience Builder",
+      "count": 9
+    },
+    {
+      "feature": "Forms",
+      "count": 7
+    },
+    {
+      "feature": "Automated Forms Conversion",
+      "count": 5
+    },
+    {
+      "feature": "FDM pre-processor",
+      "count": 2
+    },
+    {
+      "feature": "Conversational forms",
+      "count": 2
+    },
+    {
+      "feature": "ETE form submit tests",
+      "count": 2
+    },
+    {
+      "feature": "Core Components",
+      "count": 2
+    },
+    {
+      "feature": "FDM",
+      "count": 2
+    },
+    {
+      "feature": "Scribble",
+      "count": 2
+    },
+    {
+      "feature": "Save as draft",
+      "count": 2
+    },
+    {
+      "feature": "Associate UI",
+      "count": 2
+    },
+    {
+      "feature": "Form conversions",
+      "count": 2
+    },
+    {
+      "feature": "Environment access/permissions",
+      "count": 2
+    },
+    {
+      "feature": "AFCS",
+      "count": 2
+    },
+    {
+      "feature": "XDP create/edit via IC editor from FM UI",
+      "count": 2
+    }
+  ],
+  "top_customers": [
+    {
+      "customer": "LPL Financial",
+      "count": 39
+    },
+    {
+      "customer": "NFCU",
+      "count": 28
+    },
+    {
+      "customer": "LPL",
+      "count": 16
+    },
+    {
+      "customer": "AbbVie",
+      "count": 5
+    },
+    {
+      "customer": "customer",
+      "count": 5
+    },
+    {
+      "customer": "Abbvie",
+      "count": 4
+    },
+    {
+      "customer": "INAIL",
+      "count": 4
+    },
+    {
+      "customer": "Mercury Marine",
+      "count": 4
+    },
+    {
+      "customer": "Jet2",
+      "count": 3
+    },
+    {
+      "customer": "State of Pennsylvania",
+      "count": 3
+    },
+    {
+      "customer": "Maurice Blackburn",
+      "count": 3
+    },
+    {
+      "customer": "Wells Fargo",
+      "count": 3
+    },
+    {
+      "customer": "UPS",
+      "count": 2
+    },
+    {
+      "customer": "GMF",
+      "count": 2
+    },
+    {
+      "customer": "Unipol(Partner Reply)",
+      "count": 2
+    }
+  ],
+  "comparison": {
+    "llm_themes": [
+      {
+        "theme": "Authoring UX",
+        "count": 153
+      },
+      {
+        "theme": "Migration",
+        "count": 94
+      },
+      {
+        "theme": "Integrations",
+        "count": 88
+      },
+      {
+        "theme": "Rendering & PDF",
+        "count": 87
+      },
+      {
+        "theme": "Data Binding",
+        "count": 68
+      },
+      {
+        "theme": "Reliability",
+        "count": 19
+      },
+      {
+        "theme": "Performance",
+        "count": 12
+      },
+      {
+        "theme": "Security & Compliance",
+        "count": 11
+      },
+      {
+        "theme": "Meeting coordination",
+        "count": 2
+      },
+      {
+        "theme": "Access management",
+        "count": 2
+      }
+    ],
+    "deterministic_themes": [
+      {
+        "theme": "Authoring UX",
+        "count": 159
+      },
+      {
+        "theme": "Rendering & PDF",
+        "count": 103
+      },
+      {
+        "theme": "Integrations",
+        "count": 90
+      },
+      {
+        "theme": "Migration",
+        "count": 85
+      },
+      {
+        "theme": "Data Binding",
+        "count": 52
+      },
+      {
+        "theme": "Reliability",
+        "count": 42
+      },
+      {
+        "theme": "Security & Compliance",
+        "count": 20
+      },
+      {
+        "theme": "Performance",
+        "count": 13
+      }
+    ]
+  }
+}

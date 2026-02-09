@@ -1,0 +1,11 @@
+
+{
+  "layers": [
+    "signals",
+    "opportunities",
+    "judgments",
+    "artifacts"
+  ],
+  "flow": "signals -> opportunities -> judgments -> artifacts",
+  "llm_allowed_layers": ["judgments", "artifacts"]
+}

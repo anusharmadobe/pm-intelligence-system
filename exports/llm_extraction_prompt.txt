@@ -1,0 +1,25 @@
+You are extracting structured product insights from Slack messages.
+Return ONLY valid JSON (no markdown) following this schema:
+
+{
+  "items": [
+    {
+      "signal_id": "string",
+      "customers":[{"name":"string","confidence":0.0}],
+      "features":[{"name":"string","confidence":0.0}],
+      "themes":[{"name":"string","confidence":0.0}],
+      "issues":[{"title":"string","category":"string","severity":1,"confidence":0.0}],
+      "requests":[{"text":"string","confidence":0.0}]
+    }
+  ]
+}
+
+Rules:
+- Use only evidence in the message text.
+- If unknown, return empty arrays.
+- Keep issue title <= 140 chars.
+- Severity 1–5 only if stated or clearly implied.
+- Preserve the exact signal_id provided.
+
+Messages:
+<PASTE JSON ARRAY FROM THE BATCH FILE HERE>

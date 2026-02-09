@@ -1,0 +1,632 @@
+{
+  "items": [
+    {
+      "signal_id": "e43f9f15-292e-41f8-882c-eb51f697187c",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Team assignment / ownership", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "aa8da813-3d07-4ad5-9d77-a501f779b274",
+      "customers": [],
+      "features": [
+        { "name": "Forms license", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Purchase gating / evaluation before purchase", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "Customer hasn't purchased forms license yet",
+          "category": "Commercial",
+          "severity": 2,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        { "text": "Allow customer's developer to replicate the created form before buying the forms license", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "d6d653eb-0f3c-452a-81ed-6e86e178c2d1",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Timeline / go-live inquiry", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm go-live dates", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "be7b6808-381a-43ac-949c-6a88a8f1fa34",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "991b89e5-7bf3-40ff-9e60-d3fc2b10d898",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Meeting handoff / action ownership", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "773a28b6-63e4-4c03-b9c6-6c5536887d44",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Leadership transition for engagement", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Handle action items and queries going forward (lead ownership)", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "9848fdfd-1e93-4792-b7e4-9011fd352e1a",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Meeting attendance clarity", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "ebc10f0e-098a-4649-9a5a-1d8174f87c6e",
+      "customers": [],
+      "features": [
+        { "name": "Save as draft", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Resiliency vs workaround", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "Save-as-draft considered a workaround; underlying resiliency issue remains",
+          "category": "Reliability",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "aa2c488e-ff8e-4eb2-bcf3-d6d8235bf8f7",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Synchronous submission failure", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Submission failing 2-3 steps down submission flow (sync call) without notifying AEM/user",
+          "category": "Reliability",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "8808af66-1e30-48ea-9e27-d6360d4e95ba",
+      "customers": [],
+      "features": [
+        { "name": "Error propagation in custom code", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Sync vs async behavior", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Custom submission code may not throw exceptions back to source causing silent failures",
+          "category": "Reliability",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        { "text": "Improve custom code to throw exceptions to the source for sync submissions", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "1de2aa4a-cc2a-4510-b9f7-e54d6a3b199b",
+      "customers": [],
+      "features": [
+        { "name": "Submission tracking", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Data loss prevention / auditing", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "Submissions sometimes fail downstream and AEM/end-user are not aware",
+          "category": "Reliability",
+          "severity": 4,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        { "text": "Track all submissions (not just failing ones) to prevent unnoticed data loss", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "22ce9d66-a8cb-4c89-9635-3f545586fa4c",
+      "customers": [],
+      "features": [
+        { "name": "Save as draft (backup submission)", "confidence": 0.8 },
+        { "name": "ETE form submit tests", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Testing and backup strategies", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "Lost thousands of submissions during a service outage in VIP incident",
+          "category": "Reliability",
+          "severity": 5,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        { "text": "Implement ETE form submit tests in deployment pipeline", "confidence": 0.8 },
+        { "text": "Provide backup submission to draft to recover data after outages", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "974410f5-0495-40b1-9fcf-834bc5244ac7",
+      "customers": [],
+      "features": [
+        { "name": "ETE form submit tests", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Testing vs workaround", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Reliance on save-as-draft may mask underlying code quality issues",
+          "category": "Process",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        { "text": "Implement ETE tests in deployment pipeline", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "f9decf0b-9eab-4df3-8954-7e28e4c3bc88",
+      "customers": [],
+      "features": [
+        { "name": "Azure storage encryption", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Data protection / PII", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "Base64 encoding suggested by customer is not encryption and doesn't meet PII concerns",
+          "category": "Security",
+          "severity": 3,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        { "text": "Confirm Azure encryption at rest and discuss pre-processor / key management if needed", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "8b47ae6c-23e5-4fb4-8b98-354e15e0f209",
+      "customers": [],
+      "features": [
+        { "name": "Save as draft", "confidence": 0.9 },
+        { "name": "FDM pre-processor", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Data persistence and encryption", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "Customer wants drafts saved and encrypted/encoded before pushing to Azure",
+          "category": "Security",
+          "severity": 3,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        { "text": "Try FDM pre-processor to encrypt/encode data before storing in Azure", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "106f32be-40a9-4c78-ab26-03e3ef4d7847",
+      "customers": [],
+      "features": [
+        { "name": "FDM pre-processor", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Common pattern for save-as-draft across customers", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Evaluate FDM pre-processor for save-as-draft use case", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "95ccc6dc-89fb-4cd3-914c-56b7bca7acc1",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Encryption scope clarification", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm whether encryption is required at rest or in transit", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "1deb44cd-4016-4a57-ae20-09b15dd5a820",
+      "customers": [
+        { "name": "Abbvie", "confidence": 0.8 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Encryption complexity", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Encryption of saved draft data may be tricky to implement",
+          "category": "Security",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        { "text": "Confirm hook point in USC-based implementation for encryption", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "ca21f283-1cd9-41f2-b75e-16096579bff6",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Cross-customer pattern identification", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Sync to see common pattern for save-as-draft (IRS also asking)", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "b8deb6ad-8932-4374-ab6d-99f92b2fd169",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Issue resolution confirmation", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Previously reported issues were shared and addressed per support",
+          "category": "Support",
+          "severity": 2,
+          "confidence": 0.7
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "21d28f80-e247-4a52-a267-8b789caae844",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "ed735d60-3fd4-4fae-879a-b287b20c09a5",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Information access", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Provide list of issues and collaterals if available", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "7db77ab0-6c9d-41d6-867e-d31c2b95bea6",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Request for shared collaterals", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Share list of issues and migration collaterals (from TFS)", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "34a1687b-70c3-4e9c-8658-ef2ac2a8f42d",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        { "text": "Forward received collaterals if available", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "94eebd03-cc4b-49e2-ba7b-6fd42ec17227",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Support vs reported issues", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Support reports all reported issues were resolved",
+          "category": "Support",
+          "severity": 2,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        { "text": "Share list of issues that customer reported", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "effcf451-1c5a-4df8-b85b-8e0c4b77d73d",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Recognition / team morale", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "59517738-7bac-4e3c-a191-3c76ce38dc34",
+      "customers": [],
+      "features": [
+        { "name": "Renditions (volume metric)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Usage metrics", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Track rendition volume (17K in April so far)", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "0e231e62-41a7-4cc1-981f-fcbd8aa5ea15",
+      "customers": [
+        { "name": "LPL", "confidence": 0.9 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Documentation / internal wiki", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Finalize internal LPL document then move content to wiki", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "fae285be-dea0-48bb-b162-9a54b12b5cfa",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Documentation availability", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm if doc/wiki for LPL exists", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "ebb638fe-e016-48a5-a974-72aed3851a03",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Roadmap communication controls", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Share roadmap/timeline details in meeting rather than email", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "4f92d9ab-5e51-4aa2-b24e-f7e961515991",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Roadmap sharing policy", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Avoid sharing Roadmap via email/slack; present it in demo call", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "0ab17f16-0541-4ae3-94f1-cba7efaec76f",
+      "customers": [],
+      "features": [
+        { "name": "Data binding UX", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Need for improved UX and simplification", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Need improved UX to show different data binding options",
+          "category": "UX",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "4564783e-08e0-4d6e-a2bf-58a5fabcc50b",
+      "customers": [
+        { "name": "Accenture Federal", "confidence": 0.8 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Release pause but development continues", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Pause on releasing new forms though development continues; no timeline for next release",
+          "category": "Delivery",
+          "severity": 2,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "7f4277b2-d12b-4367-ab76-83745d953cda",
+      "customers": [],
+      "features": [
+        { "name": "Auto-fill from ID/document", "confidence": 0.8 },
+        { "name": "Real-time monitoring (completion / drop-off rates)", "confidence": 0.8 },
+        { "name": "Intent detection and automated guidance (AI)", "confidence": 0.8 },
+        { "name": "Personalized enrollment journeys", "confidence": 0.7 },
+        { "name": "Auto-optimize forms suggestion", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Product feature wishlist (AI + analytics)", "confidence": 0.9 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Consider features: auto-fill, real-time monitoring, intent detection, personalized journeys, auto-optimize suggestions", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "0250c6c0-f212-4a76-a874-1d2806f9477a",
+      "customers": [],
+      "features": [
+        { "name": "EDS license", "confidence": 0.8 },
+        { "name": "Core Components (CC) migration", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Renewal and future-readiness", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Evaluate moving to EDS / CC given EDS license on renewal", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "09e39df6-12d8-48bf-9191-2f789af7f21d",
+      "customers": [
+        { "name": "First Bank Puerto Rico", "confidence": 0.9 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Go-live and usage", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Note: First Bank Puerto Rico is live on CS and renewed on May 1; 100K submissions/year", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "48c80b98-8f3e-4fd0-9318-786e9adf079d",
+      "customers": [
+        { "name": "First Bank Puerto Rico", "confidence": 0.95 }
+      ],
+      "features": [
+        { "name": "Custom decision components (decision-tree)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Inventory of forms and custom components", "confidence": 0.9 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Capture number of forms and URLs; note presence of custom decision components", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "91762b3a-0823-4f0f-b166-294212c792c7",
+      "customers": [],
+      "features": [
+        { "name": "Backport request (.xdp.html)", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Bug / platform compatibility", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Issue related to font on Mac and request to backport .xdp.html feature on 6.5",
+          "category": "Compatibility",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "13023821-34a5-441a-86d6-b7b565bbbec4",
+      "customers": [],
+      "features": [
+        { "name": "AFCS (forms conversion)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Conversion quality and unsupported PDFs (XFA elements)", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "AFCS failed to extract ground truth from certain XFA-based AcroForm PDFs",
+          "category": "Conversion",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        { "text": "Send problematic PDF to dedicated team to investigate AFCS extraction issues", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "164bef8d-fc67-43a8-84fb-6166ed9e866f",
+      "customers": [
+        { "name": "LPL", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "GenAI-assisted forms conversion", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "VIP engagement / co-innovation", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Kickstart VIP engagement to reduce effort/time in forms conversion via GenAI", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "3a05c313-456e-4dfe-9f63-afba01fcf80e",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Feature awareness", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Note: customer didn't mention Document Service API", "confidence": 0.6 }
+      ]
+    }
+  ]
+}

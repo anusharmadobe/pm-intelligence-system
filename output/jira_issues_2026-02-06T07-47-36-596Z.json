@@ -1,0 +1,437 @@
+[
+  {
+    "fields": {
+      "summary": "Improve Data Binding and Caching for HTML5 Forms",
+      "issuetype": {
+        "name": "Story"
+      },
+      "priority": {
+        "name": "High"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\nCustomers Charles Shwab and Charles Schwab have reported multiple issues and feature requests related to data binding, caching, and performance of HTML5 forms. These challenges include font issues on Mac, ineffective dispatcher caching, and high manual effort in handling forms. Addressing these issues will enhance user experience and operational efficiency.\n\n### Customer Need\nCustomers need reliable and efficient handling of HTML5 forms, including proper data binding, effective caching, and improved performance. This will reduce manual effort and improve scalability and loading times.\n\n### Signals\n1. **Charles Shwab** (2025-05-07) - Feature request for improved data binding and caching.\n2. **Charles Schwab** (2025-04-21) - Feature request for addressing font issues on Mac and caching challenges.\n3. **Charles Schwab** (2025-03-18) - Issue with dispatcher caching and performance of HTML5 forms.\n\n### Why This Matters\nImproving these aspects will significantly enhance the user experience, reduce manual effort, and ensure that the forms are scalable and performant across different environments.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Charles Shwab*, Charles Schwab*\n- **Total Signals**: 3\n- **Signal Types**: feature_request, issue\n\n## Scoring\n\n- **Impact Score**: 71/100\n- **Confidence Score**: 74.16666666666667/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider dependencies on existing caching mechanisms and data binding libraries. Ensure compatibility with both on-prem and Cloud versions. Validate the solution on Mac and other platforms.\n\n---\n*Generated from opportunity: 6f17c13c-db1d-4650-9b04-48eacb930a37*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "feature-request",
+        "customer-issue",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Implement effective data binding for HTML5 forms.\nAC2: Resolve font issues on Mac for HTML5 forms.\nAC3: Ensure dispatcher caching works effectively for dynamic HTML5 forms.\nAC4: Improve performance and scalability of large HTML5 forms.\nAC5: Validate and test the solution across on-prem and Cloud versions.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "Charles Shwab*, Charles Schwab*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "6f17c13c-db1d-4650-9b04-48eacb930a37",
+      "generatedAt": "2026-02-06T08:36:16.121Z",
+      "confidenceScore": 74.16666666666667
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enhance Forms with Custom Components and External Integrations Support",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\nCustomers including Brightline, NFL, BrightLine, and Busch Group have expressed the need for enhanced forms functionality. Specifically, they require support for custom components and seamless integration with external data sources. This feature is crucial for improving authoring UX and leveraging AI Assistant capabilities.\n\n### Customer Need\nCustomers need the ability to create and manage forms that can incorporate custom components and integrate with external data sources. This will streamline their workflows and enhance the overall user experience.\n\n### Signals\n- Brightline: Feedback on the need for custom components in forms (2025-09-23)\n- NFL: Pain point regarding integration with external sources (2025-09-03)\n- BrightLine: Feedback on authoring UX improvements (2025-09-02)\n- Busch Group: Pain point on AI Assistant handling custom components (2025-05-13)\n- General feedback on AI Assistant’s ability to handle custom components and external integrations\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Brightline*, NFL*, BrightLine*, Busch Group*\n- **Total Signals**: 6\n- **Signal Types**: feedback, pain_point\n\n## Scoring\n\n- **Impact Score**: 61.43856189774724/100\n- **Confidence Score**: 75/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider existing integrations and custom component frameworks. Ensure compatibility with current AEM infrastructure.\n\n---\n*Generated from opportunity: 6ba3071d-3d0b-443c-811d-cb057f72ee69*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "pain-point",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users can add and configure custom components within forms.\nAC2: Forms can integrate with specified external data sources.\nAC3: The AI Assistant can assist in setting up and managing custom components and integrations.\nAC4: The authoring UX for forms is intuitive and user-friendly.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "Brightline*, NFL*, BrightLine*, Busch Group*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "6ba3071d-3d0b-443c-811d-cb057f72ee69",
+      "generatedAt": "2026-02-06T08:36:20.717Z",
+      "confidenceScore": 75
+    }
+  },
+  {
+    "fields": {
+      "summary": "Integrate forms functionality for site management",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\nCustomers Abbvie and Shivendra have requested enhancements related to forms and site management. This feature request aims to integrate forms functionality to improve site management capabilities.\n\n### Why This Matters\nCustomers have expressed the need for better integration of forms within their site management processes. This will streamline their workflows and improve overall efficiency.\n\n### Customer Signals\n- Abbvie: Feedback and feature request related to forms and site management.\n- Shivendra: Feedback on the need for better integration of forms.\n\n### Sources\n- Slack conversations and feedback sessions.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Abbvie*\n- **Total Signals**: 2\n- **Signal Types**: feedback, feature_request\n\n## Scoring\n\n- **Impact Score**: 55.43856189774724/100\n- **Confidence Score**: 57.5/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure compatibility with existing site management systems. Consider potential API integrations for form submissions.\n\n---\n*Generated from opportunity: 203debc4-4dd8-4cd2-af0d-d3987188e407*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "feature-request",
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users can create and manage forms within the site management interface.\nAC2: Forms can be integrated with existing site management workflows.\nAC3: Users receive notifications when forms are submitted or updated.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": "Abbvie*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "203debc4-4dd8-4cd2-af0d-d3987188e407",
+      "generatedAt": "2026-02-06T08:36:24.644Z",
+      "confidenceScore": 57.5
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enhance Forms Authoring UX and Performance for Brunswick Customers",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\n\nCustomers Brunswick and Brusnwick have provided feedback and feature requests regarding the forms authoring user experience (UX) and performance. This enhancement is crucial for their upcoming go-live dates and will improve the overall efficiency and satisfaction with our core components and integrations.\n\n### Customer Signals\n- **Brusnwick** (2025-11-04): Requested improvements in ECID Deployment and Rules.\n- **Brunswick** (2025-10-23): Suggested enhancements for forms authoring UX and performance.\n- **Brunswick** (2025-09-18): Provided feedback on the current forms integration and performance issues.\n\n### Why This Matters\nImproving the forms authoring UX and performance is essential for our customers to efficiently create and manage forms, especially as they prepare for critical go-live dates. Addressing these needs will enhance customer satisfaction and reduce potential integration issues.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Brusnwick*, Brunswick*\n- **Total Signals**: 3\n- **Signal Types**: feature_request, feedback\n\n## Scoring\n\n- **Impact Score**: 42.69925001442312/100\n- **Confidence Score**: 72.5/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider potential dependencies on existing core components and third-party integrations. Ensure backward compatibility with current systems.\n\n---\n*Generated from opportunity: 08684cae-1c25-4587-8304-9d986f0c362a*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "feature-request",
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Improve the load time of the forms authoring interface by at least 30%.\nAC2: Implement a more intuitive and user-friendly design for the forms authoring tool.\nAC3: Ensure seamless integration with existing core components and third-party systems.\nAC4: Provide detailed documentation and support for the new features.\nAC5: Conduct user testing with Brusnwick and Brunswick to validate improvements.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "Brusnwick*, Brunswick*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "08684cae-1c25-4587-8304-9d986f0c362a",
+      "generatedAt": "2026-02-06T08:36:28.833Z",
+      "confidenceScore": 72.5
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enhance IC Editor to Support Nested Fragments and Improve Layout",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Why this matters\nToyota Financial Services and Ford have both requested enhancements to the IC Editor to support nested fragments and improve layout capabilities. This is crucial for their authoring UX, migration, rendering, and PDF generation processes. The current lack of FDM support in the designer and layout support in the IC Editor is causing significant workflow disruptions.\n\n### What customers need\nCustomers need the ability to use nested fragments within the IC Editor and enhanced layout support to streamline their document creation and management processes. This will improve their overall user experience and efficiency.\n\n### Sources\n- Slack\n\n### Signal Types\n- Feedback\n- Feature Request\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Toyota Financial Services*, Ford*\n- **Total Signals**: 2\n- **Signal Types**: feedback, feature_request\n\n## Scoring\n\n- **Impact Score**: 40.69925001442312/100\n- **Confidence Score**: 67.5/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider potential dependencies on existing FDM structures and ensure backward compatibility. Evaluate any performance impacts due to the introduction of nested fragments.\n\n---\n*Generated from opportunity: 786e8a0f-d9ee-49c2-b988-104c41374b5f*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "feature-request",
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: IC Editor supports nested fragments.\nAC2: Improved layout support in IC Editor.\nAC3: Ensure compatibility with existing FDM structures.\nAC4: Validate rendering and PDF generation with new features.\nAC5: Provide documentation and user guidance for new features.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "Toyota Financial Services*, Ford*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "786e8a0f-d9ee-49c2-b988-104c41374b5f",
+      "generatedAt": "2026-02-06T08:36:32.780Z",
+      "confidenceScore": 67.5
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enable Forms Experience Builder for Customer Environments",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\n\nCustomers SmartDoc Technologies, Naveen, and LPL have requested the enabling of the Forms Experience Builder on their environments. This feature is crucial for their workflow and forms setup, as indicated by multiple feedback signals.\n\n### Why This Matters\n\nEnabling the Forms Experience Builder will enhance the customers' ability to create and manage forms efficiently, improving their overall experience and satisfaction with our product.\n\n### Customer Signals\n\n- SmartDoc Technologies: Requested enabling via email.\n- Naveen: Inquired about the next setup steps for forms.\n- LPL: Requested status updates and enabling of the feature.\n\n### Sources\n\n- Slack\n- Email\n- SharePoint\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 7\n- **Signal Types**: feedback\n\n## Scoring\n\n- **Impact Score**: 55/100\n- **Confidence Score**: 58.57142857142857/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure that enabling the Forms Experience Builder does not conflict with existing configurations. Verify that all dependencies are met and that the feature is tested in a staging environment before deployment.\n\n---\n*Generated from opportunity: 22f43462-16ad-4431-9646-54c808418f30*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Forms Experience Builder is enabled for SmartDoc Technologies' environment.\nAC2: Forms Experience Builder is enabled for Naveen's environment.\nAC3: Forms Experience Builder is enabled for LPL's environment.\nAC4: Customers are notified once the feature is enabled.\nAC5: Documentation is updated to reflect the enabling process.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "22f43462-16ad-4431-9646-54c808418f30",
+      "generatedAt": "2026-02-06T08:36:36.432Z",
+      "confidenceScore": 58.57142857142857
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enhance Core Components with Save as Draft, Multi-Signer, and Large Attachment Support",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\nCustomers IRS/DMAF, IRS/Accenture Federal, IRS, and Accenture have raised concerns regarding multiple feature toggles, integrations, and authoring UX. There is a need to share Local SDK with Accenture and for Accenture to share customization code. Specific requests include Postgress storage implementation code for converter implementation, large attachment support, multi-signer support, and custom components for Save As Draft/Listing.\n\n### Why This Matters\nThese enhancements are critical for improving the user experience and functionality of Core Components. The ability to save as draft, support large attachments, and multi-signer functionality are essential for the customers' operational efficiency and data management.\n\n### Customer Signals\n- IRS/DMAF: Feedback on Save as Draft functionality and large attachment support\n- IRS/Accenture Federal: Feature request for multi-signer support and custom submission service\n- IRS: Feature request for JSON to XML conversion and documentation for Save as Draft feature\n\n### Requirements\n- Backport 'Save as Draft' functionality for Core Component-based forms on 6.5\n- Implement large attachment support in custom core components\n- Enable multi-signer support\n- Provide Postgress storage implementation code for converter\n- Ensure custom submission service can access request header information\n- Develop OOTB utility to convert Core Component JSON data to XML\n- Improve documentation for 'Save as Draft' feature in on-premise setup\n\n---\n\n## Customer Evidence\n- **Affected Customers**: IRS/DMAF*, IRS/Accenture Federal*, IRS*\n- **Total Signals**: 3\n- **Signal Types**: feedback, feature_request\n\n## Scoring\n\n- **Impact Score**: 42.69925001442312/100\n- **Confidence Score**: 73.33333333333334/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nDependencies include sharing Local SDK with Accenture and receiving customization code from Accenture. Ensure compatibility with SP21 and consider future migration plans for SP23.\n\n---\n*Generated from opportunity: 827f0395-b4e7-4d7d-b750-26d3b70facfa*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "feature-request",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: 'Save as Draft' functionality is backported and works seamlessly on 6.5 for Core Component-based forms\nAC2: Large attachment support is implemented and tested in custom core components\nAC3: Multi-signer support is enabled and functional\nAC4: Postgress storage implementation code is provided and integrated for converter\nAC5: Custom submission service can access request header information\nAC6: OOTB utility for JSON to XML conversion is developed and tested\nAC7: Documentation for 'Save as Draft' feature is updated and accessible",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "IRS/DMAF*, IRS/Accenture Federal*, IRS*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "827f0395-b4e7-4d7d-b750-26d3b70facfa",
+      "generatedAt": "2026-02-06T08:36:42.665Z",
+      "confidenceScore": 73.33333333333334
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enhance Forms with Improved Rendering, PDF Export, and Data Binding",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\nNFCU customers have provided feedback and feature requests related to the forms functionality. They have expressed the need for better rendering, the ability to export forms as PDFs, and improved data binding capabilities. These enhancements will significantly improve the authoring UX and overall user satisfaction.\n\n### Why This Matters\n- **Improved Rendering**: Ensures that forms are displayed correctly across different devices and browsers, reducing user frustration.\n- **PDF Export**: Allows users to easily save and share forms, increasing the utility of the forms feature.\n- **Data Binding**: Enhances the ability to link form fields with data sources, making forms more dynamic and useful.\n\n### Customer Signals\n- **Signal 1**: Feature request from Prateek Awasthi on 2025-09-29 regarding form creation improvements.\n- **Signal 2**: Feedback from Vijay Srivastva on 2025-04-22 discussing the need for better form rendering and data binding.\n- **Signal 3**: Feature request from Vijay Srivastva on 2025-03-06 highlighting the importance of PDF export functionality.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: NFCU*\n- **Total Signals**: 3\n- **Signal Types**: feature_request, feedback\n\n## Scoring\n\n- **Impact Score**: 31/100\n- **Confidence Score**: 74.16666666666667/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider potential dependencies on third-party libraries for PDF export and data binding. Ensure compatibility with existing form rendering engine.\n\n---\n*Generated from opportunity: 0365896a-ebed-4416-9970-6417413fd2e8*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "feature-request",
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Forms should render correctly across all supported devices and browsers.\nAC2: Users should be able to export forms as PDFs with a single click.\nAC3: Form fields should support data binding to external data sources.\nAC4: The authoring UX should be intuitive and user-friendly.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "NFCU*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "0365896a-ebed-4416-9970-6417413fd2e8",
+      "generatedAt": "2026-02-06T08:36:48.595Z",
+      "confidenceScore": 74.16666666666667
+    }
+  },
+  {
+    "fields": {
+      "summary": "Improve User Experience for Forms Based on Customer Feedback",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\nWe have received feedback from two customers, Continental Tires and KrisShop, regarding the user experience of our forms. The feedback highlights areas where the forms can be improved to enhance usability and efficiency.\n\n### Why This Matters\nImproving the forms will help in reducing user frustration and increase the efficiency of data entry, leading to higher customer satisfaction and potentially more business from these clients.\n\n### Customer Signals\n- **Continental Tires** (2025-10-06): Feedback on form usability and presentation.\n- **KrisShop** (2025-10-03): Feedback on ASO opportunities and form efficiency.\n\n### Objectives\nTo address the feedback and improve the overall user experience of our forms.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Continental Tires*, KrisShop*\n- **Total Signals**: 2\n- **Signal Types**: feedback\n\n## Scoring\n\n- **Impact Score**: 40.69925001442312/100\n- **Confidence Score**: 58.75/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider using a form library that supports responsive design and accessibility features. Ensure compatibility with existing backend systems.\n\n---\n*Generated from opportunity: c65f5364-4998-484c-96c8-50dec68762d1*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Forms should have a clear and intuitive layout that is easy to navigate.\nAC2: Forms should include helpful tooltips and validation messages to guide users.\nAC3: Forms should be optimized for both desktop and mobile devices.\nAC4: Implement feedback mechanisms within forms to capture user suggestions in real-time.\nAC5: Ensure forms are accessible and comply with relevant accessibility standards.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": "Continental Tires*, KrisShop*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "c65f5364-4998-484c-96c8-50dec68762d1",
+      "generatedAt": "2026-02-06T08:36:53.370Z",
+      "confidenceScore": 58.75
+    }
+  },
+  {
+    "fields": {
+      "summary": "Resolve Form Loading and Integration Issues for LPL and Brunswick",
+      "issuetype": {
+        "name": "Bug"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\nCustomers LPL and Brunswick have reported multiple issues related to form loading, integration, and performance on their published QA websites. These issues are impacting their ability to go live and test forms effectively. Specific problems include unbound fields, batch conversion issues, browser mandatory field bugs, AEM publishing issues, and dispatcher restrictions.\n\n### Why This Matters\nThese issues are critical as they hinder the customers' ability to deploy and test forms, impacting their overall user experience and operational efficiency. Resolving these issues will ensure smoother form management and integration processes, leading to higher customer satisfaction and reduced support overhead.\n\n### Customer Signals\n- **LPL**: Form loading issues, dispatcher and authentication configuration challenges, inability to test forms on the published site due to dispatcher restrictions.\n- **Brunswick**: Intermittent failures when connecting new forms to Marketo via the engage connector, hidden fields and conditional rules not transferring from adaptive form to published AEM site page, client library inclusion required for adaptive form rules.\n\n### Sources\n- Slack\n\n### Signal Types\n- Issue\n- Feature Request\n\n---\n\n## Customer Evidence\n- **Affected Customers**: LPL*, Brunswick*\n- **Total Signals**: 3\n- **Signal Types**: issue, feature_request\n\n## Scoring\n\n- **Impact Score**: 42.69925001442312/100\n- **Confidence Score**: 72.5/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider dependencies on AEM configurations, dispatcher settings, and Marketo integration. Ensure thorough testing across different environments to validate fixes.\n\n---\n*Generated from opportunity: fda9f043-97cd-4008-863d-7da9dc24eb67*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-issue",
+        "feature-request",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Forms should load correctly on the published QA website for both LPL and Brunswick.\nAC2: Dispatcher and authentication configurations should allow for form testing on the published site.\nAC3: Ensure hidden fields and conditional rules transfer correctly from adaptive forms to the published AEM site page.\nAC4: Resolve intermittent failures when connecting new forms to Marketo via the engage connector.\nAC5: Include necessary client libraries for adaptive form rules and manage configuration changes across environments.",
+      "customerImpact": "Critical",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "LPL*, Brunswick*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "fda9f043-97cd-4008-863d-7da9dc24eb67",
+      "generatedAt": "2026-02-06T08:36:58.673Z",
+      "confidenceScore": 72.5
+    }
+  }
+]

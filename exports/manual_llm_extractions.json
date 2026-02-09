@@ -1,0 +1,223 @@
+{
+  "items": [
+    {
+      "signal_id": "07e37341-856b-4cb1-bc6c-ab177ef493a5",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "6ec809c5-27c8-4d7e-8fcc-d4fd7a2f5b92",
+      "customers": [],
+      "features": [
+        { "name": "Word-based forms", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Clarification / understanding", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Share example or recording explaining word-based forms", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "858ea95d-0c49-47de-a9d2-cb724de76458",
+      "customers": [
+        { "name": "INAIL", "confidence": 0.9 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Scalability and load planning", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Expected application load is unknown",
+          "category": "Scalability",
+          "severity": 2,
+          "confidence": 0.7
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "0782730c-1686-448c-9aa2-5de65e5d9f15",
+      "customers": [
+        { "name": "NFCU", "confidence": 0.9 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Customer engagement", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Increase meeting cadence for feature discussions", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "559b72d7-d53b-4528-81b0-d8f457e51389",
+      "customers": [],
+      "features": [
+        { "name": "Scribble", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Feature gap", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Scribble not available in core components",
+          "category": "Missing feature",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "4846b03c-f08a-443e-8a13-241ffbaa3378",
+      "customers": [],
+      "features": [
+        { "name": "Scribble", "confidence": 0.9 },
+        { "name": "Core Components", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Modernization / standards compliance", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Scribble unavailable in core components despite customer demand",
+          "category": "Missing feature",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        { "text": "Make Scribble available in core components", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "d8c1eeed-2a03-4fea-ab6a-45919a7d8f84",
+      "customers": [],
+      "features": [
+        { "name": "LLM-based form optimization", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "AI-driven conversion optimization", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Provide LLM capability to suggest form changes to improve conversions",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "10f3931d-b688-4b8a-9f75-e51772b9e335",
+      "customers": [],
+      "features": [
+        { "name": "Custom components in form creation", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Extensibility", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Lack of support for custom components during form creation",
+          "category": "Customization",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        { "text": "Support use of custom components when creating forms", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "283d0831-e0d0-4c75-8498-8802a40225ad",
+      "customers": [],
+      "features": [
+        { "name": "AFCS", "confidence": 0.7 },
+        { "name": "GenAI-assisted migration", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Scalability and automation", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Manual form design does not scale from 20 to 3000 XDPs",
+          "category": "Scalability",
+          "severity": 4,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        {
+          "text": "Automate form migration using AFCS or GenAI",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "bd0934c3-45ad-423f-a575-c372a99536b3",
+      "customers": [],
+      "features": [
+        { "name": "AEM Forms AI Assistant", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "AI feature adoption", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Schedule a demo of AEM Forms AI Assistant Beta",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "signal_id": "39202189-1d35-4f45-ab28-f0b7ce7fb507",
+      "customers": [
+        { "name": "LPL", "confidence": 0.9 }
+      ],
+      "features": [
+        { "name": "Forms Experience Builder", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Early access and feature eligibility", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Forms Experience Builder not aligned with XDP use case and not in EA",
+          "category": "Availability",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        {
+          "text": "Enable Forms Experience Builder on customer environment for trial",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "1c7253b5-164a-4161-9a73-a2ee7a051d42",
+      "customers": [
+        { "name": "Maurice Blackburn", "confidence": 0.8 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Conversion optimization", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm site domain targeted for conversion improvement",
+          "confidence": 0.7
+        }
+      ]
+    }
+  ]
+}

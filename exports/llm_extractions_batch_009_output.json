@@ -1,0 +1,149 @@
+{
+  "items": [
+    {
+      "signal_id": "42782364-c78e-43c2-a23a-7b6cba7bd976",
+      "customers": [],
+      "features": [
+        { "name": "BindRefs for table fields", "confidence": 0.7 },
+        { "name": "AI form conversion", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Bug fixes and validation", "confidence": 0.6 }
+      ],
+      "issues": [
+        { "title": "Double sign field issue previously observed", "category": "Bug", "severity": 2, "confidence": 0.6 }
+      ],
+      "requests": [
+        { "text": "Verify fixes in stage environment and test end-to-end form conversion", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "b72e5669-021a-4dff-a379-39b9a75408c1",
+      "customers": [
+        { "name": "Medtronics", "confidence": 0.9 },
+        { "name": "HDFC", "confidence": 0.6 }
+      ],
+      "features": [
+        { "name": "Custom authentication", "confidence": 0.7 },
+        { "name": "Autocomplete textbox", "confidence": 0.8 },
+        { "name": "Form Data Model integration", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Form authoring customization", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Support for autocomplete textbox fetching data from FDM on keypress", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "f66ec19e-2ef8-46a4-a4b9-51a6d0fbe1d1",
+      "customers": [],
+      "features": [
+        { "name": "Marketo form components", "confidence": 0.8 },
+        { "name": "API integration for dynamic data", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Cross-brand form standardization", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Documentation for dynamic country and language setups", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "942e558e-746e-4195-bedf-1c2966932d0b",
+      "customers": [],
+      "features": [
+        { "name": "Generate Document of Record", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Localization and templates", "confidence": 0.8 }
+      ],
+      "issues": [
+        { "title": "Multi-locale template selection not supported out of the box", "category": "Limitation", "severity": 3, "confidence": 0.8 }
+      ],
+      "requests": [
+        { "text": "Provide OOB solution for locale-based template selection", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "0507c536-bd95-40dd-8cc3-c85581bf5ce4",
+      "customers": [],
+      "features": [
+        { "name": "AEM Forms JEE workflow", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "On-prem workflow architecture", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm simplified JEE workflow approach for new use case", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "535dba0c-ec81-46f1-9020-35fbd99b58ec",
+      "customers": [
+        { "name": "GMF", "confidence": 0.9 }
+      ],
+      "features": [
+        { "name": "Interactive Communication Editor", "confidence": 0.8 },
+        { "name": "Bulk PDF generation", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Template migration", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Support migration from Smartform templates to IC templates", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "909d1ae8-87e5-40dc-b38e-ec3d1775874d",
+      "customers": [
+        { "name": "NFCU", "confidence": 0.9 }
+      ],
+      "features": [
+        { "name": "IC Editor", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Editor limitations and usability", "confidence": 0.7 }
+      ],
+      "issues": [
+        { "title": "IC Editor lacks content overflow support", "category": "Limitation", "severity": 3, "confidence": 0.7 }
+      ],
+      "requests": [
+        { "text": "Provide official IC Editor documentation", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "5f443a40-5db1-4734-af5a-147ce1ee9b08",
+      "customers": [],
+      "features": [
+        { "name": "Core Component forms", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Customer onboarding", "confidence": 0.6 }
+      ],
+      "issues": [
+        { "title": "Local development issues for new Forms users", "category": "Setup", "severity": 2, "confidence": 0.6 }
+      ],
+      "requests": [
+        { "text": "Guidance on best practices and next steps for Forms", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "377c4312-b71f-4e73-9e34-7f82a36e8e77",
+      "customers": [],
+      "features": [
+        { "name": "Generative AI form creation", "confidence": 0.8 },
+        { "name": "Conversational forms", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "AI-driven form innovation", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    }
+  ]
+}

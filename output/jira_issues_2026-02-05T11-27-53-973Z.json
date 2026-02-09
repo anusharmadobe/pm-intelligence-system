@@ -1,0 +1,437 @@
+[
+  {
+    "fields": {
+      "summary": "Enable JSON Data Input Support for Forms",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Why this matters\n\nCustomers have highlighted the need for supporting JSON format for data input in forms. This feature is crucial for teams that work with structured data and need to integrate JSON seamlessly into their workflows. Currently, the lack of JSON support is a significant limitation, as noted in multiple feedback signals.\n\n### What customers need\n\nCustomers need the ability to input data in JSON format within forms. This will streamline their data handling processes, making it easier to manage and transform data as needed. The feature should support JSON both for templates and data files, as indicated by customer queries.\n\n### Sample Signals\n- \"Thanks for sharing this. The use case shared was JSON format for data input. We along with another team can have a discussion on this and see if it fits the use case...\"\n- \"Is the JSON support in the Output service intended for templates or for data files? During a recent hackathon, we worked on enabling this...\"\n- \"Yes, data in JSON format...\"\n- \"When you say JSON, do you mean data in JSON format only? The case which Aditya described. Please confirm...\"\n- \"So basically, just a JSON -> XML transformer insertion at a suitable point in the execution path?\"\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 6\n- **Signal Types**: feedback\n\n## Scoring\n\n- **Impact Score**: 15/100\n- **Confidence Score**: 100/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider existing data input validation mechanisms and how they can be extended to support JSON. Verify compatibility with current data processing workflows and identify any necessary adjustments. Ensure robust error handling for malformed JSON data.\n\n---\n*Generated from opportunity: 5eb4e281-0ab5-4a99-a14b-248ca3d2f931*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users can input data in JSON format within forms.\nAC2: The system should support both JSON templates and data files.\nAC3: Ensure JSON data is validated and processed correctly without data loss.\nAC4: Provide documentation and examples for using JSON data input.\nAC5: Implement error handling for incorrect JSON formats.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "5eb4e281-0ab5-4a99-a14b-248ca3d2f931",
+      "generatedAt": "2026-02-05T12:04:48.906Z",
+      "confidenceScore": 100
+    }
+  },
+  {
+    "fields": {
+      "summary": "Address General Feedback from Slack Signals",
+      "issuetype": {
+        "name": "Task"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "We have received a cluster of 6 related feedback signals from Slack. These signals point to general feedback that needs to be addressed to improve customer satisfaction. Customers have mentioned issues that require attention and action. It is important to review these signals and implement necessary improvements to ensure positive user experience.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 6\n- **Signal Types**: feedback\n\n## Scoring\n\n- **Impact Score**: 15/100\n- **Confidence Score**: 100/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nNo specific technical constraints or dependencies identified. This task requires collaboration with the customer support and development teams to ensure accurate implementation of feedback.\n\n---\n*Generated from opportunity: 1e82e81d-e107-4b2c-af9d-76f263e108d9*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Review all feedback signals and categorize them for action.\nAC2: Identify common issues or suggestions mentioned in the feedback.\nAC3: Implement solutions or improvements based on the feedback.\nAC4: Communicate with customers to confirm the issues have been addressed.",
+      "customerImpact": "Medium",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "1e82e81d-e107-4b2c-af9d-76f263e108d9",
+      "generatedAt": "2026-02-05T12:04:52.233Z",
+      "confidenceScore": 100
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enhance Form Customization Options in AEM Forms",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Based on customer feedback, there is a need to improve customization options for forms in Adobe Experience Manager (AEM). Customers have expressed interest in having more flexible and detailed configuration capabilities to meet their specific use-cases. This enhancement will allow users to better adapt forms to their requirements, leading to improved user satisfaction and efficiency.\n\n**Customer Signals:**\n- Customers are looking to perform form conversions.\n- Requests for more context and details on form customization.\n- Flexibility in using different form components to achieve specific use-cases.\n- Reference to existing documentation for customizing AEM forms.\n\n**Impact:** This feature will enable users to have more control over the appearance and functionality of their forms, making the process of form creation and customization more intuitive and aligned with their business needs.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 5\n- **Signal Types**: feedback\n\n## Scoring\n\n- **Impact Score**: 15/100\n- **Confidence Score**: 100/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nThis feature will require updates to the AEM Forms customization API. Ensure backward compatibility with existing forms. Dependencies may include updates to the documentation and potential refactoring of core-components.\n\n---\n*Generated from opportunity: fed79fd4-ad96-4bf8-8413-02278f8385da*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users should be able to customize the appearance of forms using both foundation and core-components.\nAC2: Detailed documentation should be provided to guide users through the customization process.\nAC3: Users should be able to perform form conversions with minimal effort.\nAC4: The system should support customer-specific use-cases for form customization.\nAC5: Ensure compatibility with existing form-related URLs and configurations.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "fed79fd4-ad96-4bf8-8413-02278f8385da",
+      "generatedAt": "2026-02-05T12:04:55.869Z",
+      "confidenceScore": 100
+    }
+  },
+  {
+    "fields": {
+      "summary": "Improve Form Functionality and Resolve Issues for Brunswick and Brightline",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Several customers, including Brunswick and Brightline, have reported issues and requested enhancements related to form functionalities. These feedbacks highlight the need for more robust and user-friendly forms, and resolving blockers that impact their go-live processes.\n\n**Why this matters:**\nEnhancing form functionality and addressing blockers are critical for customer satisfaction and to ensure seamless operations during their go-live phases. This feature will help in reducing user friction and improving overall efficiency.\n\n**Customer Impact:**\n- Brunswick: Multiple signals indicate recurring issues and specific feature requests.\n- Brightline: General feedback pointing towards a need for improvements in form functionalities.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Brunswick*, Brightline*\n- **Total Signals**: 7\n- **Signal Types**: issue, feature_request, feedback\n\n## Scoring\n\n- **Impact Score**: 15/100\n- **Confidence Score**: 100/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure compatibility with existing core components and minimal disruption during deployment. Coordinate with the support team for detailed insights on reported blockers.\n\n---\n*Generated from opportunity: e7c36f16-dbb9-4ac6-87e6-00b3ab78a761*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-issue",
+        "feature-request",
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users should be able to transition from Marketo forms to our forms without any data loss or functionality issues.\nAC2: Resolve all reported blockers that prevent successful form submissions and data capture.\nAC3: Forms should be optimized for better performance and user experience based on the feedback received.\nAC4: Ensure comprehensive testing and validation with customer teams to confirm all issues and feature requests have been addressed.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "Brunswick*, Brightline*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "e7c36f16-dbb9-4ac6-87e6-00b3ab78a761",
+      "generatedAt": "2026-02-05T12:04:59.059Z",
+      "confidenceScore": 100
+    }
+  },
+  {
+    "fields": {
+      "summary": "Improve Slack feedback processing automation",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Opportunity\nA cluster of 5 related feedback signals from Slack indicates a need to improve the automation of feedback processing. Customers are frequently mentioning similar issues, suggesting a pattern that could be addressed to enhance user experience.\n\n### Why This Matters\nAutomating the feedback processing will reduce manual effort, ensure timely responses, and improve customer satisfaction. With better automation, we can quickly identify and address common pain points, leading to a more efficient feedback loop.\n\n### What Customers Need\nCustomers need a more responsive feedback system that can automatically categorize and prioritize their feedback, ensuring that important issues are not overlooked.\n\n### Signals\n- [feedback] cc:<@W4R5LUPK3>\n- [feedback] cc: <@W4R5LUPK3> <@W010NNJV7S8>\n- [feedback] cc: <@W4R5LUPK3>, <@WQWCBV6NN>\n- [feedback] cc: <@W9QMZFR39>, <@W4R5LUPK3>, <@WQWCBV6NN>\n- [feedback] cc: <@W9QMZFR39>, <@W4R5LUPK3>, <@WQWCBV6NN>\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 5\n- **Signal Types**: feedback\n\n## Scoring\n\n- **Impact Score**: 15/100\n- **Confidence Score**: 100/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nIntegration with Slack API is required. Ensure compatibility with existing feedback systems. Consider potential security implications of automating feedback processing.\n\n---\n*Generated from opportunity: b22d3c8b-45a5-4579-ab6e-7f4f9dbaaca8*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Feedback signals from Slack are automatically categorized based on keywords.\nAC2: High-priority feedback is flagged and prioritized for review.\nAC3: System generates a summary report of categorized feedback weekly.\nAC4: Notifications are sent to relevant team members for flagged feedback.\nAC5: Ensure the automation system logs errors and provides an interface for manual review.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "b22d3c8b-45a5-4579-ab6e-7f4f9dbaaca8",
+      "generatedAt": "2026-02-05T12:05:03.636Z",
+      "confidenceScore": 100
+    }
+  },
+  {
+    "fields": {
+      "summary": "Improve Data Binding for Forms to Enhance Usability",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Why this matters:\nCustomers from Charles Schwab have reported issues and requested improvements related to data binding in forms. This functionality is crucial for ensuring data integrity and user experience, especially in financial applications where accuracy and usability are paramount.\n\n### What customers need:\n1. **Reliable Data Binding**: Ensure that data entered in forms is consistently saved and reflected across different sessions and views.\n2. **Error Handling**: Provide clear and actionable error messages when data binding fails.\n3. **Performance**: Optimize data binding processes to improve form load and submission times.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Charles Shwab*, Charles Schwab*\n- **Total Signals**: 3\n- **Signal Types**: feature_request, issue\n\n## Scoring\n\n- **Impact Score**: 11/100\n- **Confidence Score**: 100/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider potential dependencies on existing data structures and frameworks. Ensure that changes are backward-compatible and do not introduce regressions in other areas of the application.\n\n---\n*Generated from opportunity: 07ec0333-ff01-45c6-8e6f-d05613deed08*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "feature-request",
+        "customer-issue",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Data entered in forms should be consistently saved and displayed correctly upon revisiting the form.\nAC2: Users should receive clear error messages when data binding issues occur, with guidance on how to resolve them.\nAC3: Form load and submission times should be optimized to enhance user experience.\nAC4: Ensure compatibility with existing data structures and frameworks used by Charles Schwab.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": "Charles Shwab*, Charles Schwab*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "07ec0333-ff01-45c6-8e6f-d05613deed08",
+      "generatedAt": "2026-02-05T12:05:07.524Z",
+      "confidenceScore": 100
+    }
+  },
+  {
+    "fields": {
+      "summary": "Resolve Issues with Custom Headers for State of Pennsylvania",
+      "issuetype": {
+        "name": "Bug"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\n\nThe State of Pennsylvania has reported multiple issues related to custom headers in their Standard Operating Procedures (SOP). These issues are affecting their workflow and need urgent resolution.\n\n### Why This Matters\n\nThe custom headers are crucial for the State of Pennsylvania's documentation process. Issues in this area could lead to significant inefficiencies and errors in their SOPs, impacting their overall operations.\n\n### Customer Signals\n\n1. **Date:** 2025-07-17\n   **Attendees:** <@W4SG81T9C>\n   **Notes:** Issues of SOP wi...\n\n2. **Date:** 2025-06-10\n   **Attendees:** <@W4SG81T9C>\n   **Notes:** Their custom hea...\n\n3. **Date:** 2025-06-05\n   **Attendees:** <@W4SG81T9C>, <@W4XTCQ07J>\n   **Notes:** Th...\n\n\n---\n\n## Customer Evidence\n- **Affected Customers**: State of Pennsylvania*\n- **Total Signals**: 3\n- **Signal Types**: issue\n\n## Scoring\n\n- **Impact Score**: 11/100\n- **Confidence Score**: 100/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider existing dependencies on the document generation module. Ensure thorough testing due to the critical nature of SOPs for the customer.\n\n---\n*Generated from opportunity: 8f15258b-30dc-45bc-92ae-a120c437b063*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-issue",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Custom headers should be correctly displayed in all SOP documents.\nAC2: No errors should occur when creating or editing SOP documents with custom headers.\nAC3: Validate that changes to custom headers are saved and reflected accurately.\nAC4: Ensure compatibility with existing SOP templates used by the State of Pennsylvania.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": "State of Pennsylvania*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "8f15258b-30dc-45bc-92ae-a120c437b063",
+      "generatedAt": "2026-02-05T12:05:11.528Z",
+      "confidenceScore": 100
+    }
+  },
+  {
+    "fields": {
+      "summary": "Resolve Data Binding Issues in IC Editor Forms for NFCU",
+      "issuetype": {
+        "name": "Bug"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context:\nNFCU has reported issues related to data binding in the IC Editor Forms. These issues have been raised multiple times, indicating a significant blocker for their workflow. The current data binding mechanism is causing disruptions and inefficiencies in their form submissions.\n\n### Customer Need:\nNFCU needs a reliable and efficient data binding process within the IC Editor Forms to ensure smooth and accurate form submissions. This improvement is crucial to maintain their operational efficiency and avoid any data-related errors.\n\n### Signals:\n- Multiple issues reported by the customer regarding the IC Editor Forms' data binding functionality.\n- Feature request to enhance the data binding mechanism for better performance and reliability.\n- Issues span across several months, indicating a persistent problem that needs immediate attention.\n\n### Customer Impact:\nThis issue affects NFCU's ability to use the IC Editor Forms effectively, leading to potential delays and inaccuracies in data handling.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: NFCU*\n- **Total Signals**: 4\n- **Signal Types**: feature_request, issue\n\n## Scoring\n\n- **Impact Score**: 13/100\n- **Confidence Score**: 100/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure compatibility with existing IC Editor Form functionalities. Consider conducting a thorough code review and testing to identify and resolve the root cause of the data binding issues. Cross-team collaboration may be required for integrating the fix.\n\n---\n*Generated from opportunity: 7278091e-6a7e-4248-80b6-a1897d4f1328*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "feature-request",
+        "customer-issue",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Data binding in IC Editor Forms functions reliably without errors.\nAC2: Form submissions are processed correctly with accurate data.\nAC3: No performance degradation observed in the IC Editor Forms post-fix.\nAC4: Comprehensive testing confirms the resolution of the reported issues.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": "NFCU*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "7278091e-6a7e-4248-80b6-a1897d4f1328",
+      "generatedAt": "2026-02-05T12:05:16.748Z",
+      "confidenceScore": 100
+    }
+  },
+  {
+    "fields": {
+      "summary": "Add Data Binding Support in IC Editor Forms",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "## Description\n\nSeveral customers have requested enhanced data binding capabilities in the IC Editor Forms. This feature will primarily benefit customers like GM Financial and Toyota Financial Services, who have expressed the need for more robust data integration within their forms. \n\n## Why This Matters\n\nCurrently, the IC Editor lacks the ability to bind form inputs directly to data models, which limits its functionality for customers who require dynamic data handling. This enhancement will streamline workflows and improve data accuracy by allowing users to directly integrate their forms with backend data sources.\n\n## Customer Signals\n- **GM Financial** (2025-08-07): Feedback on the need for improved data binding in forms.\n- **GM Financial** (2025-07-23): Feature request for more robust data integration in IC Editor Forms.\n- **Toyota Financial Services** (2025-05-15): General feedback on limitations in form data handling.\n- **GM Financial** (2025-04-03): Feedback regarding the need for dynamic data capabilities in forms.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: GM Financial*, Toyota Financial Services*\n- **Total Signals**: 4\n- **Signal Types**: feedback, feature_request\n\n## Scoring\n\n- **Impact Score**: 13/100\n- **Confidence Score**: 100/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider potential impacts on existing form workflows. Ensure that data binding operations do not degrade performance. Dependencies might include updates to the backend data handling services and potential changes to the IC Editor's user interface.\n\n---\n*Generated from opportunity: 2c08b6d1-150f-4c7f-9b60-e7e043ea14d0*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "feature-request",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users can bind form inputs to specific data models.\nAC2: The IC Editor should support dynamic data updates in real-time.\nAC3: Provide documentation and examples for setting up data bindings.\nAC4: Ensure compatibility with existing form functionalities.\nAC5: Implement error handling for invalid data bindings.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": "GM Financial*, Toyota Financial Services*"
+    },
+    "metadata": {
+      "sourceOpportunityId": "2c08b6d1-150f-4c7f-9b60-e7e043ea14d0",
+      "generatedAt": "2026-02-05T12:05:21.500Z",
+      "confidenceScore": 100
+    }
+  },
+  {
+    "fields": {
+      "summary": "Improve Documentation and Support for AEM Forms HTTPS Integration",
+      "issuetype": {
+        "name": "Story"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Based on feedback from customers, there is a need to improve the documentation and support for integrating AEM Forms with HTTPS. Customers have reported difficulties in finding relevant information and ensuring compatibility with cloud services. This enhancement aims to streamline the documentation and provide clearer guidance on HTTPS integration for both Adaptive Forms and Interactive Communications (IC).\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 4\n- **Signal Types**: feedback\n\n## Scoring\n\n- **Impact Score**: 13/100\n- **Confidence Score**: 100/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure that the documentation updates are reviewed by subject matter experts to guarantee accuracy. Consider any dependencies on other AEM components and include necessary cross-references.\n\n---\n*Generated from opportunity: 6cc8a692-53ac-4f2f-873d-1dc39ad23e9d*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-feedback",
+        "customer-signal",
+        "validated"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Update the existing documentation to include detailed steps for integrating AEM Forms with HTTPS.\nAC2: Ensure the documentation covers both Adaptive Forms and Interactive Communications (IC) with specific examples.\nAC3: Validate that the updated documentation is compatible with both on-premise and cloud versions of AEM Forms.\nAC4: Provide a troubleshooting section to address common issues faced during the integration process.\nAC5: Include links to additional resources and support channels for further assistance.",
+      "customerImpact": "Medium",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "6cc8a692-53ac-4f2f-873d-1dc39ad23e9d",
+      "generatedAt": "2026-02-05T12:05:25.134Z",
+      "confidenceScore": 100
+    }
+  }
+]

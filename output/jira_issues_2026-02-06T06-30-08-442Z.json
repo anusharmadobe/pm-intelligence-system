@@ -1,0 +1,412 @@
+[
+  {
+    "fields": {
+      "summary": "Improve IC Editor to Resolve Issues and Add Requested Features",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\nCustomers using the IC Editor have reported issues and requested new features to enhance their experience. This JIRA issue consolidates these signals to address both the blockers and the new feature requests.\n\n### Why This Matters\nThe IC Editor is a critical tool for our users, and improving its functionality will directly impact their productivity and satisfaction. Addressing these issues and adding the requested features will reduce frustration and enable more efficient workflows.\n\n### Customer Signals\n- Source: Slack\n- Topics: IC Editor, Feature Request, Issue/Blocker\n\n### Goal\nTo resolve the reported issues and implement the requested features in the IC Editor, thereby improving the user experience and meeting customer needs.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 0\n- **Signal Types**: \n\n## Scoring\n\n- **Impact Score**: 5/100\n- **Confidence Score**: 0/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider potential dependencies on other components of the application. Ensure thorough testing is conducted to avoid regressions.\n\n---\n*Generated from opportunity: 79f9a8d3-3145-4207-90f1-9785fad6a2f5*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Resolve all reported issues in the IC Editor that are causing blockers for users.\nAC2: Implement the most requested new feature as per customer feedback.\nAC3: Ensure the IC Editor passes all tests without introducing new bugs.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "79f9a8d3-3145-4207-90f1-9785fad6a2f5",
+      "generatedAt": "2026-02-06T07:19:46.228Z",
+      "confidenceScore": 50
+    }
+  },
+  {
+    "fields": {
+      "summary": "Add Advanced Validation Options to Forms",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "## Why this matters\nCustomers have requested advanced validation options for forms to improve data accuracy and ensure user input meets specific requirements. This enhancement will address the need for more robust form validation by offering customizable validation rules.\n\n## What customers need\n- Ability to define custom validation rules for form fields\n- Support for complex validation logic (e.g., conditional requirements)\n- User-friendly error messages for validation failures\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 0\n- **Signal Types**: \n\n## Scoring\n\n- **Impact Score**: 5/100\n- **Confidence Score**: 0/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider leveraging existing form validation libraries for client-side validation. Ensure server-side validation is implemented to prevent bypassing validation rules. Dependencies may include updates to the form schema and user interface components.\n\n---\n*Generated from opportunity: f4fed697-2add-435f-a832-85fcf4cdc4b6*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users can define custom validation rules for individual form fields.\nAC2: Validation rules can include conditions based on other field values.\nAC3: Forms display clear and user-friendly error messages for validation failures.\nAC4: Validation rules are documented and accessible to users.\nAC5: Validation logic is processed on both client-side and server-side for security.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "f4fed697-2add-435f-a832-85fcf4cdc4b6",
+      "generatedAt": "2026-02-06T07:19:48.924Z",
+      "confidenceScore": 50
+    }
+  },
+  {
+    "fields": {
+      "summary": "Implement Data Binding for Form Fields",
+      "issuetype": {
+        "name": "Story"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "## Customer Need\nCustomers are experiencing issues with data binding in forms, which is essential for ensuring that data entered into form fields is properly bound and reflected in the underlying data model. This enhancement will improve the reliability and usability of forms, particularly in scenarios where real-time data synchronization is critical.\n\n## Context\nData binding is a fundamental feature that ensures seamless interaction between the user interface and the data model. Customers have reported issues in slack that indicate a need for more robust data binding capabilities in forms. Addressing these issues will enhance user experience and reduce the risk of data inconsistencies.\n\n## Why This Matters\nReliable data binding is crucial for applications that rely on accurate and up-to-date data entry. Without it, users may face issues such as data loss, incorrect data display, and synchronization problems, leading to frustration and decreased productivity.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 0\n- **Signal Types**: \n\n## Scoring\n\n- **Impact Score**: 5/100\n- **Confidence Score**: 0/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider using existing data binding libraries or frameworks that integrate well with our technology stack. Ensure compatibility with current form components and validate performance impacts. Collaborate with the QA team to develop comprehensive test cases.\n\n---\n*Generated from opportunity: 07ec0333-ff01-45c6-8e6f-d05613deed08*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Data entered in form fields should be immediately reflected in the underlying data model.\nAC2: Any changes in the data model should be instantly updated in the form fields.\nAC3: Implement error handling to manage data binding failures and provide user feedback.\nAC4: Ensure performance is not negatively impacted by the data binding implementation.\nAC5: Provide documentation and examples for developers to implement and troubleshoot data binding in forms.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "07ec0333-ff01-45c6-8e6f-d05613deed08",
+      "generatedAt": "2026-02-06T07:19:52.525Z",
+      "confidenceScore": 50
+    }
+  },
+  {
+    "fields": {
+      "summary": "Resolve Form Submission Issues and Add New Features",
+      "issuetype": {
+        "name": "Story"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Context\nCustomers have reported issues with form submissions and requested additional features to enhance usability. These signals were collected from Slack and indicate a need for improvement in the form functionality.\n\n### Why This Matters\nForm submissions are critical for several workflows. Resolving these issues will improve user satisfaction and reduce friction in the user experience. Adding new features will further enhance the form's usability and meet customer expectations.\n\n### Customer Signals\nTwo related signals have highlighted this issue:\n1. Difficulty in submitting forms.\n2. Requests for additional form functionalities.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 0\n- **Signal Types**: \n\n## Scoring\n\n- **Impact Score**: 5/100\n- **Confidence Score**: 0/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure compatibility with existing form infrastructure. Consider potential impacts on data integrity and user interface consistency.\n\n---\n*Generated from opportunity: cc640a93-8027-43f8-994f-9e654b870a9e*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users should be able to submit forms without encountering errors.\nAC2: Implement a user-friendly error notification system for form submissions.\nAC3: Add requested features (e.g., auto-save, field validation) to the forms.\nAC4: Ensure all new features are tested and documented.\nAC5: Provide a detailed release note for users regarding the changes.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "cc640a93-8027-43f8-994f-9e654b870a9e",
+      "generatedAt": "2026-02-06T07:19:55.230Z",
+      "confidenceScore": 50
+    }
+  },
+  {
+    "fields": {
+      "summary": "Automate Conversion of Forms in Forms Experience Builder",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Customers using the Forms Experience Builder have expressed the need for an automated forms conversion feature. This would significantly reduce the manual effort required to transfer and convert existing forms, thereby improving efficiency and reducing potential errors. Currently, the manual conversion process is a blocker for many users, affecting their productivity.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 0\n- **Signal Types**: \n\n## Scoring\n\n- **Impact Score**: 5/100\n- **Confidence Score**: 0/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nEnsure compatibility with all major data binding formats and core components used in existing forms. Consider potential integrations with third-party tools used for form creation.\n\n---\n*Generated from opportunity: e26398b0-a922-4e03-a11a-6d25790e8722*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users can select existing forms for automated conversion within the Forms Experience Builder.\nAC2: The system accurately converts selected forms while preserving all data bindings and core components.\nAC3: Users can review and make adjustments to the converted forms before finalizing them.\nAC4: Provide clear documentation and user guidance for the automated conversion feature.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "e26398b0-a922-4e03-a11a-6d25790e8722",
+      "generatedAt": "2026-02-06T07:19:58.717Z",
+      "confidenceScore": 50
+    }
+  },
+  {
+    "fields": {
+      "summary": "Implement Automated Forms Conversion for Core Components",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "## Context\nCustomers have reported issues and requested features related to the automation of forms conversion within our platform. This enhancement is critical for improving their experience with forms and data binding in the Forms Experience Builder.\n\n## Why This Matters\nAutomating the forms conversion process will save time for customers, reduce manual errors, and streamline workflows. By addressing this need, we enhance customer satisfaction and increase the efficiency of our platform.\n\n## Customer Signals\n- Topic: Automated Forms Conversion, Core Components, Forms\n- Source: Slack\n- Type: Issue\n\n## Impact\nThough the exact number of affected customers is unknown, addressing this feature is expected to have a significant positive impact on user experience.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 0\n- **Signal Types**: \n\n## Scoring\n\n- **Impact Score**: 5/100\n- **Confidence Score**: 0/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nThis feature will require integration with existing data binding mechanisms and thorough testing to ensure compatibility with various form types. Dependencies include the current forms module and data binding services.\n\n---\n*Generated from opportunity: f287ee40-a5ae-4c56-950e-d34ef20ffea4*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Automated forms conversion feature is implemented in the Forms Experience Builder.\nAC2: The system successfully binds data to forms without manual intervention.\nAC3: The automated process is thoroughly tested and validated to ensure accuracy and reliability.",
+      "customerImpact": "High",
+      "estimatedComplexity": "L",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "f287ee40-a5ae-4c56-950e-d34ef20ffea4",
+      "generatedAt": "2026-02-06T07:20:01.892Z",
+      "confidenceScore": 50
+    }
+  },
+  {
+    "fields": {
+      "summary": "Enhance IC Editor with Form Customization Features",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "## Context\n\nCustomers have expressed the need for enhanced form customization capabilities within the IC Editor. This request stems from feedback collected via Slack, where users indicated a desire for more flexible and user-friendly form editing options.\n\n## Why This Matters\n\nImproving the form customization features in the IC Editor will empower users to create more tailored and efficient forms, leading to improved user satisfaction and productivity. This aligns with our goal of providing a versatile and intuitive editing tool.\n\n## What Customers Need\n\nCustomers need the ability to customize forms in the IC Editor with advanced features such as drag-and-drop fields, conditional logic, and improved styling options.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 0\n- **Signal Types**: \n\n## Scoring\n\n- **Impact Score**: 5/100\n- **Confidence Score**: 0/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider leveraging existing form libraries or frameworks that support drag-and-drop functionality and conditional logic. Ensure compatibility with current IC Editor architecture.\n\n---\n*Generated from opportunity: db049a62-0127-40e4-8fed-72026ac5881d*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users can drag and drop form fields to customize the layout.\nAC2: Users can apply conditional logic to form fields (e.g., show/hide fields based on user input).\nAC3: Users can customize the styling of form elements, including fonts, colors, and sizes.\nAC4: Changes to the form are saved and rendered correctly in the IC Editor.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "db049a62-0127-40e4-8fed-72026ac5881d",
+      "generatedAt": "2026-02-06T07:20:05.858Z",
+      "confidenceScore": 50
+    }
+  },
+  {
+    "fields": {
+      "summary": "Resolve blocker for new users during account setup",
+      "issuetype": {
+        "name": "Bug"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Several new users have reported encountering a blocker during the account setup process. This issue prevents users from completing their registration and accessing the platform. \n\n**Why this matters:**\nThis is crucial as it affects user acquisition and their first experience with our product. Fixing this issue will ensure a smoother onboarding process and potentially increase user retention. \n\n**Customer Signals:**\n- Multiple reports from Slack indicating inability to complete registration.\n- Users experiencing a blocker during account setup.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 0\n- **Signal Types**: \n\n## Scoring\n\n- **Impact Score**: 5/100\n- **Confidence Score**: 0/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nInvestigate the account setup code for any recent changes or bugs. Ensure compatibility with different browsers and devices. Check for any backend issues related to user registration.\n\n---\n*Generated from opportunity: 9120965a-6f0b-4e8c-a115-f20de8a3d4a4*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "New users can complete the account setup process without encountering blockers.\nAccount setup flow is tested end-to-end to ensure no issues.\nClear error messages are provided if any part of the setup fails.",
+      "customerImpact": "Critical",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "9120965a-6f0b-4e8c-a115-f20de8a3d4a4",
+      "generatedAt": "2026-02-06T07:20:08.215Z",
+      "confidenceScore": 50
+    }
+  },
+  {
+    "fields": {
+      "summary": "Fix error encountered by new users during initial setup",
+      "issuetype": {
+        "name": "Bug"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "### Description\n\nNew users are encountering an error during the initial setup process. This is causing frustration and preventing them from moving forward with our product. We have received 2 related signals from Slack reporting this issue.\n\n### Why This Matters\n\nEnsuring a smooth onboarding experience is critical for user retention and satisfaction. Addressing this blocker will help new users get started without issues, improving their overall experience with our product.\n\n### Customer Signals\n\n- Signal 1: [Slack message link 1]\n- Signal 2: [Slack message link 2]\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 0\n- **Signal Types**: \n\n## Scoring\n\n- **Impact Score**: 5/100\n- **Confidence Score**: 0/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nThis issue may be related to the recent deployment. Check the deployment logs and error reports. Investigate dependencies with the onboarding module.\n\n---\n*Generated from opportunity: b72eca5e-f450-4519-9fac-e2d7343c6549*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: Users can complete the initial setup process without encountering any errors.\nAC2: Any potential error messages are clear and provide actionable steps for resolution.\nAC3: The issue is verified as resolved by QA and at least one new user who previously encountered the problem.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "b72eca5e-f450-4519-9fac-e2d7343c6549",
+      "generatedAt": "2026-02-06T07:20:11.800Z",
+      "confidenceScore": 50
+    }
+  },
+  {
+    "fields": {
+      "summary": "Improve Form Usability for New Users",
+      "issuetype": {
+        "name": "Feature"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "## Description\n\nBased on feedback from multiple new users, we have identified that the current form interface is creating usability issues. Users are finding it difficult to navigate and complete forms, which results in a high drop-off rate.\n\n### Why this matters\nImproving the form usability will enhance the user experience, reduce drop-off rates, and increase form completion rates. This change is critical to ensuring that new users can easily interact with and utilize our product features.\n\n### Customer Signals\n- Signal 1: User feedback from Slack indicated difficulty in understanding form fields.\n- Signal 2: Another user reported issues with form navigation in the support channel.\n\n### Customer Impact\nUnknown number of customers are currently affected but improving this will benefit all new users.\n\n---\n\n## Customer Evidence\n- **Affected Customers**: Various\n- **Total Signals**: 0\n- **Signal Types**: \n\n## Scoring\n\n- **Impact Score**: 5/100\n- **Confidence Score**: 0/100\n- **Urgency Score**: 30/100\n\n\n## Technical Notes\nConsider the current form library being used and its limitations. Ensure compatibility with existing backend systems and validation logic. Conduct usability testing with new users before final implementation.\n\n---\n*Generated from opportunity: e1b8b5fa-5512-4029-a503-421370c5d5bb*\n"
+              }
+            ]
+          }
+        ]
+      },
+      "labels": [
+        "customer-signal"
+      ],
+      "components": []
+    },
+    "customFields": {
+      "acceptanceCriteria": "AC1: The form should have clear labels and placeholders for all input fields.\nAC2: Navigation between form fields should be intuitive and user-friendly.\nAC3: Form submission should provide clear success or error messages.\nAC4: Include a progress indicator for multi-step forms.\nAC5: Ensure the form is responsive on all device types.",
+      "customerImpact": "High",
+      "estimatedComplexity": "M",
+      "affectedCustomers": ""
+    },
+    "metadata": {
+      "sourceOpportunityId": "e1b8b5fa-5512-4029-a503-421370c5d5bb",
+      "generatedAt": "2026-02-06T07:20:15.102Z",
+      "confidenceScore": 50
+    }
+  }
+]

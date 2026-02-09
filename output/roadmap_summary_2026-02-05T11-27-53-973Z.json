@@ -1,0 +1,737 @@
+{
+  "totalOpportunities": 75,
+  "topPriorities": [
+    {
+      "id": "5eb4e281-0ab5-4a99-a14b-248ca3d2f931",
+      "title": "Forms - json - data (6 signals)",
+      "description": "Cluster of 6 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+      "status": "new",
+      "created_at": "2026-02-05T12:04:43.951Z",
+      "roadmapScore": {
+        "overallScore": 49,
+        "impactScore": 15,
+        "confidenceScore": 100,
+        "effortScore": 50,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 6,
+          "uniqueCustomers": 0,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 36.666666666666664,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "0364fa73-af17-43b2-a8bc-a7d953e73327",
+          "source": "slack",
+          "source_ref": "1753951866.211399",
+          "signal_type": "feedback",
+          "content": "<@U031G7ZLRRC>: Thanks for sharing this . The use case shared was JSON format for data input. We along with <@W9QMZFR39> team can have a discussion on this and see if it fits the use case.",
+          "normalized_content": "u031g7zlrrc thanks for sharing this the use case shared was json format for data input we along with w9qmzfr39 team can have a discussion on this and see if it fits the use case",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1753951866.211399",
+            "channelId": "C04D195JVGS",
+            "quality_score": 40,
+            "parentSignalId": "1160d1a3-5af3-4cbf-80cf-9ccc3aba3a03"
+          },
+          "created_at": "2025-07-31T08:51:06.211Z"
+        },
+        {
+          "id": "93911346-77d3-47ac-ab3a-a461a3017274",
+          "source": "slack",
+          "source_ref": "1753951671.294199",
+          "signal_type": "feedback",
+          "content": "<@U0213T59LMN> Is the JSON support in the Output service intended for templates or for data files?\nDuring a recent hackathon (<https://adobe.brightidea.com/D44557?idea_count=2|link>), we worked on enabling JSON input for data files and successfully rendered PDFs using simple JSON formats. If this is aligned with that effort, we could consider building on it further to handle more complex and edge cases.\ncc: <@W4R5LUPK3> <@WQWCBV6NN>",
+          "normalized_content": "u0213t59lmn is the json support in the output service intended for templates or for data files during a recent hackathon https adobe brightidea com d44557 idea_count 2 link we worked on enabling json input for data files and successfully rendered pdfs using simple json formats if this is aligned with that effort we could consider building on it further to handle more complex and edge cases cc w4r5lupk3 wqwcbv6nn",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1753951671.294199",
+            "channelId": "C04D195JVGS",
+            "quality_score": 40,
+            "parentSignalId": "1160d1a3-5af3-4cbf-80cf-9ccc3aba3a03"
+          },
+          "created_at": "2025-07-31T08:47:51.294Z"
+        },
+        {
+          "id": "2e5d1ef3-dced-450e-8b94-ad7b45a135c9",
+          "source": "slack",
+          "source_ref": "1753432677.473259",
+          "signal_type": "feedback",
+          "content": "Yes, data in json format",
+          "normalized_content": "yes data in json format",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1753432677.473259",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "fc9dd964-5b5b-4f26-ae06-894ee434d9ef"
+          },
+          "created_at": "2025-07-25T08:37:57.473Z"
+        },
+        {
+          "id": "4e8e2757-ceb1-42e5-900c-820ec19e6a66",
+          "source": "slack",
+          "source_ref": "1753430044.627849",
+          "signal_type": "feedback",
+          "content": "<@W4RU4N66R> , when you say JSON, do you mean data in JSON format only? The case which Aditya described. Please confirm.",
+          "normalized_content": "w4ru4n66r when you say json do you mean data in json format only the case which aditya described please confirm",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1753430044.627849",
+            "channelId": "C04D195JVGS",
+            "quality_score": 40,
+            "parentSignalId": "fc9dd964-5b5b-4f26-ae06-894ee434d9ef"
+          },
+          "created_at": "2025-07-25T07:54:04.627Z"
+        },
+        {
+          "id": "cda4493a-1758-4444-99a2-ec19cd6b5552",
+          "source": "slack",
+          "source_ref": "1753428088.329349",
+          "signal_type": "feedback",
+          "content": "So basically, just a JSON -&gt; XML transformer insertion at a suitable point in the execution path?",
+          "normalized_content": "so basically just a json gt xml transformer insertion at a suitable point in the execution path",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1753428088.329349",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "fc9dd964-5b5b-4f26-ae06-894ee434d9ef"
+          },
+          "created_at": "2025-07-25T07:21:28.329Z"
+        },
+        {
+          "id": "a2e7988f-8069-4cec-a272-c0cffc4d99f6",
+          "source": "slack",
+          "source_ref": "1753427951.770889",
+          "signal_type": "feedback",
+          "content": "&gt; Is this solely about adding support for JSON data in Output APIs? i.e. XDP template and JSON data?\nInstead of XML supporting JSON and template can be XDP or acroform",
+          "normalized_content": "gt is this solely about adding support for json data in output apis i e xdp template and json data instead of xml supporting json and template can be xdp or acroform",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1753427951.770889",
+            "channelId": "C04D195JVGS",
+            "quality_score": 40,
+            "parentSignalId": "fc9dd964-5b5b-4f26-ae06-894ee434d9ef"
+          },
+          "created_at": "2025-07-25T07:19:11.770Z"
+        }
+      ],
+      "themes": [],
+      "customers": []
+    },
+    {
+      "id": "1e82e81d-e107-4b2c-af9d-76f263e108d9",
+      "title": "w4xtcq07j - w6cbb4953 (6 signals)",
+      "description": "Cluster of 6 related signals. Sources: slack. Types: feedback.",
+      "status": "new",
+      "created_at": "2026-02-05T12:04:43.926Z",
+      "roadmapScore": {
+        "overallScore": 49,
+        "impactScore": 15,
+        "confidenceScore": 100,
+        "effortScore": 50,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 6,
+          "uniqueCustomers": 0,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 30,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "4c482e36-4cd6-4f89-abda-e1604b079953",
+          "source": "slack",
+          "source_ref": "1759980082.203999",
+          "signal_type": "feedback",
+          "content": "cc: <@W4XTCQ07J> <@W6CBB4953>",
+          "normalized_content": "cc w4xtcq07j w6cbb4953",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1759980082.203999",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "c4b5fb3e-cae8-4838-9c43-7ceb2e9c83c8"
+          },
+          "created_at": "2025-10-09T03:21:22.203Z"
+        },
+        {
+          "id": "80a70b3c-989c-4d4c-8103-9c259fd96129",
+          "source": "slack",
+          "source_ref": "1759744009.368079",
+          "signal_type": "feedback",
+          "content": "cc: <@W4XTCQ07J> <@W6CBB4953>",
+          "normalized_content": "cc w4xtcq07j w6cbb4953",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1759744009.368079",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "8939e2a9-4a0a-4bb9-84c1-4f62e4173cbd"
+          },
+          "created_at": "2025-10-06T09:46:49.368Z"
+        },
+        {
+          "id": "ddbaaa68-f501-4fb8-a680-47d07507d4f6",
+          "source": "slack",
+          "source_ref": "1759720696.683869",
+          "signal_type": "feedback",
+          "content": "cc: <@W4XTCQ07J> <@W6CBB4953>",
+          "normalized_content": "cc w4xtcq07j w6cbb4953",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1759720696.683869",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "3760a925-39f8-45e1-8be7-7d98a7fb791a"
+          },
+          "created_at": "2025-10-06T03:18:16.683Z"
+        },
+        {
+          "id": "15353277-ced4-4e19-b1f3-3fd897be050e",
+          "source": "slack",
+          "source_ref": "1759720691.093639",
+          "signal_type": "feedback",
+          "content": "cc: <@W4XTCQ07J> <@W6CBB4953>",
+          "normalized_content": "cc w4xtcq07j w6cbb4953",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1759720691.093639",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "3a1d99e2-0717-47cd-a6c7-6336f23ce6a1"
+          },
+          "created_at": "2025-10-06T03:18:11.093Z"
+        },
+        {
+          "id": "5319ea63-6456-4d98-a031-3320dc2a148b",
+          "source": "slack",
+          "source_ref": "1758134424.035189",
+          "signal_type": "feedback",
+          "content": "FYI: <@W4XTCQ07J> <@W6CBB4953>",
+          "normalized_content": "fyi w4xtcq07j w6cbb4953",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1758134424.035189",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "8e3dcec3-a820-4eb4-b256-27736c93b44d"
+          },
+          "created_at": "2025-09-17T18:40:24.035Z"
+        },
+        {
+          "id": "e95f2eb7-e223-42b4-873b-8c719304ec7d",
+          "source": "slack",
+          "source_ref": "1757581327.332199",
+          "signal_type": "feedback",
+          "content": "cc: <@W4XTCQ07J>",
+          "normalized_content": "cc w4xtcq07j",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1757581327.332199",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "1ff5eba7-2936-4075-a971-d2ccee1bf93e"
+          },
+          "created_at": "2025-09-11T09:02:07.332Z"
+        }
+      ],
+      "themes": [],
+      "customers": []
+    },
+    {
+      "id": "fed79fd4-ad96-4bf8-8413-02278f8385da",
+      "title": "Forms - form - forms (5 signals)",
+      "description": "Cluster of 5 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+      "status": "new",
+      "created_at": "2026-02-05T12:04:43.923Z",
+      "roadmapScore": {
+        "overallScore": 49,
+        "impactScore": 15,
+        "confidenceScore": 100,
+        "effortScore": 50,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 5,
+          "uniqueCustomers": 0,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 34,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "c54b1298-251f-47a9-9621-103dc607cd0d",
+          "source": "slack",
+          "source_ref": "1760934448.615859",
+          "signal_type": "feedback",
+          "content": "Form/Use-case details shared.",
+          "normalized_content": "form use case details shared",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1760934448.615859",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "8401b0a6-3c8d-4d7c-8073-cf8e8d3d8fda"
+          },
+          "created_at": "2025-10-20T04:27:28.615Z"
+        },
+        {
+          "id": "333465d6-62e6-4c5e-9109-6700db2370f7",
+          "source": "slack",
+          "source_ref": "1758700371.562739",
+          "signal_type": "feedback",
+          "content": "Yes. They will be doing the form conversions. ",
+          "normalized_content": "yes they will be doing the form conversions",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1758700371.562739",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "a7ad7077-5a6f-4964-81f8-d83644a49923"
+          },
+          "created_at": "2025-09-24T07:52:51.562Z"
+        },
+        {
+          "id": "7b35ae36-20e1-4981-8f40-f35a091c2e9d",
+          "source": "slack",
+          "source_ref": "1756436648.066259",
+          "signal_type": "feedback",
+          "content": "<@W4SG81T9C> could you provide more context/details - including the customer form URLs.",
+          "normalized_content": "w4sg81t9c could you provide more context details including the customer form urls",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1756436648.066259",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "d166eebf-fa32-4259-b11a-9ecd5ddea104"
+          },
+          "created_at": "2025-08-29T03:04:08.066Z"
+        },
+        {
+          "id": "b9594ef6-9fde-4e77-aadd-3f4905d67c7d",
+          "source": "slack",
+          "source_ref": "1753273867.856599",
+          "signal_type": "feedback",
+          "content": "<@W4R5M9P4H> The customer as stated on the mail is flexible to use foundation or core-components forms, they are just willing to achieve the use-case.",
+          "normalized_content": "w4r5m9p4h the customer as stated on the mail is flexible to use foundation or core components forms they are just willing to achieve the use case",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1753273867.856599",
+            "channelId": "C04D195JVGS",
+            "quality_score": 40,
+            "parentSignalId": "68de8f2d-3453-46ff-81e5-bd26704245d8"
+          },
+          "created_at": "2025-07-23T12:31:07.856Z"
+        },
+        {
+          "id": "301619be-3532-46df-9370-7860153c6f41",
+          "source": "slack",
+          "source_ref": "1753273558.433679",
+          "signal_type": "feedback",
+          "content": "Documentation: <https://experienceleague.adobe.com/en/docs/experience-manager-65/content/forms/customize-aem-forms/custom-appearance-widget-adaptive-form>",
+          "normalized_content": "documentation https experienceleague adobe com en docs experience manager 65 content forms customize aem forms custom appearance widget adaptive form",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1753273558.433679",
+            "channelId": "C04D195JVGS",
+            "quality_score": 40,
+            "parentSignalId": "68de8f2d-3453-46ff-81e5-bd26704245d8"
+          },
+          "created_at": "2025-07-23T12:25:58.433Z"
+        }
+      ],
+      "themes": [],
+      "customers": []
+    },
+    {
+      "id": "e7c36f16-dbb9-4ac6-87e6-00b3ab78a761",
+      "title": "Forms - Feature Request - mayank (7 signals)",
+      "description": "Cluster of 7 related signals. Topics: Forms, Feature Request, Issue/Blocker, Go-Live, Core Components. Sources: slack. Types: issue, feature_request, feedback.",
+      "status": "new",
+      "created_at": "2026-02-05T12:04:43.916Z",
+      "roadmapScore": {
+        "overallScore": 49,
+        "impactScore": 15,
+        "confidenceScore": 100,
+        "effortScore": 50,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 7,
+          "uniqueCustomers": 0,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 80,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "27b2b815-822b-4778-b1f1-530a62f0bcaa",
+          "source": "slack",
+          "source_ref": "1762939436.325349",
+          "signal_type": "issue",
+          "content": ":new_user: *Shraddha Singh* :new_user:\n:customervivo:*Customer Name : Brunswick*\n:clock2: *Date :* 2025-11-10\n:group-people: *Attendees :* <@U06NF880220>, <@U0213T59LMN>\n:loading-2248:*Notes*\n*Meeting notes*\n\n*AEM Forms Local Development Environment Setup:* Christy, Mayank, Andy, and Shraddha discussed and collaboratively worked through the step-by-step process for setting up AEM Forms on a local SDK instance, focusing on creating comprehensive internal documentation to guide future developers through the process.\n\n*Cloud Manager and Environment Configuration:* Mayank and Shraddha explained to Christy how to enable and configure AEM Forms as an add-on in Cloud Manager, clarifying the process for both new and existing environments and the implications for license availability.\n\n*Marketo Connector and ECID Integration:* Andy and Christy discussed the setup and testing of the Marketo connector for both local and stage environments, including questions about using a sandbox for local development and ensuring ECID values are correctly submitted from AEM Forms.\n\n*Documentation Consolidation and Handover:* Christy, Mayank, and Shraddha agreed on the importance of consolidating all setup steps and troubleshooting notes into a single, detailed internal document or Excel tab to facilitate future development and handover.\n\nF*ollow-up tasks*\n.\nD*ocumentation for Local AEM Forms Setup: _Done_*\nSend Christy the detailed step-by-step instructions for setting up AEM Forms on a local SDK, including enabling feature toggles and any additional configuration required for local development. (Shraddha, Mayank)\n.\n*Excel Documentation Update: _Done_*\nAdd the local AEM Forms setup steps provided by Christy to a new tab in the shared Excel documentation for team reference. (Mayank, Shraddha)\n.\n*Sandbox Marketo Connector Details:* Provide Christy with the details needed to set up the Marketo connector for local development using the Mercury Sandbox environment. (Andy)\n.\n*ECID Submission Issue Investigation:* Investigate and clarify why the ECID is not being submitted to Marketo from the QA environment and coordinate with Andy to resolve the issue. (Shraddha, Andy)\n:todo_done: *Next Action*\nD*ocumentation for Local AEM Forms Setup: _Done_*\nSend Christy the detailed step-by-step instructions for setting up AEM Forms on a local SDK, including enabling feature toggles and any additional configuration required for local development. (Shraddha, Mayank)\n.\n*Excel Documentation Update: _Done_*\nAdd the local AEM Forms setup steps provided by Christy to a new tab in the shared Excel documentation for team reference. (Mayank, Shraddha)\n.\n*Sandbox Marketo Connector Details:* Provide Christy with the details needed to set up the Marketo connector for local development using the Mercury Sandbox environment. (Andy)\n.\n*ECID Submission Issue Investigation:* Investigate and clarify why the ECID is not being submitted to Marketo from the QA environment and coordinate with Andy to resolve the issue. (Shraddha, Andy)",
+          "normalized_content": "new_user shraddha singh new_user customervivo customer name brunswick clock2 date 2025 11 10 group people attendees u06nf880220 u0213t59lmn loading 2248 notes meeting notes aem forms local development environment setup christy mayank andy and shraddha discussed and collaboratively worked through the step by step process for setting up aem forms on a local sdk instance focusing on creating comprehensive internal documentation to guide future developers through the process cloud manager and environment configuration mayank and shraddha explained to christy how to enable and configure aem forms as an add on in cloud manager clarifying the process for both new and existing environments and the implications for license availability marketo connector and ecid integration andy and christy discussed the setup and testing of the marketo connector for both local and stage environments including questions about using a sandbox for local development and ensuring ecid values are correctly submitted from aem forms documentation consolidation and handover christy mayank and shraddha agreed on the importance of consolidating all setup steps and troubleshooting notes into a single detailed internal document or excel tab to facilitate future development and handover f ollow up tasks d ocumentation for local aem forms setup _done_ send christy the detailed step by step instructions for setting up aem forms on a local sdk including enabling feature toggles and any additional configuration required for local development shraddha mayank excel documentation update _done_ add the local aem forms setup steps provided by christy to a new tab in the shared excel documentation for team reference mayank shraddha sandbox marketo connector details provide christy with the details needed to set up the marketo connector for local development using the mercury sandbox environment andy ecid submission issue investigation investigate and clarify why the ecid is not being submitted to marketo from the qa environment and coordinate with andy to resolve the issue shraddha andy todo_done next action d ocumentation for local aem forms setup _done_ send christy the detailed step by step instructions for setting up aem forms on a local sdk including enabling feature toggles and any additional configuration required for local development shraddha mayank excel documentation update _done_ add the local aem forms setup steps provided by christy to a new tab in the shared excel documentation for team reference mayank shraddha sandbox marketo connector details provide christy with the details needed to set up the marketo connector for local development using the mercury sandbox environment andy ecid submission issue investigation investigate and clarify why the ecid is not being submitted to marketo from the qa environment and coordinate with andy to resolve the issue shraddha andy",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-11-10",
+            "pmName": "Shraddha Singh",
+            "slackTs": "1762939436.325349",
+            "attendees": [
+              "U06NF880220",
+              "U0213T59LMN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Brunswick*",
+            "quality_score": 80
+          },
+          "created_at": "2025-11-12T09:23:56.325Z"
+        },
+        {
+          "id": "24691090-9e7e-4c0f-b757-44df39a4d07d",
+          "source": "slack",
+          "source_ref": "1762925718.072349",
+          "signal_type": "issue",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : Brunswick*\n:clock2: *Date :* 2025-11-11\n:group-people: *Attendees :* <@U0213T59LMN>, <@U06NF880220>\n:loading-2248:*Notes*\n• *Feature Toggle and Bundle Configuration for Local Development:* Christy, Mayank, and Shraddha discussed the process for enabling feature toggles in local development, confirming that uploading the bundle to the system console and enabling it via Config Manager is the required approach, with documentation and links provided by Shraddha.\n• *Marketo Connector and Form Configuration in AEM:* Christy, Mayank, and Shraddha walked through the steps to configure the Marketo connector in AEM, including obtaining credentials, setting up global configurations, and deploying the Mercury Marine code base, with Andy Kluck joining later to discuss form migration and scalability.\n• *Form Migration, Environment Structure, and Scalability:* Andy Kluck, Christy, and Mayank discussed strategies for migrating forms between QA, stage, and production environments, including the storage locations of forms and configurations, the feasibility of moving forms versus rebuilding, and the need for documentation on folder structures.\n• *Documentation and Process Standardization:* Mayank and Shraddha emphasized the importance of following and updating documentation for both cloud and local setups, with Christy agreeing to adjust formatting and Andy planning to use the documentation to build and import forms, ensuring consistency and easier troubleshooting.\n• *Meeting Frequency Adjustment:* Mayank proposed reducing the frequency of the meetings from twice a week to once a week as the project nears go-live, with Andy suggesting a Thursday meeting to address any deployment issues and reevaluate the schedule as needed.\n:todo_done: *Next Action*\n• *Feature Toggle Documentation:* Add the async FT to the documentation and update the shared sheet accordingly. (Shraddha)\n• *Feature Toggle Documentation:* Update the documentation to include the rule editor FT as well as the marketer FT. (Shraddha)\n• *AEM Folder Structure Documentation:* Compile and share documentation listing the different AEM folder locations and their purposes for form storage, configuration, and related assets. (Mayank)\n• *AEM Folder Structure Documentation:* Check for and share any available public documentation related to AEM folder structure and storage locations. (Mayank)\n• *Form Migration Process:* Share documentation on how to download a form from one environment and upload it to another in AEM. (Shraddha)\n• *Form Migration Process:* Copy and paste the documentation for form migration into Excel for team reference. (Shraddha)\n• *Meeting Cadence:* Reduce the frequency of these meetings from twice a week to once a week and reevaluate after Thursday's meeting. (Mayank, Andy Kluck)",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name brunswick clock2 date 2025 11 11 group people attendees u0213t59lmn u06nf880220 loading 2248 notes feature toggle and bundle configuration for local development christy mayank and shraddha discussed the process for enabling feature toggles in local development confirming that uploading the bundle to the system console and enabling it via config manager is the required approach with documentation and links provided by shraddha marketo connector and form configuration in aem christy mayank and shraddha walked through the steps to configure the marketo connector in aem including obtaining credentials setting up global configurations and deploying the mercury marine code base with andy kluck joining later to discuss form migration and scalability form migration environment structure and scalability andy kluck christy and mayank discussed strategies for migrating forms between qa stage and production environments including the storage locations of forms and configurations the feasibility of moving forms versus rebuilding and the need for documentation on folder structures documentation and process standardization mayank and shraddha emphasized the importance of following and updating documentation for both cloud and local setups with christy agreeing to adjust formatting and andy planning to use the documentation to build and import forms ensuring consistency and easier troubleshooting meeting frequency adjustment mayank proposed reducing the frequency of the meetings from twice a week to once a week as the project nears go live with andy suggesting a thursday meeting to address any deployment issues and reevaluate the schedule as needed todo_done next action feature toggle documentation add the async ft to the documentation and update the shared sheet accordingly shraddha feature toggle documentation update the documentation to include the rule editor ft as well as the marketer ft shraddha aem folder structure documentation compile and share documentation listing the different aem folder locations and their purposes for form storage configuration and related assets mayank aem folder structure documentation check for and share any available public documentation related to aem folder structure and storage locations mayank form migration process share documentation on how to download a form from one environment and upload it to another in aem shraddha form migration process copy and paste the documentation for form migration into excel for team reference shraddha meeting cadence reduce the frequency of these meetings from twice a week to once a week and reevaluate after thursday s meeting mayank andy kluck",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-11-11",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1762925718.072349",
+            "attendees": [
+              "U0213T59LMN",
+              "U06NF880220"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Brunswick*",
+            "quality_score": 80
+          },
+          "created_at": "2025-11-12T05:35:18.072Z"
+        },
+        {
+          "id": "780a1025-c075-4648-8f21-f0b1eed9a55a",
+          "source": "slack",
+          "source_ref": "1762496766.537899",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : Brunswick*\n:clock2: *Date :* 2025-11-06\n:group-people: *Attendees :* <@U0213T59LMN>\n:loading-2248:*Notes*\n• *Transition from Marketo to AEM Forms: Analytics Tracking:* Andy, Mayank, Heidi, Mark, and Jonathan discussed the transition from Marketo to AEM forms, focusing on ensuring analytics tracking (including Adobe Analytics and Google Analytics) is maintained and properly configured during and after the migration.\n• *Form Styling and Theme Implementation Across Brands:* Andy, Jonathan, Mark, Mayank, and Joseph discussed the challenges and requirements for form styling and theme implementation when migrating from Marketo to AEM forms, especially regarding the use of Figma designs, CSS variables, and the ECL (Enterprise Component Library) for multiple brands.\n• *Permissions and Access for Form Development:* Andy, Mayank, Mark, and Jonathan addressed issues related to permissions and access for creating and editing forms in different environments, identifying the need for proper group assignments and coordination with Christy to resolve access limitations.\n• *Multi-Brand Form Data Routing and Configuration:* Andy, Mayank, and Mark discussed the setup and configuration of Marketo connectors for multiple brands, clarifying how forms should be routed to different data sources and the implications for form duplication and theming.\n• *Next Steps and Open Items:* Andy, Mayank, and Joseph outlined the next steps, including resolving outstanding permissions, planning for higher environment rollouts, coordinating with Christy and Shraddha, and validating the scalability of form styling and analytics across brands.\n:todo_done: *Next Action*\n• *Analytics Tracking Transition:* Confirm with the analytics team whether any additional testing or adjustments are needed for tracking analytics when transitioning from Marketo to AEM forms. (Andy)\n• *Form Styling and Theming Scalability:* Connect with Ben McKnight and the rest of the team to ensure there is a clear plan for styling and theming of AEM forms across all brands, and validate that the work is being accounted for before scaling. (Andy)\n• *Form Styling Proof of Concept:* Build and test forms for other brands (e.g., Sea Ray) to prove out the styling and theming process and ensure forms can be easily embedded and styled correctly on each brand’s site. (Andy, Joseph)\n• *User Permissions for Form Creation:* Check with Christy to verify what permissions have been given for form creation and editing in stage and production environments, and build a group if necessary to ensure appropriate access for Andy, Heidi, and Joe. (Jonathan)\n• *Documentation for User Groups:* Share documentation outlining which user groups and permissions need to be assigned to allow form creation, editing, and publishing in AEM forms. (Mayank)\n• *Marketo Connector Setup for Multiple Brands:* Add the BBG Marketo Engage connection to stage and production environments to enable form data tracking for Brunswick boat group brands. (Andy)\n• *Testing Form Reusability Across BBG Brands:* Test using a single request-a-quote form across multiple BBG brands to ensure correct data routing and style application per site. (Andy)",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name brunswick clock2 date 2025 11 06 group people attendees u0213t59lmn loading 2248 notes transition from marketo to aem forms analytics tracking andy mayank heidi mark and jonathan discussed the transition from marketo to aem forms focusing on ensuring analytics tracking including adobe analytics and google analytics is maintained and properly configured during and after the migration form styling and theme implementation across brands andy jonathan mark mayank and joseph discussed the challenges and requirements for form styling and theme implementation when migrating from marketo to aem forms especially regarding the use of figma designs css variables and the ecl enterprise component library for multiple brands permissions and access for form development andy mayank mark and jonathan addressed issues related to permissions and access for creating and editing forms in different environments identifying the need for proper group assignments and coordination with christy to resolve access limitations multi brand form data routing and configuration andy mayank and mark discussed the setup and configuration of marketo connectors for multiple brands clarifying how forms should be routed to different data sources and the implications for form duplication and theming next steps and open items andy mayank and joseph outlined the next steps including resolving outstanding permissions planning for higher environment rollouts coordinating with christy and shraddha and validating the scalability of form styling and analytics across brands todo_done next action analytics tracking transition confirm with the analytics team whether any additional testing or adjustments are needed for tracking analytics when transitioning from marketo to aem forms andy form styling and theming scalability connect with ben mcknight and the rest of the team to ensure there is a clear plan for styling and theming of aem forms across all brands and validate that the work is being accounted for before scaling andy form styling proof of concept build and test forms for other brands e g sea ray to prove out the styling and theming process and ensure forms can be easily embedded and styled correctly on each brand s site andy joseph user permissions for form creation check with christy to verify what permissions have been given for form creation and editing in stage and production environments and build a group if necessary to ensure appropriate access for andy heidi and joe jonathan documentation for user groups share documentation outlining which user groups and permissions need to be assigned to allow form creation editing and publishing in aem forms mayank marketo connector setup for multiple brands add the bbg marketo engage connection to stage and production environments to enable form data tracking for brunswick boat group brands andy testing form reusability across bbg brands test using a single request a quote form across multiple bbg brands to ensure correct data routing and style application per site andy",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-11-06",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1762496766.537899",
+            "attendees": [
+              "U0213T59LMN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Brunswick*",
+            "quality_score": 80
+          },
+          "created_at": "2025-11-07T06:26:06.537Z"
+        },
+        {
+          "id": "f66a1579-7ffb-4159-993e-87da4585aa6e",
+          "source": "slack",
+          "source_ref": "1760073869.744429",
+          "signal_type": "issue",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : Brunswick*\n:clock2: *Date :* 2025-10-09\n:group-people: *Attendees :* <@U0213T59LMN>, <@U06NF880220>, <@W4SG81T9C>\n:loading-2248:*Notes*\n• *AEM Form Publishing and Loading Issues:* Andy Kluck, Mayank, Sakshi, and others discussed persistent issues with AEM forms not loading on the published QA website, despite working in the editor and preview modes, and identified that dispatcher rules and client library configurations may be blocking the required resources.\n• *Dispatcher and Authentication Configuration Challenges:* Sakshi, Jonathan, Mayank, and others conducted a detailed review of dispatcher and authentication settings, identifying that missing or misconfigured rules in the dispatcher files were likely preventing form resources from loading on the published site, and discussed next steps for remediation.\n• *Access and Collaboration Barriers:* Sarah, Mayank, Sakshi, and others addressed ongoing access issues to repositories and IT systems, outlining the need for support from Christy and the IT help desk to resolve authentication loops and ensure timely progress on required configuration changes.\n• *Outstanding Technical Issues and Next Actions:* Andy Kluck summarised the two main unresolved issues: inability to test forms on the published site due to dispatcher restrictions, and intermittent failures when connecting new forms to Marketo via the engage connector, with the team agreeing to investigate and communicate recommended fixes.\n:todo_done: *Next Action*\n• *Dispatcher Rules for Forms on Publish:* Review and update the dispatcher rules to explicitly allow the necessary selectors and paths for adaptive forms, ensuring forms render correctly on the publish environment. (Mayank, Sakshi, Jonathan)\n• *Dispatcher Rules Patch Creation and Handover:* Create a patch with the required dispatcher rule changes, share the pull request with Christy, and coordinate for the changes to be applied to the source repository and pipeline. (Mayank)\n• *Repository Access for Dispatcher Rules Review:* Ensure the relevant team members have access to the repository containing dispatcher rules to facilitate review and updates. (Sarah, Ben, Jonathan)\n• *IT Support for Opta Access:* Contact the IT help desk to resolve the Opta access issue preventing team members from logging in and using required tools. (Sarah, Mayank)\n• *Testing Marketo Data Mapping Issue:* Investigate and resolve the issue where Marketo data mapping fails to load or errors out when creating a new form. (Andy Kluck)\n• *Communication on Dispatcher Rule Changes:* Include Jonathan and Christy in all communications regarding dispatcher rule changes and backend updates to ensure alignment and progress. (Mayank)",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name brunswick clock2 date 2025 10 09 group people attendees u0213t59lmn u06nf880220 w4sg81t9c loading 2248 notes aem form publishing and loading issues andy kluck mayank sakshi and others discussed persistent issues with aem forms not loading on the published qa website despite working in the editor and preview modes and identified that dispatcher rules and client library configurations may be blocking the required resources dispatcher and authentication configuration challenges sakshi jonathan mayank and others conducted a detailed review of dispatcher and authentication settings identifying that missing or misconfigured rules in the dispatcher files were likely preventing form resources from loading on the published site and discussed next steps for remediation access and collaboration barriers sarah mayank sakshi and others addressed ongoing access issues to repositories and it systems outlining the need for support from christy and the it help desk to resolve authentication loops and ensure timely progress on required configuration changes outstanding technical issues and next actions andy kluck summarised the two main unresolved issues inability to test forms on the published site due to dispatcher restrictions and intermittent failures when connecting new forms to marketo via the engage connector with the team agreeing to investigate and communicate recommended fixes todo_done next action dispatcher rules for forms on publish review and update the dispatcher rules to explicitly allow the necessary selectors and paths for adaptive forms ensuring forms render correctly on the publish environment mayank sakshi jonathan dispatcher rules patch creation and handover create a patch with the required dispatcher rule changes share the pull request with christy and coordinate for the changes to be applied to the source repository and pipeline mayank repository access for dispatcher rules review ensure the relevant team members have access to the repository containing dispatcher rules to facilitate review and updates sarah ben jonathan it support for opta access contact the it help desk to resolve the opta access issue preventing team members from logging in and using required tools sarah mayank testing marketo data mapping issue investigate and resolve the issue where marketo data mapping fails to load or errors out when creating a new form andy kluck communication on dispatcher rule changes include jonathan and christy in all communications regarding dispatcher rule changes and backend updates to ensure alignment and progress mayank",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-10-09",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1760073869.744429",
+            "attendees": [
+              "U0213T59LMN",
+              "U06NF880220",
+              "W4SG81T9C"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Brunswick*",
+            "quality_score": 80
+          },
+          "created_at": "2025-10-10T05:24:29.744Z"
+        },
+        {
+          "id": "d5236664-02e8-4331-9850-f6520a774a0a",
+          "source": "slack",
+          "source_ref": "1758706160.526549",
+          "signal_type": "feedback",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : Brightline*\n:clock2: *Date :* 2025-09-23\n:group-people: *Attendees :* <@U05TSNKRNP8>, <@U0213T59LMN>\n:loading-2248:*Notes*\n• *AEM Forms Integration with Adobe Experience Platform (AEP):* Harman, Mayank, and Katie Manarte discussed the end-to-end process of integrating AEM forms with Adobe Experience Platform, including schema creation, data set configuration, and form setup, with Vince and other team members contributing questions and clarifications.\n• *Form Field Configuration and Validation:* Katie Manarte inquired about configuring specific form fields, such as checkboxes and validation rules, with Harman and Mayank confirming that these options are available and customizable within the AEM editor.\n• *Documentation and Support Resources:* Katie Manarte requested access to both written and video documentation for the integration process, with Harman and Vince confirming that comprehensive resources, including step-by-step videos, are available and will be shared.\n• *Future Form Use Cases and Additional Integrations:* Mayank and Katie Manarte discussed potential future forms and other integration needs, agreeing to gather requirements and schedule further discussions or demos as needed.\n:todo_done: *Next Action*\n• *Documentation Sharing:* Share the documentation for adding a form fragment in AEM with Katie Manarte. (Harman)\n• *Meeting Recording Distribution:* Send the meeting recording to Katie Manarte for her and her team's reference. (Vince)\n• *Future Forms Planning:* Gather information from analytics and product teams regarding future forms requirements and be prepared to discuss by next Tuesday. (Katie Manarte)",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name brightline clock2 date 2025 09 23 group people attendees u05tsnkrnp8 u0213t59lmn loading 2248 notes aem forms integration with adobe experience platform aep harman mayank and katie manarte discussed the end to end process of integrating aem forms with adobe experience platform including schema creation data set configuration and form setup with vince and other team members contributing questions and clarifications form field configuration and validation katie manarte inquired about configuring specific form fields such as checkboxes and validation rules with harman and mayank confirming that these options are available and customizable within the aem editor documentation and support resources katie manarte requested access to both written and video documentation for the integration process with harman and vince confirming that comprehensive resources including step by step videos are available and will be shared future form use cases and additional integrations mayank and katie manarte discussed potential future forms and other integration needs agreeing to gather requirements and schedule further discussions or demos as needed todo_done next action documentation sharing share the documentation for adding a form fragment in aem with katie manarte harman meeting recording distribution send the meeting recording to katie manarte for her and her team s reference vince future forms planning gather information from analytics and product teams regarding future forms requirements and be prepared to discuss by next tuesday katie manarte",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-09-23",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1758706160.526549",
+            "attendees": [
+              "U05TSNKRNP8",
+              "U0213T59LMN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Brightline*",
+            "quality_score": 80
+          },
+          "created_at": "2025-09-24T09:29:20.526Z"
+        },
+        {
+          "id": "925a0cdc-d922-432a-9c07-46a21ef76daa",
+          "source": "slack",
+          "source_ref": "1757057610.093969",
+          "signal_type": "issue",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : Brunswick*\n:clock2: *Date :* 2025-09-04\n:group-people: *Attendees :* <@U06NF880220>, <@WLWHN4TV3>, <@U0213T59LMN>\n:loading-2248:*Notes*\n• *Marketo Connector Enablement in AEM Environments:* Andy Kluck, Mayank, Lesley, and Rahul Kumar collaborated to enable and configure the Marketo connector in both the stage and production AEM environments, with Lesley providing necessary admin permissions and folder setup support.\n• *AEM Forms Core Component Enablement and Pipeline Configuration:* Christy, Mayank, Lesley, and the team discussed the absence of AEM Forms core components and themes, investigated pipeline configurations, and agreed on steps to enable core components in the appropriate environments, with Christy taking responsibility for the enablement before the next meeting.\n• *Access Provisioning for AEM and Cloud Manager:* Christy and Mayank coordinated to resolve access issues for the Adobe team, with Christy adding multiple team members to the AEM instance, Cloud Manager, and code base to facilitate ongoing configuration and troubleshooting.\n• *Next Steps for AEM Forms Testing:* The team, including Andy Kluck, Heidi, and Christy, agreed to proceed with enabling core components and to reconvene in the next meeting to begin creating and testing AEM Forms, with Heidi preparing a test page and Christy handling the technical enablement.\n:todo_done: *Next Action*\n• *Core Component Enablement:* Enable the core component for AEM Forms as a Cloud Service in the non-production environment and notify the group upon completion. (Christy)\n• *Access Provisioning:* Provide access to the relevant environments and code base for the Adobe team using the email IDs shared during the meeting. (Christy)\n• *Test Page Creation:* Create a test page for ANCP or another location to host the Marketo form for initial testing. (Heidi)\n• *Form Creation Preparation:* Review the documentation shared by the Adobe team on enabling core components and prepare to start form creation in the next meeting. (Christy)",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name brunswick clock2 date 2025 09 04 group people attendees u06nf880220 wlwhn4tv3 u0213t59lmn loading 2248 notes marketo connector enablement in aem environments andy kluck mayank lesley and rahul kumar collaborated to enable and configure the marketo connector in both the stage and production aem environments with lesley providing necessary admin permissions and folder setup support aem forms core component enablement and pipeline configuration christy mayank lesley and the team discussed the absence of aem forms core components and themes investigated pipeline configurations and agreed on steps to enable core components in the appropriate environments with christy taking responsibility for the enablement before the next meeting access provisioning for aem and cloud manager christy and mayank coordinated to resolve access issues for the adobe team with christy adding multiple team members to the aem instance cloud manager and code base to facilitate ongoing configuration and troubleshooting next steps for aem forms testing the team including andy kluck heidi and christy agreed to proceed with enabling core components and to reconvene in the next meeting to begin creating and testing aem forms with heidi preparing a test page and christy handling the technical enablement todo_done next action core component enablement enable the core component for aem forms as a cloud service in the non production environment and notify the group upon completion christy access provisioning provide access to the relevant environments and code base for the adobe team using the email ids shared during the meeting christy test page creation create a test page for ancp or another location to host the marketo form for initial testing heidi form creation preparation review the documentation shared by the adobe team on enabling core components and prepare to start form creation in the next meeting christy",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-09-04",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1757057610.093969",
+            "attendees": [
+              "U06NF880220",
+              "WLWHN4TV3",
+              "U0213T59LMN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Brunswick*",
+            "quality_score": 80
+          },
+          "created_at": "2025-09-05T07:33:30.093Z"
+        },
+        {
+          "id": "9b96cb6a-625a-439c-bf2f-df47c1b9d2c8",
+          "source": "slack",
+          "source_ref": "1756358443.203619",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : Brunswick*\n:clock2: *Date :* 2025-08-26\n:group-people: *Attendees :* <@U06NF880220>, <@WLWHN4TV3>, <@U0213T59LMN>\n:loading-2248:*Notes*\n• *AEM Forms and Marketo Integration Demo:* Mayank, Shraddha, and Rahul presented a demo to Andy Kluck and Sarah Warzecha, showcasing the implementation of AEM Forms integrated with Marketo, including custom rules for lead partitioning based on form fields such as city and postal code.\n• *Requirements Review and Field Mapping:* Andy Kluck walked the group through a detailed requirements presentation, outlining the need for replicating the request a quote form on multiple regional websites, specifying required visible and hidden fields, and ensuring correct data flow and field mapping into Marketo and Salesforce.\n• *Lead Routing, Partitioning, and Duplicate Management:* The team discussed strategies for routing leads to the correct Marketo partitions and workspaces, handling existing and new contacts, and minimizing duplicate records, with Andy and Mayank exploring whether assignment logic should reside in AEM Forms or Marketo.\n• *Salesforce Integration and Custom Field Handling:* Rahul and Andy discussed the integration between Marketo and Salesforce, confirming that all form data flows through the lead object, with custom fields and tasks used to trigger updates in Salesforce, and clarified the frequency and process for creating new custom fields.\n• *Access Management and Next Steps:* The group coordinated on access to AEM and Marketo environments, with Sarah confirming access for Mayank, Vijay, Rahul, and Shraddha, and Andy agreeing to provide the requirements document via email, while planning for the next meeting and initial form authoring by Andy.\n• *Trigger Points and Campaign Adjustments in Marketo:* Rahul and Andy discussed the need to update Marketo campaign triggers to accommodate the shift from Marketo form fills to AEM form fills, with plans to clone and adjust campaigns as needed for the new integration.\n:todo_done: *Next Action*\n• *Requirement Document Sharing:* Email the requirements presentation (slide deck) as a PDF attachment to all team members who could not access it via the chat or link. (Andy Kluck)\n• *AEM Environment Access:* Verify and confirm AEM environment access for Shraddha, and resolve any outstanding access issues for all relevant team members. (Sarah Warzecha)\n• *AEM Environment Access Testing:* Test the provided AEM environment credentials and report back on successful access or any issues encountered. (Mayank)\n• *Form Authoring Access:* Check and confirm that Andy Kluck has the necessary access to AEM to act as the form author for the project. (Sarah Warzecha)\n• *Review of Requirements Document:* Review the requirements document and communicate any follow-up questions or changes in strategy to the group via email. (Mayank, the team)\n• *API Connection Details:* Provide the necessary API connection details for Marketo main instance to the implementation team when needed. (Andy Kluck)",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name brunswick clock2 date 2025 08 26 group people attendees u06nf880220 wlwhn4tv3 u0213t59lmn loading 2248 notes aem forms and marketo integration demo mayank shraddha and rahul presented a demo to andy kluck and sarah warzecha showcasing the implementation of aem forms integrated with marketo including custom rules for lead partitioning based on form fields such as city and postal code requirements review and field mapping andy kluck walked the group through a detailed requirements presentation outlining the need for replicating the request a quote form on multiple regional websites specifying required visible and hidden fields and ensuring correct data flow and field mapping into marketo and salesforce lead routing partitioning and duplicate management the team discussed strategies for routing leads to the correct marketo partitions and workspaces handling existing and new contacts and minimizing duplicate records with andy and mayank exploring whether assignment logic should reside in aem forms or marketo salesforce integration and custom field handling rahul and andy discussed the integration between marketo and salesforce confirming that all form data flows through the lead object with custom fields and tasks used to trigger updates in salesforce and clarified the frequency and process for creating new custom fields access management and next steps the group coordinated on access to aem and marketo environments with sarah confirming access for mayank vijay rahul and shraddha and andy agreeing to provide the requirements document via email while planning for the next meeting and initial form authoring by andy trigger points and campaign adjustments in marketo rahul and andy discussed the need to update marketo campaign triggers to accommodate the shift from marketo form fills to aem form fills with plans to clone and adjust campaigns as needed for the new integration todo_done next action requirement document sharing email the requirements presentation slide deck as a pdf attachment to all team members who could not access it via the chat or link andy kluck aem environment access verify and confirm aem environment access for shraddha and resolve any outstanding access issues for all relevant team members sarah warzecha aem environment access testing test the provided aem environment credentials and report back on successful access or any issues encountered mayank form authoring access check and confirm that andy kluck has the necessary access to aem to act as the form author for the project sarah warzecha review of requirements document review the requirements document and communicate any follow up questions or changes in strategy to the group via email mayank the team api connection details provide the necessary api connection details for marketo main instance to the implementation team when needed andy kluck",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-08-26",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1756358443.203619",
+            "attendees": [
+              "U06NF880220",
+              "WLWHN4TV3",
+              "U0213T59LMN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Brunswick*",
+            "quality_score": 80
+          },
+          "created_at": "2025-08-28T05:20:43.203Z"
+        }
+      ],
+      "themes": [],
+      "customers": []
+    },
+    {
+      "id": "b22d3c8b-45a5-4579-ab6e-7f4f9dbaaca8",
+      "title": "w4r5lupk3 - wqwcbv6nn - w9qmzfr39 (5 signals)",
+      "description": "Cluster of 5 related signals. Sources: slack. Types: feedback.",
+      "status": "new",
+      "created_at": "2026-02-05T12:04:43.912Z",
+      "roadmapScore": {
+        "overallScore": 49,
+        "impactScore": 15,
+        "confidenceScore": 100,
+        "effortScore": 50,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 5,
+          "uniqueCustomers": 0,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 30,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "942df536-2e53-487f-83c6-f036fbd192ab",
+          "source": "slack",
+          "source_ref": "1764150872.336759",
+          "signal_type": "feedback",
+          "content": "cc:<@W4R5LUPK3>",
+          "normalized_content": "cc w4r5lupk3",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1764150872.336759",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "1f7e658c-df21-469d-a515-45379d182d34"
+          },
+          "created_at": "2025-11-26T09:54:32.336Z"
+        },
+        {
+          "id": "abcbd73f-fbbf-436d-9dbb-3352c8b4a520",
+          "source": "slack",
+          "source_ref": "1759215734.376689",
+          "signal_type": "feedback",
+          "content": "cc: <@W4R5LUPK3> <@W010NNJV7S8>",
+          "normalized_content": "cc w4r5lupk3 w010nnjv7s8",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1759215734.376689",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "6e2b1f2b-6472-46ed-a5ba-ef7b19a36c26"
+          },
+          "created_at": "2025-09-30T07:02:14.376Z"
+        },
+        {
+          "id": "2a5eaf0d-fb0a-4f55-b02b-8867292b6107",
+          "source": "slack",
+          "source_ref": "1755672870.458489",
+          "signal_type": "feedback",
+          "content": "cc: <@W4R5LUPK3>, <@WQWCBV6NN>",
+          "normalized_content": "cc w4r5lupk3 wqwcbv6nn",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1755672870.458489",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "65579fd6-ac1a-4117-be89-52600001f1ff"
+          },
+          "created_at": "2025-08-20T06:54:30.458Z"
+        },
+        {
+          "id": "00ac6d90-a03c-4a1d-9145-fa4fea67b9bc",
+          "source": "slack",
+          "source_ref": "1754466397.250069",
+          "signal_type": "feedback",
+          "content": "cc: <@W9QMZFR39>, <@W4R5LUPK3>, <@WQWCBV6NN>",
+          "normalized_content": "cc w9qmzfr39 w4r5lupk3 wqwcbv6nn",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1754466397.250069",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "d0d824de-debf-4b69-baa3-f07164c17fe8"
+          },
+          "created_at": "2025-08-06T07:46:37.250Z"
+        },
+        {
+          "id": "64251041-bd79-422d-b8c1-1b012d0d1be2",
+          "source": "slack",
+          "source_ref": "1754464333.456929",
+          "signal_type": "feedback",
+          "content": "cc: <@W9QMZFR39>, <@W4R5LUPK3>, <@WQWCBV6NN>",
+          "normalized_content": "cc w9qmzfr39 w4r5lupk3 wqwcbv6nn",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1754464333.456929",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "21bbba15-4560-4fff-8fa9-9ca7887cc9eb"
+          },
+          "created_at": "2025-08-06T07:12:13.456Z"
+        }
+      ],
+      "themes": [],
+      "customers": []
+    }
+  ],
+  "quickWins": [],
+  "emerging": [],
+  "byImpact": {
+    "high": 0,
+    "medium": 0,
+    "low": 75
+  },
+  "byConfidence": {
+    "high": 75,
+    "medium": 0,
+    "low": 0
+  },
+  "averageScores": {
+    "impact": 10,
+    "confidence": 100,
+    "effort": 50,
+    "strategic": 50,
+    "urgency": 30
+  }
+}

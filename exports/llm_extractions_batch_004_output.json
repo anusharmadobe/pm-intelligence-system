@@ -1,0 +1,1392 @@
+{
+  "items": [
+    {
+      "signal_id": "d62319cf-ef85-4517-85d1-ebaf9ffefacc",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "67b2302a-b586-4c94-8691-30f0015eed42",
+      "customers": [],
+      "features": [
+        { "name": "PDF Viewer Core component", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Use existing core components", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Have they tried PDF Viewer Core component?", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "52a1b6d7-ba4c-4d70-8f8a-69920576234d",
+      "customers": [],
+      "features": [
+        { "name": "PDF display in same tab (PDFViewer)", "confidence": 0.9 },
+        { "name": "Adobe Document Services APIs", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Licensing / configuration required for Doc Cloud API", "confidence": 0.9 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm if additional Doc Cloud license required to display PDF in same tab", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "5f64ddce-57ce-4807-9aad-2d0207f31876",
+      "customers": [],
+      "features": [
+        { "name": "PreProcessor (FDM preprocessor)", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Documentation gap", "confidence": 0.9 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Share HDFC example wiki for PreProcessor functionality", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "d5537f74-f99c-4976-bd92-c08ea5169cc4",
+      "customers": [],
+      "features": [
+        { "name": "Authenticated REST Endpoint (submit action restpoint)", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Documentation reference", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Refer to documentation for Authenticated Rest Endpoint", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "9dcc76fe-828b-4782-9abc-3ef41d38cfc7",
+      "customers": [
+        { "name": "NFCU", "confidence": 0.95 }
+      ],
+      "features": [
+        { "name": "Convert static PDF T&C to HTML and show in Adaptive Form", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "PDF-to-HTML conversion requirement", "confidence": 0.9 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Convert static PDF containing T&C to HTML and display below in AF", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "2c83285a-3448-42f4-be23-285a88417b31",
+      "customers": [],
+      "features": [
+        { "name": "Auth REST endpoint documentation + preprocessor", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Documentation request", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Provide documentation for Authenticated REST endpoint and preprocessor functionality", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "f50750f1-ecd6-4f52-a64c-8d1b839878e3",
+      "customers": [
+        { "name": "HDFC Bank", "confidence": 0.9 }
+      ],
+      "features": [
+        { "name": "HTML Forms / Mobile Forms", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "PDF conversion to HTML for data capture", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "99bc0bc8-a679-4259-99f2-ac933e4d653b",
+      "customers": [
+        { "name": "NFCU", "confidence": 0.9 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Go-live plan", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "NFCU custom implementation going live by June end for first AF submission usecase", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "99e77bde-2102-4eb5-bd38-151c4a8d8edb",
+      "customers": [],
+      "features": [
+        { "name": "LLM-based conversion with bindings", "confidence": 0.7 },
+        { "name": "AFCS conversion", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "GenAI-assisted conversion testing", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Try to convert sturman1.pdf using LLM along with bindings", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "15f8898c-8e3b-4866-969b-7950f7af340a",
+      "customers": [],
+      "features": [
+        { "name": "AFCS conversion testing", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Request for sample forms", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Have you received any sample forms and tried to convert via AFCS?", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "9041ab15-2f1f-4511-ad1b-70f1e5ef69f6",
+      "customers": [
+        { "name": "State of PA", "confidence": 0.8 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Legal agreement coordination", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Share State of PA email id to send legal agreement", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "c6c27bc4-a63d-4d77-ab5e-bf8d725302a6",
+      "customers": [
+        { "name": "State of PA", "confidence": 0.6 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Interest suggestion", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "5057f578-f003-4312-ac4d-bb774656856f",
+      "customers": [
+        { "name": "Abbvie", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "Demo of Forms", "confidence": 0.7 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        { "text": "Shown demo to Abbvie during their POC", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "796bdde0-6d76-4c29-bcc1-45616931aab6",
+      "customers": [],
+      "features": [
+        { "name": "Summit deck (AEM Forms innovations)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Collateral sharing", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "22d6131f-5b09-4083-b56f-aba7385c62d5",
+      "customers": [],
+      "features": [
+        { "name": "Recorded demo", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Use recorded demo to gauge interest", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Show recorded demo to gauge interest", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "6adb4adf-0698-457d-9354-0b44d8f12c31",
+      "customers": [],
+      "features": [
+        { "name": "GenAI beta agreement", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Agreement coordination", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Provide email ID to send GenAI beta agreement", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "2c0a7ca2-5e62-49c8-8b5e-e71bc29ca691",
+      "customers": [
+        { "name": "State of Pennsylvania", "confidence": 0.8 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Pitching to cloud customers", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Pitch to cloud customers (including State of Pennsylvania)", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "74243ea4-286c-40e0-bbed-fdada545636f",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        { "text": "Send legal document to sign", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "07959d39-abb1-4f59-b317-25bf22ad951e",
+      "customers": [
+        { "name": "State of Pennsylvania", "confidence": 0.7 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Customer engagement", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Pitch to State of Pennsylvania and share material if available; schedule session", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "342a1b91-27b6-40d4-96c2-714bb0fa4b81",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        { "text": "Check referenced thread", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "d6c50d70-d47e-4b96-b418-19c0ac8b5a73",
+      "customers": [],
+      "features": [
+        { "name": "Tagged interactive PDF", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Accessibility / tagging", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm generation of tagged interactive PDF", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "99eb8274-0666-4d33-ad35-1595a8ba8ba6",
+      "customers": [],
+      "features": [
+        { "name": "Tagged interactive PDF generation", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Accessibility", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Have you generated a tagged interactive PDF?", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "c5ca3f4f-c99c-4f86-858f-a75beee434d9",
+      "customers": [],
+      "features": [
+        { "name": "Multi-signer flow sample form", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Signature / multi-signer support", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "373b0faa-9058-456e-aa08-e4a1f1526e8d",
+      "customers": [],
+      "features": [
+        { "name": "Tag enabled PDF", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Accessibility", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "4cd0d203-514f-41a9-b29a-7a364c18a36d",
+      "customers": [],
+      "features": [
+        { "name": "Multiple signers (Adobe Sign block in foundation components)", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Signing workflow", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Check if foundation forms support multiple signers and updating fields for subsequent signers", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "09857f37-2149-4aa9-b8c9-95ef75854337",
+      "customers": [],
+      "features": [
+        { "name": "XDP extraction and generatePDFOutput API (tagging enabled)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Tagged PDF generation", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Extract XDP from first PDF and pass through generatePDFOutput API with tagging enabled", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "fb37341c-55a4-4b2f-81cb-393f89d7bfee",
+      "customers": [],
+      "features": [
+        { "name": "Accessibility roles in XDP", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Accessibility - role tagging", "confidence": 0.9 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "fd7ab988-5b91-46fa-8d81-498288f35aa4",
+      "customers": [],
+      "features": [
+        { "name": "Output service (XDP -> tagged PDF)", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Limitations of tagging flat vs XFA PDFs", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Output service cannot tag flat PDFs directly; best with XDPs containing accessibility roles",
+          "category": "Conversion",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        { "text": "Confirm whether heuristic API works with XFA-based PDFs", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "9333395b-d751-4208-891d-4c6cf62e964f",
+      "customers": [
+        { "name": "DMAF (Media & Publishing org)", "confidence": 0.7 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Promote infra across orgs", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "d73e07d4-b4a3-43ab-9c70-97526d163e2a",
+      "customers": [
+        { "name": "IRS", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "Output service conversion to tagged PDF", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "XFA -> tagged PDF conversion", "confidence": 0.9 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Convert XFA file to tagged PDF using Output service and confirm tagging retention", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "6bd3c29a-debc-41eb-aec2-6fd3e0176580",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "fdc04f73-694b-4a95-b2ad-f8774ac9c4c5",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Undefined go-live timeline", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Customer does not share defined timeline to go live",
+          "category": "Timeline",
+          "severity": 2,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "524d2d81-e0e5-460c-97fd-4d5023316d3e",
+      "customers": [
+        { "name": "INPS", "confidence": 0.7 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Go-live date inquiry", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "What are the expected go-live dates for INPS?", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "f95b6801-0bf8-4583-9bb3-9a9df5990e7e",
+      "customers": [
+        { "name": "AbbVie", "confidence": 0.9 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Connectivity / CloudFront workaround", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "502 Cloudflare error blocked testing; temporary CloudFront testing domain created",
+          "category": "Availability",
+          "severity": 3,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        { "text": "Provide proper fix for 502 error (working on it)", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "2f6f3475-5225-4fa0-81ed-922b2c4df428",
+      "customers": [
+        { "name": "AbbVie", "confidence": 0.85 }
+      ],
+      "features": [
+        { "name": "Forms Experience Builder", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Bug fix + feature enablement", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Need to set status code correctly (work in progress)",
+          "category": "Bugfix",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        { "text": "Enable Forms Experience Builder on customer's environments", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "fc36f235-3894-4910-823c-f997e2da1424",
+      "customers": [
+        { "name": "AbbVie", "confidence": 0.8 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Unblocking customer", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Notify once fixed and AbbVie is unblocked", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "649be1b0-97f2-47eb-99d2-f3796b244f47",
+      "customers": [
+        { "name": "AbbVie", "confidence": 0.7 }
+      ],
+      "features": [
+        { "name": "Forms Experience Builder", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Enablement nudges", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Nudge customer for use of Forms Experience Builder; they will confirm if they want it enabled", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "2c5fd938-a4ff-4cf6-ba41-ff44fac10384",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Account coordination", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Start internal thread with Account Manager and keep loop", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "7f97e569-9ef3-44d9-a647-0a8b688f451a",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Meeting scheduling / pitching", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Schedule meeting to pitch if not planned", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "bb6ea290-672d-4e39-ae57-610364ce627b",
+      "customers": [
+        { "name": "SOP (State of Pennsylvania?)", "confidence": 0.7 }
+      ],
+      "features": [
+        { "name": "Forms Experience Builder demo", "confidence": 0.9 }
+      ],
+      "themes": [
+        { "name": "Customer interest / demo scheduling", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Schedule demo for Forms Experience Builder (US timing / late evening)", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "4b474e7b-70c2-403a-81c5-19452c62e7e5",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Submission channels & integrations", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Document submission details per form category (email, sitecore csv export, Dynamics 365)", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "1bb5c365-1149-4330-bb33-e1df70339759",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Form URLs catalog", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "10cdb6ca-bb72-4216-bde6-953bea32455c",
+      "customers": [],
+      "features": [
+        { "name": "RDE advanced networking features", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Environment networking capabilities", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "15ba5cd6-1764-49af-a947-3d1b80903db1",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Uncertainty about RDE networking support", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "432b2771-a270-432a-9460-09ed4b380f52",
+      "customers": [],
+      "features": [
+        { "name": "RDE usage for quick backend development", "confidence": 0.6 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "f8b85b87-5e24-4e59-819f-4b2302259aaf",
+      "customers": [
+        { "name": "Carpenter's", "confidence": 0.7 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Unblocked status", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "3efbfd8c-eb46-4ed4-b4cf-181a169adc74",
+      "customers": [],
+      "features": [
+        { "name": "Azure SQL Server connection steps", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Documentation request for connectivity", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Document steps for connecting with Azure SQL Server", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "7f164a71-c050-4b9b-88c6-537febc6390c",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Customer unblocking appreciation", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "e61cf680-1622-4029-a649-2ac24734916c",
+      "customers": [],
+      "features": [
+        { "name": "EDS (interest in more customers live on EDS)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "EDS adoption", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "52138483-7947-4e0c-b97f-5937d8e39c4f",
+      "customers": [],
+      "features": [
+        { "name": "Forms Optimizer / RUM", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Optimization and analytics", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Check if customer interested in Forms Optimizer and RUM or analytics data", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "e1cbdca0-c59b-41c5-a6c9-d28888e8c667",
+      "customers": [
+        { "name": "Jet2", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "Forms VIP program", "confidence": 0.8 },
+        { "name": "EDS & Forms Experience Builder adoption", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Offer VIP to drive adoption and avoid escalation", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Offer Forms VIP program to Jet2", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "623f925b-500d-4667-87b7-f5de6c4f9bc1",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Reference forms for demo", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "1b8ddbb2-319e-4256-8da1-e0d03ae0fec0",
+      "customers": [
+        { "name": "Corebridge / GenerationStation (demoed)", "confidence": 0.7 }
+      ],
+      "features": [
+        { "name": "Document of Record (DoR) generation", "confidence": 0.8 },
+        { "name": "Versioning and audit trail", "confidence": 0.8 },
+        { "name": "Reusable Rules / Fragments", "confidence": 0.7 },
+        { "name": "Forms Optimizer", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Feature gaps (DoR, charts, reusable rules)", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Document of Record (DoR) generation currently not supported in UE",
+          "category": "Feature gap",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        { "text": "Recommend Forms Optimizer for conversion improvement", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "6e2bdd24-19ad-4af6-841c-a1f156f0df8d",
+      "customers": [],
+      "features": [
+        { "name": "UE based forms (feature parity consideration)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Recommendation to demo UE forms for new customers", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Recommend/demo UE-based forms for new prospective customers", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "654bce47-d875-40c6-8b58-82d1b0ce5322",
+      "customers": [],
+      "features": [
+        { "name": "MF (Mobile Forms) suitability", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Scalability and caching concerns", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "MF may not scale without caching for many requests; Lighthouse scores may be poor for very large forms",
+          "category": "Scalability",
+          "severity": 4,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        { "text": "Analyze form size and current request volume to determine MF suitability", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "a2c3e85c-8449-4e2f-98a5-41584e1fecea",
+      "customers": [],
+      "features": [
+        { "name": "MF suitability question", "confidence": 0.6 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        { "text": "Is MF the right choice for this considering large form?", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "dc9ce6e8-ae80-47f3-8ca1-1342f5d90886",
+      "customers": [],
+      "features": [
+        { "name": "USC and FDM Azure connector backport plan", "confidence": 0.85 }
+      ],
+      "themes": [
+        { "name": "Backporting strategy and support matrix", "confidence": 0.85 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "dea309f8-2823-47f1-880a-d4bf5ddf8dd8",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Parity between versions (6.5 vs 6.6)", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Need to keep parity between 6.5 and 6.6 else maintenance burden increases",
+          "category": "Maintenance",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "f71e94de-5114-44f8-b85b-6d7cb78df1a4",
+      "customers": [],
+      "features": [
+        { "name": "Custom USC features in Cloud", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Backport scope discussion", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Decide whether to backport all features to 6.6 and include custom USC in Cloud", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "6d3fa7a2-fdd0-4ec3-b41c-2b3755c6fb0d",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Issue reporting guidance", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Raise issues in Forms Boilerplate", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "9ff61ae5-eedc-43f0-8b83-658c450ed544",
+      "customers": [],
+      "features": [
+        { "name": "Create-custom-component doc (UE)", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Documentation/link clarification", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "a0b83762-3170-49bf-b107-da8aee32466b",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Discovery problem affecting TTV", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Discovery problem contributes to increased Time-to-Value (TTV)",
+          "category": "Adoption",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "cdade710-a910-4784-ba43-923967482792",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Where to raise issues documentation query", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Clarify where to raise issues (is it documented?)", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "e61ae6ec-0ca4-4ab2-960e-02774a14cb7d",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "2b88be6f-c273-4155-86d4-7dee0cac9539",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Documentation gap for simplified custom components", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Lack of documentation for simplified custom components causes discovery problem",
+          "category": "Documentation",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "ce8e8624-c829-4758-ad03-8c644c0e741b",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Raise issues in boilerplate to help other customers", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Suggest raising queries/issues in boilerplate", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "1a7c6dc1-2fc9-41f9-ae01-e09694e4750e",
+      "customers": [],
+      "features": [
+        { "name": "Custom component creation process", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Refactor from incorrect product code edits to proper custom components", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Customer modified product code (form.js) instead of creating custom components",
+          "category": "Implementation",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        { "text": "Walk through custom component creation process and refactor with right approach", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "8d814298-36a9-4b52-b154-da2f4ddd94a6",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Need to document incorrect approaches and lessons learned", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Elaborate incorrect approaches taken and how to improve to prevent others repeating mistakes", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "dea18808-5b36-4a3b-9b7b-80042062176f",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "LAS team involvement", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "4b2d2011-9d6d-490f-b5fd-5ec4a5140608",
+      "customers": [
+        { "name": "NFCU", "confidence": 0.8 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Meeting cadence preference", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Set twice/week meetings and share details by email to NFCU including requester", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "02e6210e-c8d7-4cf5-8962-c5c69efcc113",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Timeout causes analysis", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Timeout error due to many pages in PDF (not due to table json decode issue)",
+          "category": "Performance",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "7af7b376-312b-454e-a1a4-1bb49c65a26e",
+      "customers": [],
+      "features": [
+        { "name": "AF generation for large forms (>40 pages)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Conversion blockers for large PDFs", "confidence": 0.9 }
+      ],
+      "issues": [
+        {
+          "title": "Unable to generate AF forms from >40 page PDFs (blocker)",
+          "category": "Conversion",
+          "severity": 4,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        { "text": "Recommend fixing large table to repeatable panel as first step", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "ed9a3d03-5e4e-4147-bcda-997cdf2444fc",
+      "customers": [],
+      "features": [
+        { "name": "Async support / batch processing", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Batching vs async support", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Four forms >40 pages in 19-form batch block generation of AF forms",
+          "category": "Conversion",
+          "severity": 4,
+          "confidence": 0.9
+        },
+        {
+          "title": "Signed fields appear twice in converted PDF (critical issue)",
+          "category": "Conversion",
+          "severity": 4,
+          "confidence": 0.85
+        },
+        {
+          "title": "Some data missing in final PDF after conversion",
+          "category": "Conversion",
+          "severity": 4,
+          "confidence": 0.85
+        }
+      ],
+      "requests": [
+        { "text": "Sync with team to provide fixes by early next week and focus on async support in parallel", "confidence": 0.8 },
+        { "text": "Push customer to execute at least one batch", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "8447547b-34b0-42c2-87da-80780d8a4f13",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Meeting notes and action items", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Review meeting notes and action items posted (meeting summary link)", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "3e40277a-45ed-4dfb-9d67-681e3fe0a0f2",
+      "customers": [],
+      "features": [
+        { "name": "Async support / batch processing", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Encourage batch execution", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Push customer to execute at least one batch", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "daa178a3-c060-4ab5-8392-e0383df1bf94",
+      "customers": [],
+      "features": [
+        { "name": "Template reuse; repeatable panel", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Alignments and next steps summary", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "PDF Conversion: signed fields appear twice in converted PDF",
+          "category": "Conversion",
+          "severity": 4,
+          "confidence": 0.85
+        },
+        {
+          "title": "Missing data in final PDF after conversion",
+          "category": "Conversion",
+          "severity": 4,
+          "confidence": 0.85
+        }
+      ],
+      "requests": [
+        { "text": "Provide end-to-end testing for conversion/prefilling/generation (exclude signing)", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "0951f340-cd00-49e4-a935-45ead895d88e",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "d3350b75-4690-49aa-8412-696573d8030b",
+      "customers": [
+        { "name": "NFCU", "confidence": 0.75 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Need more clarity on requirements", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Seek more clarity from NFCU on stated requirements", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "e05794a2-8229-463b-b78c-f9a4dd9fb1ed",
+      "customers": [],
+      "features": [
+        { "name": "Automated custom metadata (readonly)", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Request for elaboration", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Elaborate on automated custom metadata which is readonly", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "4c59fa8b-743c-4205-addb-78cce7f6c70a",
+      "customers": [
+        { "name": "LPL", "confidence": 0.7 }
+      ],
+      "features": [
+        { "name": "PDF generated by converting Word (comparison)", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Reproducibility and comparison artifacts", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Get PDF generated by converting the Word doc to confirm presence of signature field", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "92671492-a068-477d-a13a-4fbda5bc1cc9",
+      "customers": [
+        { "name": "LPL", "confidence": 0.7 }
+      ],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        { "text": "Confirm that customer has shared documents", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "cbdfade8-2fb1-4952-850d-8a12de66c37f",
+      "customers": [
+        { "name": "LPL", "confidence": 0.7 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Request for Word document", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Provide the Word document shared by LPL", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "c5b5738a-d3d4-41e6-ba65-45506d8de7b4",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Meeting cadence (July 28 week)", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Awaiting July 28 week meeting", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "a7bbb25d-e39e-4bd9-bea7-bb3e5922ad25",
+      "customers": [],
+      "features": [
+        { "name": "Gen AI", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Prioritization (focus before GenAI)", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Delay GenAI discussion for about a week; focus on one thing at a time", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "83d21e10-41a0-4056-9ce1-29660a2757b6",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Coordination via Slack or email", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Start a thread on Slack or initiate an email thread to check availability", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "23977c04-0bdc-4977-accb-82dafab1bf90",
+      "customers": [],
+      "features": [
+        { "name": "Gen AI capabilities (image/PDF to Adaptive Form conversion)", "confidence": 0.85 }
+      ],
+      "themes": [
+        { "name": "Schedule demo and gather feedback", "confidence": 0.85 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Schedule meeting to walk through Gen AI capabilities and gather feedback; analyze prompt usage", "confidence": 0.85 }
+      ]
+    },
+    {
+      "signal_id": "141d8fe7-728a-4295-83f8-e2f226265368",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "d569c138-a8e1-49ba-92c3-25dc3d80ca58",
+      "customers": [
+        { "name": "Abbvie", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "Sites Optimizer trial", "confidence": 0.7 },
+        { "name": "Forms optimizer (EA)", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Convergence of Sites+Forms optimizer and trials", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "81af9885-359d-4ed2-b0d2-1a213e8ed028",
+      "customers": [
+        { "name": "Abbvie", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "Forms Experience Builder (Prompts usage)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Positive feedback and usage", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "8fb6beef-1cb2-4837-9d9d-70298418c3f7",
+      "customers": [],
+      "features": [
+        { "name": "Core Components", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Decision to remain on core-components (no EDS plans)", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "0399feab-1911-4bbb-9af7-c5c589965830",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Relevance of learning for future authors", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "64673f8f-199c-4582-b591-91881bf50179",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "73e0c498-ebc4-4331-adac-a632968d2a03",
+      "customers": [
+        { "name": "4Point", "confidence": 0.7 }
+      ],
+      "features": [
+        { "name": "Core-components adoption (chosen)", "confidence": 0.8 },
+        { "name": "EDS pitching for new projects", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Pitch EDS as primary option for new projects", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Pitch EDS to 4Point and highlight as primary option for new projects", "confidence": 0.75 }
+      ]
+    },
+    {
+      "signal_id": "56399f2b-4e9a-4f3e-81f9-70b9a50c4378",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Push data vs pull data distinction", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "3e5a6a93-b666-4cff-8105-32fbdaae1ae2",
+      "customers": [
+        { "name": "NFCU", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "data.json delivered from separate API (similar to Output Service)", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Integration pattern: data source via API", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "4be281f3-b7a1-4dfd-8e67-462605748341",
+      "customers": [],
+      "features": [
+        { "name": "IC data source (initial decision)", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Design decision on data source support", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "59b8c2e0-20d8-455a-b69d-86a9b5ca9f20",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Questioning origin of data.json", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "d091bde6-7fd8-43d2-8708-f789bfcfbd46",
+      "customers": [
+        { "name": "LPL", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "XDP template generation from schema", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Use-case: generate PDF by merging data.json with XDP template", "confidence": 0.85 }
+      ],
+      "issues": [
+        {
+          "title": "Customer not retrieving data from external system; has data.json and wants XDP from schema (FDM not preferred)",
+          "category": "Integration",
+          "severity": 2,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        { "text": "Create XDP from schema and generate PDF by merging data.json values with XDP template; avoid FDM since no retrieval", "confidence": 0.8 }
+      ]
+    }
+  ]
+}

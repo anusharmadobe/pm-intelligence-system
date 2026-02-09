@@ -1,0 +1,1681 @@
+{
+  "items": [
+    {
+      "signal_id": "a5dc5ffd-2606-4a1b-8840-bafbfd269df1",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "7a269fa4-6a79-41d6-90ef-c3c8845654c0",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "77498bc5-2856-4d55-85da-e38050088646",
+      "customers": [
+        {
+          "name": "Brightline",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "need developer persona for single config",
+          "confidence": 0.8
+        },
+        {
+          "name": "styling/configuration support",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "product usability for content authors",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Provide developer persona support for single config and styling to help content authors.",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "signal_id": "7f1ef6e3-872b-453a-bf13-aa4ca404b9d1",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [
+        {
+          "title": "Wizard Data tab performance issue",
+          "category": "performance",
+          "severity": 3,
+          "confidence": 0.85
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "b0812060-05af-47bb-a6cc-5521d57bf2c9",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm whether Jira was created for the Wizard Data Performance issue.",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "signal_id": "94dca04d-a06c-4d09-846e-4a610975785c",
+      "customers": [],
+      "features": [
+        {
+          "name": "API for listing forms",
+          "confidence": 0.9
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Use the API directly to list forms (similar to JPMC example).",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "036fb277-5df0-4cee-909e-031ae10d5b90",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "696047a8-3560-4aa0-bd00-d7687336bf08",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "a5462347-3b38-4504-b49a-df4b525f8e6f",
+      "customers": [],
+      "features": [
+        {
+          "name": "forms portal listing component",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "guidance for Cloud Manager site page listing forms and group-based access control",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Provide guidance or a walkthrough on how to create a site page in Adobe Cloud Manager that lists available forms and configures user group-based access control.",
+          "confidence": 0.9
+        },
+        {
+          "text": "Explain why forms portal listing component can't be used in this scenario.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "9a0fd5af-8c3e-49ff-9e59-0d017bf2be40",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Sync on this and send a formal response/proposal to Ford.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "0c939dc7-6131-44f6-8c3e-cedb7dc6a43d",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "31b89f69-a7fa-4525-a37b-a1f5f581758a",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Discuss with <@W5HEU5M7Y> and send a response post Diwali.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "81bed79a-6de3-4b7e-9650-6929fe328f8a",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "include in offline and VIP discussions",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Add the requester to offline and VIP discussions.",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "5f2a1df9-fc5b-4d78-a8f9-a62fe62d57db",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Form/Use-case details shared.",
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "signal_id": "3f1cb81b-c18d-41c3-8cc9-0d593daa0a08",
+      "customers": [
+        {
+          "name": "MTAB app",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "support for large job-card forms and long update cycles",
+          "confidence": 0.85
+        },
+        {
+          "name": "co-creation opportunities",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "large forms, slow update cycles, need for specialised support/DevOps",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Adobe to follow up on MTAP requirements and offer co-creation opportunities (forms implementation planned for FY26).",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "65efe671-f996-4256-bf1c-268e7dc16010",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "ff5846d7-ec83-4443-bee7-ba7e1dc49a25",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Request to update/correct thread content if missed anything.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "6eb3747b-83b5-41e1-b330-9904f546a8c7",
+      "customers": [],
+      "features": [
+        {
+          "name": "outlook email configuration",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "c5180da6-4fa0-49f9-91fb-038e3e023682",
+      "customers": [
+        {
+          "name": "Customer (unnamed)",
+          "confidence": 0.8
+        }
+      ],
+      "features": [
+        {
+          "name": "AEM Forms license (no Sites license)",
+          "confidence": 0.9
+        }
+      ],
+      "themes": [
+        {
+          "name": "lack of development experience / need for hand-holding",
+          "confidence": 0.9
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Set customer expectations for AEM site implementation and note that professional services or paid consulting may be required.",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "signal_id": "8619cde8-2e8c-43ad-b4cb-f5cace3fc1ec",
+      "customers": [
+        {
+          "name": "Carpenter",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "only Forms license observed in Panorama",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "license-check required",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Check with SAM to confirm license status.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "bfc6db99-9dc7-4ce2-90d8-6dc5a2114739",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "escalation tracking",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "da5b2969-a296-42a8-b511-b72ece4cd186",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "393d634c-d42b-4f36-b488-6d3714b6e3de",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Check if they already have LAS.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "af948b43-03c6-4868-8e67-a7ef0464dd8e",
+      "customers": [],
+      "features": [
+        {
+          "name": "LAS credits required",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Inform customer that LAS credits need to be purchased.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "a2b2b110-04bf-49ce-855e-b28362713c1a",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Ask whether LAS is involved and can help.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "cd4cdbef-3bdd-4209-a877-2704a02687b8",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "customer lacks developer fundamentals; expects Adobe to implement end-to-end",
+          "confidence": 0.9
+        }
+      ],
+      "issues": [
+        {
+          "title": "Customer lacks development fundamentals and expects Adobe to implement forms end-to-end",
+          "category": "onboarding/training",
+          "severity": 3,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "Engage partner/ACS involvement because customer expects Adobe to implement many items on their behalf.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "0a47f819-3d8a-4494-9f91-240c2438cb8a",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "0a94a5e4-4860-4776-b55e-757ce72741bc",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Request link to the query.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "e58194c3-e2b7-4f29-86de-1a3ee04e300c",
+      "customers": [],
+      "features": [
+        {
+          "name": "IC environment error (IC Env)",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "usecase discovery and PoC; potential EA opt-in",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Investigate errors in the customer's IC environment posted in the relevant Slack group.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "eee65d5f-f8aa-4d2a-898e-fd9bca9c7e64",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Keep the team in the loop for IC engagement with LPL.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "72260aa0-ddf0-4507-ab22-140b79a65300",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "a80b5289-0a86-4dff-b70d-f2e0ca91a557",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "96e393f3-e1d3-4e50-85ed-4fec9812b461",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "4d096b56-8850-4660-8ff8-d7ac246ad15b",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "3ccd5bf6-1566-4a2c-a972-15a9613ee5eb",
+      "customers": [],
+      "features": [
+        {
+          "name": "servlet at bin/generatePDF",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "f4ff95ec-8f94-416a-8305-ca2c766db718",
+      "customers": [
+        {
+          "name": "LPL",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "Generate DoR call tracking equals transaction count",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Track the Generate DoR call for LPL to equate transaction counts.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "3b10cf57-1454-48f2-95ed-219f5292f916",
+      "customers": [
+        {
+          "name": "LPL",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "custom submit flow (exportData -> custom servlet -> DoR -> signing)",
+          "confidence": 0.9
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "320d8fd5-f3e2-484b-97e1-d275441a7be3",
+      "customers": [
+        {
+          "name": "LPL",
+          "confidence": 0.8
+        }
+      ],
+      "features": [
+        {
+          "name": "custom submit usage vs live forms/submissions check",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Verify if LPL has any live Forms and whether they are using custom submit.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "cbd33126-b77c-4483-ac9e-93d7e7ba59eb",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "08d5b3a8-27b3-4f53-ace3-f7c56ce4cd9c",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Reference to 'Adobe's proposed solution' (no detail in text).",
+          "confidence": 0.5
+        }
+      ]
+    },
+    {
+      "signal_id": "fbf96a1f-9039-4e81-b175-60b7e1a0e746",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "4d5d61d8-555b-40ec-a3d4-71be061327bb",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "29af2ff3-d560-4240-957a-4f5e6fd2b091",
+      "customers": [],
+      "features": [
+        {
+          "name": "Edge delivery licence suggestion",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "If customers have Edge delivery licence then suggest it.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "15d2dc5a-6c33-47eb-b06a-41f50382d2c8",
+      "customers": [],
+      "features": [
+        {
+          "name": "Enable IC and Experience Builder FT to activate AI",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Enable IC and Experience Builder FT so AI should start working.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "08d1f40b-9a0d-4ffb-afe2-5a3e90af0c00",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Forward the consent form.",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "0d344976-75c9-4d0c-8eeb-59d5c530cdda",
+      "customers": [],
+      "features": [
+        {
+          "name": "Product's AI capabilities",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Start the process so user can use Product's AI capabilities.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "a8fd390c-ebba-4159-bf70-0f88fb5f7844",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Ask whether customer has signed the consent form.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "fb36cabf-127d-485b-bf25-ed2aa88fe83c",
+      "customers": [
+        {
+          "name": "[jp@smartdoctech.com](mailto:jp@smartdoctech.com) (customer email)",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "Enable Forms Experience Builder on customer env",
+          "confidence": 0.9
+        },
+        {
+          "name": "Enable IC's FT",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Enable the Forms Experience Builder and IC FT on the customer's environment and confirm additional steps to activate IC AI capabilities.",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "signal_id": "50a3d6ce-5bf5-427f-baf6-3ea30fcb2127",
+      "customers": [],
+      "features": [
+        {
+          "name": "Enable IC's FT on customer env",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Help enable IC's FT on customer env so James can use IC on Cloud.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "4c3d5b48-e12e-4cbd-9c0b-1c6ae489f581",
+      "customers": [],
+      "features": [
+        {
+          "name": "DoR API auto-convert JSON to XML",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "979d3ce1-f38a-4755-9029-0e8811af0d84",
+      "customers": [],
+      "features": [
+        {
+          "name": "XSD to JSON conversion / DoR API requirement",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "e9cee57a-2870-48e7-bf60-43dec6b6aad6",
+      "customers": [],
+      "features": [
+        {
+          "name": "Azure SQL server connection with AEM configurations documented",
+          "confidence": 0.9
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Add recommendations/troubleshooting steps for SQL server connection issues (WIP video to be added in Jan).",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "6ab6f5d5-b716-4a1c-8062-f258d50d156f",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "repeated SQL server connection issues across customers",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [
+        {
+          "title": "Multiple customers facing SQL server connection issues",
+          "category": "connectivity",
+          "severity": 3,
+          "confidence": 0.85
+        }
+      ],
+      "requests": [
+        {
+          "text": "Add recommendations and troubleshooting steps for Azure SQL server connections.",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "signal_id": "ceabf691-54f6-41a0-ad71-bc322c36c6b9",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Customer to sync internally and confirm go-live dates for forms in QA.",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "00f004d1-d5a6-4672-88a3-783d8de6d609",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Any update/confirmation from the meeting?",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "0a2e77af-17f2-4e95-8852-26dd338d5fba",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Follow-up in meeting tomorrow for confirmation.",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "6cb1dd95-0170-47e5-ba4a-2d9993f0fd48",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Request update on customer's go-live.",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "46fb92b6-9266-49ac-a2b2-8eaab20a0fcc",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "gather go-live dates, targets and documentation/training planning",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm go-live dates for forms, target counts for the year, and whether to provide documentation vs dedicated sessions.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "17980b95-94dd-43f2-8442-14a830298ce7",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Ask for go-live dates, target form counts, and session format preference (docs vs dedicated sessions).",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "965c54e6-3b97-4f36-9347-3ba900aca37f",
+      "customers": [],
+      "features": [
+        {
+          "name": "IC 'create IC from PDF' flow via AI Assistant",
+          "confidence": 0.9
+        }
+      ],
+      "themes": [
+        {
+          "name": "priority fix for demo to customer next week",
+          "confidence": 0.9
+        }
+      ],
+      "issues": [
+        {
+          "title": "Create IC from PDF flow broken in AI Assistant",
+          "category": "functional",
+          "severity": 4,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "Fix the create IC from PDF flow in AI Assistant and apply changes to Tano's env if required.",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "signal_id": "96678d82-bc34-4c4c-9ce7-d774d1496397",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "CSE team validation stage",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm whether the validated change has been shared with the customer.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "cfe05a18-6d2b-4bf6-b1dd-9cc9a3dff0c8",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Is there a confirmation from the customer yet?",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "0c64abac-a228-4437-97b7-f8caee61d5a7",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "7635c5fd-0464-45c9-9eba-7040bec31730",
+      "customers": [],
+      "features": [
+        {
+          "name": "PPT and code review required before re-connect",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Schedule a re-connect meeting next week (help schedule on Monday).",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "7a1f0741-dece-4a38-91f4-77caa3dcba7c",
+      "customers": [
+        {
+          "name": "Yuji Nakagawa (contact)",
+          "confidence": 0.8
+        }
+      ],
+      "features": [
+        {
+          "name": "connect with AMS team to get collateral/source code",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Connect with AMS team and review code for VIP engagement approach.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "b09e71e8-6e64-4c24-b17a-fd677fefe04d",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Propose a follow-up with Paul this week (note: user travelling next week).",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "35e210d5-fda2-46b5-9d58-200fb4db8d09",
+      "customers": [
+        {
+          "name": "SunPharma",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "AFCS conversion from Word to AF and DoR generation",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "large forms conversion and prefill/portal use cases",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Showcase demo from word -> AF -> generated DoR including workflow for approvals.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "1fc999a2-1eff-4303-a2c1-283b975b443a",
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "FDM integration ETA early April",
+          "confidence": 0.85
+        },
+        {
+          "name": "CS Service API .tiff to PDF conversion demo",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "need for webhooks/customizations and more frequent meetings",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "NFCU to share Excel with business requirements; follow up demo planned.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "33537113-6583-426c-a58c-afa46c3ef80b",
+      "customers": [
+        {
+          "name": "INAIL",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "private endpoint for Azure Blob store connection working",
+          "confidence": 0.9
+        }
+      ],
+      "themes": [
+        {
+          "name": "Output Batch testing and pre-prod security validation",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Check INAIL's plan for onboarding more use cases on Output Sync API.",
+          "confidence": 0.75
+        }
+      ]
+    },
+    {
+      "signal_id": "72455d58-f04b-49c5-8336-cac13a686f66",
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "FDM, render API and Rule Editor ETA: April",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "various feature ETAs and roadmap items",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "9fe65e5a-8f7c-45e6-b24b-04f444bf4b3c",
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "Navigation Functionality working; requested agent use cases",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "8ff06dd3-581f-4972-8f72-514fb4e1e830",
+      "customers": [
+        {
+          "name": "IRS",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "GenAI-assisted form authoring; migration utility interest",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "need for JSON support in Designer and better large-form performance",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Schedule follow-up session to demo migration utility and GenAI capabilities.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "0d5eeda6-a609-4634-adea-fff3e319eceb",
+      "customers": [],
+      "features": [
+        {
+          "name": "JSON Schema Conversion, adaptive form fragments, mapping/formatting",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "issues": [
+        {
+          "title": "Auto-DOR: tables in adaptive forms and excluding empty sections from DoR",
+          "category": "document generation",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "d08d7e86-9cef-4681-ad5d-13e8c8897c87",
+      "customers": [
+        {
+          "name": "Bank (unnamed)",
+          "confidence": 0.7
+        }
+      ],
+      "features": [
+        {
+          "name": "SmartEMI WhatsApp flow JSON updates",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "UAT/prod testing gap and production-specific changes",
+          "confidence": 0.75
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "562e9fa6-ab53-4f63-80d8-e09cb5b3d5a4",
+      "customers": [
+        {
+          "name": "Unnamed customer (800+ XDP-based PDF forms)",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "HTML5 forms conversion and client-side validation",
+          "confidence": 0.9
+        }
+      ],
+      "themes": [
+        {
+          "name": "scaling and loading large HTML5 forms; dispatcher caching issues",
+          "confidence": 0.9
+        }
+      ],
+      "issues": [
+        {
+          "title": "Performance and scalability issues with large HTML5 forms",
+          "category": "performance",
+          "severity": 4,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "Recommend migration to Adobe Cloud or AMS to resolve scaling and caching issues.",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "signal_id": "bd88fe6a-456d-4144-9cf3-90192bd1d533",
+      "customers": [
+        {
+          "name": "AbbVie",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "planned migration and partner (Cognizant) engagement",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "migration to cloud, data hydration to AEP, commerce integrations",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "dbcf62bd-5b24-4ee8-9b96-ed85411c1d83",
+      "customers": [
+        {
+          "name": "Unnamed (250+ XDP-based forms)",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "generate and deliver communications (~2,500 envelopes/day)",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "multi-step JSON→XML→PDF→Agreement→Signature flow and desire to optimize",
+          "confidence": 0.9
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Review existing architecture to reduce time for generating and sending communications.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "33192303-f5ad-490a-be9d-78bfb8bbe82e",
+      "customers": [
+        {
+          "name": "FCSA",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "explore AEM Forms capabilities including headless and prefill",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "post-migration exploration of use cases (marketing/business forms)",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "cc4dac95-f0b0-477e-b3fc-b00dbcb43281",
+      "customers": [],
+      "features": [
+        {
+          "name": "Universal Editor adoption and FDM support",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "AI assistant and GenAI authoring capabilities session requested",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Plan separate session to showcase GenAI authoring capabilities.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "20611247-c7f9-45cb-8763-3b8960014111",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Customer to send server logs to support for analysis.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "e18685ab-e6a9-40e8-b1c9-d2612858c7d0",
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 0.9
+        }
+      ],
+      "features": [],
+      "themes": [
+        {
+          "name": "MasterPage option confusion and FDM use case needs",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [
+        {
+          "title": "MasterPage option causing confusion during fragment creation",
+          "category": "usability",
+          "severity": 2,
+          "confidence": 0.85
+        }
+      ],
+      "requests": [
+        {
+          "text": "Provide FDM use case with filtered data and permission management demo; request GA dates for features.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "cf0d2527-fb56-4bf1-b65d-70e9af9d4906",
+      "customers": [],
+      "features": [
+        {
+          "name": "JSON→XML transformation and Generate PDF API flow",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "scalability concern and reluctance to replace BPM tool",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Review current implementation and share best practices for AEM Forms to make system more scalable.",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "signal_id": "a5669b70-ed19-416b-a980-115693a788c0",
+      "customers": [
+        {
+          "name": "Cintas",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "custom workflow model for Policy Exception (PE) form",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "theming, migration pros/cons, document storage",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "7b94a6ae-c4c4-4f92-8ebd-bec2509b48b5",
+      "customers": [
+        {
+          "name": "Pinnacle/VB-based static PDF customer (unnamed)",
+          "confidence": 0.8
+        }
+      ],
+      "features": [
+        {
+          "name": "cloud-based IC editing and conditional/rules-based fragments",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "migration from IC 6.5 to cloud and reliance on LiveCycle experience",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Implement user-friendly cloud-based editing for IC documents and support conditional fragments.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "c30d408f-11f2-47c2-addd-e9f1b0e76d95",
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 0.9
+        }
+      ],
+      "features": [],
+      "themes": [
+        {
+          "name": "auth/API details needed for FDM (auth protocol, storage data source, Swagger)",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [
+        {
+          "title": "Redirection issue when clicking edit in Document FM (dev2) - fixed",
+          "category": "redirect",
+          "severity": 1,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        {
+          "text": "Provide authentication protocol, storage data source details and Swagger endpoint for REST API.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "77e635a2-13d6-48fd-8f13-52077ed0e2d5",
+      "customers": [
+        {
+          "name": "GMF",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "JSON data support via FDM, communication composer demo",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "migration from Smartform to IC templates, collaborative editing, component styling roadmap",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "7389b0ed-f4ae-4545-94ff-fe5694ab9bee",
+      "customers": [],
+      "features": [
+        {
+          "name": "AEM Forms & Marketo integration, AI-assisted form creation",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "API limits handling and volume/throughput (100K+ submissions/year)",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "568c235e-f84a-4ef1-94b9-a05a59a0448b",
+      "customers": [
+        {
+          "name": "Accenture Federal (IRS engagement implied)",
+          "confidence": 0.8
+        }
+      ],
+      "features": [
+        {
+          "name": "GenAI-based form conversion evaluation",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "tight 90-day deadline for modernising ~200 forms",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Evaluate GenAI-based form conversion for selected IRS form and create an internal Slack channel to speed communication.",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "a8996547-917b-40bf-9fee-45f13e0e4673",
+      "customers": [
+        {
+          "name": "Wells Fargo (via Four Solutions Partner)",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "accessibility fixes in XCI/XDP and Designer guidance",
+          "confidence": 0.9
+        }
+      ],
+      "themes": [
+        {
+          "name": "screen reader accessibility and 'speak disable' behavior",
+          "confidence": 0.9
+        }
+      ],
+      "issues": [
+        {
+          "title": "Screen reader reads textboxes despite 'speak disable' set to 1",
+          "category": "accessibility",
+          "severity": 4,
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "Apply XCI/XDP fixes and mark draw fields as artifact to prevent screen reader reading.",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "signal_id": "d2b2508f-a331-4e7c-a9c0-106bbdc112bd",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "MasterPage option to be hidden; fragment and redirect fixes",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [
+        {
+          "title": "MasterPage option causing confusion during fragment creation",
+          "category": "usability",
+          "severity": 2,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "85ffff12-e511-4fc2-97e3-9a206ad4d96f",
+      "customers": [
+        {
+          "name": "KBC",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "multi-modal forms and headless usecases for mobile apps",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "preference for conversational screen without review window and headless mobile embedding",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "43df6021-1c59-4751-bdd5-636e558e93b0",
+      "customers": [
+        {
+          "name": "INAIL",
+          "confidence": 0.9
+        },
+        {
+          "name": "INPS",
+          "confidence": 0.85
+        }
+      ],
+      "features": [
+        {
+          "name": "adaptive forms versioning and batch processing optimizations",
+          "confidence": 0.85
+        }
+      ],
+      "themes": [
+        {
+          "name": "performance testing and batch process limitations",
+          "confidence": 0.85
+        }
+      ],
+      "issues": [
+        {
+          "title": "Batch processing failures during 100K sample test",
+          "category": "performance",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": []
+    }
+  ]
+}

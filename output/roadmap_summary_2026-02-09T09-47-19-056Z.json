@@ -1,0 +1,652 @@
+{
+  "totalOpportunities": 100,
+  "topPriorities": [
+    {
+      "id": "6f17c13c-db1d-4650-9b04-48eacb930a37",
+      "title": "Charles Shwab & Charles Schwab - Data Binding - forms (3 signals)",
+      "description": "Cluster of 3 related signals. Customers: Charles Shwab, Charles Schwab, Martin, George, Muravitsky, Valerie, Petty, Michael, Teague, Stephanie, Kolluru, Abhishek, Paracka, Jacob J. Topics: Data Binding, Forms, Feature Request, Issue/Blocker, HTML5 Forms, Font issue on Mac with HTML5 forms, HTML extension for caching not coming on 6.5, Challenges with dynamic HTML forms caching, CSS and JS references in HTML forms need absolute path, Migration, Rendering & PDF, Adaptive Forms, Validation of strategy to hide certain parameters from the request, Fetch HTML from an application and insert in page, Hide HTTP URL used to fetch data, Cache HTML content in dispatcher, Differences between on-prem and Cloud versions for migration, Authoring UX, Security & Compliance, High manual effort in printing, filling, and validating forms, Difficulty in scaling and loading large HTML5 forms, Dispatcher caching is not effective for HTML5 forms, Performance. Sources: slack. Types: feature_request, issue.",
+      "status": "new",
+      "created_at": "2026-02-06T08:36:09.972Z",
+      "roadmapScore": {
+        "overallScore": 55,
+        "impactScore": 71,
+        "confidenceScore": 74.16666666666667,
+        "effortScore": 20,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 3,
+          "uniqueCustomers": 7,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0.9833333333333334,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "083514c1-f985-4bb9-8634-295b2385f715",
+          "source": "slack",
+          "source_ref": "1746695260.441729",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Sudhanshu Singh* :new_user:\n:customervivo:*Customer Name : Charles Shwab*\n:clock2: *Date :* 2025-05-07\n:group-people: *Attendees :* <@W4XTCQ07J>, <@WQ6GEBZHN>\n:loading-2248:*Notes*\nCharles Shwab is an old AEM Forms customer (originally LiveCycle customer -&gt; moved to OSGi). They are using XDP Forms and want to migrate to HTML5 Forms.\n• They are on-prem - 6.5.22\n• 800-900 forms\n• Font issue - is currently a blocker: <https://aemcs-workspace.adobe.com/bot/conversation/fd1a2149-f976-41e0-b135-8bbba0ebc139|E-001631249>\n• *HTML Extension for Caching:* Sudhanshu, Devendra, and Abhishek Kolluru discussed the recent change to cache HTML (.html extension is not coming on 6.5 and was added recently on 6.5) on the cloud service and the possibility of backporting this enhancement. Abhishek emphasized the importance of this feature for their large number of forms and server capacity. <@W6CBB4953> they mentioned about caching implemented and then removed (from last meeting discussion) - due to some issues on mobile - could you provide more details.\n• *Embedding HTML Forms:* Devendra demonstrated how to embed HTML forms in external sites using an iframe and dispatcher settings. Sudhanshu clarified that this method can be applied to any external site.\n• *Static vs Dynamic HTML Forms:* Abhishek Kolluru and Sudhanshu discussed the caching of static HTML forms and the challenges with dynamic forms. Abhishek highlighted the importance of not caching forms with query parameters and the need for static forms to be cached.\n• *Font Issue on Mac:* Abhishek Kolluru raised a font issue with HTML5 forms on Mac, which works fine on Windows. Devendra suggested creating a custom CSS profile to address the issue. Sudhanshu requested the support ticket ID to review and confirm the issue.\n• *JSON Payload for Prefilled Forms:* Abhishek Kolluru explained their process of using JSON payloads to prefill forms and the challenges faced with CSS and JS references in the HTML forms (_currently relative path - need absolute path_). Sudhanshu noted the need to identify and document the steps to address this issue.\n\n:todo_done: *Next Action*\n• H*TML Caching Support:* Introduce support for caching HTML5 forms and evaluate the client-side data merge requirement. (<@WQ6GEBZHN>)\n• *Font Issue on Mac:* Review the support ticket related to the font issue on Mac and share the documented steps to resolve it. (<@WQ6GEBZHN>)\n• *Dispatcher Extension Validation:* Validate the HTML extension for caching on a local dev environment before providing it for use. (<@WQ6GEBZHN>)\n• *CSS and JS References in HTML Forms:* Share documented steps on how to provide CSS and JS references in HTML forms through dispatcher settings. Also check Sling mapping - need to make relative path to absolute path (<@WQ6GEBZHN> - cc: <@U02RMEY3D1C>)\n• HTML returned for first page - need complete pages - they have to scroll manually (need an option to avoid that) - <@WQ6GEBZHN> I believe we do this for test profile. Could you check and share the steps - if possible. Or confirm if an enhancement is needed.",
+          "normalized_content": "new_user sudhanshu singh new_user customervivo customer name charles shwab clock2 date 2025 05 07 group people attendees w4xtcq07j wq6gebzhn loading 2248 notes charles shwab is an old aem forms customer originally livecycle customer gt moved to osgi they are using xdp forms and want to migrate to html5 forms they are on prem 6 5 22 800 900 forms font issue is currently a blocker https aemcs workspace adobe com bot conversation fd1a2149 f976 41e0 b135 8bbba0ebc139 e 001631249 html extension for caching sudhanshu devendra and abhishek kolluru discussed the recent change to cache html html extension is not coming on 6 5 and was added recently on 6 5 on the cloud service and the possibility of backporting this enhancement abhishek emphasized the importance of this feature for their large number of forms and server capacity w6cbb4953 they mentioned about caching implemented and then removed from last meeting discussion due to some issues on mobile could you provide more details embedding html forms devendra demonstrated how to embed html forms in external sites using an iframe and dispatcher settings sudhanshu clarified that this method can be applied to any external site static vs dynamic html forms abhishek kolluru and sudhanshu discussed the caching of static html forms and the challenges with dynamic forms abhishek highlighted the importance of not caching forms with query parameters and the need for static forms to be cached font issue on mac abhishek kolluru raised a font issue with html5 forms on mac which works fine on windows devendra suggested creating a custom css profile to address the issue sudhanshu requested the support ticket id to review and confirm the issue json payload for prefilled forms abhishek kolluru explained their process of using json payloads to prefill forms and the challenges faced with css and js references in the html forms _currently relative path need absolute path_ sudhanshu noted the need to identify and document the steps to address this issue todo_done next action h tml caching support introduce support for caching html5 forms and evaluate the client side data merge requirement wq6gebzhn font issue on mac review the support ticket related to the font issue on mac and share the documented steps to resolve it wq6gebzhn dispatcher extension validation validate the html extension for caching on a local dev environment before providing it for use wq6gebzhn css and js references in html forms share documented steps on how to provide css and js references in html forms through dispatcher settings also check sling mapping need to make relative path to absolute path wq6gebzhn cc u02rmey3d1c html returned for first page need complete pages they have to scroll manually need an option to avoid that wq6gebzhn i believe we do this for test profile could you check and share the steps if possible or confirm if an enhancement is needed",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-05-07",
+            "pmName": "Sudhanshu Singh",
+            "slackTs": "1746695260.441729",
+            "attendees": [
+              "W4XTCQ07J",
+              "WQ6GEBZHN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": true,
+            "replyCount": 7,
+            "customerName": "Charles Shwab*",
+            "quality_score": 100
+          },
+          "created_at": "2025-05-08T09:07:40.441Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "720476f4-90ab-4587-85a0-e200107dc1ad",
+          "source": "slack",
+          "source_ref": "1745387862.117089",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Varun Dua* :new_user:\n:customervivo:*Customer Name : Charles Schwab*\n:clock2: *Date :* 2025-04-21\n:group-people: *Attendees :* <@W6CBB4953>, <@W5HEU5M7Y>, <@WFXFG9B1A>\n:loading-2248:*Notes*\nCustomers:\n• Martin, George\n• Muravitsky, Valerie\n• Petty, Michael\n• Teague, Stephanie\n• Kolluru, Abhishek\n• Paracka, Jacob J\n*Installation*: On Prem\n\n*Background:* We had a meeting with the customer at the summit and it was a follow up to that. They have XDP forms which are present as links in mutliple websites. The customers fill those forms , print it and post it. They want to digitalize this use case using HTML5 Forms and have some questions around that. During the summit they clearly mentioned they are not planning to move to Adaptive Form currently.\n\nThe team has shared the questions earlier in the mail and we had a discussion around the same.\n\nTheir current architecture that they have tried is that they have a custom servlet which forwards the request to the HTML5 Form rendition and returns that. Then they have an external website which either embeds the Form as iframe or redirects to the AEM Servlet which forwards to the HTML5 Form rendition profile.\n\n1. They wanted a validation of the above strategy and if possible to hide certain parameters from the request. _*Advised them to have sling mapping or some selector based notion to identify the xdp path in their servlet.*_\n2. They have another use case (non iframe), where they want to fetch the HTML from an application or a web app and then insert the HTML in that page. This is also possible with the way we do it for Adaptive Forms, but we need to implement it for HTML5 Forms as well. _*They have asked for a sample if possible.*_ \n3. They currently use an http url to fetch the data but want to hide that url. _*Advised them to provide a prefill service that can take an id and then use that service to fetch the data. Clearly mentioned that we do not store any data in AEM to ease out their security concerns.*_ \n4. They want to cache the HTML content in dispatcher. _*Mentioned that it needs to be supported on 6.5 and they need to raise a new Feature Request for the same.*_\n5. Discussed with them how complex their xdps are and they mentioned they only have some validation rules in the xdps.\n6. Arun asked about cloud migration and they asked for a write up from us on what are the differences between the on-prem version vs Cloud so that they can get a buy in from the higher management\n\n:todo_done: *Next Action*\n• Providing examples of embedding forms in external websites with or without iframes. *- Adobe*\n• Sharing documents on HTML5 forms and PDF forms differences *- Adobe*\n• Sharing ETA on how the dispatcher cache can be enabled on-prem *- Adobe*\n• Share documentation and talking points on the benefits of migrating to the cloud for AEM forms *- Adobe*\n• They will raise a enhancement request for enabling the support of dispatcher cache in HTML5 Forms. *- Customer*",
+          "normalized_content": "new_user varun dua new_user customervivo customer name charles schwab clock2 date 2025 04 21 group people attendees w6cbb4953 w5heu5m7y wfxfg9b1a loading 2248 notes customers martin george muravitsky valerie petty michael teague stephanie kolluru abhishek paracka jacob j installation on prem background we had a meeting with the customer at the summit and it was a follow up to that they have xdp forms which are present as links in mutliple websites the customers fill those forms print it and post it they want to digitalize this use case using html5 forms and have some questions around that during the summit they clearly mentioned they are not planning to move to adaptive form currently the team has shared the questions earlier in the mail and we had a discussion around the same their current architecture that they have tried is that they have a custom servlet which forwards the request to the html5 form rendition and returns that then they have an external website which either embeds the form as iframe or redirects to the aem servlet which forwards to the html5 form rendition profile 1 they wanted a validation of the above strategy and if possible to hide certain parameters from the request _ advised them to have sling mapping or some selector based notion to identify the xdp path in their servlet _ 2 they have another use case non iframe where they want to fetch the html from an application or a web app and then insert the html in that page this is also possible with the way we do it for adaptive forms but we need to implement it for html5 forms as well _ they have asked for a sample if possible _ 3 they currently use an http url to fetch the data but want to hide that url _ advised them to provide a prefill service that can take an id and then use that service to fetch the data clearly mentioned that we do not store any data in aem to ease out their security concerns _ 4 they want to cache the html content in dispatcher _ mentioned that it needs to be supported on 6 5 and they need to raise a new feature request for the same _ 5 discussed with them how complex their xdps are and they mentioned they only have some validation rules in the xdps 6 arun asked about cloud migration and they asked for a write up from us on what are the differences between the on prem version vs cloud so that they can get a buy in from the higher management todo_done next action providing examples of embedding forms in external websites with or without iframes adobe sharing documents on html5 forms and pdf forms differences adobe sharing eta on how the dispatcher cache can be enabled on prem adobe share documentation and talking points on the benefits of migrating to the cloud for aem forms adobe they will raise a enhancement request for enabling the support of dispatcher cache in html5 forms customer",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-04-21",
+            "pmName": "Varun Dua",
+            "slackTs": "1745387862.117089",
+            "attendees": [
+              "W6CBB4953",
+              "W5HEU5M7Y",
+              "WFXFG9B1A"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": true,
+            "replyCount": 4,
+            "customerName": "Charles Schwab*",
+            "quality_score": 100
+          },
+          "created_at": "2025-04-23T05:57:42.117Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "c82c3aa8-abdd-4b9b-8b3e-adbb17b8819a",
+          "source": "slack",
+          "source_ref": "1743094263.729979",
+          "signal_type": "issue",
+          "content": ":new_user: *Vijay Kumar Jalagari* :new_user:\n:customervivo:*Customer Name : Charles Schwab*\n:clock2: *Date :* 2025-03-18\n:group-people: *Attendees :* <@W6CBB4953>, <@W4R4S9FS4>, <@W5HEU5M7Y>, <@W4RU4N66R>\n:loading-2248:*Notes*\n*Forms License:* *Yes, On-prem*\n*Primary Use Case:* HTML 5 Forms.\n*Adobe Products in Use:* DAM &amp; Ultimate Success\n*Attendees:* Michaell (Platform Manager), George (Platform Manager), Abhishek (SME), Dennis (Manager) and Stephane (Technical Lead)\n\n*Current State:*\n• Customer is currently using *XDP-based PDF forms*, with over *800+ forms* and associated *fragments*. \n• These PDFs are *printed and manually filled* by users. A *third-party vendor* reviews, validates, and contacts customers for any corrections. \n• Some forms span up to *30 pages*, adding complexity and validation effort. \n*Key Challenges:*\n\n• High manual effort in printing, filling, and validating forms. \n• Difficulty in *scaling and loading large HTML5 forms* (converted from XDP), particularly those with high page counts. \n• *Dispatcher caching is not effective* for these HTML5 forms, impacting performance. \n*Key Use Cases &amp; Goals:*\n\n• The customer aims to *reduce 90% of paper and manual validation costs* incurred via vendor processing. \n*Planned Approach (Phase-wise):*\n\n*Phase 1:*\n\n• Convert XDP to *HTML5* forms. \n• Implement *client-side validation* to reduce dependency on manual vendor review. \n• Currently in PoC phase but facing performance/scalability issues. \n*Phase 2:*\n\n• Add *prefill capability* using internal databases without query parameters (to avoid disclosure of information) \n• *Integrate with Adobe Sign* for digital signatures. \n\n*Adobe Recommendation:*\n\n• Migrate to *Adobe Cloud or AMS* to resolve *scaling and caching issues*, especially for large forms. \n\n:todo_done: *Next Action*\nCustomer to *share sample PDFs* and *schedule a follow-up meeting* to review issues observed in HTML5 form rendering and performance.",
+          "normalized_content": "new_user vijay kumar jalagari new_user customervivo customer name charles schwab clock2 date 2025 03 18 group people attendees w6cbb4953 w4r4s9fs4 w5heu5m7y w4ru4n66r loading 2248 notes forms license yes on prem primary use case html 5 forms adobe products in use dam amp ultimate success attendees michaell platform manager george platform manager abhishek sme dennis manager and stephane technical lead current state customer is currently using xdp based pdf forms with over 800 forms and associated fragments these pdfs are printed and manually filled by users a third party vendor reviews validates and contacts customers for any corrections some forms span up to 30 pages adding complexity and validation effort key challenges high manual effort in printing filling and validating forms difficulty in scaling and loading large html5 forms converted from xdp particularly those with high page counts dispatcher caching is not effective for these html5 forms impacting performance key use cases amp goals the customer aims to reduce 90 of paper and manual validation costs incurred via vendor processing planned approach phase wise phase 1 convert xdp to html5 forms implement client side validation to reduce dependency on manual vendor review currently in poc phase but facing performance scalability issues phase 2 add prefill capability using internal databases without query parameters to avoid disclosure of information integrate with adobe sign for digital signatures adobe recommendation migrate to adobe cloud or ams to resolve scaling and caching issues especially for large forms todo_done next action customer to share sample pdfs and schedule a follow up meeting to review issues observed in html5 form rendering and performance",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-03-18",
+            "pmName": "Vijay Kumar Jalagari",
+            "slackTs": "1743094263.729979",
+            "attendees": [
+              "W6CBB4953",
+              "W4R4S9FS4",
+              "W5HEU5M7Y",
+              "W4RU4N66R"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Charles Schwab*",
+            "quality_score": 95
+          },
+          "created_at": "2025-03-27T16:51:03.729Z",
+          "is_duplicate_of": null
+        }
+      ],
+      "themes": [],
+      "customers": [
+        "Charles Schwab",
+        "Kolluru, Abhishek",
+        "Martin, George",
+        "Muravitsky, Valerie",
+        "Paracka, Jacob J",
+        "Petty, Michael",
+        "Teague, Stephanie"
+      ]
+    },
+    {
+      "id": "6ba3071d-3d0b-443c-811d-cb057f72ee69",
+      "title": "Brightline & NFL - Forms - forms (6 signals)",
+      "description": "Cluster of 6 related signals. Customers: Brightline, NFL, BrightLine, Busch Group, Spark NZ. Topics: Forms, Feature Request, Core Components, Integrations, Authoring UX, AI Assistant, Custom Components Support, Integration with External Sources. Sources: slack. Types: feedback, pain_point.",
+      "status": "new",
+      "created_at": "2026-02-06T08:36:09.930Z",
+      "roadmapScore": {
+        "overallScore": 52,
+        "impactScore": 61.43856189774724,
+        "confidenceScore": 75,
+        "effortScore": 20,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 6,
+          "uniqueCustomers": 4,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0.7999999999999999,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "983dc6de-75f9-44b8-b1ad-c52fb1429314",
+          "source": "slack",
+          "source_ref": "1758706160.526549",
+          "signal_type": "feedback",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : Brightline*\n:clock2: *Date :* 2025-09-23\n:group-people: *Attendees :* <@U05TSNKRNP8>, <@U0213T59LMN>\n:loading-2248:*Notes*\n• *AEM Forms Integration with Adobe Experience Platform (AEP):* Harman, Mayank, and Katie Manarte discussed the end-to-end process of integrating AEM forms with Adobe Experience Platform, including schema creation, data set configuration, and form setup, with Vince and other team members contributing questions and clarifications.\n• *Form Field Configuration and Validation:* Katie Manarte inquired about configuring specific form fields, such as checkboxes and validation rules, with Harman and Mayank confirming that these options are available and customizable within the AEM editor.\n• *Documentation and Support Resources:* Katie Manarte requested access to both written and video documentation for the integration process, with Harman and Vince confirming that comprehensive resources, including step-by-step videos, are available and will be shared.\n• *Future Form Use Cases and Additional Integrations:* Mayank and Katie Manarte discussed potential future forms and other integration needs, agreeing to gather requirements and schedule further discussions or demos as needed.\n:todo_done: *Next Action*\n• *Documentation Sharing:* Share the documentation for adding a form fragment in AEM with Katie Manarte. (Harman)\n• *Meeting Recording Distribution:* Send the meeting recording to Katie Manarte for her and her team's reference. (Vince)\n• *Future Forms Planning:* Gather information from analytics and product teams regarding future forms requirements and be prepared to discuss by next Tuesday. (Katie Manarte)",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name brightline clock2 date 2025 09 23 group people attendees u05tsnkrnp8 u0213t59lmn loading 2248 notes aem forms integration with adobe experience platform aep harman mayank and katie manarte discussed the end to end process of integrating aem forms with adobe experience platform including schema creation data set configuration and form setup with vince and other team members contributing questions and clarifications form field configuration and validation katie manarte inquired about configuring specific form fields such as checkboxes and validation rules with harman and mayank confirming that these options are available and customizable within the aem editor documentation and support resources katie manarte requested access to both written and video documentation for the integration process with harman and vince confirming that comprehensive resources including step by step videos are available and will be shared future form use cases and additional integrations mayank and katie manarte discussed potential future forms and other integration needs agreeing to gather requirements and schedule further discussions or demos as needed todo_done next action documentation sharing share the documentation for adding a form fragment in aem with katie manarte harman meeting recording distribution send the meeting recording to katie manarte for her and her team s reference vince future forms planning gather information from analytics and product teams regarding future forms requirements and be prepared to discuss by next tuesday katie manarte",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-09-23",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1758706160.526549",
+            "attendees": [
+              "U05TSNKRNP8",
+              "U0213T59LMN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Brightline*",
+            "quality_score": 95
+          },
+          "created_at": "2025-09-24T09:29:20.526Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "c45494ff-5434-4a1b-88a1-43015b94d7c1",
+          "source": "slack",
+          "source_ref": "1756966421.639629",
+          "signal_type": "pain_point",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : NFL*\n:clock2: *Date :* 2025-09-03\n:group-people: *Attendees :* <@W5HEU5M7Y>, <@W4RU4N66R>, <@U0213T59LMN>\n:loading-2248:*Notes*\n• *Marketing Team’s Transition from Digio to AEM Forms:* Chi, Amit, and Arun discussed the marketing team’s interest in replacing Digio with AEM Forms for fan experience activations, focusing on understanding AEM Forms’ capabilities, identifying gaps, and ensuring the demo addresses specific pain points relevant to their current use cases.\n• *Technical Integration and Data Flow Requirements:* Amit and Arun discussed the technical requirements for AEM Forms, including integration with the data warehouse, Adobe RTCDP, and the need for flexible data submission options, while ensuring the demo remains non-technical for the marketing audience.\n• *Demo Content, Scenarios, and Customization:* Chi, Arun, and Amit outlined the desired content and approach for the AEM Forms demo, agreeing to focus on marketing forms, reusable components, and user-friendly experiences, while highlighting but not dwelling on technical or custom development aspects.\n• *Future State and Platform Roadmap Considerations:* Chi and Arun discussed the potential future use of AEM Sites, clarifying that while the current focus is on forms, the demo should also create awareness of the broader capabilities of AEM Sites without assuming a replatforming decision.\n• *Demo Scheduling and Next Steps:* Chi, Arun, and the team coordinated on next steps, agreeing to share pain points and sample URLs via email, and for Arun to propose a demo timeline after consulting with their team.\n:todo_done: *Next Action*\n• *Sharing Sample Forms and URLs:* Send sample URLs and examples of current Digio forms, including quiz and fan experience forms, to Arun for demo preparation. (Amit, Chi)\n• .*Communicating Marketing Team Pain Points:* Email specific pain points experienced with Digio to Arun to help tailor the AEM forms demo. (Chi)\n• *Scheduling Demo Meeting:* Share a tentative date for the AEM forms demo with the NFL team and confirm calendar availability. (Arun)",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name nfl clock2 date 2025 09 03 group people attendees w5heu5m7y w4ru4n66r u0213t59lmn loading 2248 notes marketing team s transition from digio to aem forms chi amit and arun discussed the marketing team s interest in replacing digio with aem forms for fan experience activations focusing on understanding aem forms capabilities identifying gaps and ensuring the demo addresses specific pain points relevant to their current use cases technical integration and data flow requirements amit and arun discussed the technical requirements for aem forms including integration with the data warehouse adobe rtcdp and the need for flexible data submission options while ensuring the demo remains non technical for the marketing audience demo content scenarios and customization chi arun and amit outlined the desired content and approach for the aem forms demo agreeing to focus on marketing forms reusable components and user friendly experiences while highlighting but not dwelling on technical or custom development aspects future state and platform roadmap considerations chi and arun discussed the potential future use of aem sites clarifying that while the current focus is on forms the demo should also create awareness of the broader capabilities of aem sites without assuming a replatforming decision demo scheduling and next steps chi arun and the team coordinated on next steps agreeing to share pain points and sample urls via email and for arun to propose a demo timeline after consulting with their team todo_done next action sharing sample forms and urls send sample urls and examples of current digio forms including quiz and fan experience forms to arun for demo preparation amit chi communicating marketing team pain points email specific pain points experienced with digio to arun to help tailor the aem forms demo chi scheduling demo meeting share a tentative date for the aem forms demo with the nfl team and confirm calendar availability arun",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-09-03",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1756966421.639629",
+            "attendees": [
+              "W5HEU5M7Y",
+              "W4RU4N66R",
+              "U0213T59LMN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "NFL*",
+            "quality_score": 95
+          },
+          "created_at": "2025-09-04T06:13:41.639Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "237ff5a0-54ca-4448-b885-107f79965f76",
+          "source": "slack",
+          "source_ref": "1756877949.804249",
+          "signal_type": "feedback",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : BrightLine*\n:clock2: *Date :* 2025-09-02\n:group-people: *Attendees :* <@W4RU4N66R>, <@W5HEU5M7Y>, <@U0213T59LMN>\n:loading-2248:*Notes*\n• *AEM Forms Enablement and Initial Setup:* Arun, David Lopez, Vijay Kumar, Sudhanshu, and Jennifer Rogers coordinated the enablement of AEM Forms in the dev environment, discussed the process for activating the solution in Cloud Manager, and clarified the approach to avoid impacting production while setting up the proof of concept (POC) form.\n• *POC Form Scope and Data Integration:* Arun, Jennifer Rogers, and David Lopez defined the scope of the POC form, confirmed the use of core components, and agreed to integrate form submissions with the AEP RTCDP connector, ensuring data accessibility for other Adobe Experience Platform applications.\n• *Collaboration and Communication Plan:* Arun, Vijay Kumar, Jennifer Rogers, and Vince established a plan for ongoing collaboration, including setting up a dedicated Slack channel for the forms project and scheduling weekly cadence meetings to track progress and address requirements.\n• *Next Steps and Open Questions:* Vijay Kumar and Arun outlined the next steps, including finalizing access, clarifying form requirements, and planning a discovery call to address detailed questions about form reuse, validations, and integration with AEP.\n:todo_done: *Next Action*\n• *Requirements Documentation:* Write and share a document listing the requirements and scope for the forms, including details such as submission destination and potential reuse across pages. (Jennifer Rogers, David Lopez)\n• *Access Provisioning:* Add Vijay Kumar and Sudhanshu to the AEM dev environment with appropriate admin access profiles to enable configuration and setup activities. (David Lopez)\n• *Pipeline Impact Confirmation:* Follow up with Paul to confirm whether running the dev pipeline will have any unintended impact on the current environment or recent releases. (Jennifer Rogers)\n• *Slack Channel Setup:* Create a new Slack channel dedicated to the forms engagement and invite all relevant team members for ongoing collaboration. (Vijay Kumar, Arun)\n• *Weekly Meeting Coordination:* Coordinate and finalize a weekly meeting time that accommodates both the East Coast and India-based team members, ideally between 7:00 AM and 10:00 AM Pacific. (Vince, Arun)",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name brightline clock2 date 2025 09 02 group people attendees w4ru4n66r w5heu5m7y u0213t59lmn loading 2248 notes aem forms enablement and initial setup arun david lopez vijay kumar sudhanshu and jennifer rogers coordinated the enablement of aem forms in the dev environment discussed the process for activating the solution in cloud manager and clarified the approach to avoid impacting production while setting up the proof of concept poc form poc form scope and data integration arun jennifer rogers and david lopez defined the scope of the poc form confirmed the use of core components and agreed to integrate form submissions with the aep rtcdp connector ensuring data accessibility for other adobe experience platform applications collaboration and communication plan arun vijay kumar jennifer rogers and vince established a plan for ongoing collaboration including setting up a dedicated slack channel for the forms project and scheduling weekly cadence meetings to track progress and address requirements next steps and open questions vijay kumar and arun outlined the next steps including finalizing access clarifying form requirements and planning a discovery call to address detailed questions about form reuse validations and integration with aep todo_done next action requirements documentation write and share a document listing the requirements and scope for the forms including details such as submission destination and potential reuse across pages jennifer rogers david lopez access provisioning add vijay kumar and sudhanshu to the aem dev environment with appropriate admin access profiles to enable configuration and setup activities david lopez pipeline impact confirmation follow up with paul to confirm whether running the dev pipeline will have any unintended impact on the current environment or recent releases jennifer rogers slack channel setup create a new slack channel dedicated to the forms engagement and invite all relevant team members for ongoing collaboration vijay kumar arun weekly meeting coordination coordinate and finalize a weekly meeting time that accommodates both the east coast and india based team members ideally between 7 00 am and 10 00 am pacific vince arun",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-09-02",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1756877949.804249",
+            "attendees": [
+              "W4RU4N66R",
+              "W5HEU5M7Y",
+              "U0213T59LMN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "BrightLine*",
+            "quality_score": 95
+          },
+          "created_at": "2025-09-03T05:39:09.804Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "1c89d708-74ff-4b9f-9afc-72e520015fb9",
+          "source": "slack",
+          "source_ref": "1747149273.555789",
+          "signal_type": "pain_point",
+          "content": ":new_user: *Aditya Nagpal* :new_user:\n:customervivo:*Customer Name : Busch Group*\n:clock2: *Date :* 2025-05-13\n:group-people: *Attendees :* <@W4R5WN6LR>, <@WE163TH43>, <@W010NNJV7S8>, <@WQWCBV6NN>, <@W9QMZFR39>\n:loading-2248:*Notes*\nProposal meeting to Busch Group in response to their RfP for Communications.\n\nThe meeting kicked off with Nick Maerlender setting the context and briefly introducing the Adobe team. He then handed over to Dominik Emmert who presented the overall AEM and Forms story + capabilities.\n\nThis was followed by 6 mini-demos from <@W4R5WN6LR> primarily showcasing template authoring via Desktop Designer, each with a particular theme (fragments, localization via data/scripting etc.) mapping to their requirements and (inferred) pain-points shared earlier. After partly presenting the 7th demo, handed over to <@WE163TH43> who focused on the authoring experience in Cloud Designer by demo'ing live the creation of a Communication template and document with fragments. <@W010NNJV7S8> then wrapped up the Adobe side of things by sharing the roadmap and exciting things ahead for Forms and Communications.\n\nAt this point, approximately 10 minutes remained out of the 90 allotted for the meeting, when Martin Grimm from eggs Unimedia began explaining their development strategy as a 15+ yr. old Adobe partner experience, primarily in AEM Forms since the LiveCycle days. There were pointed questions about integration with SAP, to which both Martin and <@W9QMZFR39> replied.\n\nWe then ran out of time and the Busch attendees could not extend so it was agreed that Nick would connect again with them by the end of this week to discuss commericals and gather consolidated feedback.\n:todo_done: *Next Action*\nNick Maerlender to connect with Mr. Bernhard Götze at Busch Group by the end of this week.",
+          "normalized_content": "new_user aditya nagpal new_user customervivo customer name busch group clock2 date 2025 05 13 group people attendees w4r5wn6lr we163th43 w010nnjv7s8 wqwcbv6nn w9qmzfr39 loading 2248 notes proposal meeting to busch group in response to their rfp for communications the meeting kicked off with nick maerlender setting the context and briefly introducing the adobe team he then handed over to dominik emmert who presented the overall aem and forms story capabilities this was followed by 6 mini demos from w4r5wn6lr primarily showcasing template authoring via desktop designer each with a particular theme fragments localization via data scripting etc mapping to their requirements and inferred pain points shared earlier after partly presenting the 7th demo handed over to we163th43 who focused on the authoring experience in cloud designer by demo ing live the creation of a communication template and document with fragments w010nnjv7s8 then wrapped up the adobe side of things by sharing the roadmap and exciting things ahead for forms and communications at this point approximately 10 minutes remained out of the 90 allotted for the meeting when martin grimm from eggs unimedia began explaining their development strategy as a 15 yr old adobe partner experience primarily in aem forms since the livecycle days there were pointed questions about integration with sap to which both martin and w9qmzfr39 replied we then ran out of time and the busch attendees could not extend so it was agreed that nick would connect again with them by the end of this week to discuss commericals and gather consolidated feedback todo_done next action nick maerlender to connect with mr bernhard g tze at busch group by the end of this week",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-05-13",
+            "pmName": "Aditya Nagpal",
+            "slackTs": "1747149273.555789",
+            "attendees": [
+              "W4R5WN6LR",
+              "WE163TH43",
+              "W010NNJV7S8",
+              "WQWCBV6NN",
+              "W9QMZFR39"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": true,
+            "replyCount": 1,
+            "customerName": "Busch Group*",
+            "quality_score": 95
+          },
+          "created_at": "2025-05-13T15:14:33.555Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "7a2931cd-fde3-47d8-9df8-faf139a87246",
+          "source": "slack",
+          "source_ref": "1745379889.233349",
+          "signal_type": "feedback",
+          "content": "Hello!\n\nIt sounds like there were a couple of open questions about the AI Assistant’s ability to handle custom components and queries about external integrations:\n\n• *Custom Components Support:* As noted in a similar engagement (see “Spark NZ – GenAI Assistant Demo (27 Mar 2025)”), customers have asked for ways to incorporate their own custom components into the Assistant’s generated forms or rules. Currently, this is under internal discussion — the short-term approach would be to manually integrate your custom components, while Adobe product teams consider a more streamlined “plug-in” method. So yes, it’s possible, but it may require additional configuration or code referencing in your environment.\n\n• *Integration with External Sources:* The Assistant can suggest or scaffold certain connections (for example, calling a REST endpoint in a form rule). However, in most cases you still have to define the actual endpoint, authentication, and data structure. The AI Assistant can help give you a starting point, but to finalize the integration, you’ll often need to specify details of your external service.\n\nRegarding *increasing conversion rates* for lead-generation forms, the “Success Studio” approach can be very helpful, as it focuses on iterative improvements to the form experience. That, coupled with thorough versioning (which can be done natively in AEM Forms), may help you track and optimize changes.\n\nIf you have more details about your custom components or the desired integrations, feel free to share! We can also set up a session to walk through the versioning capabilities and how to pull in analytics for form conversion improvements.\n\n_Mr. FluffyJaws_ _Disclaimer: If my answer wasn't helpful, please feel free to ignore it. However, I love to learn! If you can, correct me by replying in this thread and I will adjust my future responses._ To help me and other users know if my answer was useful, please rate it with a :thumbsup: or :thumbsdown: reaction. :fluffy-jaws: *Request the FluffyJaws bot on your Slack channels*: #fluffyjaws-enablement Chat with me on Workspace button",
+          "normalized_content": "hello it sounds like there were a couple of open questions about the ai assistant s ability to handle custom components and queries about external integrations custom components support as noted in a similar engagement see spark nz genai assistant demo 27 mar 2025 customers have asked for ways to incorporate their own custom components into the assistant s generated forms or rules currently this is under internal discussion the short term approach would be to manually integrate your custom components while adobe product teams consider a more streamlined plug in method so yes it s possible but it may require additional configuration or code referencing in your environment integration with external sources the assistant can suggest or scaffold certain connections for example calling a rest endpoint in a form rule however in most cases you still have to define the actual endpoint authentication and data structure the ai assistant can help give you a starting point but to finalize the integration you ll often need to specify details of your external service regarding increasing conversion rates for lead generation forms the success studio approach can be very helpful as it focuses on iterative improvements to the form experience that coupled with thorough versioning which can be done natively in aem forms may help you track and optimize changes if you have more details about your custom components or the desired integrations feel free to share we can also set up a session to walk through the versioning capabilities and how to pull in analytics for form conversion improvements _mr fluffyjaws_ _disclaimer if my answer wasn t helpful please feel free to ignore it however i love to learn if you can correct me by replying in this thread and i will adjust my future responses _ to help me and other users know if my answer was useful please rate it with a thumbsup or thumbsdown reaction fluffy jaws request the fluffyjaws bot on your slack channels fluffyjaws enablement chat with me on workspace button",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1745379889.233349",
+            "channelId": "C04D195JVGS",
+            "quality_score": 50,
+            "parentSignalId": "510bcbff-8315-4543-ac25-cffcd20c5c33"
+          },
+          "created_at": "2025-04-23T03:44:49.233Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "da202c58-2ae7-44e9-abf0-4028059a8c36",
+          "source": "slack",
+          "source_ref": "1743094479.422999",
+          "signal_type": "feedback",
+          "content": "Next Action\n• The customer will share a sample form. \n• The Adobe team will demonstrate how AEM Forms supports their end-to-end requirements and capabilities. \n",
+          "normalized_content": "next action the customer will share a sample form the adobe team will demonstrate how aem forms supports their end to end requirements and capabilities",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1743094479.422999",
+            "channelId": "C04D195JVGS",
+            "quality_score": 50,
+            "parentSignalId": "4f8150ed-9eec-4299-a0b7-862932ba4e03"
+          },
+          "created_at": "2025-03-27T16:54:39.422Z",
+          "is_duplicate_of": null
+        }
+      ],
+      "themes": [],
+      "customers": [
+        "BrightLine",
+        "Busch Group",
+        "NFL",
+        "Spark NZ"
+      ]
+    },
+    {
+      "id": "203debc4-4dd8-4cd2-af0d-d3987188e407",
+      "title": "Abbvie & Shivendra - Forms - sites (2 signals)",
+      "description": "Cluster of 2 related signals. Customers: Abbvie, Shivendra, Arun, Toto. Topics: Forms, Feature Request, Integrations. Sources: slack. Types: feedback, feature_request.",
+      "status": "new",
+      "created_at": "2026-02-06T08:36:09.957Z",
+      "roadmapScore": {
+        "overallScore": 50,
+        "impactScore": 55.43856189774724,
+        "confidenceScore": 57.5,
+        "effortScore": 44,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 2,
+          "uniqueCustomers": 4,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0.75,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "e6ed7f59-03dd-4f21-8820-d125ff996a2a",
+          "source": "slack",
+          "source_ref": "1752632796.520969",
+          "signal_type": "feedback",
+          "content": "Shameem/Kevin would be connecting with Shivendra and confirming on the next steps (Shivendra had to drop after 30 mins for another meeting).\n\nThough Shivendra did mention that he had a connect for Sites Optimizer for optimizing Sites (which is coming with ~ 1 month trial) - so they would need to plan for that - but for Forms Arun clarified that this was still in EA and separate from the engagement - where the 1 month restriction did not apply (at least till EA). But he was happy to see both converge (Sites+Forms optimizer in same UI).\nWe had also invited Toto (CSME) to the call - who is involved in the discussion for Sites Optimizer with Abbvie.",
+          "normalized_content": "shameem kevin would be connecting with shivendra and confirming on the next steps shivendra had to drop after 30 mins for another meeting though shivendra did mention that he had a connect for sites optimizer for optimizing sites which is coming with 1 month trial so they would need to plan for that but for forms arun clarified that this was still in ea and separate from the engagement where the 1 month restriction did not apply at least till ea but he was happy to see both converge sites forms optimizer in same ui we had also invited toto csme to the call who is involved in the discussion for sites optimizer with abbvie",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1752632796.520969",
+            "channelId": "C04D195JVGS",
+            "quality_score": 50,
+            "parentSignalId": "a7bd6e1b-0d85-4975-87c3-6300289d8f30"
+          },
+          "created_at": "2025-07-16T02:26:36.520Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "a7bd6e1b-0d85-4975-87c3-6300289d8f30",
+          "source": "slack",
+          "source_ref": "1752601935.879449",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Varun Dua* :new_user:\n:customervivo:*Customer Name : Abbvie*\n:clock2: *Date :* 2025-07-15\n:group-people: *Attendees :* <@W4RT1B152>, <@W5HEU5M7Y>, <@W4XTCQ07J>\n:loading-2248:*Notes*\nAttendees\n• Shameem Gouse Lazam Sayyad\n• Shivendra Vikram Singh\n• Kevin Ausburn\nMeeting Notes:\n\n*Introduction:* The team had some knowledge of Sites Optimizer and gave them an introduction of the Forms Opportunities. Shivendra mentioned that it is good that Form Opportunities are also presented within a single tool. They were earlier confused with what Forms is doing vs Sites.\n\n*Sampling in Optel*\nWe emphasised that the analysis and opportunity suggestion is AI driven but since they had low traffic it takes time to collect enough data. There was a question if we can change the sampling rate. We confirmed that it is done during experimentation but generally it is 1% of all site visits\n\n*Opportunities*\nThey wanted to look at the examples of different type of opportunities and we shared with them the drop off analysis and Form Navigation.\nThe Form Navigation Opportunities made total sense to them while it was mentioned that suggestions for the drop off hypothesis has to be proven by an experiment.\n\n*Business KPIs*\nThe team shared the details of the KPIs they currently monitor via an agency which includes navigations within the site pages, field drop offs, conversion rate.\nThey are also interested in time taken to fill a form which they are not able to measure currently\n\n*Integration during development cycle*\nAs they are in the process of modernizing their forms, they wanted to identify certain opportunities before going live as well. They wanted to understand if the tooling can integrate during the development phase (figma designs etc) as they have a huge development process (business justification, processes etc) if something needs to be changed on prod.\n\nWe mentioned that we would be creating a knowledge base once we have proven hypothesis and use that to suggest best practices or common pitfalls during the design phase as well.\n\n*Next Steps*\nThe team liked the idea and wanted to try it out on their environment. We need to enable the FT on their environment. They are also in talks to get a trial version of Sites Optimizer.\n:todo_done: *Next Action*\n",
+          "normalized_content": "new_user varun dua new_user customervivo customer name abbvie clock2 date 2025 07 15 group people attendees w4rt1b152 w5heu5m7y w4xtcq07j loading 2248 notes attendees shameem gouse lazam sayyad shivendra vikram singh kevin ausburn meeting notes introduction the team had some knowledge of sites optimizer and gave them an introduction of the forms opportunities shivendra mentioned that it is good that form opportunities are also presented within a single tool they were earlier confused with what forms is doing vs sites sampling in optel we emphasised that the analysis and opportunity suggestion is ai driven but since they had low traffic it takes time to collect enough data there was a question if we can change the sampling rate we confirmed that it is done during experimentation but generally it is 1 of all site visits opportunities they wanted to look at the examples of different type of opportunities and we shared with them the drop off analysis and form navigation the form navigation opportunities made total sense to them while it was mentioned that suggestions for the drop off hypothesis has to be proven by an experiment business kpis the team shared the details of the kpis they currently monitor via an agency which includes navigations within the site pages field drop offs conversion rate they are also interested in time taken to fill a form which they are not able to measure currently integration during development cycle as they are in the process of modernizing their forms they wanted to identify certain opportunities before going live as well they wanted to understand if the tooling can integrate during the development phase figma designs etc as they have a huge development process business justification processes etc if something needs to be changed on prod we mentioned that we would be creating a knowledge base once we have proven hypothesis and use that to suggest best practices or common pitfalls during the design phase as well next steps the team liked the idea and wanted to try it out on their environment we need to enable the ft on their environment they are also in talks to get a trial version of sites optimizer todo_done next action",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-07-15",
+            "pmName": "Varun Dua",
+            "slackTs": "1752601935.879449",
+            "attendees": [
+              "W4RT1B152",
+              "W5HEU5M7Y",
+              "W4XTCQ07J"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": true,
+            "replyCount": 8,
+            "customerName": "Abbvie*",
+            "quality_score": 100
+          },
+          "created_at": "2025-07-15T17:52:15.879Z",
+          "is_duplicate_of": null
+        }
+      ],
+      "themes": [],
+      "customers": [
+        "AbbVie",
+        "Arun",
+        "Shivendra",
+        "Toto"
+      ]
+    },
+    {
+      "id": "786e8a0f-d9ee-49c2-b988-104c41374b5f",
+      "title": "Toyota Financial Services & Ford - IC Editor - customer (2 signals)",
+      "description": "Cluster of 2 related signals. Customers: Toyota Financial Services, Ford. Topics: IC Editor, Forms, Feature Request, Nested fragments use-case due to lack of FDM support in designer and layout support in IC Editor, Authoring UX, Migration, Rendering & PDF. Sources: slack. Types: feedback, feature_request.",
+      "status": "new",
+      "created_at": "2026-02-06T08:36:09.975Z",
+      "roadmapScore": {
+        "overallScore": 47,
+        "impactScore": 40.69925001442312,
+        "confidenceScore": 67.5,
+        "effortScore": 39,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 2,
+          "uniqueCustomers": 2,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0.95,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "f41e0b8e-a180-49c1-a925-e3016607f1bd",
+          "source": "slack",
+          "source_ref": "1747375576.560709",
+          "signal_type": "feedback",
+          "content": ":new_user: *Anirudh Aggarwal* :new_user:\n:customervivo:*Customer Name : Toyota Financial Services*\n:clock2: *Date :* 2025-05-15\n:group-people: *Attendees :* <@W9QMZFR39>, <@W4R5LUPK3>, <@W5HEU5M7Y>, <@WGVFDSK18>, <@U038XFD63GS>\n:loading-2248:*Notes*\nFolks for ACS team also attended this meet.\n\n- The customer was provided with a demo showcasing IC Cloud Editor and its capabilities in comparison to the existing on-premises editors.\n- The customer expressed positive feedback regarding the enhanced user experience and streamlined functionality offered by the cloud editor.\n- The customer requested information regarding the following:\n\t- Support for FDM/JSON data - Team informed that it is in development and will be available soon.\n\t- Availability of Agent UI on cloud - Team informed that it is planned for next phases.\n\t- Migration of (100s of) on-premise 6.5 ICs - Team informed about the VIP engagement to facilitate the migration.\n\t- Availability of PDF generation APIs corresponding to IC - Team provided a brief overview of the render API.\n\t- Nested fragments use-case - Initial analysis of the collateral revealed that nested fragments (Document Fragments inside Layout Fragments) were created due to lack of FDM support in designer and layout support in IC Editor. This requires further evaluation from both teams.\n:todo_done: *Next Action*\nNext Meeting Agenda:\n- PMs to share the roadmap and future timelines.\n- Customer and PMs to determine POC Scope together.",
+          "normalized_content": "new_user anirudh aggarwal new_user customervivo customer name toyota financial services clock2 date 2025 05 15 group people attendees w9qmzfr39 w4r5lupk3 w5heu5m7y wgvfdsk18 u038xfd63gs loading 2248 notes folks for acs team also attended this meet the customer was provided with a demo showcasing ic cloud editor and its capabilities in comparison to the existing on premises editors the customer expressed positive feedback regarding the enhanced user experience and streamlined functionality offered by the cloud editor the customer requested information regarding the following support for fdm json data team informed that it is in development and will be available soon availability of agent ui on cloud team informed that it is planned for next phases migration of 100s of on premise 6 5 ics team informed about the vip engagement to facilitate the migration availability of pdf generation apis corresponding to ic team provided a brief overview of the render api nested fragments use case initial analysis of the collateral revealed that nested fragments document fragments inside layout fragments were created due to lack of fdm support in designer and layout support in ic editor this requires further evaluation from both teams todo_done next action next meeting agenda pms to share the roadmap and future timelines customer and pms to determine poc scope together",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-05-15",
+            "pmName": "Anirudh Aggarwal",
+            "slackTs": "1747375576.560709",
+            "attendees": [
+              "W9QMZFR39",
+              "W4R5LUPK3",
+              "W5HEU5M7Y",
+              "WGVFDSK18",
+              "U038XFD63GS"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Toyota Financial Services*",
+            "quality_score": 95
+          },
+          "created_at": "2025-05-16T06:06:16.560Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "a13b510b-17e2-4c2c-a043-b7d8a60f3c31",
+          "source": "slack",
+          "source_ref": "1746508900.112879",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Anirudh Aggarwal* :new_user:\n:customervivo:*Customer Name : Ford*\n:clock2: *Date :* 2025-05-05\n:group-people: *Attendees :* <@W9QMZFR39>, <@W010NNJV7S8>, <@U038XFD63GS>\n:loading-2248:*Notes*\n• The customer was provided with a demo showcasing IC Cloud Editor and its capabilities in comparison to the existing on-premises editors.\n• The customer expressed positive feedback regarding the enhanced user experience and streamlined functionality offered by the cloud editor.\n• The customer requested information regarding the migration strategy for their portfolio of 500-600 letters to the cloud platform. The team provided an overview of the VIP engagement program to facilitate this transition.\n• The customer was asked to explore the new editor and share honest feedback with the team for improvements.\n:todo_done: *Next Action*\n• *Sandbox Configuration:* Customer will share their sandbox details to enable the editor.\n• *VIP Engagement:* The customer will conduct an internal review of the VIP engagement program for the migration initiative and provide their assessment to our team.\n• *PostgreSQL Integration:* We need to check the feasibility and plans for integrating PostgreSQL database with the FDM.\n• *Script Editing Support:* Customer will share their requirements for custom functions/scripts in the cloud editor to explore potential solutions.",
+          "normalized_content": "new_user anirudh aggarwal new_user customervivo customer name ford clock2 date 2025 05 05 group people attendees w9qmzfr39 w010nnjv7s8 u038xfd63gs loading 2248 notes the customer was provided with a demo showcasing ic cloud editor and its capabilities in comparison to the existing on premises editors the customer expressed positive feedback regarding the enhanced user experience and streamlined functionality offered by the cloud editor the customer requested information regarding the migration strategy for their portfolio of 500 600 letters to the cloud platform the team provided an overview of the vip engagement program to facilitate this transition the customer was asked to explore the new editor and share honest feedback with the team for improvements todo_done next action sandbox configuration customer will share their sandbox details to enable the editor vip engagement the customer will conduct an internal review of the vip engagement program for the migration initiative and provide their assessment to our team postgresql integration we need to check the feasibility and plans for integrating postgresql database with the fdm script editing support customer will share their requirements for custom functions scripts in the cloud editor to explore potential solutions",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-05-05",
+            "pmName": "Anirudh Aggarwal",
+            "slackTs": "1746508900.112879",
+            "attendees": [
+              "W9QMZFR39",
+              "W010NNJV7S8",
+              "U038XFD63GS"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Ford*",
+            "quality_score": 95
+          },
+          "created_at": "2025-05-06T05:21:40.112Z",
+          "is_duplicate_of": null
+        }
+      ],
+      "themes": [],
+      "customers": [
+        "Ford",
+        "Toyota Financial Services"
+      ]
+    },
+    {
+      "id": "22f43462-16ad-4431-9646-54c808418f30",
+      "title": "SmartDoc Technologies & Naveen - Forms Experience Builder - forms (7 signals)",
+      "description": "Cluster of 7 related signals. Customers: SmartDoc Technologies, Naveen, LPL. Topics: Forms Experience Builder, Forms, Feature Request, IC Editor. Sources: slack. Types: feedback.",
+      "status": "new",
+      "created_at": "2026-02-06T08:36:09.906Z",
+      "roadmapScore": {
+        "overallScore": 47,
+        "impactScore": 55,
+        "confidenceScore": 58.57142857142857,
+        "effortScore": 29,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 7,
+          "uniqueCustomers": 3,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0.4714285714285714,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "3cc50da6-cc08-41f8-9be5-14456d82845a",
+          "source": "slack",
+          "source_ref": "1765520928.634359",
+          "signal_type": "feedback",
+          "content": "<@U0213T59LMN> <@W4R4S9FS4> Can you please help in enabling the Forms Experience Builder on the Customer env? Email: <mailto:jp@smartdoctech.com|jp@smartdoctech.com> and cm-p119822-e1855156.\n\n<@WE163TH43> <@W4R5LUPK3> Please let me know if, in addition to enabling IC’s FT and Forms Experience Builder, there are any other steps required to activate the IC AI capabilities.\ncc: <@W4RT1UR2Q>",
+          "normalized_content": "u0213t59lmn w4r4s9fs4 can you please help in enabling the forms experience builder on the customer env email mailto jp smartdoctech com jp smartdoctech com and cm p119822 e1855156 we163th43 w4r5lupk3 please let me know if in addition to enabling ic s ft and forms experience builder there are any other steps required to activate the ic ai capabilities cc w4rt1ur2q",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1765520928.634359",
+            "channelId": "C04D195JVGS",
+            "quality_score": 50,
+            "parentSignalId": "9efd309b-cecf-42be-8e7b-274c23ed1374"
+          },
+          "created_at": "2025-12-12T06:28:48.634Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "d4f9b51c-d888-43d2-8b68-c7cc7f98a0a5",
+          "source": "slack",
+          "source_ref": "1758697626.422529",
+          "signal_type": "feedback",
+          "content": "Anything on Forms Experience Builder and next setup of forms",
+          "normalized_content": "anything on forms experience builder and next setup of forms",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1758697626.422529",
+            "channelId": "C04D195JVGS",
+            "quality_score": 30,
+            "parentSignalId": "be0f4425-6004-42c4-887f-427971fb1032"
+          },
+          "created_at": "2025-09-24T07:07:06.422Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "643637f5-2b22-4e89-82e5-8fb5c400e9b9",
+          "source": "slack",
+          "source_ref": "1755148494.808229",
+          "signal_type": "feedback",
+          "content": "Recording link: <https://adobe-my.sharepoint.com/:v:/p/navneeta/EUOE5iNNMABNqhdgBcDPGk0BBbHuSlmh0QqWVq0XhVT3VA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&amp;e=5305QW|Forms Experience Builder Feedback-20250813_203459-Meeting Recording.mp4>\ncc: <@W4R4S9FS4>",
+          "normalized_content": "recording link https adobe my sharepoint com v p navneeta euoe5innmabnqhdgbcdpgk0bbbhuslmh0qqwvq0xhvt3va nav eyjyzwzlcnjhbeluzm8ionsicmvmzxjyywxbchaioijtdhjlyw1xzwjbchailcjyzwzlcnjhbfzpzxcioijtagfyzurpywxvzy1maw5riiwicmvmzxjyywxbchbqbgf0zm9ybsi6ildlyiisinjlzmvycmfstw9kzsi6inzpzxcifx0 3d amp e 5305qw forms experience builder feedback 20250813_203459 meeting recording mp4 cc w4r4s9fs4",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1755148494.808229",
+            "channelId": "C04D195JVGS",
+            "quality_score": 50,
+            "parentSignalId": "b80b2dd0-2df2-470e-97b8-da5d09cd1246"
+          },
+          "created_at": "2025-08-14T05:14:54.808Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "0cd43b4a-8123-4035-a816-42ab5ba2c739",
+          "source": "slack",
+          "source_ref": "1750221979.971579",
+          "signal_type": "feedback",
+          "content": "<@W4RSW3ECC> We are working on the solution for setting the status code, will take couple of days. As for Forms Experience Builder, they asked us to enable and <@U0213T59LMN> has already enabled it on their environments.",
+          "normalized_content": "w4rsw3ecc we are working on the solution for setting the status code will take couple of days as for forms experience builder they asked us to enable and u0213t59lmn has already enabled it on their environments",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1750221979.971579",
+            "channelId": "C04D195JVGS",
+            "quality_score": 50,
+            "parentSignalId": "b00277a7-d478-4ed3-b887-4f2e426018b0"
+          },
+          "created_at": "2025-06-18T04:46:19.971Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "26a4d914-7b67-405e-9358-73e80fb89e9c",
+          "source": "slack",
+          "source_ref": "1750165218.805479",
+          "signal_type": "feedback",
+          "content": "<@W4RU4N66R> We have nudged them for use of 'Forms Experience Builder', they will let us know if they want it enabled on their environments",
+          "normalized_content": "w4ru4n66r we have nudged them for use of forms experience builder they will let us know if they want it enabled on their environments",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1750165218.805479",
+            "channelId": "C04D195JVGS",
+            "quality_score": 50,
+            "parentSignalId": "b00277a7-d478-4ed3-b887-4f2e426018b0"
+          },
+          "created_at": "2025-06-17T13:00:18.805Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "04d29795-4490-41e0-8e62-01bd5be025f6",
+          "source": "slack",
+          "source_ref": "1747888205.722279",
+          "signal_type": "feedback",
+          "content": "<@W4RT1UR2Q>, Naveen Sharma from LPL has filed and signed the survey. Please confirm.\nPost that we need to enable the Forms Experience Builder on following customer environments.\n• Program: 124307 \n    ◦ Dev Env: 1224512\n    ◦ Stage Env: 1224603\nI know <@U0213T59LMN> is on PTO today. <@W4RU5J3JR> do you know the FT for this. I can enable it once <@W4RT1UR2Q> confirms.",
+          "normalized_content": "w4rt1ur2q naveen sharma from lpl has filed and signed the survey please confirm post that we need to enable the forms experience builder on following customer environments program 124307 dev env 1224512 stage env 1224603 i know u0213t59lmn is on pto today w4ru5j3jr do you know the ft for this i can enable it once w4rt1ur2q confirms",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1747888205.722279",
+            "channelId": "C04D195JVGS",
+            "quality_score": 50,
+            "parentSignalId": "a3f750b0-f4a0-4885-9950-cbab6a859fb5"
+          },
+          "created_at": "2025-05-22T04:30:05.722Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "18cf912c-32b9-4aa2-adaa-c774c0da88e8",
+          "source": "slack",
+          "source_ref": "1745582442.056639",
+          "signal_type": "feedback",
+          "content": "<@W5HEU5M7Y> <@W4R4S9FS4>\nI had a sync-up with the customer on Thu, 23rd April, where Naveen asked me about enabling the AI feature(Forms Experience Builder) that was demoed to them during the Summit. From what I understand, when they initially asked about it, <@W5HEU5M7Y> had mentioned that It is meant for Adaptive Forms (AF), not XDPs. However, the customer is still interested in trying it out.\n\nI connected within team to get more details on it and get to know that this feature is not in EA (Early Access) yet. Given that the feature is not officially in EA and currently doesn't align with the customer’s intended use (for XDPs),\n\nCould you please advise if it's possible to enable it on the customer's environment so that they can try it out?\n\ncc: <@W9QMZFR39> <@W4RSW3ECC>",
+          "normalized_content": "w5heu5m7y w4r4s9fs4 i had a sync up with the customer on thu 23rd april where naveen asked me about enabling the ai feature forms experience builder that was demoed to them during the summit from what i understand when they initially asked about it w5heu5m7y had mentioned that it is meant for adaptive forms af not xdps however the customer is still interested in trying it out i connected within team to get more details on it and get to know that this feature is not in ea early access yet given that the feature is not officially in ea and currently doesn t align with the customer s intended use for xdps could you please advise if it s possible to enable it on the customer s environment so that they can try it out cc w9qmzfr39 w4rsw3ecc",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "isReply": true,
+            "slackTs": "1745582442.056639",
+            "channelId": "C04D195JVGS",
+            "quality_score": 50,
+            "parentSignalId": "a3f750b0-f4a0-4885-9950-cbab6a859fb5"
+          },
+          "created_at": "2025-04-25T12:00:42.056Z",
+          "is_duplicate_of": null
+        }
+      ],
+      "themes": [],
+      "customers": [
+        "GM Financial",
+        "Naveen",
+        "SmartDoc Technologies"
+      ]
+    }
+  ],
+  "quickWins": [],
+  "emerging": [],
+  "byImpact": {
+    "high": 1,
+    "medium": 13,
+    "low": 86
+  },
+  "byConfidence": {
+    "high": 18,
+    "medium": 45,
+    "low": 37
+  },
+  "averageScores": {
+    "impact": 22,
+    "confidence": 40,
+    "effort": 40,
+    "strategic": 50,
+    "urgency": 31
+  }
+}

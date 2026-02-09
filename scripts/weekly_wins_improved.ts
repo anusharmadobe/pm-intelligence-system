@@ -1,0 +1,443 @@
+#!/usr/bin/env ts-node
+
+/**
+ * Improved Weekly Wins Summary Generator
+ * Higher bar: Requires customer names, quantifiable metrics, and actual business impact
+ */
+
+import { readFileSync, writeFileSync } from 'fs';
+import { join } from 'path';
+
+const CHANNEL_ID = 'C043FKMNUNM';
+
+// Thread replies for weekly status update thread
+const STATUS_THREAD_REPLIES = [
+  {
+    "user": "U0900H3NUUT",
+    "ts": "1769055784.412839",
+    "text": "Handed over the designs for:\n• Dynamic Tables\n• Associate UI (Content Editing, Rearranging content, Workflow )\nHad a discussion with Devs for stylesheet UIs, understood some gaps, working on them, where defining the creation journey of stylesheet.\n Working on Deck, defined the examples for each patterns including  AEM Forms & AEP AI Agent.",
+    "user_profile": {
+      "real_name": "Utkarsha Sharma",
+      "display_name": "utkarshas"
+    }
+  },
+  {
+    "user": "U03HRQ036BD",
+    "ts": "1769144888.924279",
+    "text": "*Ruchita (leave on 16 Jan)*\n• *AEM Forms as a Cloud Service*\n    ◦ Migrating content from EXL to AEM Live for EDS documents\n    ◦ Worked on January release notes and early access features\n• *AEM Forms 6.5 LTS*\n    ◦ Worked with Bhumika on publishing Install Turnkey and Upgrade Turnkey PDFs\n• *AEM Forms 6.5*\n    ◦ Worked on Transaction Reporting on JEE (added note)\n• *Miscellaneous*\n    ◦ Defined goals for 2026 with Khushwant\n    ◦ Working on the SEO checklist\n    ◦ Working on the first draft PoC of Agent Draft (to be shared with Khushwant soon)",
+    "user_profile": {
+      "real_name": "Ruchita Srivastava",
+      "display_name": "ruchitas"
+    }
+  },
+  {
+    "user": "WAM5KDYBZ",
+    "ts": "1769162564.412539",
+    "text": "• Shared the 2026 goals for the Forms Content Experience team with Anurag.\n• Preparing an overview deck of the AEM Forms Content Experience team's key activities in 2025 and plans for 2026 for leadership meetings. \t\n• Analysed AEM Forms brand visibility for \"Forms Builder\" intent. \n• Analysed \"DoR\" terminology for visibility and customer intent perspective.  This part of activity to rename *Feature and terminology* to match how customers search and describe problems.  \n• Preparing the January 2026 edition of the CAB Newsletter. \t\n• Incorporating customer feedback into Core Components content.\n• Discussed AI UX Patterns deck's outline with Utkarsha. She is developing the deck.",
+    "user_profile": {
+      "real_name": "Khushwant Singh",
+      "display_name": "khsingh"
+    }
+  }
+];
+
+interface SlackMessage {
+  text?: string;
+  user?: string;
+  ts: string;
+  user_profile?: {
+    real_name?: string;
+    display_name?: string;
+  };
+  blocks?: any[];
+  subtype?: string;
+  thread_ts?: string;
+  reply_count?: number;
+  [key: string]: any;
+}
+
+interface WeeklyWin {
+  user: string;
+  date: string;
+  category: 'customer' | 'productivity' | 'business' | 'other';
+  description: string;
+  customerName?: string;
+  quantifiable?: string;
+  businessImpact?: string;
+  confidence: 'high' | 'medium' | 'low';
+}
+
+function extractTextFromBlocks(blocks: any[]): string {
+  const texts: string[] = [];
+  for (const block of blocks) {
+    if (block.type === 'rich_text' && block.elements) {
+      texts.push(extractTextFromElements(block.elements));
+    } else if (block.text) {
+      texts.push(block.text);
+    }
+  }
+  return texts.join('\n').trim();
+}
+
+function extractTextFromElements(elements: any[]): string {
+  const texts: string[] = [];
+  for (const element of elements) {
+    if (element.type === 'rich_text_section' && element.elements) {
+      texts.push(extractTextFromElements(element.elements));
+    } else if (element.type === 'rich_text_list' && element.elements) {
+      element.elements.forEach((item: any) => {
+        if (item.elements) {
+          texts.push('• ' + extractTextFromElements(item.elements));
+        }
+      });
+    } else if (element.text) {
+      texts.push(element.text);
+    } else if (element.type === 'text') {
+      texts.push(element.text || '');
+    }
+  }
+  return texts.join('').trim();
+}
+
+function getMessageText(message: SlackMessage): string {
+  if (message.text) return message.text;
+  if (message.blocks) return extractTextFromBlocks(message.blocks);
+  return '';
+}
+
+function getWeekRange(weekOffset: number = 0): { start: Date; end: Date } {
+  const now = new Date();
+  const currentDay = now.getDay();
+  const daysFromMonday = currentDay === 0 ? 6 : currentDay - 1;
+  
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(now.getDate() - daysFromMonday - (weekOffset * 7));
+  startOfWeek.setHours(0, 0, 0, 0);
+  
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+  endOfWeek.setHours(23, 59, 59, 999);
+  
+  return { start: startOfWeek, end: endOfWeek };
+}
+
+function isInWeekRange(timestamp: string, weekStart: Date, weekEnd: Date): boolean {
+  const msgDate = new Date(parseFloat(timestamp) * 1000);
+  return msgDate >= weekStart && msgDate <= weekEnd;
+}
+
+function extractCustomerName(text: string): string | undefined {
+  // Look for customer names - common patterns
+  const patterns = [
+    /(?:for|with|at|to)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:customer|client|company|enterprise|organization)/i,
+    /(?:customer|client)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)/i,
+    /([A-Z][A-Z]+)\s+(?:deployment|implementation|rollout|launch)/i, // Acronyms like "EDS"
+    /(?:deployed|launched|shipped|delivered)\s+(?:to|for)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)/i,
+  ];
+  
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match && match[1]) {
+      const name = match[1].trim();
+      // Filter out common false positives
+      if (!['AEM', 'Forms', 'Cloud', 'Service', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].includes(name)) {
+        return name;
+      }
+    }
+  }
+  
+  return undefined;
+}
+
+function extractQuantifiableMetrics(text: string): { metrics: string; hasRealNumbers: boolean } {
+  // Look for REAL metrics, not just dates
+  const realMetricPatterns = [
+    /(\d+)\s*(%|percent)\s*(?:increase|decrease|improvement|growth|reduction|savings)/gi,
+    /(\d+)\s*(?:hours?|days?|weeks?|months?)\s*(?:saved|reduced|decreased|faster|improved|cut)/gi,
+    /(\$|USD)\s*(\d+[,\d]*)\s*(?:saved|revenue|cost|reduction)/gi,
+    /(\d+)\s*(?:customers?|users?|deployments?|implementations?|adoptions?)\s*(?:added|gained|onboarded|launched)/gi,
+    /(\d+)\s*(?:x|times)\s*(?:faster|more|improvement|increase)/gi,
+    /reduced\s+(?:by|to)\s+(\d+)\s*(?:%|hours?|days?|cost)/gi,
+    /increased\s+(?:by|to)\s+(\d+)\s*(?:%|users?|customers?|revenue)/gi,
+    /(\d+)\s*(?:million|billion|k|thousand)\s*(?:users?|customers?|revenue|dollars?)/gi,
+  ];
+  
+  const matches: string[] = [];
+  let hasRealNumbers = false;
+  
+  realMetricPatterns.forEach(pattern => {
+    const found = text.match(pattern);
+    if (found) {
+      matches.push(...found);
+      // Check if it's a real number (not just a year like 2026)
+      found.forEach(match => {
+        const numMatch = match.match(/\d+/);
+        if (numMatch) {
+          const num = parseInt(numMatch[0]);
+          // Exclude years (1900-2100 range) unless they're clearly part of a metric
+          if (num < 1900 || num > 2100 || match.includes('%') || match.includes('$') || match.includes('hours') || match.includes('days')) {
+            hasRealNumbers = true;
+          }
+        }
+      });
+    }
+  });
+  
+  return {
+    metrics: matches.length > 0 ? matches.join(', ') : '',
+    hasRealNumbers: hasRealNumbers
+  };
+}
+
+function hasBusinessImpact(text: string): boolean {
+  const lowerText = text.toLowerCase();
+  
+  // Strong impact indicators
+  const impactKeywords = [
+    'launched', 'deployed', 'shipped', 'released', 'delivered', 'completed',
+    'achieved', 'exceeded', 'closed', 'signed', 'won', 'adopted',
+    'revenue', 'cost savings', 'time saved', 'efficiency', 'productivity',
+    'customer success', 'adoption', 'usage', 'growth', 'increase',
+    'reduced', 'eliminated', 'solved', 'resolved', 'fixed'
+  ];
+  
+  // Weak indicators (routine work)
+  const routineKeywords = [
+    'working on', 'preparing', 'discussing', 'planning', 'analyzing',
+    'reviewing', 'drafting', 'defining', 'exploring'
+  ];
+  
+  const hasImpact = impactKeywords.some(kw => lowerText.includes(kw));
+  const isRoutine = routineKeywords.some(kw => lowerText.includes(kw)) && !hasImpact;
+  
+  return hasImpact && !isRoutine;
+}
+
+function identifyWins(messages: SlackMessage[]): WeeklyWin[] {
+  const wins: WeeklyWin[] = [];
+  
+  for (const message of messages) {
+    if (message.subtype || message.user === 'USLACKBOT') {
+      continue;
+    }
+    
+    const text = getMessageText(message);
+    if (!text || text.length < 30) {
+      continue; // Need substantial content
+    }
+    
+    // REQUIREMENT 1: Must have completion/shipment language
+    const completionKeywords = [
+      'launched', 'deployed', 'shipped', 'released', 'delivered', 'completed',
+      'achieved', 'exceeded', 'closed', 'signed', 'won', 'adopted',
+      'handed over', 'published', 'migrated', 'implemented'
+    ];
+    
+    const hasCompletion = completionKeywords.some(kw => 
+      text.toLowerCase().includes(kw)
+    );
+    
+    if (!hasCompletion) {
+      continue; // Skip "working on" or "preparing" - not wins yet
+    }
+    
+    // REQUIREMENT 2: Must have business impact
+    if (!hasBusinessImpact(text)) {
+      continue;
+    }
+    
+    // REQUIREMENT 3: Extract customer name (if present)
+    const customerName = extractCustomerName(text);
+    
+    // REQUIREMENT 4: Extract REAL quantifiable metrics
+    const metrics = extractQuantifiableMetrics(text);
+    
+    // REQUIREMENT 5: Determine confidence level
+    let confidence: 'high' | 'medium' | 'low' = 'low';
+    
+    if (customerName && metrics.hasRealNumbers) {
+      confidence = 'high';
+    } else if (customerName || metrics.hasRealNumbers) {
+      confidence = 'medium';
+    } else {
+      // Even without customer name or metrics, if it's a clear completion with impact, it's medium
+      if (hasCompletion && hasBusinessImpact(text)) {
+        confidence = 'medium';
+      } else {
+        continue; // Skip low confidence items
+      }
+    }
+    
+    // Only include medium or high confidence wins
+    if (confidence === 'low') {
+      continue;
+    }
+    
+    const userName = message.user_profile?.real_name || 
+                    message.user_profile?.display_name || 
+                    message.user || 
+                    'Unknown';
+    
+    const date = new Date(parseFloat(message.ts) * 1000).toISOString().split('T')[0];
+    
+    wins.push({
+      user: userName,
+      date: date,
+      category: customerName ? 'customer' : (metrics.hasRealNumbers ? 'business' : 'other'),
+      description: text.substring(0, 500),
+      customerName: customerName,
+      quantifiable: metrics.metrics || undefined,
+      businessImpact: metrics.hasRealNumbers ? metrics.metrics : undefined,
+      confidence: confidence
+    });
+  }
+  
+  // Sort by confidence (high first)
+  wins.sort((a, b) => {
+    const order = { 'high': 3, 'medium': 2, 'low': 1 };
+    return order[b.confidence] - order[a.confidence];
+  });
+  
+  return wins;
+}
+
+function generateSummary(wins: WeeklyWin[], weekRange: { start: Date; end: Date }, weekLabel: string): string {
+  const highConfidenceWins = wins.filter(w => w.confidence === 'high');
+  const mediumConfidenceWins = wins.filter(w => w.confidence === 'medium');
+  const customerWins = wins.filter(w => w.customerName);
+  const quantifiedWins = wins.filter(w => w.quantifiable);
+  
+  let summary = `\n${'='.repeat(80)}\n`;
+  summary += `📈 WEEKLY WINS SUMMARY - ${weekLabel.toUpperCase()}\n`;
+  summary += `📅 Week: ${weekRange.start.toISOString().split('T')[0]} to ${weekRange.end.toISOString().split('T')[0]}\n`;
+  summary += `${'='.repeat(80)}\n\n`;
+  
+  summary += `📊 Summary Statistics:\n`;
+  summary += `   Total Wins Identified: ${wins.length}\n`;
+  summary += `   High Confidence Wins: ${highConfidenceWins.length}\n`;
+  summary += `   Medium Confidence Wins: ${mediumConfidenceWins.length}\n`;
+  summary += `   Wins with Customer Names: ${customerWins.length}\n`;
+  summary += `   Wins with Quantifiable Metrics: ${quantifiedWins.length}\n\n`;
+  
+  if (highConfidenceWins.length > 0) {
+    summary += `${'─'.repeat(80)}\n`;
+    summary += `⭐ HIGH CONFIDENCE WINS (Customer Name + Quantifiable Metrics)\n`;
+    summary += `${'─'.repeat(80)}\n\n`;
+    highConfidenceWins.forEach((win, idx) => {
+      summary += `${idx + 1}. ${win.user} (${win.date})\n`;
+      if (win.customerName) {
+        summary += `   👤 Customer: ${win.customerName}\n`;
+      }
+      if (win.quantifiable) {
+        summary += `   📊 Metrics: ${win.quantifiable}\n`;
+      }
+      summary += `   ${win.description.substring(0, 400)}${win.description.length > 400 ? '...' : ''}\n\n`;
+    });
+  }
+  
+  if (mediumConfidenceWins.length > 0) {
+    summary += `${'─'.repeat(80)}\n`;
+    summary += `📋 MEDIUM CONFIDENCE WINS (Customer Name OR Quantifiable Metrics)\n`;
+    summary += `${'─'.repeat(80)}\n\n`;
+    mediumConfidenceWins.forEach((win, idx) => {
+      summary += `${idx + 1}. ${win.user} (${win.date})\n`;
+      if (win.customerName) {
+        summary += `   👤 Customer: ${win.customerName}\n`;
+      }
+      if (win.quantifiable) {
+        summary += `   📊 Metrics: ${win.quantifiable}\n`;
+      }
+      summary += `   ${win.description.substring(0, 400)}${win.description.length > 400 ? '...' : ''}\n\n`;
+    });
+  }
+  
+  if (wins.length === 0) {
+    summary += `\n⚠️  No significant wins identified for this week.\n`;
+    summary += `\nCriteria for wins:\n`;
+    summary += `   • Must use completion language (launched, deployed, shipped, delivered, etc.)\n`;
+    summary += `   • Must have business impact indicators\n`;
+    summary += `   • Should include customer names OR quantifiable metrics\n`;
+    summary += `   • Excludes routine work ("working on", "preparing", "discussing")\n\n`;
+  }
+  
+  summary += `${'='.repeat(80)}\n`;
+  
+  return summary;
+}
+
+async function processWeeklyWinsImproved(weekOffset: number = 0) {
+  const weekRange = getWeekRange(weekOffset);
+  const weekLabel = weekOffset === 0 ? 'Current Week' : 'Last Week';
+  
+  console.log(`\n📊 Processing ${weekLabel} Wins Summary (Improved Criteria)`);
+  console.log(`📅 Week: ${weekRange.start.toISOString().split('T')[0]} to ${weekRange.end.toISOString().split('T')[0]}\n`);
+  
+  try {
+    // Read messages from file
+    console.log('📥 Reading messages from file...');
+    const messagesFile = '/Users/anusharm/.cursor/projects/Users-anusharm-learn-PM-cursor-system/agent-tools/1733d34a-9624-4ef6-93ea-b7796f832e13.txt';
+    const fileContent = readFileSync(messagesFile, 'utf-8');
+    const data = JSON.parse(fileContent);
+    const messages: SlackMessage[] = data.messages || [];
+    console.log(`✅ Loaded ${messages.length} messages\n`);
+    
+    // Filter messages for the week
+    const weekMessages = messages.filter(msg => 
+      isInWeekRange(msg.ts, weekRange.start, weekRange.end)
+    );
+    
+    // Add thread replies for current week
+    const allMessages = [...weekMessages];
+    if (weekOffset === 0) {
+      STATUS_THREAD_REPLIES.forEach(reply => {
+        if (isInWeekRange(reply.ts, weekRange.start, weekRange.end)) {
+          allMessages.push(reply as SlackMessage);
+        }
+      });
+    }
+    
+    console.log(`📅 Found ${weekMessages.length} main messages + ${allMessages.length - weekMessages.length} thread replies = ${allMessages.length} total in ${weekLabel}\n`);
+    
+    // Identify wins with improved criteria
+    console.log('🔍 Analyzing messages with improved criteria...\n');
+    console.log('   Criteria:');
+    console.log('   • Must have completion language (launched, deployed, shipped, etc.)');
+    console.log('   • Must have business impact');
+    console.log('   • Should include customer names OR quantifiable metrics\n');
+    
+    const wins = identifyWins(allMessages);
+    
+    // Generate summary
+    const summary = generateSummary(wins, weekRange, weekLabel);
+    console.log(summary);
+    
+    // Save to file
+    const outputFile = join(process.cwd(), `weekly_wins_improved_${weekOffset === 0 ? 'current' : 'last'}_week.txt`);
+    writeFileSync(outputFile, summary, 'utf-8');
+    console.log(`\n✅ Summary saved to: ${outputFile}\n`);
+    
+    return { wins, weekRange, weekLabel, summary };
+    
+  } catch (error: any) {
+    console.error(`\n❌ Error: ${error.message}`);
+    console.error(error.stack);
+    throw error;
+  }
+}
+
+// Main execution
+if (require.main === module) {
+  const weekOffset = process.argv[2] ? parseInt(process.argv[2]) : 0;
+  
+  processWeeklyWinsImproved(weekOffset)
+    .then(() => {
+      console.log('✅ Processing complete\n');
+      process.exit(0);
+    })
+    .catch(error => {
+      console.error('\n❌ Fatal error:', error.message);
+      process.exit(1);
+    });
+}
+
+export { processWeeklyWinsImproved, generateSummary };

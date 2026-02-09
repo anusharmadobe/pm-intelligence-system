@@ -1,0 +1,452 @@
+{
+  "items": [
+    {
+      "signal_id": "07e37341-856b-4cb1-bc6c-ab177ef493a5",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": [
+        { "text": "Share an example form", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "6ec809c5-27c8-4d7e-8fcc-d4fd7a2f5b92",
+      "customers": [],
+      "features": [
+        { "name": "Word-based forms", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Clarification needed", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Provide examples or recording explaining word-based forms", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "858ea95d-0c49-47de-a9d2-cb724de76458",
+      "customers": [
+        { "name": "INAIL", "confidence": 0.9 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Growth and scaling", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Exact expected application load is unknown",
+          "category": "Scalability",
+          "severity": 2,
+          "confidence": 0.7
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "0782730c-1686-448c-9aa2-5de65e5d9f15",
+      "customers": [
+        { "name": "NFCU", "confidence": 0.9 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Customer engagement", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Increase meeting frequency for feature discussions", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "5ef6c5ef-fc23-40dc-8c8d-15c58d4dee1b",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "8e727d48-a764-42b3-923e-297f2f25713b",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "8b210e3b-e9ae-4525-a876-fad1e1c91d59",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "93a3c5b3-b81c-4307-9f94-5d7701c1530c",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Demo planning", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Add participant to give a general demo", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "746fe3c9-390c-4711-977b-e414c3b6dd84",
+      "customers": [],
+      "features": [
+        { "name": "Headless forms", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Product exploration", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Show CodeSandbox to help understand headless", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "a03fffdd-2d5f-4496-a7a3-e57db08b8ae6",
+      "customers": [],
+      "features": [
+        { "name": "Headless Adaptive Forms", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Requirements discovery", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "f414b9e8-cecf-462b-aa63-236f7ed07cfa",
+      "customers": [
+        { "name": "Spark", "confidence": 0.8 }
+      ],
+      "features": [
+        { "name": "Headless forms demo", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Demo request", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Align someone to demonstrate headless forms", "confidence": 0.8 }
+      ]
+    },
+    {
+      "signal_id": "7ce31ce4-072a-4ebe-990a-d783cedc9488",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Automation", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Sling mapping is manual and caused regression",
+          "category": "Automation",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        { "text": "Automate sling mapping to avoid future regression", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "9b280587-3021-4daa-a01a-b5b313baa997",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Automation", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "c9dd6163-6727-4b9d-b1d6-5dd8c8b63247",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Account clarity", "confidence": 0.5 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "56ead7cb-7512-43b1-aea6-7f34ded7e952",
+      "customers": [
+        { "name": "IRS DMAF", "confidence": 0.8 },
+        { "name": "IRS ECM", "confidence": 0.8 },
+        { "name": "IRS W&I", "confidence": 0.8 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Account segmentation", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "bda9070e-4509-4b0b-aa2f-e7926a45fb60",
+      "customers": [],
+      "features": [
+        { "name": "Large attachment upload", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Customer-specific enablement", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Enable large MB attachment uploads for this customer", "confidence": 0.7 }
+      ]
+    },
+    {
+      "signal_id": "559b72d7-d53b-4528-81b0-d8f457e51389",
+      "customers": [],
+      "features": [
+        { "name": "Scribble", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Feature request tracking", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "4846b03c-f08a-443e-8a13-241ffbaa3378",
+      "customers": [],
+      "features": [
+        { "name": "Scribble", "confidence": 0.9 },
+        { "name": "Core Components", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Feature gap", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Scribble not available in core components",
+          "category": "Missing feature",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        { "text": "Make Scribble available in core components", "confidence": 0.9 }
+      ]
+    },
+    {
+      "signal_id": "c5c07e09-1bcb-4bac-a17e-930fff29e8ff",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Demo scheduling", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "5e80bd26-9de7-461f-a0f5-34d4292eb8ac",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "2c16d140-788d-4197-abbe-acd92997727d",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Meeting coordination", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Add participant to upcoming meeting", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "39a0fe61-d924-4827-ab76-b41e183a8f5a",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Customer success opportunity", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "42357115-08b8-4530-b13b-cc2c09f2eed4",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Deployment clarification", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "a6b64c49-80b9-4fb8-ae10-882f78707fcf",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Environment discovery", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        { "text": "Share live domain for the customer", "confidence": 0.6 }
+      ]
+    },
+    {
+      "signal_id": "d8c1eeed-2a03-4fea-ab6a-45919a7d8f84",
+      "customers": [],
+      "features": [
+        { "name": "LLM-based form optimization", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "AI-driven conversion improvement", "confidence": 0.8 }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Enable LLM suggestions to improve form conversions",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "d3dc8c6f-4169-46f8-941b-048a5f8a0b66",
+      "customers": [],
+      "features": [
+        { "name": "AFCS", "confidence": 0.6 },
+        { "name": "AI Assistant", "confidence": 0.6 }
+      ],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "10f3931d-b688-4b8a-9f75-e51772b9e335",
+      "customers": [],
+      "features": [
+        { "name": "Custom components in form creation", "confidence": 0.8 }
+      ],
+      "themes": [
+        { "name": "Extensibility", "confidence": 0.7 }
+      ],
+      "issues": [
+        {
+          "title": "Custom components not supported during form creation",
+          "category": "Customization",
+          "severity": 3,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        {
+          "text": "Support use of custom components when creating forms",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "243f9908-88cd-4618-abca-05961b5ceb3b",
+      "customers": [],
+      "features": [],
+      "themes": [
+        { "name": "Next steps", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "48e33d05-a706-4778-813c-bda9df35c005",
+      "customers": [],
+      "features": [
+        { "name": "API integration", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Integration requirements", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Share API details including Swagger and authentication",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "87e583e0-5040-4bba-afe7-58cb3154df96",
+      "customers": [],
+      "features": [
+        { "name": "REST API", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Integration clarification", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "10477d57-0340-420f-8010-d056e9f16706",
+      "customers": [],
+      "features": [
+        { "name": "OOTB data source integration", "confidence": 0.6 }
+      ],
+      "themes": [
+        { "name": "Compatibility check", "confidence": 0.6 }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm if integration with customer data source is supported OOTB",
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "signal_id": "283d0831-e0d0-4c75-8498-8802a40225ad",
+      "customers": [],
+      "features": [
+        { "name": "AFCS", "confidence": 0.7 },
+        { "name": "GenAI-assisted migration", "confidence": 0.7 }
+      ],
+      "themes": [
+        { "name": "Scalability", "confidence": 0.8 }
+      ],
+      "issues": [
+        {
+          "title": "Manual form design does not scale to thousands of XDPs",
+          "category": "Scalability",
+          "severity": 4,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        {
+          "text": "Automate form migration using AFCS or GenAI",
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "signal_id": "1c7253b5-164a-4161-9a73-a2ee7a051d42",
+      "customers": [
+        { "name": "Maurice Blackburn", "confidence": 0.8 }
+      ],
+      "features": [],
+      "themes": [
+        { "name": "Conversion optimization", "confidence": 0.7 }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Confirm site domain targeted for conversion improvement",
+          "confidence": 0.7
+        }
+      ]
+    }
+  ]
+}

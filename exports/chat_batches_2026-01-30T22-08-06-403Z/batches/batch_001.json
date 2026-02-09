@@ -1,0 +1,1352 @@
+[
+  {
+    "id": "6d0d50c3-486b-4f3d-9d58-9bd7c632134f",
+    "source": "slack",
+    "text": "<@W4RU4N66R> example form.",
+    "created_at": "2026-01-30T07:16:00.188Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1740064440.189899"
+  },
+  {
+    "id": "44ff6a35-0497-443b-be71-7b94199ec8d8",
+    "source": "slack",
+    "text": "What does word based forms really means. Did they share any example word or available in recording?",
+    "created_at": "2026-01-30T07:16:00.131Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1740064440.189899"
+  },
+  {
+    "id": "5111e0b1-5c42-4ad9-84e4-12ea9f1394be",
+    "source": "slack",
+    "text": "INAIL started with 1 application when they went live, now they have 3 and in the next months will become 7. Exact expected load is unknown and we are in touch with partner to find this out.",
+    "created_at": "2026-01-30T07:16:00.072Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1741238406.467149"
+  },
+  {
+    "id": "68c076d8-f8ae-4312-9637-6ac10adcd1ee",
+    "source": "slack",
+    "text": "NFCU want two meetings a week for more feature discussions.",
+    "created_at": "2026-01-30T07:16:00.012Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1741278995.147779"
+  },
+  {
+    "id": "ffb01404-6dfe-4ffe-9560-accf69600878",
+    "source": "slack",
+    "text": "cc: <@WQWCBV6NN> <@W4R5LUPK3> <@W9QMZFR39>",
+    "created_at": "2026-01-30T07:15:59.948Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1741879185.057409"
+  },
+  {
+    "id": "9b7bf5ca-8ff8-4889-abdf-eb456aad37ed",
+    "source": "slack",
+    "text": "Sharing the presentation discussed in the meeting.",
+    "created_at": "2026-01-30T07:15:59.889Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742354852.195479"
+  },
+  {
+    "id": "451cb455-d5fd-4591-b02c-9b9fc661ceeb",
+    "source": "slack",
+    "text": "Cool\nI’ll share the invite with you",
+    "created_at": "2026-01-30T07:15:59.828Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742560750.719689"
+  },
+  {
+    "id": "0068367a-0c4b-4895-a7f2-795180b8fcc8",
+    "source": "slack",
+    "text": "You can add me, i can show a general demo (since I don’t know their use-case)",
+    "created_at": "2026-01-30T07:15:59.770Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742560750.719689"
+  },
+  {
+    "id": "995b594f-50da-4539-8f40-fd820017a542",
+    "source": "slack",
+    "text": "Yes, we had a few engagements earlier, and if I recall correctly, Brad was the only one in that meeting.\nWe can simply show them CodeSandbox and let them explore it to better understand headless.",
+    "created_at": "2026-01-30T07:15:59.713Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742560750.719689"
+  },
+  {
+    "id": "d5f65382-532c-429f-a116-13b98e537339",
+    "source": "slack",
+    "text": "<@W4R5M9P4H> would you be available for the meeting?\nQQ - my understanding is that Rishi was already engaged with them for headless/SPA enhancements.\nAnything specific they are looking for in Headless Adaptive Forms?",
+    "created_at": "2026-01-30T07:15:59.655Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742560750.719689"
+  },
+  {
+    "id": "b842217a-74f6-4867-afe3-243a150cd29a",
+    "source": "slack",
+    "text": "<@W4XTCQ07J> Spark has asked for a session tomorrow for headless forms demo from 9:00-9:30 am. Can you please align someone to demonstrate the same ?\ncc: <@U0213T59LMN>",
+    "created_at": "2026-01-30T07:15:59.601Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742560750.719689"
+  },
+  {
+    "id": "ba1dfa7d-999c-4ae6-911c-dec6b274076a",
+    "source": "slack",
+    "text": "&gt; I have scheduled a meeting tomorrow - to identify if we can automate the sling mapping and related use-case - to avoid the miss/regression in future.\nIt can/should be automated, it was not done earlier due to time constraints",
+    "created_at": "2026-01-30T07:15:59.536Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742921869.659799"
+  },
+  {
+    "id": "357a02a5-a982-4337-baa8-0727c2d34c5c",
+    "source": "slack",
+    "text": "FYI - I have scheduled a meeting tomorrow - to identify if we can automate the sling mapping and related use-case - to avoid the miss/regression in future.",
+    "created_at": "2026-01-30T07:11:34.140Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742921869.659799"
+  },
+  {
+    "id": "2792cd9a-7349-44f9-aa65-12a5c46670af",
+    "source": "slack",
+    "text": "Thanks Sud for different accounts information which was confusing for me.",
+    "created_at": "2026-01-30T07:11:34.084Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742921869.659799"
+  },
+  {
+    "id": "50d7d7b0-b814-40e7-b545-bad824ff5431",
+    "source": "slack",
+    "text": "*IRS Accounts:*\n• This request is related to *IRS DMAF* account (biggest account - where we have been actively engaged)\n• *IRS ECM* is another account (640K ARR) - where there are initial discussions on requirement to move to newer Java version (already live - this is the second year)\n• *IRS W&amp;I* where we connected with them in context of moving to CC components.",
+    "created_at": "2026-01-30T07:11:34.025Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742921869.659799"
+  },
+  {
+    "id": "094cec85-e40e-4017-a21b-74140aa6f263",
+    "source": "slack",
+    "text": "For the same customer and for the same timeline - we are also engaged for the use case of uploading big MBs attachment files in SP doc library and to achieve the same we are implementing a way to unblock customer and the approach will only be enabled for this customer",
+    "created_at": "2026-01-30T07:11:33.967Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742924442.462169"
+  },
+  {
+    "id": "477db946-9b72-49f1-a354-5de98e900c2a",
+    "source": "slack",
+    "text": "<@W4R4S9FS4> / <@W010NNJV7S8> FPR raised for Scribble - FORMS-19284.",
+    "created_at": "2026-01-30T07:11:33.911Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742924442.462169"
+  },
+  {
+    "id": "b62c1807-8f7e-43dd-b04a-5b5fb135d464",
+    "source": "slack",
+    "text": "From <@WBTGD8NCR> (TAM): Customer confirmed -\n&gt; _We are using the core components and not the older version (foundation components) . Since scribble is not available, it is something we requested for to be made available to us._\n&gt; _We would like to focus on scribble as it is something business is inclined towards using._\n&gt; _Older version-foundation- contains it but we aren’t using per adobe’s guidelines_",
+    "created_at": "2026-01-30T07:11:33.851Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742924442.462169"
+  },
+  {
+    "id": "496f963d-39f6-4565-b558-1793fc1b9b24",
+    "source": "slack",
+    "text": "Received an update from SC team. Demo is scheduled for April 30, 2025. Pablo will do the demo and relay the feedback. We have provided the demo script and collateral.",
+    "created_at": "2026-01-30T07:11:33.792Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742987166.130449"
+  },
+  {
+    "id": "502bb0d0-54a4-438b-9e24-51ac4ef0cb2a",
+    "source": "slack",
+    "text": "No meeting scheduled as of now.",
+    "created_at": "2026-01-30T07:11:33.734Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742987166.130449"
+  },
+  {
+    "id": "07712aad-32f8-41d8-9d09-d29a5e6ef0d2",
+    "source": "slack",
+    "text": "<@W9QMZFR39> please add me to this meeting, planned for April 9 or 10",
+    "created_at": "2026-01-30T07:11:33.678Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742987166.130449"
+  },
+  {
+    "id": "db550f3f-da3e-4efa-9d7b-5f635b6dda08",
+    "source": "slack",
+    "text": "It is a CS opportunity.",
+    "created_at": "2026-01-30T07:11:33.623Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742987166.130449"
+  },
+  {
+    "id": "6fe20c76-4aca-4bd6-bd0d-20043d92c8ff",
+    "source": "slack",
+    "text": "Thanks, is that on-prem/AMS opportunity ?",
+    "created_at": "2026-01-30T07:11:33.566Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1742987166.130449"
+  },
+  {
+    "id": "3a46fc7b-f16c-4916-84c0-aaef37617cf5",
+    "source": "slack",
+    "text": "Do we have a live domain for this customer? If yes, can someone share it?",
+    "created_at": "2026-01-30T07:11:33.509Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743053506.705239"
+  },
+  {
+    "id": "605c2b6e-9bd6-47f5-92f3-cd2721782653",
+    "source": "slack",
+    "text": "One more point that Brad mentioned during the call was.\n “Do we have a capability where LLM can suggest to change the form in order to improve conversions?” - which I think this would align with PSS.\n<@W4XTCQ07J>/ <@W4RT1B152>",
+    "created_at": "2026-01-30T07:11:33.452Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743053506.705239"
+  },
+  {
+    "id": "8c2821b6-fb7a-415d-a91e-af233d6d5cdc",
+    "source": "slack",
+    "text": "Yes, this can be used for AFCS as well as assistant.",
+    "created_at": "2026-01-30T07:11:33.395Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743053506.705239"
+  },
+  {
+    "id": "7f00405a-52ef-4ecb-9cf4-c210cd5a8236",
+    "source": "slack",
+    "text": "&gt; They have custom components which they would like to use when form is getting created.\n<@U0213T59LMN>, <@U03N27GAZDZ> This ask been coming from multiple customer and also long pending in AFCS for CC. Lets try to create some proposal",
+    "created_at": "2026-01-30T07:11:33.338Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743053506.705239"
+  },
+  {
+    "id": "cd9a5f1d-f6b6-4611-b8e2-fe7391485a9c",
+    "source": "slack",
+    "text": "Next Action\n• The customer will share a sample form. \n• The Adobe team will demonstrate how AEM Forms supports their end-to-end requirements and capabilities.",
+    "created_at": "2026-01-30T07:11:33.279Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743094442.256779"
+  },
+  {
+    "id": "0cfa6799-206c-4201-986e-b4eac1a96a42",
+    "source": "slack",
+    "text": "Thanks, it would be great to know details about their API, if they have swagger endpoint or file for their rest API, it would be great and details about their authentication mechanism.",
+    "created_at": "2026-01-30T07:11:33.220Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743574464.470509"
+  },
+  {
+    "id": "5c4abeb2-e707-4844-8080-afcf82aa3664",
+    "source": "slack",
+    "text": "<@WLWHN4TV3> As of now they are not aware of it but they mentioned that service exposes rest API end point. Let me know what additional information you need I can get that tomorrow.",
+    "created_at": "2026-01-30T07:11:33.161Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743574464.470509"
+  },
+  {
+    "id": "bb45f718-de95-4bd2-a111-61369a4c07da",
+    "source": "slack",
+    "text": "&gt; Need to check if the integration with their data source will be supported OOTB\nwhat is their end storage data source?",
+    "created_at": "2026-01-30T07:11:33.103Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743574464.470509"
+  },
+  {
+    "id": "1489b64b-cff1-4d2e-959e-6627451e6972",
+    "source": "slack",
+    "text": "Added in <https://adobe-my.sharepoint.com/:x:/r/personal/ranjeet_adobe_com/_layouts/15/doc2.aspx?sourcedoc=%7B20a0d84c-895c-4b2e-9ed6-08b3d76974dd%7D&amp;action=edit&amp;activeCell=%27Communication%20Composer%20Tasks%27!C3&amp;wdinitialsession=f327c6e8-f05e-e90a-df3f-c74cfc0b4999&amp;wdrldsc=31&amp;wdrldc=1&amp;wdrldr=AccessTokenExpiredWarningUnauthenticated%2CRefreshin|Delrina Timeline.xlsx> under NFCU Tab. cc: <@W4R5LUPK3> <@WQWCBV6NN>",
+    "created_at": "2026-01-30T07:11:33.045Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743574464.470509"
+  },
+  {
+    "id": "ea89cc46-adc8-4421-804b-0f2b422fcf17",
+    "source": "slack",
+    "text": "We are working on the IC RM slide, which we can share with NFCU.\nRegarding new Requirements from NFCU, <@WE163TH43> can you please create a Tab in <https://adobe-my.sharepoint.com/:x:/r/personal/ranjeet_adobe_com/_layouts/15/doc2.aspx?sourcedoc=%7B20a0d84c-895c-4b2e-9ed6-08b3d76974dd%7D&amp;action=edit&amp;activeCell=%27Communication%20Composer%20Tasks%27!C3&amp;wdinitialsession=f327c6e8-f05e-e90a-df3f-c74cfc0b4999&amp;wdrldsc=31&amp;wdrldc=1&amp;wdrldr=AccessTokenExpiredWarningUnauthenticated%2CRefreshin|Delrina_Timeline> listing all their requirements and current status\ncc: <@W010NNJV7S8> <@W5HEU5M7Y>",
+    "created_at": "2026-01-30T07:11:32.987Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743574464.470509"
+  },
+  {
+    "id": "0b1246de-ac2f-40a2-808f-d9a4b2796577",
+    "source": "slack",
+    "text": "cc: <@W9QMZFR39> <@WQWCBV6NN> <@W4R5LUPK3>",
+    "created_at": "2026-01-30T07:11:32.930Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743574464.470509"
+  },
+  {
+    "id": "7e59a541-a3f1-4b82-b89a-244de0ea4249",
+    "source": "slack",
+    "text": "<@W5HEU5M7Y> What is the next Action with GM Financial?",
+    "created_at": "2026-01-30T07:11:32.872Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1743744842.640529"
+  },
+  {
+    "id": "a1021a33-1bd9-44ff-b843-774a2174bedd",
+    "source": "slack",
+    "text": "slack channel created: <#C08M44L9GNT|>",
+    "created_at": "2026-01-30T07:11:32.816Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744251122.295539"
+  },
+  {
+    "id": "b5890dc6-b18a-4d4d-8e22-fbd0568fc76d",
+    "source": "slack",
+    "text": "Form to evaluate.",
+    "created_at": "2026-01-30T07:11:32.758Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744251122.295539"
+  },
+  {
+    "id": "40a24892-117c-40d9-8bde-e3a33916ce22",
+    "source": "slack",
+    "text": "<@WQWCBV6NN> We should keep updating the documentation as an FAQ",
+    "created_at": "2026-01-30T07:11:32.700Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744273244.954249"
+  },
+  {
+    "id": "a0b914a9-0afa-4a82-9560-520ad3566727",
+    "source": "slack",
+    "text": "<@W4R5LUPK3> All the details are not mentioned in XFA spec",
+    "created_at": "2026-01-30T07:11:32.644Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744273244.954249"
+  },
+  {
+    "id": "fdbbe62d-19f3-4976-b51e-c6e8006af24a",
+    "source": "slack",
+    "text": "<@U031G7ZLRRC> Does our Documentation lists these Best practices around generating Accessible PDF?",
+    "created_at": "2026-01-30T07:11:32.587Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744273244.954249"
+  },
+  {
+    "id": "93dd16fb-ad87-4e3d-a47f-4deda4f5b439",
+    "source": "slack",
+    "text": "<@W9QMZFR39> sure. I will take care of it.",
+    "created_at": "2026-01-30T07:11:32.529Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744298197.930249"
+  },
+  {
+    "id": "d0aa87eb-62af-4fdb-a615-ecd6062d4c50",
+    "source": "slack",
+    "text": "<@W4R4VBWQG>, can you add the point for master pages in fragments as a point of discussion in our scrum sync ups?",
+    "created_at": "2026-01-30T07:11:32.472Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744298197.930249"
+  },
+  {
+    "id": "d775bbe4-047d-4442-a0d0-6b603d071c05",
+    "source": "slack",
+    "text": "cc: <@W9QMZFR39> <@W4R5LUPK3> <@WQWCBV6NN>",
+    "created_at": "2026-01-30T07:11:32.417Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744298197.930249"
+  },
+  {
+    "id": "c8b19fcc-87ee-4370-ac11-a6e068ed9e4d",
+    "source": "slack",
+    "text": "Yes. they are on 6.5",
+    "created_at": "2026-01-30T07:11:32.361Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744371951.163669"
+  },
+  {
+    "id": "2d397438-2505-4974-9aa2-9793273cdeef",
+    "source": "slack",
+    "text": "are they existing AEM Forms customer ?",
+    "created_at": "2026-01-30T07:11:32.303Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744371951.163669"
+  },
+  {
+    "id": "444d6565-9b31-4c44-b5df-3211c7ec73cc",
+    "source": "slack",
+    "text": "Busch Group\n\n• We have got official confirmation from the Busch Group that we have moved to the next stage of RFP and we have been given a 90 mins slot on May 13, 2025 for demoing our product. \n• More details are awaited but we will work with SC and account manager to prepare for this. \ncc: <@W4RSW3ECC>",
+    "created_at": "2026-01-30T07:11:32.248Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744716758.455559"
+  },
+  {
+    "id": "669d1fa4-8316-426e-87ae-b763e89b774a",
+    "source": "slack",
+    "text": "<@W4RSW3ECC> yes, I am create the document and wiki for this.",
+    "created_at": "2026-01-30T07:11:32.190Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744825792.076749"
+  },
+  {
+    "id": "9bf744d3-39f4-4962-88a2-6ee7734e6b19",
+    "source": "slack",
+    "text": "I suspect this will be a long-ish engagement  - lets pls write use cases on doc/wiki. IIRC, there were 2 use cases - one where they are using 3rd party app for data capture and using output for pdf generation and second might be Adaptive Form.\n\nWhat is the input document format ? They mentioned last time that its not XDP and some older format - do we know which is that .. and do they want to convert them to XDPs and struggling there or is that process fast enough and the issue is with AF JSON to XML to designer binding..",
+    "created_at": "2026-01-30T07:11:32.131Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744825792.076749"
+  },
+  {
+    "id": "26451495-0685-400a-a80b-8be5aa80f49c",
+    "source": "slack",
+    "text": "<@W4RU4N66R> Yes, they have a single XSD that they use for binding fields in all the Forms. We have asked for more collateral to analyse the XDPs let me know what do you mean by \"any standard format for representing field or subform\" so that I can have a look from that perspective also.\n\nYes, we plan to explore AFCS to see if it can help here. I had a  discussion with Arneh about this and He suggested we should gather more forms to assess the quality of the generated PDF forms.  Please note that we also support generating XDP from PDF Form in Designer(via simple import, quality is still unknown) , hence we're considering to do a  comparison check between the two.",
+    "created_at": "2026-01-30T07:11:32.073Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744825792.076749"
+  },
+  {
+    "id": "44b2307d-2a13-4efe-8fee-0480bca38afb",
+    "source": "slack",
+    "text": "<@W9QMZFR39> can you check if XDPs follow any standard format for representing field or subform?\n\nDo they also have XSD of this xdps and is there any common structure in xsd?\n\n<@W4RSW3ECC>, <@U0213T59LMN>, <@W4RU708G5>  similar to IRS opportunity in case customer what to create Adaptive Form.",
+    "created_at": "2026-01-30T07:11:32.015Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744825792.076749"
+  },
+  {
+    "id": "c2d5d438-a5b2-4897-89bc-a1d5da9554f1",
+    "source": "slack",
+    "text": "They have it in PDF and some JSON format. More details awaited.\nThey are using common fragments — as they say. We have asked for more collateral as Darshan said to further analyse it at our end.",
+    "created_at": "2026-01-30T07:11:31.956Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744825792.076749"
+  },
+  {
+    "id": "5c747b64-a7a4-47e2-8264-b7ec75ef3592",
+    "source": "slack",
+    "text": "<@W9QMZFR39> Their existing Forms are in PDF or some other format?\nAlso it would be good to explore if there are any common fragments usecase across 3000 XDPs which would also help in scaling",
+    "created_at": "2026-01-30T07:11:31.897Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744825792.076749"
+  },
+  {
+    "id": "62c2528f-360e-4b9a-aa91-d5cce9195eb7",
+    "source": "slack",
+    "text": "Just to add to the above. The major scalability challenge from 20 to 3000 XDPs is the design of each form from scratch. To migrate all forms from their existing, they need some automated process like afcs or gen-ai. New bindings per form are few and seldom.",
+    "created_at": "2026-01-30T07:11:31.838Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744825792.076749"
+  },
+  {
+    "id": "b7bd623c-19b5-4352-a375-bc2bfb1ab7b3",
+    "source": "slack",
+    "text": "Hi <@W4RSW3ECC>: We are waiting for their sandbox details to enable Communication Composer for them. <@W010NNJV7S8>: Have the details been shared?\nAlso, we'll deep dive on the Unipol's use-cases and how they are using Pega for Communication PDFs generation.",
+    "created_at": "2026-01-30T07:11:31.779Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744888036.289559"
+  },
+  {
+    "id": "fb4714f7-1b97-4bdb-8199-133789b3c8ef",
+    "source": "slack",
+    "text": "<@W010NNJV7S8>, we can do competitive analysis here and have pov for product roadmap. cc: <@W5HEU5M7Y>, <@W4R4S9FS4>\n\nDhurv, what is the next touch point with the partner ?",
+    "created_at": "2026-01-30T07:11:31.721Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744888036.289559"
+  },
+  {
+    "id": "e21e5363-8656-43dd-a4bc-29bd2ce6279d",
+    "source": "slack",
+    "text": "Need to confirm from NFCU, last Thursday meeting attendance was very low. Few months back they informed they are doing testing,",
+    "created_at": "2026-01-30T07:11:31.662Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744902425.184379"
+  },
+  {
+    "id": "c32fda27-768b-4126-9a7c-17c2a657cdc8",
+    "source": "slack",
+    "text": "I see a few thousand transactions from NFCU on prod - are they live, <@W4R5LUPK3>?",
+    "created_at": "2026-01-30T07:11:31.604Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744902425.184379"
+  },
+  {
+    "id": "41729ea1-d436-465f-9ff8-7010316795d2",
+    "source": "slack",
+    "text": ":done-checkmark:",
+    "created_at": "2026-01-30T07:11:31.546Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "e41f6726-b40c-4436-b5b5-cc70b6c90788",
+    "source": "slack",
+    "text": "Let's avoid the other ones",
+    "created_at": "2026-01-30T07:11:31.489Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "3ae69f89-2b98-4471-8b6c-a091babbdfe6",
+    "source": "slack",
+    "text": "I think these are the 3 ones we would need:\n```FT_FORMS-7883\nFT_FORMS-17067\nFT_FORMS-18566```",
+    "created_at": "2026-01-30T07:11:31.431Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "7101d2d3-3173-4037-a423-76cddd62d15c",
+    "source": "slack",
+    "text": "<@W4RU708G5>: Marketo and Workfront anyway is EA so until the customer specifically request for it - we would not be enabling it . I have a query for these two\n• Add panel before a field \n• Enable EDS template listing \nCan these exist independently as a feature in AEM or these are specific to genai . Also we should be discussing the dependency as in if genai assistant is not enabled these dependent FTs are useless so in the next scrum we should be creating a dependency map of it and i can do the changes in LD",
+    "created_at": "2026-01-30T07:11:31.374Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "82083a99-3c4b-47cb-976c-f7b5ad879b24",
+    "source": "slack",
+    "text": "I was thinking that you might had already done it.",
+    "created_at": "2026-01-30T07:11:31.317Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "86f6db5f-bb0a-4478-831a-3492317a53cc",
+    "source": "slack",
+    "text": "I have added a genai segment to be referenced in all FTs and we would be adding any new request in that segment",
+    "created_at": "2026-01-30T07:11:31.259Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "9e9107eb-8a37-4e3d-a4e0-6de08c021669",
+    "source": "slack",
+    "text": "<@W9QMZFR39>: I am doing it",
+    "created_at": "2026-01-30T07:11:31.203Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "d74657da-7690-48e9-82fa-d14d97b1f5a9",
+    "source": "slack",
+    "text": "<@W4RU708G5>, do we need to enable all these FTs mentioned in Canvas?",
+    "created_at": "2026-01-30T07:11:31.146Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "8395f84c-151f-42dc-9ab7-c1ee23020b7b",
+    "source": "slack",
+    "text": "<@W9QMZFR39> <@U0213T59LMN> Naveen has signed the agreement. Kindly enable AI Assistant on his env.",
+    "created_at": "2026-01-30T07:11:31.089Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "ee528ee5-b00f-441d-9a2c-dd4248e7da4c",
+    "source": "slack",
+    "text": "I'd assume the following FT's would be relevant:\n• `FT_FORMS-7883`\n• `FT_FORMS-17067`\n• `FT_FORMS-18566`",
+    "created_at": "2026-01-30T07:11:31.031Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "47a14243-50ff-4ce0-ae30-eb99cd5e9455",
+    "source": "slack",
+    "text": "We have collated all the relevant FTs at <https://adobe.enterprise.slack.com/docs/T02CAQ0B2/F08T3KZ2VV5>",
+    "created_at": "2026-01-30T07:11:30.972Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "52c5a453-9508-46b9-8182-a2c1440642f1",
+    "source": "slack",
+    "text": "<@W4RT1UR2Q>, please confirm if we can enable it on customer environments.",
+    "created_at": "2026-01-30T07:11:30.914Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "05854b52-442e-43d9-89e8-8440659b7e1b",
+    "source": "slack",
+    "text": "The FT for the Forms Experience builder is `FT_FORMS-7883`",
+    "created_at": "2026-01-30T07:11:30.859Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "fdde94bd-0fb6-419b-b227-184cb2a155df",
+    "source": "slack",
+    "text": "<@W4RT1UR2Q>, Naveen Sharma from LPL has filed and signed the survey. Please confirm.\nPost that we need to enable the Forms Experience Builder on following customer environments.\n• Program: 124307 \n    ◦ Dev Env: 1224512\n    ◦ Stage Env: 1224603\nI know <@U0213T59LMN> is on PTO today. <@W4RU5J3JR> do you know the FT for this. I can enable it once <@W4RT1UR2Q> confirms.",
+    "created_at": "2026-01-30T07:11:30.802Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "b10101b0-5f62-454a-9f36-cb566d28d9a6",
+    "source": "slack",
+    "text": "<@U0213T59LMN>, can you please help here?",
+    "created_at": "2026-01-30T07:11:30.745Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "4e12e30f-c4d0-4250-9bba-cfd75be33fd8",
+    "source": "slack",
+    "text": "The customer has requested a demo of the AEM Forms AI Assistant Beta.  Can someone please confirm when we can scheduled it with them? cc: <@W9QMZFR39> <@W4R4S9FS4> <@W4RT1UR2Q>",
+    "created_at": "2026-01-30T07:11:30.687Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "e9a4f104-12ea-401a-a5bf-e1a4d98ac3a8",
+    "source": "slack",
+    "text": "Invite extended to Naveen",
+    "created_at": "2026-01-30T07:11:30.629Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "da4f0473-3c12-4e7f-97af-5707902e821d",
+    "source": "slack",
+    "text": "If its going to be Naveen than let me know I can get invite extended.",
+    "created_at": "2026-01-30T07:11:30.570Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "f8370793-ed11-4422-885a-4ede738c02ab",
+    "source": "slack",
+    "text": "<@U0213T59LMN> can you please confirm who need to complete the survey? Cindy Underwood or  <mailto:naveen.sharma@lplfinancial.com|naveen.sharma@lplfinancial.com> can also complete that?",
+    "created_at": "2026-01-30T07:11:30.510Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "ac3f2f2c-cfd0-4c6e-876a-4f10ad88def4",
+    "source": "slack",
+    "text": "<@W4R4S9FS4>: This is the latest state of LPL , the customer need to complete the survey -\ncc : <@W4RT1UR2Q>",
+    "created_at": "2026-01-30T07:11:30.449Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "ab78976e-89f9-4c26-ba70-e239413f235c",
+    "source": "slack",
+    "text": "<@W4RT1UR2Q> <@U0213T59LMN> can you please check and confirm?",
+    "created_at": "2026-01-30T07:11:30.392Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "0c51c796-f875-4ec0-b86e-8254d0be3a68",
+    "source": "slack",
+    "text": "<@W4R4S9FS4> Customer is looking for update on this. can you please confirm if we have enabled it on their env or not?",
+    "created_at": "2026-01-30T07:11:30.331Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "a67c989f-148b-40ea-81bf-f06176114e0f",
+    "source": "slack",
+    "text": "I discussed this with <@WAM5KDYBZ> this morning, and he mentioned that we currently don't have any documentation for this.",
+    "created_at": "2026-01-30T07:11:30.271Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "bb686d46-c59a-4287-9eae-33a63e187dc0",
+    "source": "slack",
+    "text": "<@W4R4S9FS4>, do we have any documentation to share with the customer on Forms Experience Builder Usage?",
+    "created_at": "2026-01-30T07:11:30.212Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "369651ac-9658-4496-8aed-70504352462b",
+    "source": "slack",
+    "text": "With Sandbox, you mean environment. right?  this is not CM sandbox program.\n\n&gt; email: <mailto:naveen.sharma@lplfinancial.com|naveen.sharma@lplfinancial.com>\n&gt; Customer dev env : <https://author-p124307-e1224512.adobeaemcloud.com/>",
+    "created_at": "2026-01-30T07:11:30.153Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "75edd3e2-7651-431d-ab9c-82a3e5a3f12d",
+    "source": "slack",
+    "text": "We can enable AI capability on their env and let them play with it. Send us their sandbox details and email id.",
+    "created_at": "2026-01-30T07:11:30.094Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "42ae77e6-1ec2-42f2-af2b-760a5320d2f1",
+    "source": "slack",
+    "text": "<@W5HEU5M7Y> <@W4R4S9FS4>\nI had a sync-up with the customer on Thu, 23rd April, where Naveen asked me about enabling the AI feature(Forms Experience Builder) that was demoed to them during the Summit. From what I understand, when they initially asked about it, <@W5HEU5M7Y> had mentioned that It is meant for Adaptive Forms (AF), not XDPs. However, the customer is still interested in trying it out.\n\nI connected within team to get more details on it and get to know that this feature is not in EA (Early Access) yet. Given that the feature is not officially in EA and currently doesn't align with the customer’s intended use (for XDPs),\n\nCould you please advise if it's possible to enable it on the customer's environment so that they can try it out?\n\ncc: <@W9QMZFR39> <@W4RSW3ECC>",
+    "created_at": "2026-01-30T07:11:30.038Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "74c07c41-d75a-4815-9082-14abd01eb486",
+    "source": "slack",
+    "text": "I will try it.  <@W4RU5J3JR> thanks for sharing the env details.",
+    "created_at": "2026-01-30T07:11:29.980Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "fdce52f1-246a-4728-b161-6782bf52e963",
+    "source": "slack",
+    "text": "Env details : <http://nova:4502/>.\ncredentials : admin/admin\n\nFor trying out conversions -\n• Start by uploading the PDF document\n• convert the pdf using the AFCS service (use the already configured cloud config named 'local' for AFCS)\n• After the conversion, XDP file will be available in the output folder.\nDo let me know if you face any issues.\ncc: <@W4R4VBWQG>",
+    "created_at": "2026-01-30T07:11:29.921Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "58b9a351-8ca0-40cb-a22d-cf2e4b550cab",
+    "source": "slack",
+    "text": "<@U0213T59LMN> yes please share the env details, I will try it out .",
+    "created_at": "2026-01-30T07:11:29.863Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "d531fd1e-6aae-4afe-a7b7-ae0348d79d77",
+    "source": "slack",
+    "text": "<@W4R4VBWQG>: Let us know if you are blocked anywhere or need any inputs. Also we can share the env details where we have exposed the AFCS &gt;&gt; xdp to try the functionality",
+    "created_at": "2026-01-30T07:11:29.805Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "6d7254e7-d732-462c-a6b2-af3f91f18339",
+    "source": "slack",
+    "text": "let me see which one will good result.",
+    "created_at": "2026-01-30T07:11:29.746Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "2e846615-ef18-4b85-8744-40c790eb6b9d",
+    "source": "slack",
+    "text": "yes, we have 3 routes:\n\n1. pdf -> import in designer\n2. pdf -> acroform (option in Acrobat to identify fields)-> import in designer\n3. pdf/acroform -> AFCS -> xdp.. this I think is not in product.. but was used internally",
+    "created_at": "2026-01-30T07:11:29.688Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "645b4766-2113-4b46-89c6-82cc4e5533dd",
+    "source": "slack",
+    "text": "I discussed with Arneh before going into above call.  <https://cq-dev.slack.com/archives/C04D195JVGS/p1744914003511129?thread_ts=1744825792.076749&amp;cid=C04D195JVGS> . Basically, we have capability in designer also but we need to validate the quality of both, for that I am trying to get collaterals from customer git repo.",
+    "created_at": "2026-01-30T07:11:29.630Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "b6874de7-b576-4b9d-82e0-2ed00c10bfca",
+    "source": "slack",
+    "text": "<@W4RU5J3JR> did a PoC for converting flat pdfs to XDPs via AFCS sometime back. <@W4R4VBWQG>, hope you have discussed with Gaurav on reusing that. cc: <@U0213T59LMN>\n\nThis is for converting pdf to XDPs.. are they also doing some AF creation - perhaps wait for your document that you are creating Darshan.",
+    "created_at": "2026-01-30T07:11:29.572Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1744912326.949669"
+  },
+  {
+    "id": "1152951a-e846-4c22-9753-445495379997",
+    "source": "slack",
+    "text": "fyi,\nCustomer still didn't have clear understanding how the web service they are designing (for fetching data via FDM) will work and if it will have capability to filter data or not. I would like to wait for their clear requirement before jumping to the strategy.\n\nI am trying to get more details around this from last 2-3 meeting but I think still now they haven't analysed it in detail.",
+    "created_at": "2026-01-30T07:11:29.512Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745335041.678119"
+  },
+  {
+    "id": "ecc2da20-59a1-4501-8478-88a8a15c2fa0",
+    "source": "slack",
+    "text": "For Pre-rendering scenario - they already have one UI at their to do data filtering and they want to get the data from fdm and list sections present in data and they do preview with selected data from the list.",
+    "created_at": "2026-01-30T07:11:29.454Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745335041.678119"
+  },
+  {
+    "id": "faa2af90-2f2e-4d6c-be22-dcc4e0db33c1",
+    "source": "slack",
+    "text": "&gt; Pre-rendering scenario - NFCU wants pdf preview with filtered data, which they get from FDM. They want to render only a section of a template using the part of data they select.\nIf the aim is to filter/process the data fetched from FDM and before it is used for rendering the PDF then it can be done by using FDM Post processor which is already available. Adding <@WLWHN4TV3> to confirm it.\n\n&gt; Post-rendering scenario - They want to use the rendered letter/pdf for archival or send via email to users.\nThere are 2 ways to handle it\n• Invoke HTTP Api to render the IC print channel as pdf with data and then use the PDF and do post processing in customer application itself. \n• Use a workflow in AEM for rendition of IC print channel as PDF with data and then do further post-processing in subsequent workflow steps. Initiation of the workflow would be some event dependent. This will require us to support OOTB workflow step for IC rendition. \nSelection of approach will depend on the customer’s preference for where to post process the PDF.\n\n<@WE163TH43>, do they prefer do it on AEM only? Did we discuss this?",
+    "created_at": "2026-01-30T07:11:29.393Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745335041.678119"
+  },
+  {
+    "id": "281a980f-4241-44bd-9e6d-feb95222a706",
+    "source": "slack",
+    "text": "Pre-rendering scenario -  NFCU wants pdf preview with filtered data, which they get from FDM. They want to render only a section of a template using the part of data they select.\n\nPost-rendering scenario - They want to use the rendered letter/pdf for archival or send via email to users.",
+    "created_at": "2026-01-30T07:11:29.336Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745335041.678119"
+  },
+  {
+    "id": "ce9a2812-eafe-4be3-8d5b-52711c3c1f70",
+    "source": "slack",
+    "text": "what is the use case fir pre-rendering and post rendering web hooks ?",
+    "created_at": "2026-01-30T07:11:29.279Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745335041.678119"
+  },
+  {
+    "id": "88ab9750-1583-4bdf-ad9c-f8438a8ec99d",
+    "source": "slack",
+    "text": "domain is\n<http://www.mauriceblackburn.com.au|www.mauriceblackburn.com.au>",
+    "created_at": "2026-01-30T07:11:29.221Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745378411.396529"
+  },
+  {
+    "id": "4f7c6e5a-f699-4276-a16f-b33510613818",
+    "source": "slack",
+    "text": "They shared a two forms on the teams chat yesterday:\n•  <https://www.mauriceblackburn.com.au/free-claim-check/>\n• <https://www.mauriceblackburn.com.au/get-in-touch/>\nSo I think <http://mauriceblackburn.com.au|mauriceblackburn.com.au> should be it.",
+    "created_at": "2026-01-30T07:11:29.164Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745378411.396529"
+  },
+  {
+    "id": "aded6b88-4467-419a-8d42-fefcd1e5ecb1",
+    "source": "slack",
+    "text": "Do we have their site domain for which they are interested to increase conversions?",
+    "created_at": "2026-01-30T07:11:29.104Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745378411.396529"
+  },
+  {
+    "id": "1ad320a0-8924-4b88-bfbd-14edd2a45be1",
+    "source": "slack",
+    "text": "<@W4XTCQ07J>, <@W6CBB4953>, <@W4RT1B152> - ESS lead",
+    "created_at": "2026-01-30T07:11:29.044Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745378411.396529"
+  },
+  {
+    "id": "5739e5c8-08f2-4773-b1b5-07030fb5993e",
+    "source": "slack",
+    "text": "They haven't purchased forms license yet. They wanted their developer to be able to replicate the form which we created, before buying the forms license.",
+    "created_at": "2026-01-30T07:11:28.985Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745383802.651359"
+  },
+  {
+    "id": "be6c9822-9836-42d1-9891-9f3c4622cbe4",
+    "source": "slack",
+    "text": "do you know of any go live dates ?",
+    "created_at": "2026-01-30T07:11:28.924Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745383802.651359"
+  },
+  {
+    "id": "3d1ede6f-9a4d-425b-b7ba-0b6b52e1082a",
+    "source": "slack",
+    "text": "<@W4XTCQ07J> sure I will check",
+    "created_at": "2026-01-30T07:11:28.851Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745387862.117089"
+  },
+  {
+    "id": "970c9857-0af9-4941-970f-c8dace5cdc3b",
+    "source": "slack",
+    "text": "<@W4RSW3ECC> No It wasn’t too technical, but I was added in the meeting as they knew my name from summit. I will discuss with <@WQ6GEBZHN> on the action items",
+    "created_at": "2026-01-30T07:11:28.790Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745387862.117089"
+  },
+  {
+    "id": "15f7d28e-8c63-4b2e-a813-90bcde58b6cb",
+    "source": "slack",
+    "text": "I was unable to attend on the day as was not feeling well.. Had a sync-up with Varun post this, <@WQ6GEBZHN> &amp; I would be leading this going forward.\n<@WQ6GEBZHN> could you help with the queries (action items above) - apart from the ones I shared with your earlier.",
+    "created_at": "2026-01-30T07:11:28.731Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745387862.117089"
+  },
+  {
+    "id": "48cef943-8474-40f9-a29d-4eb892bde97e",
+    "source": "slack",
+    "text": "Thanks <@W6CBB4953>. Just wondering on why were you part of this. Was that because of <@W4XTCQ07J> or <@WQ6GEBZHN>’s absence or was it too technical ?",
+    "created_at": "2026-01-30T07:11:28.675Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745387862.117089"
+  },
+  {
+    "id": "022f5ff8-ef2a-4e07-9652-7a55ba7943db",
+    "source": "slack",
+    "text": "&gt; I'm still not sure if saving as draft is the right solution. It seems more of a workaround as of now.\nIdeally it should be solved with resiliency - but here it is a success for AEM - and backend call is success and fails in downstream..",
+    "created_at": "2026-01-30T07:11:28.618Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "ffcd6f97-055d-4887-8451-73614a4d47ad",
+    "source": "slack",
+    "text": "&gt; If it's a sync call\nSync-call it seems - as Shivendra mentioned that it fails 2-3 steps down their submission flow and AEM/user is not intimated..",
+    "created_at": "2026-01-30T07:11:28.562Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "73f9dcd0-408f-482b-82ee-192856b5c6e9",
+    "source": "slack",
+    "text": "If it's a sync call where the submission is failing then custom code should be improved to throw the exception to the source. In case of async calls this scenarios should not arise.\nI'm still not sure if saving as draft is the right solution. It seems more of a workaround as of now.",
+    "created_at": "2026-01-30T07:11:28.499Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "f522316b-f1c3-4823-aa46-9d6868bf1ee9",
+    "source": "slack",
+    "text": "They shared in last call that - at times submission failed 2-3 steps down the line - which end user/AEM is not aware of - and thus want to track all submissions - not just failing submissions.",
+    "created_at": "2026-01-30T07:07:40.227Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "4bc090d2-fbdf-4340-a574-5954305f396d",
+    "source": "slack",
+    "text": "&gt; Shouldn't they be just implementing ETE form submit tests that run in their deployment pipeline?\n+1 We did propose that.\n\nTo provide more context on the original issue...\n&gt;  When we were working with them on the VIP engagement - an incident happened when due to a code change - their service went down.. In VIP we helped make the code modular and readable - but due to that incident - they lost thousands of submissions in a few hours.\n&gt; With portal - they want to have a backup submission to draft - so that if something similar happens in future - they have the complete data - and can leverage to push data to original submit through manual process later on.",
+    "created_at": "2026-01-30T07:07:40.170Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "b14e4155-83eb-42be-98bf-3a9aa246d00f",
+    "source": "slack",
+    "text": "Just wondering if the problem can be with their code that results in submission failure then any customization for Save as draft code also may be prone to the failures (it seems they don't trust their code) \nShouldn't they be just implementing ETE form submit tests that run in their deployment pipeline?",
+    "created_at": "2026-01-30T07:07:40.112Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "520dfeff-818b-4aae-aaf5-10dafc7aaae8",
+    "source": "slack",
+    "text": "<@U04P75X4H1B> One thing which came to my mind, since they have PII concerns, data in Azure is by default encrypted at rest[0] and not in transit and in use. For transit we use https so we are good, and in use they can restrict the access to azure/blob/containers. Lets confirm with them once, if this works for them, if not then lets do pre-processor.\nAs during our call, they needed base 64 encoding which is not encryption and definitely will not resolve their PII concerns. And if preprocessor is encrypting form values and their rest service should decrypt that in same fashion and in that case they have to handle key management also.\n\n[0] : <https://learn.microsoft.com/en-us/azure/storage/common/storage-service-encryption>",
+    "created_at": "2026-01-30T07:07:40.054Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "dae24dee-1a51-41c0-a5f4-8020d57cda0e",
+    "source": "slack",
+    "text": "<@U0213T59LMN> They are submitting to rest api. They have written custom submission for this.\n\nCurrent requirement is that they want to save that data with submission.\n\nHere is the background for this requirement:\nIn past, their submission starts failing due to some issue in their code base and they almost lost 3k submissions. They were looking for some solution where they can save this data when submission happens so that if submission fails, they can get those drafts and submit by themselves. For this, we recommend save as draft feature to them. And, after the portal demo most of their requirements met, its just that they want to encrypt/encode this data before pushing it to Azure. To achieve this use case, we are thinking to try out FDM pre processor.",
+    "created_at": "2026-01-30T07:07:39.997Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "879010e3-38ce-450f-a8c8-57c10f1232ef",
+    "source": "slack",
+    "text": "<@W4RSW3ECC> We are thinking to try out FDM pre processor for this.\ncc: <@WLWHN4TV3>",
+    "created_at": "2026-01-30T07:07:39.939Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "77a7f841-26d5-45ef-aa5a-0e880bbda402",
+    "source": "slack",
+    "text": "I hope the encryption would be required at rest and not at transit .\n<@U04P75X4H1B>: Do we know where they are submitting the final submission ?",
+    "created_at": "2026-01-30T07:07:39.882Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "248faf96-4cc8-4c60-902a-47ed027d74c7",
+    "source": "slack",
+    "text": "Abbvie is CS. its only encrypting the data that might be tricky.. is there a hook point in our USC based implementation ? cc: <@W4RT1B152>",
+    "created_at": "2026-01-30T07:07:39.825Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "5e837374-2b71-4d11-9e49-dffff02e6cf9",
+    "source": "slack",
+    "text": "<@U04P75X4H1B> / <@WLWHN4TV3>: Lets have a sync up on this - save as draft is being asked by IRS also - lets see a common pattern and try to address that",
+    "created_at": "2026-01-30T07:07:39.768Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "103678b1-0ad7-405a-80df-67b798185ff4",
+    "source": "slack",
+    "text": "jFYI :  <@U0213T59LMN>",
+    "created_at": "2026-01-30T07:07:39.709Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745389270.783369"
+  },
+  {
+    "id": "803d4646-bc01-4c0e-bc16-2c3a3cb8b292",
+    "source": "slack",
+    "text": "I discussed with Arun, the list of issues were shared earlier and were already addressed. Support team has also confirmed the same.",
+    "created_at": "2026-01-30T07:07:39.652Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745465972.890959"
+  },
+  {
+    "id": "75d75dc4-1e13-40bc-a707-e15094d997a3",
+    "source": "slack",
+    "text": "No <@W010NNJV7S8>, i don't have the issue list or collaterals",
+    "created_at": "2026-01-30T07:07:39.595Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745465972.890959"
+  },
+  {
+    "id": "2910f436-cf3f-4cf2-8e97-d45aaeaee4b6",
+    "source": "slack",
+    "text": "<@WQWCBV6NN> would you be privy to the information on list of issues and shared collaterals?",
+    "created_at": "2026-01-30T07:07:39.537Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745465972.890959"
+  },
+  {
+    "id": "f3f87590-673f-4172-abea-f32204ba89d7",
+    "source": "slack",
+    "text": "<@W5HEU5M7Y>, can you please share the list of issues mentioned by Sunny? Also, as per notes from TFS, they have also shared their collateral for analysis for migration, can you please also share the same?\n\ncc: <@W4RT1UR2Q> <@W4RSW3ECC>",
+    "created_at": "2026-01-30T07:07:39.480Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745465972.890959"
+  },
+  {
+    "id": "bb60fc75-409d-4d07-8444-5002703b0e61",
+    "source": "slack",
+    "text": "<@W5HEU5M7Y> can you please forward the same if you have received it",
+    "created_at": "2026-01-30T07:07:39.420Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745465972.890959"
+  },
+  {
+    "id": "42521cac-6455-49a1-a1ad-5847eec4dcea",
+    "source": "slack",
+    "text": "<@W4R5LUPK3>, can you please share the list of issues that they have shared?\nAs per my sync with support, all their reported issues were resolved.",
+    "created_at": "2026-01-30T07:07:39.356Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745465972.890959"
+  },
+  {
+    "id": "2dca0071-01af-4739-947f-9701060341e0",
+    "source": "slack",
+    "text": "Awesome news <@W4R5LUPK3> and team thanks for your perseverance and hard work on this",
+    "created_at": "2026-01-30T07:07:39.299Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745508620.418529"
+  },
+  {
+    "id": "8895407d-bc68-4d78-8338-804f344fa26c",
+    "source": "slack",
+    "text": "In April so far they have 17K Renditions",
+    "created_at": "2026-01-30T07:07:39.244Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745508620.418529"
+  },
+  {
+    "id": "5df24dbc-c4d2-4b24-8510-1a041bd908dc",
+    "source": "slack",
+    "text": "cc: <@W4RSW3ECC> <@W5HEU5M7Y>",
+    "created_at": "2026-01-30T07:07:39.188Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745595895.634119"
+  },
+  {
+    "id": "5cc0e123-7d16-4101-8b34-2f049bbc351a",
+    "source": "slack",
+    "text": "sure. for us, I will keep wiki updated with the details.",
+    "created_at": "2026-01-30T07:07:39.133Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745635974.062459"
+  },
+  {
+    "id": "03d8a15a-a32c-4ae0-b8f1-5d7ebb1d2552",
+    "source": "slack",
+    "text": "thanks Darshan. the doc may/may not be customer facing. this is for our benefit to get on the same page..",
+    "created_at": "2026-01-30T07:07:39.079Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745635974.062459"
+  },
+  {
+    "id": "5b0f3d5c-76fc-437f-985e-f9c6decc0c90",
+    "source": "slack",
+    "text": "<@W4RSW3ECC>  I have started creating  <https://adobe-my.sharepoint.com/:w:/r/personal/mahor_adobe_com/_layouts/15/Doc.aspx?sourcedoc=%7BA0193EBE-6AE5-4C56-8E95-F5E4CEF3D57A%7D&amp;file=LPL%20Financial%20Internal%20Document.docx&amp;action=default&amp;mobileredirect=true|LPL Internal Document> doc but I am still refining it. Once I get final draft, I will move the content <https://wiki.corp.adobe.com/display/lc/LPL+Financial> .\n\nWe presented the draft of the <https://adobe-my.sharepoint.com/:w:/r/personal/mahor_adobe_com/_layouts/15/Doc.aspx?sourcedoc=%7BA0193EBE-6AE5-4C56-8E95-F5E4CEF3D57A%7D&amp;file=LPL%20Financial%20Internal%20Document.docx&amp;action=default&amp;mobileredirect=true|LPL Internal Document>  to Naveen, the LPL representative, and prioritised the identified tasks. We are still awaiting some information to define the KPIs.",
+    "created_at": "2026-01-30T07:07:39.019Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745635974.062459"
+  },
+  {
+    "id": "2f92e6f7-8ce8-4037-bac6-de6e39fbe65c",
+    "source": "slack",
+    "text": "<@W4R4VBWQG>, do we have doc/wiki for LPL now ?",
+    "created_at": "2026-01-30T07:07:38.958Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745635974.062459"
+  },
+  {
+    "id": "1a0f93ed-c24d-48fb-a235-e3f00f736f35",
+    "source": "slack",
+    "text": "Thanks for the clarification Sufyan. sounds good then!",
+    "created_at": "2026-01-30T07:07:38.902Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745935569.585889"
+  },
+  {
+    "id": "827ec541-74a2-4d2c-aaf2-c457240064c4",
+    "source": "slack",
+    "text": "<@W010NNJV7S8>, thanks for highlighting. I think my communication was not clear. The intention for sharing roadmap details is not to be shared via email. It was intended via a meeting only. We conveyed to 4Point that we can have a meeting later with Arun or you to share roadmap/timeline details.",
+    "created_at": "2026-01-30T07:07:38.845Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745935569.585889"
+  },
+  {
+    "id": "d8355305-18b1-48d9-b4e1-e5bf7d10b1e3",
+    "source": "slack",
+    "text": "Its recommended not to share Roadmap via Email or slack. It should be rather shared in the same call as the demo. This call happened when i was on PTO and Arun wasn't invited to the call, hence the Roadmap got missed. <@W5HEU5M7Y> /<@W4R4S9FS4> please advice if its ok to share the Roadmap slides with 4point over email or sorts.",
+    "created_at": "2026-01-30T07:07:38.787Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745935569.585889"
+  },
+  {
+    "id": "feb7b324-b808-4173-bbda-a9222c469e87",
+    "source": "slack",
+    "text": "Thanks <@WE163TH43>, Agree need more simplification or segregation here between the 2 binding approaches.\n&gt; Identified the need for improved UX to show different data binding options for text boxes and other dynamic fields",
+    "created_at": "2026-01-30T07:07:38.732Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1745993504.479779"
+  },
+  {
+    "id": "5c2a0791-aefa-4615-8499-13f13b1d0880",
+    "source": "slack",
+    "text": "Accenture Federal mentioned in yesterdays meeting, there is a pause on Releasing new Forms ( which they were creating using Core Components) but there is no pause on development from Accenture side and they are exploring on improving the processes. Currently they dont have any timeline when the next release is planned, so not urgently they sought timelines about Portal backport. We mentioned that effort is around 5 weeks, but when it would be delivered is not yet confirmed\ncc: <@W4XTCQ07J> <@U0213T59LMN>",
+    "created_at": "2026-01-30T07:07:38.675Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746424327.367189"
+  },
+  {
+    "id": "4fc7ab86-eb39-4a66-9122-468229d5d338",
+    "source": "slack",
+    "text": "<@W9QMZFR39>, I've provided the view access to Dave and replied on the thread with his queries regarding OSGI workflows.",
+    "created_at": "2026-01-30T07:07:38.619Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746507668.048259"
+  },
+  {
+    "id": "c005012a-00d3-407c-ae36-3de9a241a836",
+    "source": "slack",
+    "text": "<@U05DURMMBGV>, please give access to <mailto:dave.venance@4point.com|dave.venance@4point.com>. Secondly, the customer will not have access to internal Slack channels. Please formulate a complete reply and provide the same on <https://cq-dev.slack.com/archives/C03T2C2F83V/p1746508157253249?thread_ts=1745944936.540549&amp;cid=C03T2C2F83V|thread>. I will add you to the private channel.\n\ncc: <@U0213T59LMN>",
+    "created_at": "2026-01-30T07:07:38.562Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746507668.048259"
+  },
+  {
+    "id": "5c13b141-9cf4-4169-9a79-d5f862732405",
+    "source": "slack",
+    "text": "<@U0213T59LMN> /<@W9QMZFR39>: Please find the package consisting of a Workflow Model catering to review and approval process for a form submission.\n\nHere is a demo recording for the working of the WF model: <https://adobe-my.sharepoint.com/:v:/p/sakshatc/EapDE6bUy3xKjCfMBZkA8ZgBNlB4ZUzer9ccIO3tgvn5vg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&amp;e=5QHNaB|Custom_Approve_Review_Defer_Workflow.mov>\nCurrently, I've given view access to people in Adobe. Do let me know, if I've to add someone from outside the adobe domain.\n\nFurther context about the WF model: <https://cq-dev.slack.com/archives/C04D195JVGS/p1743694244944359>",
+    "created_at": "2026-01-30T07:07:38.504Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746507668.048259"
+  },
+  {
+    "id": "7fcce8ad-85c5-475d-9cbf-b7c665b53ded",
+    "source": "slack",
+    "text": "&gt; • Are there any sample OSGI workflows for review, approval and rejection that can be shared with the customer?\n<@U05DURMMBGV>: Please share the workflow we created for Cintas as a package\n&gt; • Can a OSGI workflow invoke another OSGI workflow and pass data between them? Basically, a sub-workflow and wait for its execution. I know there is a container component but we need more clarity on this.\nThere is also a process step which wait for external process to complete and decide on the next action - we can get more details on this requirement.\n&gt; • How can failed workflow instances can be recovered? If an OSGI workflow execution fails, is there a way to recover them?\nFailed workflows can be found in the failed workflow tabs and can be executed from the same failed step - if the requirement is to replay the complete wf then it is not available",
+    "created_at": "2026-01-30T07:07:38.448Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746507668.048259"
+  },
+  {
+    "id": "b3962c67-b6e8-4ba0-9d9c-26b994f17532",
+    "source": "slack",
+    "text": "<@U0213T59LMN>, please use <https://cq-dev.slack.com/archives/C03T2C2F83V/p1746508157253249?thread_ts=1745944936.540549&amp;cid=C03T2C2F83V|thread> for posting answers to these questions. I have further shared the meeting recording with you, in case it is needed.",
+    "created_at": "2026-01-30T07:07:38.390Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746507668.048259"
+  },
+  {
+    "id": "4fb71670-1e0a-42b2-94ab-c00dbae7d3fc",
+    "source": "slack",
+    "text": "<@W4R4VBWQG> they don't have much clarity yet.",
+    "created_at": "2026-01-30T07:07:38.334Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746543262.415969"
+  },
+  {
+    "id": "2d6db41d-3855-4092-bdc0-c6716a0537ad",
+    "source": "slack",
+    "text": "<@WE163TH43> Do they now have any clarity on how the remote service they want to use with FDM is designed?  In the last meeting, they mentioned it was still unclear to them.\n\nI have already shared the FDM-related queries in email to them and waiting for their response, and we still need the following information from their side.(copy paste from email)\n• What authentication mechanism and protocol are used by the remote service?\n• Any document or something to show the schema definition of the service for example swagger endpoint or file for API etc.\n• For a single Communication, Do we have a use case where it will connect with multiple remote services, for example using one service for fetching account details and other service for fetching personal information etc ?\n• During discussions, we get to know that you need filtering on incoming data? Can you please provide some information about what kind of filtering it is?\nPlease let me know if they have shared any of the above information.",
+    "created_at": "2026-01-30T07:07:38.276Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746543262.415969"
+  },
+  {
+    "id": "1afde47a-574c-459e-9a91-98da1a53c23c",
+    "source": "slack",
+    "text": "Here are some features they're looking for:\n• *Filling forms with information from an ID or document:* Automatically pre-fill forms using verified sources to save time and reduce errors.\n• *Real-time monitoring:* Track form completion and drop-off rates in real-time to identify bottlenecks and optimize customer journeys.\n• *Intent detection and automated guidance:* Use AI to detect customer intent and provide automated guidance, making the process more efficient and user-friendly.\n• *Personalized enrollment journeys:* Use data-driven insights to create personalized experiences for each customer.\n• *Auto-optimize forms suggestion*.\ncc: <@W4RSW3ECC> <@W4RU708G5> <@U0213T59LMN> <@W4RT1B152> <@W5HEU5M7Y> <@W4R4S9FS4>",
+    "created_at": "2026-01-30T07:07:38.219Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746604170.340579"
+  },
+  {
+    "id": "13971c02-859e-4995-b57f-1902d29d8493",
+    "source": "slack",
+    "text": "Here is the last thread: <https://cq-dev.slack.com/archives/C04D195JVGS/p1730743207835599>",
+    "created_at": "2026-01-30T07:07:38.161Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746604170.340579"
+  },
+  {
+    "id": "2b0d57c1-9bde-4df9-88ac-9dfa2151f0d6",
+    "source": "slack",
+    "text": "With the renewal - they got the EDS license and planned to be future ready - and thus move to CC (based on discussion last year). Their forms are simple - we could evaluate if they would want to move to EDS directly..",
+    "created_at": "2026-01-30T07:07:38.103Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746604170.340579"
+  },
+  {
+    "id": "b9ecea79-75d4-4528-80cf-a838b1a4a6b9",
+    "source": "slack",
+    "text": "First Bank Peurto Rico is live on CS, renewed on 1st May, having 100K Submissions per year",
+    "created_at": "2026-01-30T07:07:38.044Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746604170.340579"
+  },
+  {
+    "id": "a469db87-a927-4a79-bb74-48d116c29420",
+    "source": "slack",
+    "text": "I have asked them - if they have seen the new features shown in summit, and any particular features they would be interested in (the motivation on moving to CC).  TAM is yet to get back on the same.",
+    "created_at": "2026-01-30T07:07:37.986Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1746604170.340579"
+  }
+]

@@ -1,0 +1,2056 @@
+{
+  "items": [
+    {
+      "signal_id": "59246451-2319-4e72-88f4-d309aedb740e",
+      "customers": [
+        {
+          "name": "Micron",
+          "confidence": 0.92
+        }
+      ],
+      "features": [
+        {
+          "name": "AEM Forms integration with Marketo",
+          "confidence": 0.82
+        },
+        {
+          "name": "AEM Forms integration with Salesforce",
+          "confidence": 0.8
+        },
+        {
+          "name": "Headless forms integration (JSON output) with React starter kit",
+          "confidence": 0.84
+        },
+        {
+          "name": "Headless forms integration (JSON output) with Angular starter kit",
+          "confidence": 0.84
+        },
+        {
+          "name": "Edge delivery forms headless integration",
+          "confidence": 0.72
+        },
+        {
+          "name": "Forms Experience Builder",
+          "confidence": 0.78
+        },
+        {
+          "name": "Rule editor (custom validation logic)",
+          "confidence": 0.83
+        },
+        {
+          "name": "Migration utility from foundation components to core components",
+          "confidence": 0.78
+        }
+      ],
+      "themes": [
+        {
+          "name": "CRM migration planning (Salesforce to Microsoft Dynamics 365)",
+          "confidence": 0.77
+        },
+        {
+          "name": "Marketing automation and lead generation",
+          "confidence": 0.86
+        },
+        {
+          "name": "Event registration forms and unified web experience",
+          "confidence": 0.79
+        },
+        {
+          "name": "Foundation to core components migration",
+          "confidence": 0.85
+        },
+        {
+          "name": "Headless embedding in external apps",
+          "confidence": 0.82
+        }
+      ],
+      "issues": [
+        {
+          "title": "Rule editor intermittently fails to validate or allow editing of rules when creating custom validation",
+          "category": "Rule editor",
+          "severity": 4,
+          "confidence": 0.86
+        },
+        {
+          "title": "Post-submission navigation is limited for iframe-embedded forms; requires custom code for redirection",
+          "category": "Embedding/Navigation",
+          "severity": 3,
+          "confidence": 0.82
+        },
+        {
+          "title": "Foundation components do not automatically update value attribute, requiring custom JS to update DOM values",
+          "category": "Form runtime/Field handling",
+          "severity": 3,
+          "confidence": 0.78
+        },
+        {
+          "title": "Migration utility migrates content but not business logic or custom code",
+          "category": "Migration",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        {
+          "text": "Enhancements for seamless navigation handling after submission for iframe-embedded forms (e.g., redirection without custom code)",
+          "confidence": 0.77
+        },
+        {
+          "text": "Ability for migration tooling to handle business logic/custom code (not just content)",
+          "confidence": 0.66
+        }
+      ]
+    },
+    {
+      "signal_id": "1b3626d2-f2f3-45cc-88f7-c9369c253140",
+      "customers": [
+        {
+          "name": "Fedex-Freight",
+          "confidence": 0.76
+        }
+      ],
+      "features": [
+        {
+          "name": "Universal Editor (UE) authoring",
+          "confidence": 0.72
+        },
+        {
+          "name": "Edge delivery forms",
+          "confidence": 0.75
+        },
+        {
+          "name": "Advanced networking",
+          "confidence": 0.78
+        },
+        {
+          "name": "Email submission",
+          "confidence": 0.74
+        },
+        {
+          "name": "Forms AI assistant",
+          "confidence": 0.76
+        },
+        {
+          "name": "Screenshots to forms",
+          "confidence": 0.7
+        },
+        {
+          "name": "Rules",
+          "confidence": 0.7
+        },
+        {
+          "name": "Conversational forms",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Edge submission troubleshooting",
+          "confidence": 0.82
+        },
+        {
+          "name": "Interest in AI-assisted form creation",
+          "confidence": 0.72
+        }
+      ],
+      "issues": [
+        {
+          "title": "Submission from edge was failing; resolved by enabling advanced networking",
+          "category": "Submission/Networking",
+          "severity": 3,
+          "confidence": 0.79
+        }
+      ],
+      "requests": [
+        {
+          "text": "Email submission from edge-delivered forms",
+          "confidence": 0.78
+        }
+      ]
+    },
+    {
+      "signal_id": "90ac9bd7-c786-4e0a-a07f-d4135e518e34",
+      "customers": [],
+      "features": [
+        {
+          "name": "Repository modularization (immutable vs mutable content)",
+          "confidence": 0.74
+        },
+        {
+          "name": "OSGI configuration management via UI.config and env vars",
+          "confidence": 0.78
+        },
+        {
+          "name": "Azure email integration using OAuth",
+          "confidence": 0.84
+        },
+        {
+          "name": "Advanced networking for opening SMTP ports",
+          "confidence": 0.82
+        },
+        {
+          "name": "Flexible port egress",
+          "confidence": 0.78
+        },
+        {
+          "name": "Dynamic dropdown population via custom JS functions",
+          "confidence": 0.76
+        },
+        {
+          "name": "Client libraries for custom functions in rule editor",
+          "confidence": 0.76
+        }
+      ],
+      "themes": [
+        {
+          "name": "Cloud deployment and CI/CD pipeline setup",
+          "confidence": 0.74
+        },
+        {
+          "name": "Secure secret management via environment variables",
+          "confidence": 0.8
+        },
+        {
+          "name": "Networking configuration for SMTP and regional compliance",
+          "confidence": 0.77
+        }
+      ],
+      "issues": [
+        {
+          "title": "Troubleshooting refresh token generation issues due to URL formatting and scope definitions",
+          "category": "OAuth/Email integration",
+          "severity": 2,
+          "confidence": 0.72
+        },
+        {
+          "title": "Flexible port egress configuration options were grayed out and required troubleshooting",
+          "category": "Networking",
+          "severity": 2,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        {
+          "text": "Guidance/tools to generate and validate refresh tokens for Azure OAuth email integration",
+          "confidence": 0.74
+        },
+        {
+          "text": "Ability to select environment region (Canada vs US) and manage advanced networking options accordingly",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "00361868-63bf-44b3-b37c-23c49d995086",
+      "customers": [],
+      "features": [
+        {
+          "name": "Embedded forms (core components and foundation components)",
+          "confidence": 0.76
+        }
+      ],
+      "themes": [
+        {
+          "name": "Cloudflare routing and URL rewriting for embedded forms",
+          "confidence": 0.84
+        },
+        {
+          "name": "Core components embed behavior differences",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [
+        {
+          "title": "Embedded form failures due to model.json paths not being rewritten properly through Cloudflare and AEM filters",
+          "category": "Routing/URL rewriting",
+          "severity": 5,
+          "confidence": 0.9
+        },
+        {
+          "title": "Issue occurs only in core components; foundation components load correctly due to differing callback handling",
+          "category": "Core components/Embedding",
+          "severity": 4,
+          "confidence": 0.82
+        },
+        {
+          "title": "All current forms blocked from UAT due to unresolved routing and model.json failures",
+          "category": "Release blocker",
+          "severity": 5,
+          "confidence": 0.88
+        }
+      ],
+      "requests": [
+        {
+          "text": "Fix for core components embedded form loading when routed via Cloudflare (model.json rewrite/callback handling)",
+          "confidence": 0.84
+        }
+      ]
+    },
+    {
+      "signal_id": "d3306a8a-8d0d-4d09-b5a2-78959b0c29fc",
+      "customers": [
+        {
+          "name": "NFL",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "Universal Editor form authoring",
+          "confidence": 0.82
+        },
+        {
+          "name": "Experience Builder authoring",
+          "confidence": 0.78
+        },
+        {
+          "name": "AEP schema configuration and submit action",
+          "confidence": 0.72
+        },
+        {
+          "name": "Auto-mapping schema elements to form fields",
+          "confidence": 0.74
+        },
+        {
+          "name": "Custom component authoring",
+          "confidence": 0.7
+        },
+        {
+          "name": "DAM asset management",
+          "confidence": 0.68
+        },
+        {
+          "name": "Prefill integration",
+          "confidence": 0.66
+        },
+        {
+          "name": "Experimentation",
+          "confidence": 0.66
+        },
+        {
+          "name": "Adobe Analytics integration",
+          "confidence": 0.7
+        },
+        {
+          "name": "Embedding UE-authored form in a non-AEM site",
+          "confidence": 0.68
+        },
+        {
+          "name": "Form Optimiser",
+          "confidence": 0.76
+        }
+      ],
+      "themes": [
+        {
+          "name": "Marketing team enablement and product demo",
+          "confidence": 0.74
+        },
+        {
+          "name": "Conversion optimization interest",
+          "confidence": 0.76
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Interest in Form Optimiser offering to enhance conversion for forms",
+          "confidence": 0.76
+        }
+      ]
+    },
+    {
+      "signal_id": "52b7cd92-7473-4001-afe1-e9960f94645d",
+      "customers": [
+        {
+          "name": "Mercury Marine",
+          "confidence": 0.8
+        }
+      ],
+      "features": [
+        {
+          "name": "Cloudflare routing for form submissions",
+          "confidence": 0.8
+        },
+        {
+          "name": "SQL injection blocking on submissions",
+          "confidence": 0.7
+        },
+        {
+          "name": "ECID field population",
+          "confidence": 0.78
+        },
+        {
+          "name": "FBCLID field population",
+          "confidence": 0.74
+        },
+        {
+          "name": "GCLID field population",
+          "confidence": 0.74
+        },
+        {
+          "name": "Async function support in rules",
+          "confidence": 0.7
+        },
+        {
+          "name": "Microsoft Translation connector",
+          "confidence": 0.76
+        }
+      ],
+      "themes": [
+        {
+          "name": "Submission routing and security hardening",
+          "confidence": 0.8
+        },
+        {
+          "name": "Tracking/attribution parameter capture",
+          "confidence": 0.78
+        },
+        {
+          "name": "Environment scaling and repeated configuration",
+          "confidence": 0.72
+        },
+        {
+          "name": "Translation setup",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Complete Microsoft Translation connector configuration by obtaining required key",
+          "confidence": 0.72
+        }
+      ]
+    },
+    {
+      "signal_id": "7949e7df-8d98-4a20-bd44-d9a08c9ff2f6",
+      "customers": [],
+      "features": [
+        {
+          "name": "Async ECID function",
+          "confidence": 0.78
+        }
+      ],
+      "themes": [
+        {
+          "name": "Cloudflare blocking of submissions for new forms",
+          "confidence": 0.84
+        },
+        {
+          "name": "Documentation updates",
+          "confidence": 0.68
+        }
+      ],
+      "issues": [
+        {
+          "title": "Cloudflare is blocking submissions for new forms; need a permanent solution",
+          "category": "Submission/Security",
+          "severity": 4,
+          "confidence": 0.84
+        }
+      ],
+      "requests": [
+        {
+          "text": "Permanent fix to prevent Cloudflare from blocking submissions for new forms",
+          "confidence": 0.82
+        }
+      ]
+    },
+    {
+      "signal_id": "31bbf489-47e4-455b-97b4-c1d51152de55",
+      "customers": [],
+      "features": [
+        {
+          "name": "Azure SQL Database integration",
+          "confidence": 0.78
+        },
+        {
+          "name": "Dedicated egress for static IP",
+          "confidence": 0.8
+        },
+        {
+          "name": "Flexible port egress for SMTP",
+          "confidence": 0.78
+        },
+        {
+          "name": "Cloud Manager environment variables for secrets",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Networking tradeoffs (static IP vs SMTP ports)",
+          "confidence": 0.82
+        },
+        {
+          "name": "Secret management best practices",
+          "confidence": 0.78
+        },
+        {
+          "name": "Deployment workflow and onboarding documentation needs",
+          "confidence": 0.74
+        }
+      ],
+      "issues": [
+        {
+          "title": "Unclear if dedicated and flexible egress can be enabled simultaneously for Azure SQL and SMTP needs",
+          "category": "Networking",
+          "severity": 3,
+          "confidence": 0.76
+        },
+        {
+          "title": "Customer reported documentation is fragmented and onboarding/orientation materials are lacking",
+          "category": "Documentation/Onboarding",
+          "severity": 2,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        {
+          "text": "Step-by-step guide for deploying changes from local development to cloud environments (pipeline usage and user role setup)",
+          "confidence": 0.74
+        },
+        {
+          "text": "Clarify feasibility of domain whitelisting or enabling both dedicated and flexible egress simultaneously",
+          "confidence": 0.76
+        }
+      ]
+    },
+    {
+      "signal_id": "4c9175b6-8416-4793-9ff9-6d2554c340cd",
+      "customers": [],
+      "features": [
+        {
+          "name": "ECID deployment",
+          "confidence": 0.72
+        },
+        {
+          "name": "Rule editor updates",
+          "confidence": 0.7
+        },
+        {
+          "name": "Marketo connectors (stage and production)",
+          "confidence": 0.76
+        },
+        {
+          "name": "Form themes and styling",
+          "confidence": 0.74
+        }
+      ],
+      "themes": [
+        {
+          "name": "Analytics submit tracking",
+          "confidence": 0.78
+        },
+        {
+          "name": "Multi-brand styling scalability",
+          "confidence": 0.8
+        },
+        {
+          "name": "Permissions/access to build forms",
+          "confidence": 0.74
+        }
+      ],
+      "issues": [
+        {
+          "title": "Need reliable form submit tracking for analytics; exploring alternatives to satellite tracking",
+          "category": "Analytics/Tracking",
+          "severity": 3,
+          "confidence": 0.78
+        },
+        {
+          "title": "Access to AEM forms is pending, preventing form creation despite Marketo connectors set up",
+          "category": "Access/Permissions",
+          "severity": 4,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        {
+          "text": "Alternative mechanism for reliable form submit tracking for analytics",
+          "confidence": 0.76
+        },
+        {
+          "text": "Scalable theming solution across multiple brands by translating Figma/ECL styling into AEM form themes",
+          "confidence": 0.78
+        }
+      ]
+    },
+    {
+      "signal_id": "8f1c9649-c6a1-4652-a0ef-d9d3a3d5ec42",
+      "customers": [
+        {
+          "name": "Mayo Clinic",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "Reusable form fragments and templates",
+          "confidence": 0.76
+        },
+        {
+          "name": "Workflow capabilities (approvals/human-in-the-loop)",
+          "confidence": 0.72
+        },
+        {
+          "name": "Data export handling (XML and JSON)",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Forms platform consolidation onto AEM Forms",
+          "confidence": 0.82
+        },
+        {
+          "name": "Epic integration desire (launching forms with patient/provider context)",
+          "confidence": 0.84
+        },
+        {
+          "name": "Modern guided user experience",
+          "confidence": 0.78
+        },
+        {
+          "name": "Governance to prevent rogue form solutions",
+          "confidence": 0.74
+        },
+        {
+          "name": "Pricing concerns (per-submission pricing for simple forms)",
+          "confidence": 0.76
+        }
+      ],
+      "issues": [
+        {
+          "title": "Current forms landscape is fragmented across AEM forms, fillable PDFs, and HTML forms, causing inefficiencies",
+          "category": "Platform/UX",
+          "severity": 4,
+          "confidence": 0.84
+        },
+        {
+          "title": "Minimal Epic integration; forms accessed via links without embedded workflows or patient context transfer",
+          "category": "Integration",
+          "severity": 4,
+          "confidence": 0.82
+        },
+        {
+          "title": "Staff adopting unofficial less expensive solutions, undermining governance",
+          "category": "Governance",
+          "severity": 3,
+          "confidence": 0.74
+        }
+      ],
+      "requests": [
+        {
+          "text": "Tighter Epic integration, including launching forms within Epic with pre-filled patient and provider data",
+          "confidence": 0.82
+        },
+        {
+          "text": "Affordable pricing approach for high-volume, low-complexity forms (concerns about per-submission pricing)",
+          "confidence": 0.76
+        },
+        {
+          "text": "Provide sample form URLs (consent/authorization) to tailor future discussions and demos",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "48aa1db6-f410-43eb-945f-e0c045e806c1",
+      "customers": [],
+      "features": [
+        {
+          "name": "Analytics tracking (Adobe Analytics and Google Analytics)",
+          "confidence": 0.74
+        },
+        {
+          "name": "Form styling and themes using CSS variables and ECL",
+          "confidence": 0.76
+        },
+        {
+          "name": "Marketo connectors for multiple brands",
+          "confidence": 0.72
+        }
+      ],
+      "themes": [
+        {
+          "name": "Migration from Marketo forms to AEM Forms",
+          "confidence": 0.8
+        },
+        {
+          "name": "Multi-brand theming and routing strategy",
+          "confidence": 0.78
+        },
+        {
+          "name": "Permissions/access for form development",
+          "confidence": 0.74
+        }
+      ],
+      "issues": [
+        {
+          "title": "Challenges in styling/theme implementation across brands when migrating from Marketo to AEM Forms",
+          "category": "Theming/Styling",
+          "severity": 3,
+          "confidence": 0.76
+        },
+        {
+          "title": "Permissions/access issues prevent creating and editing forms in different environments",
+          "category": "Access/Permissions",
+          "severity": 4,
+          "confidence": 0.78
+        }
+      ],
+      "requests": [
+        {
+          "text": "Ensure analytics tracking (Adobe Analytics and Google Analytics) is maintained during/after Marketo-to-AEM migration",
+          "confidence": 0.72
+        },
+        {
+          "text": "Clarify multi-brand routing configuration and implications for duplication/theming with Marketo connectors",
+          "confidence": 0.68
+        }
+      ]
+    },
+    {
+      "signal_id": "b32b4ab5-bdef-4190-88d9-138238c31169",
+      "customers": [],
+      "features": [
+        {
+          "name": "Interactive Communication editor (template creation, data binding, dynamic PDF generation)",
+          "confidence": 0.82
+        }
+      ],
+      "themes": [
+        {
+          "name": "Dynamic document/letter generation POC",
+          "confidence": 0.78
+        },
+        {
+          "name": "Feature enablement and follow-up planning",
+          "confidence": 0.72
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Enable Interactive Communication editor feature in the environment to support a POC for dynamic client letter generation",
+          "confidence": 0.78
+        }
+      ]
+    },
+    {
+      "signal_id": "016f79ed-3c9e-4700-8be9-d9b0a62800f8",
+      "customers": [
+        {
+          "name": "Ford",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "Interactive Communications (IC) on AEM Forms",
+          "confidence": 0.8
+        },
+        {
+          "name": "Output Service",
+          "confidence": 0.72
+        },
+        {
+          "name": "Batch generation",
+          "confidence": 0.7
+        },
+        {
+          "name": "FDM data sources (MS SQL, PostgreSQL)",
+          "confidence": 0.68
+        }
+      ],
+      "themes": [
+        {
+          "name": "Migration from AEM Forms 6.5 to AEM Forms on Cloud Service for IC",
+          "confidence": 0.82
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Migrate ~700 existing Interactive Communications to Cloud Service and enable creation of new ICs",
+          "confidence": 0.82
+        }
+      ]
+    },
+    {
+      "signal_id": "4570aae9-4bd4-4a22-9b65-8222884ed26d",
+      "customers": [
+        {
+          "name": "Abbott",
+          "confidence": 0.92
+        }
+      ],
+      "features": [
+        {
+          "name": "PDF Generator Office conversions",
+          "confidence": 0.78
+        },
+        {
+          "name": "Multi-threaded support with single user (Word/Excel) while running server as a service",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Environment upgrade compatibility and throughput",
+          "confidence": 0.78
+        },
+        {
+          "name": "Operational mode decisions (service vs command-line)",
+          "confidence": 0.74
+        },
+        {
+          "name": "Roadmap request",
+          "confidence": 0.76
+        }
+      ],
+      "issues": [
+        {
+          "title": "Multiple Office-to-PDF conversion issues during upgrade to Windows Server 2022 + Office 2021 + Acrobat DC",
+          "category": "PDF generation/Conversion",
+          "severity": 4,
+          "confidence": 0.82
+        },
+        {
+          "title": "PowerPoint conversions remain single-threaded; customer needs multi-threaded PowerPoint conversions",
+          "category": "PDF generation/Performance",
+          "severity": 3,
+          "confidence": 0.78
+        }
+      ],
+      "requests": [
+        {
+          "text": "Share Adobe's long-term roadmap and strategy for Office conversions",
+          "confidence": 0.78
+        },
+        {
+          "text": "Support multi-threaded PowerPoint conversions for certain use cases",
+          "confidence": 0.76
+        }
+      ]
+    },
+    {
+      "signal_id": "596c0b77-e087-4418-9dec-ddc5d012f5de",
+      "customers": [
+        {
+          "name": "Mercury Marine",
+          "confidence": 0.72
+        }
+      ],
+      "features": [
+        {
+          "name": "Feature toggles enabled via bundle upload and Config Manager",
+          "confidence": 0.74
+        },
+        {
+          "name": "Marketo connector configuration in AEM",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Form migration across environments (QA/stage/prod)",
+          "confidence": 0.76
+        },
+        {
+          "name": "Documentation standardization",
+          "confidence": 0.74
+        }
+      ],
+      "issues": [
+        {
+          "title": "Need clearer documentation on folder structures and whether to move forms vs rebuild across environments",
+          "category": "Migration/Process",
+          "severity": 2,
+          "confidence": 0.72
+        }
+      ],
+      "requests": [
+        {
+          "text": "Documentation on environment folder structures and best practice for migrating forms between QA, stage, and production",
+          "confidence": 0.74
+        }
+      ]
+    },
+    {
+      "signal_id": "f6956c8d-f88a-4d38-b220-663518f2eaf8",
+      "customers": [],
+      "features": [
+        {
+          "name": "AI-powered bulk PDF import service",
+          "confidence": 0.74
+        },
+        {
+          "name": "Form theming and styling",
+          "confidence": 0.68
+        }
+      ],
+      "themes": [
+        {
+          "name": "Form migration from DocuSign",
+          "confidence": 0.76
+        },
+        {
+          "name": "Converted form layout/mapping quality",
+          "confidence": 0.78
+        }
+      ],
+      "issues": [
+        {
+          "title": "Form validation failures and incorrect prefix paths in the application",
+          "category": "Validation/Configuration",
+          "severity": 3,
+          "confidence": 0.78
+        },
+        {
+          "title": "Layout changes and mapping issues in XDP forms converted using AI tools",
+          "category": "Conversion quality",
+          "severity": 3,
+          "confidence": 0.76
+        },
+        {
+          "title": "Lack of consistent theming and styling in the converted forms",
+          "category": "Theming/Styling",
+          "severity": 2,
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        {
+          "text": "Clear instructions and quantifiable feedback process for DocuSign-to-AEM migration using bulk PDF import",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "be64f0a1-0781-41f1-90ea-dbec3d48a830",
+      "customers": [],
+      "features": [
+        {
+          "name": "AEM Forms local SDK setup",
+          "confidence": 0.76
+        },
+        {
+          "name": "Cloud Manager add-on enablement for AEM Forms",
+          "confidence": 0.72
+        },
+        {
+          "name": "Marketo connector setup (local and stage)",
+          "confidence": 0.74
+        },
+        {
+          "name": "ECID submission to Marketo",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Developer onboarding documentation",
+          "confidence": 0.78
+        },
+        {
+          "name": "Local development enablement and troubleshooting",
+          "confidence": 0.76
+        }
+      ],
+      "issues": [
+        {
+          "title": "ECID is not being submitted to Marketo from the QA environment",
+          "category": "Integration/Submission",
+          "severity": 3,
+          "confidence": 0.74
+        }
+      ],
+      "requests": [
+        {
+          "text": "Consolidate local AEM Forms setup steps and troubleshooting into a single detailed internal document/Excel tab",
+          "confidence": 0.78
+        },
+        {
+          "text": "Provide details needed to set up Marketo connector for local development using the Mercury Sandbox environment",
+          "confidence": 0.74
+        }
+      ]
+    },
+    {
+      "signal_id": "e0454d15-91a0-4846-9dee-dbce61a475fe",
+      "customers": [
+        {
+          "name": "UPS",
+          "confidence": 0.86
+        }
+      ],
+      "features": [
+        {
+          "name": "Certificate based authentication for OneDrive",
+          "confidence": 0.74
+        }
+      ],
+      "themes": [
+        {
+          "name": "Open queries review and demo/recording",
+          "confidence": 0.66
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Certificate based authentication of OneDrive",
+          "confidence": 0.74
+        }
+      ]
+    },
+    {
+      "signal_id": "676b1a14-d093-4214-9b87-c24418936a64",
+      "customers": [],
+      "features": [
+        {
+          "name": "Azure SQL connectivity modes (proxy/default)",
+          "confidence": 0.7
+        },
+        {
+          "name": "Dedicated egress IP whitelisting",
+          "confidence": 0.72
+        },
+        {
+          "name": "Forms listing via component/API returning JSON",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Intermittent Azure SQL connectivity troubleshooting",
+          "confidence": 0.82
+        },
+        {
+          "name": "Workflow integration and document of record/printable PDF",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [
+        {
+          "title": "Intermittent inability to access Azure SQL database despite dedicated egress IP being whitelisted",
+          "category": "Database/Networking",
+          "severity": 4,
+          "confidence": 0.78
+        }
+      ],
+      "requests": [
+        {
+          "text": "Provide Azure SQL activity logs to investigate connection drops and share troubleshooting documentation",
+          "confidence": 0.72
+        }
+      ]
+    },
+    {
+      "signal_id": "85ee1ebb-8f51-42e6-8f6f-5d5c0bc38dbd",
+      "customers": [],
+      "features": [
+        {
+          "name": "AF2 multiple forms on a single page",
+          "confidence": 0.74
+        },
+        {
+          "name": "AEM semantic search",
+          "confidence": 0.66
+        }
+      ],
+      "themes": [
+        {
+          "name": "Multiple form loading on same page",
+          "confidence": 0.8
+        },
+        {
+          "name": "Search integration and indexing best practices",
+          "confidence": 0.74
+        }
+      ],
+      "issues": [
+        {
+          "title": "Missing unload function in AF2 causes event listener conflicts when loading multiple forms in the same division",
+          "category": "Runtime/Embedding",
+          "severity": 4,
+          "confidence": 0.86
+        },
+        {
+          "title": "Search failures in dev environment due to conflicting indexes",
+          "category": "Search/Indexing",
+          "severity": 3,
+          "confidence": 0.74
+        }
+      ],
+      "requests": [
+        {
+          "text": "Proper unload recommendations for AF2 to support multiple forms on a single page",
+          "confidence": 0.8
+        },
+        {
+          "text": "Best practices to resolve conflicting indexes causing search failures in dev",
+          "confidence": 0.72
+        }
+      ]
+    },
+    {
+      "signal_id": "97f2c238-7838-4a3d-a3f7-d4e0351279e4",
+      "customers": [],
+      "features": [
+        {
+          "name": "AEM Forms Core Components",
+          "confidence": 0.7
+        },
+        {
+          "name": "Document Services - Output",
+          "confidence": 0.78
+        },
+        {
+          "name": "DocAssurance Service",
+          "confidence": 0.74
+        },
+        {
+          "name": "Interactive Communication on AEM as a Cloud Service",
+          "confidence": 0.78
+        }
+      ],
+      "themes": [
+        {
+          "name": "Hands-on enablement for document services on cloud",
+          "confidence": 0.76
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Deeper hands-on session focused on setup, configuration, and practical usage of Output, DocAssurance, and IC on Cloud",
+          "confidence": 0.78
+        }
+      ]
+    },
+    {
+      "signal_id": "6700770b-c893-453e-81be-eaa0d7b6e34c",
+      "customers": [
+        {
+          "name": "Fidelity Stock Plan Services",
+          "confidence": 0.92
+        }
+      ],
+      "features": [
+        {
+          "name": "PDF Generator (DOCX to PDF conversion)",
+          "confidence": 0.82
+        },
+        {
+          "name": "Multi-threaded conversions in single-user mode while running server as a service",
+          "confidence": 0.84
+        }
+      ],
+      "themes": [
+        {
+          "name": "Modernizing Windows Server/Microsoft Office/Acrobat while maintaining throughput",
+          "confidence": 0.78
+        },
+        {
+          "name": "Concurrent conversion scalability",
+          "confidence": 0.8
+        }
+      ],
+      "issues": [
+        {
+          "title": "With latest supported Windows Server and MS Office, unable to run multi-threaded conversions",
+          "category": "PDF generation/Performance",
+          "severity": 4,
+          "confidence": 0.84
+        }
+      ],
+      "requests": [
+        {
+          "text": "Support multiple concurrent PDFG conversions (10+)",
+          "confidence": 0.78
+        },
+        {
+          "text": "Support DOCX documents larger than 1 MB for DOCX to PDF conversion",
+          "confidence": 0.74
+        }
+      ]
+    },
+    {
+      "signal_id": "ee4e420c-fe18-4dfc-b7b3-a8593f41c6a2",
+      "customers": [],
+      "features": [
+        {
+          "name": "AFV2 guidebridge enhancement to support multiple forms on a single page",
+          "confidence": 0.82
+        },
+        {
+          "name": "XDP versioning",
+          "confidence": 0.74
+        },
+        {
+          "name": "Private build distribution",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Multiple forms on single page support",
+          "confidence": 0.82
+        },
+        {
+          "name": "Release timing constraints (code freeze)",
+          "confidence": 0.68
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Customer validation that AFV2 fix resolves multiple-forms-on-page issue",
+          "confidence": 0.76
+        },
+        {
+          "text": "Option to share private build with XDP versioning before official 2026 release if needed",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "a5b85df5-0624-45a9-b9df-c9d5126557a7",
+      "customers": [
+        {
+          "name": "Mercury Marine",
+          "confidence": 0.7
+        }
+      ],
+      "features": [
+        {
+          "name": "Multi-brand form strategy",
+          "confidence": 0.72
+        },
+        {
+          "name": "Marketo partitioning and data attribution",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Go-live planning and deployment coordination",
+          "confidence": 0.76
+        },
+        {
+          "name": "Theming/styling deployment using Figma exports",
+          "confidence": 0.74
+        },
+        {
+          "name": "Form naming conventions and connector configuration during migration",
+          "confidence": 0.76
+        }
+      ],
+      "issues": [
+        {
+          "title": "Migration from QA to stage hit issues with form naming conventions and connector configurations",
+          "category": "Migration/Configuration",
+          "severity": 3,
+          "confidence": 0.78
+        },
+        {
+          "title": "Ongoing challenges with Marketo partitioning and data attribution for lead assignment across brands",
+          "category": "Data routing/Attribution",
+          "severity": 3,
+          "confidence": 0.74
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "9c0466c4-bab2-4210-9f29-e71d11a9a1f2",
+      "customers": [
+        {
+          "name": "Verizon",
+          "confidence": 0.92
+        }
+      ],
+      "features": [
+        {
+          "name": "Interactive Communication document creation (templates, fragments, data binding)",
+          "confidence": 0.78
+        },
+        {
+          "name": "Real-time PDF preview using sample data",
+          "confidence": 0.7
+        },
+        {
+          "name": "Batch processing for document generation",
+          "confidence": 0.72
+        }
+      ],
+      "themes": [
+        {
+          "name": "Replacing multiple vendor solutions with unified AEM platform",
+          "confidence": 0.78
+        },
+        {
+          "name": "High-volume document generation requirements",
+          "confidence": 0.76
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "3c723601-da20-4aa5-b926-4faf413a5d31",
+      "customers": [],
+      "features": [
+        {
+          "name": "Dynamic forms and custom themes with front-end pipeline",
+          "confidence": 0.72
+        },
+        {
+          "name": "Document of record PDF customization",
+          "confidence": 0.72
+        },
+        {
+          "name": "Translation projects and machine/human translation",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Regional restrictions impacting Azure SQL connectivity",
+          "confidence": 0.78
+        },
+        {
+          "name": "Theme customization workflow and local preview",
+          "confidence": 0.72
+        },
+        {
+          "name": "Translation licensing constraints",
+          "confidence": 0.72
+        }
+      ],
+      "issues": [
+        {
+          "title": "Azure SQL connection succeeds from Canada Central but not from other regions, indicating possible regional restriction",
+          "category": "Database/Networking",
+          "severity": 4,
+          "confidence": 0.78
+        },
+        {
+          "title": "Machine translation cannot be used due to licensing issue",
+          "category": "Translation/Licensing",
+          "severity": 2,
+          "confidence": 0.74
+        }
+      ],
+      "requests": [
+        {
+          "text": "Share documentation for manual translation workflow (download, translate, upload dictionaries) for forms",
+          "confidence": 0.72
+        },
+        {
+          "text": "Share guidance on configuring local environment to view front-end CSS changes in real time (front-end pipeline locally)",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "f7e0bbfa-a749-4e02-96d1-d7fd5034c018",
+      "customers": [
+        {
+          "name": "Mercury Marine",
+          "confidence": 0.82
+        }
+      ],
+      "features": [
+        {
+          "name": "Form wizard",
+          "confidence": 0.7
+        },
+        {
+          "name": "Forms optimiser",
+          "confidence": 0.74
+        },
+        {
+          "name": "Microsoft Translator for forms",
+          "confidence": 0.72
+        }
+      ],
+      "themes": [
+        {
+          "name": "Production testing and go-live readiness",
+          "confidence": 0.72
+        },
+        {
+          "name": "Translation setup as a dependency",
+          "confidence": 0.74
+        },
+        {
+          "name": "Form creation/submission reliability issues",
+          "confidence": 0.76
+        }
+      ],
+      "issues": [
+        {
+          "title": "Form wizard has issues where form creation and data submission fail to load properly; workarounds discussed",
+          "category": "Authoring/Submission",
+          "severity": 3,
+          "confidence": 0.76
+        }
+      ],
+      "requests": [
+        {
+          "text": "Set up a demonstration of forms optimiser for lead capture and form discovery initiative",
+          "confidence": 0.74
+        }
+      ]
+    },
+    {
+      "signal_id": "74979e58-6f7d-43b3-8ae9-fdcb9a895cbe",
+      "customers": [],
+      "features": [
+        {
+          "name": "Migration utility from foundation to core component based forms",
+          "confidence": 0.76
+        },
+        {
+          "name": "Core component based forms performance for very large forms",
+          "confidence": 0.78
+        },
+        {
+          "name": "React-based headless form rendering",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Extreme-scale forms performance (tens of thousands of fields)",
+          "confidence": 0.84
+        },
+        {
+          "name": "Core components limitations (no table component) and theming requirements",
+          "confidence": 0.78
+        }
+      ],
+      "issues": [
+        {
+          "title": "Initial render time for 37,000-field core component form was around 4 minutes",
+          "category": "Performance",
+          "severity": 3,
+          "confidence": 0.78
+        },
+        {
+          "title": "Core components lack a table component; tables represented using panels requiring CSS/custom component for table-like appearance",
+          "category": "Component capability",
+          "severity": 2,
+          "confidence": 0.8
+        },
+        {
+          "title": "Migration utility does not handle tables perfectly; manual enhancements may be needed",
+          "category": "Migration",
+          "severity": 2,
+          "confidence": 0.74
+        }
+      ],
+      "requests": [
+        {
+          "text": "Confirm whether React-based rendering inside a site page is supported on AEM 6.5 or only on cloud setups",
+          "confidence": 0.78
+        },
+        {
+          "text": "Provide detailed performance metrics under scenarios including business rules applied",
+          "confidence": 0.76
+        }
+      ]
+    },
+    {
+      "signal_id": "d18ae231-0147-4f75-ac75-5d1fb813bf4c",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "Go-live coordination",
+          "confidence": 0.66
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Share both test and final production URLs for the live form",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "33596cfb-eb0f-460e-8f11-47a7deb082d9",
+      "customers": [],
+      "features": [
+        {
+          "name": "Core components support for JSON schemas",
+          "confidence": 0.74
+        },
+        {
+          "name": "Experience Fielder",
+          "confidence": 0.66
+        }
+      ],
+      "themes": [
+        {
+          "name": "Authoring performance and responsiveness",
+          "confidence": 0.76
+        },
+        {
+          "name": "Schema conversion and configuration",
+          "confidence": 0.74
+        }
+      ],
+      "issues": [
+        {
+          "title": "Slow/unresponsive deletion of text fields due to slow 'references' network call",
+          "category": "Authoring performance",
+          "severity": 3,
+          "confidence": 0.82
+        },
+        {
+          "title": "Core components support JSON schemas only; XSD to JSON conversion has sync/maintenance risks",
+          "category": "Schema/Compatibility",
+          "severity": 2,
+          "confidence": 0.78
+        },
+        {
+          "title": "UAT/production testing blocked due to SPA deployment (not AEM)",
+          "category": "Release dependency",
+          "severity": 4,
+          "confidence": 0.74
+        }
+      ],
+      "requests": [
+        {
+          "text": "Provide access to reproduce slow deletion issue and evaluate workaround (Experience Fielder) while investigating",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "5623250f-2e77-417a-b8fb-599b4be41e69",
+      "customers": [],
+      "features": [
+        {
+          "name": "Private release distribution",
+          "confidence": 0.66
+        }
+      ],
+      "themes": [
+        {
+          "name": "Configuration correctness and rollout across environments",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [
+        {
+          "title": "Private release selectively worked until incorrect configuration was corrected",
+          "category": "Configuration",
+          "severity": 2,
+          "confidence": 0.68
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "ff8c46f2-ad32-4f59-a61a-26896d0c7309",
+      "customers": [],
+      "features": [],
+      "themes": [],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "51aa2059-0332-49b8-9b90-8ffc4e5c8441",
+      "customers": [],
+      "features": [],
+      "themes": [
+        {
+          "name": "SQL server connection stability and rate limiting",
+          "confidence": 0.76
+        }
+      ],
+      "issues": [
+        {
+          "title": "Customer SQL server connection is getting dropped and sometimes returning too many requests; custom servlet establishing connection was dropping",
+          "category": "Database/Performance",
+          "severity": 4,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        {
+          "text": "Guidance on JDBC connection configuration to prevent dropped connections and 'too many requests' behavior",
+          "confidence": 0.74
+        }
+      ]
+    },
+    {
+      "signal_id": "6e6b5eeb-9405-4df3-9c10-f1325cde2632",
+      "customers": [
+        {
+          "name": "Verizon",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "Interactive communications (templates, governance, workflows)",
+          "confidence": 0.72
+        },
+        {
+          "name": "Cloud service continuous innovation and scalability",
+          "confidence": 0.68
+        },
+        {
+          "name": "Gen AI authoring (early access) on cloud",
+          "confidence": 0.66
+        }
+      ],
+      "themes": [
+        {
+          "name": "On-premise vs cloud service capability and entitlement comparison",
+          "confidence": 0.74
+        },
+        {
+          "name": "Rendition-based pricing clarification",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": []
+    },
+    {
+      "signal_id": "49a3cc12-048a-4071-9acc-a01308e81dd2",
+      "customers": [
+        {
+          "name": "UK Ministry of Defence",
+          "confidence": 0.86
+        }
+      ],
+      "features": [
+        {
+          "name": "AM Forms cloud service",
+          "confidence": 0.74
+        },
+        {
+          "name": "Import legacy XDP",
+          "confidence": 0.7
+        },
+        {
+          "name": "Generate accessible fillable PDFs",
+          "confidence": 0.7
+        },
+        {
+          "name": "AI Assistant for PDF to adaptive forms conversion",
+          "confidence": 0.74
+        },
+        {
+          "name": "Forms Experience Builder capabilities",
+          "confidence": 0.72
+        }
+      ],
+      "themes": [
+        {
+          "name": "Migration from on-prem legacy forms to cloud service",
+          "confidence": 0.76
+        },
+        {
+          "name": "Accessibility requirements",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [],
+      "requests": [
+        {
+          "text": "Replicate existing forms on AM Forms cloud service and leverage new AI capabilities",
+          "confidence": 0.72
+        }
+      ]
+    },
+    {
+      "signal_id": "e220d565-d982-4359-b87b-030a55affc3a",
+      "customers": [
+        {
+          "name": "LPL",
+          "confidence": 0.86
+        }
+      ],
+      "features": [
+        {
+          "name": "GenAI form conversion",
+          "confidence": 0.74
+        },
+        {
+          "name": "Experience builder",
+          "confidence": 0.72
+        },
+        {
+          "name": "Discovery agent demo",
+          "confidence": 0.66
+        }
+      ],
+      "themes": [
+        {
+          "name": "Conversion QA and quality feedback loop",
+          "confidence": 0.74
+        },
+        {
+          "name": "Operations team onboarding",
+          "confidence": 0.72
+        }
+      ],
+      "issues": [
+        {
+          "title": "LPL raised issues related to conversions and quality; Engineering to look into those",
+          "category": "Conversion quality",
+          "severity": 3,
+          "confidence": 0.72
+        }
+      ],
+      "requests": [
+        {
+          "text": "Onboarding session for Experience builder to onboard operations team for new conversions",
+          "confidence": 0.74
+        }
+      ]
+    },
+    {
+      "signal_id": "d9b03203-0460-497f-8a4c-f483787315c3",
+      "customers": [],
+      "features": [
+        {
+          "name": "PDF to XDP conversion APIs (experimental)",
+          "confidence": 0.72
+        },
+        {
+          "name": "Interactive Communications on cloud (beta)",
+          "confidence": 0.66
+        },
+        {
+          "name": "AI assistant / Experience Builder for PDF/XDP to adaptive forms conversion",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Legacy PDF/XDP conversion troubleshooting",
+          "confidence": 0.74
+        },
+        {
+          "name": "Feature parity questions between Life Cycle and Interactive Communications",
+          "confidence": 0.68
+        }
+      ],
+      "issues": [
+        {
+          "title": "PDF to XDP conversion output had empty fields; investigation assigned",
+          "category": "Conversion quality",
+          "severity": 3,
+          "confidence": 0.72
+        }
+      ],
+      "requests": [
+        {
+          "text": "Enable required experimental APIs for XDP generation upon request",
+          "confidence": 0.68
+        }
+      ]
+    },
+    {
+      "signal_id": "8c56bd23-9f63-4d2d-a967-a5c665fc652a",
+      "customers": [
+        {
+          "name": "Fidelity Stock Plan Services",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "Single-user mode multi-threaded support for PDF Generator on OSGi (buddy build)",
+          "confidence": 0.84
+        }
+      ],
+      "themes": [
+        {
+          "name": "Multi-threaded PDFG conversions requirement with Office 2021 and Acrobat DC (FRL)",
+          "confidence": 0.82
+        }
+      ],
+      "issues": [
+        {
+          "title": "Multi-threaded conversions are not supported by default with Office 2021 and Acrobat DC (FRL)",
+          "category": "PDF generation/Performance",
+          "severity": 4,
+          "confidence": 0.84
+        }
+      ],
+      "requests": [
+        {
+          "text": "Support multi-threaded PDFG conversions in OSGi environment after migrating to Office 2021 and Acrobat DC (FRL)",
+          "confidence": 0.82
+        }
+      ]
+    },
+    {
+      "signal_id": "90ee28bd-6f5d-41a8-9fed-cc554ad7616b",
+      "customers": [],
+      "features": [
+        {
+          "name": "Batch APIs for PDF-to-AEM conversion (async processing, rate limits)",
+          "confidence": 0.78
+        },
+        {
+          "name": "Conversion report highlighting unbound fields",
+          "confidence": 0.74
+        },
+        {
+          "name": "Semantic search / discovery agent",
+          "confidence": 0.66
+        }
+      ],
+      "themes": [
+        {
+          "name": "Bulk migration scalability from DocuSign to AEM",
+          "confidence": 0.82
+        },
+        {
+          "name": "Conversion quality for form elements",
+          "confidence": 0.78
+        },
+        {
+          "name": "Time-savings and throughput metrics collection",
+          "confidence": 0.72
+        }
+      ],
+      "issues": [
+        {
+          "title": "Radio buttons and checkboxes have ongoing issues in Acroforms during conversion; Engineering to investigate",
+          "category": "Conversion quality",
+          "severity": 3,
+          "confidence": 0.78
+        },
+        {
+          "title": "Manual conversion (~2 hrs/form) is not scalable for ~1900 forms",
+          "category": "Migration scalability",
+          "severity": 4,
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        {
+          "text": "Bulk migrate ~1900 RIA forms from DocuSign to AEM using batch APIs; start with 50 PDFs to validate quality",
+          "confidence": 0.8
+        },
+        {
+          "text": "Collect and share time-savings and throughput metrics for the conversion approach",
+          "confidence": 0.72
+        }
+      ]
+    },
+    {
+      "signal_id": "8a24808a-3b51-42de-965d-3dc57a07f30d",
+      "customers": [
+        {
+          "name": "BMW",
+          "confidence": 0.86
+        }
+      ],
+      "features": [
+        {
+          "name": "EM forms AI capabilities",
+          "confidence": 0.66
+        },
+        {
+          "name": "Analytics for forms",
+          "confidence": 0.66
+        },
+        {
+          "name": "Integration with Edge delivery services",
+          "confidence": 0.66
+        }
+      ],
+      "themes": [
+        {
+          "name": "Risk of churn due to cost of ownership and licensing",
+          "confidence": 0.78
+        },
+        {
+          "name": "Need to pitch unified website + forms experience",
+          "confidence": 0.7
+        }
+      ],
+      "issues": [
+        {
+          "title": "Decision to stop using EM forms due to cost of ownership and license costs",
+          "category": "Commercial/Retention",
+          "severity": 4,
+          "confidence": 0.82
+        },
+        {
+          "title": "Challenges integrating Edge delivery services due to lack of integration between website and forms",
+          "category": "Integration",
+          "severity": 3,
+          "confidence": 0.74
+        }
+      ],
+      "requests": [
+        {
+          "text": "Demonstrate/pitch latest EM forms, AI capabilities, analytics, and integrations to retain markets and reverse decision",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "10e48856-c855-42d2-9903-690c8f49ca38",
+      "customers": [],
+      "features": [
+        {
+          "name": "Marketo forms to AEM forms migration",
+          "confidence": 0.7
+        },
+        {
+          "name": "Forms optimisation (Sites Optimizer module)",
+          "confidence": 0.74
+        },
+        {
+          "name": "Operational telemetry data collection",
+          "confidence": 0.66
+        }
+      ],
+      "themes": [
+        {
+          "name": "POC planning for migration and optimization",
+          "confidence": 0.74
+        },
+        {
+          "name": "Cost and licensing concerns",
+          "confidence": 0.72
+        }
+      ],
+      "issues": [
+        {
+          "title": "Customer raised concerns about cost and licensing of the Sites Optimizer module",
+          "category": "Commercial",
+          "severity": 2,
+          "confidence": 0.74
+        }
+      ],
+      "requests": [
+        {
+          "text": "Enable operational telemetry data collection as pre-work for a POC analyzing Marketo forms and optimization opportunities",
+          "confidence": 0.7
+        }
+      ]
+    },
+    {
+      "signal_id": "81a2b287-4366-47c3-8362-e8274efd5c1c",
+      "customers": [
+        {
+          "name": "S&P Global",
+          "confidence": 0.86
+        }
+      ],
+      "features": [
+        {
+          "name": "EDS forms on Cloud Service",
+          "confidence": 0.68
+        },
+        {
+          "name": "Adaptive Forms on Cloud Service",
+          "confidence": 0.68
+        },
+        {
+          "name": "Progressive forms",
+          "confidence": 0.66
+        },
+        {
+          "name": "A/B testing",
+          "confidence": 0.66
+        }
+      ],
+      "themes": [
+        {
+          "name": "Migration timeline planning (AMS to CS) across divisions",
+          "confidence": 0.74
+        },
+        {
+          "name": "Conversion quality vs submission volume",
+          "confidence": 0.78
+        },
+        {
+          "name": "Backend-driven forms limitations",
+          "confidence": 0.74
+        }
+      ],
+      "issues": [
+        {
+          "title": "Increased submissions did not translate to quality leads; conversion defined as sales not form submission",
+          "category": "Conversion/Lead quality",
+          "severity": 3,
+          "confidence": 0.78
+        },
+        {
+          "title": "Some backend-driven forms have empty submit, making no-code changes unlikely",
+          "category": "Implementation constraint",
+          "severity": 3,
+          "confidence": 0.76
+        }
+      ],
+      "requests": []
+    },
+    {
+      "signal_id": "52292cf3-fa76-42a0-af96-89d721fb3af6",
+      "customers": [
+        {
+          "name": "State of Washington",
+          "confidence": 0.86
+        }
+      ],
+      "features": [
+        {
+          "name": "Migration utilities/scripts to parse legacy XFT and generate specification spreadsheet",
+          "confidence": 0.78
+        },
+        {
+          "name": "Reusable fragments and common theme/template",
+          "confidence": 0.72
+        },
+        {
+          "name": "Assembler APIs for document package assembly",
+          "confidence": 0.7
+        }
+      ],
+      "themes": [
+        {
+          "name": "Large-scale legacy form migration with specification-driven process",
+          "confidence": 0.78
+        },
+        {
+          "name": "AI opportunities to interpret legacy VBScript and generate specs",
+          "confidence": 0.68
+        }
+      ],
+      "issues": [
+        {
+          "title": "Significant variation in legacy VBScript/form logic limits automation and requires manual review for unique cases",
+          "category": "Migration/Automation",
+          "severity": 3,
+          "confidence": 0.76
+        }
+      ],
+      "requests": [
+        {
+          "text": "Follow-up session to demonstrate AI agent capabilities for form authoring and review a sample migrated form to find optimization opportunities",
+          "confidence": 0.7
+        }
+      ]
+    }
+  ]
+}

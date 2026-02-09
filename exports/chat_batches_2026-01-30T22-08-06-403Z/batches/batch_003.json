@@ -1,0 +1,1352 @@
+[
+  {
+    "id": "e07cb0a1-986d-4987-acf1-336ad2286c24",
+    "source": "slack",
+    "text": "As per the discussion they are writing their own servelet from where they want to call IC render api with json data.\nI don't think they want to configure prefill via fdm.",
+    "created_at": "2026-01-30T07:03:31.039Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "49eb550a-65d8-4ca7-bd4f-b044b93a9cc2",
+    "source": "slack",
+    "text": "Can't it configured directly as prefill via FDM?",
+    "created_at": "2026-01-30T07:03:30.976Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "3a448f2a-1358-4790-b852-1e1798056cdc",
+    "source": "slack",
+    "text": "How is data pulled from there system and provided to Render Service API?",
+    "created_at": "2026-01-30T07:03:30.918Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "c2f533c2-e39a-4647-8c14-f050202d0bc6",
+    "source": "slack",
+    "text": "FDM support JSON schema actually its Json schema++ with operational details extra",
+    "created_at": "2026-01-30T07:03:30.862Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "fa75fb9d-38bb-4bd4-9c14-84c1422045e1",
+    "source": "slack",
+    "text": "+1 for FDM based approach.",
+    "created_at": "2026-01-30T07:03:30.808Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "dd4581a4-f8ce-4e50-a421-9376b476f6fb",
+    "source": "slack",
+    "text": "There have been similar requests from other customers as well (LPL. KB) where customer doesnt want FDM to be created, rather directly use Json Schema while Authoring and Render PDF with corresponding data.json either for DoR generation or Output usecase.\nAdding <@W6CBB4953> <@W4RU4N66R> <@U0213T59LMN> to guide on this flow and does FDM support Json schema is sufficient or we need to additional Json schema support",
+    "created_at": "2026-01-30T07:03:30.743Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "aaa4b9d9-a9d2-4266-b807-8893979bff10",
+    "source": "slack",
+    "text": "I guess that can be handled with FDM via custom prefill service. FDM provides a lot of goodness at its own level. Taking data directly as part of API will lead us to redo a lot of work which FDM already provides like schema validation, etc.\n\nWe need to educate the customer about this. The functionality they are asking is all there but there is a better mechanism to use it. We can have someone from FDM team on the call to explain this to the customer.",
+    "created_at": "2026-01-30T06:59:44.045Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "f4bc409a-ea8b-4f67-a2d2-93ef62e9e18b",
+    "source": "slack",
+    "text": "Just one task pending for this use case. We need to update `IC render API` to accept `json data` as well.",
+    "created_at": "2026-01-30T06:59:43.988Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "e21e69cc-bdd1-45d2-bd4f-bace09f8acc8",
+    "source": "slack",
+    "text": "This will not require any additional work at our end and solve customer’s problem.",
+    "created_at": "2026-01-30T06:59:43.932Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "d47f3036-0219-4597-b8c8-bc16fa2a6f65",
+    "source": "slack",
+    "text": "Details on Current Proposal Workflow:\n• The user creates a `FDM data source` using a Swagger file that defines the JSON schema.\n• This data source is used to configure FDM, which generates entities based on the schema.\n• The user then provides a `data.json` file that aligns with the FDM schema.\n• Similar to how `dorService` works—accepting JSON, converting it to XML, and sending it to the output service—the `IC Render Service` will:\n    ◦ Accept JSON input\n    ◦ Convert it to XML\n    ◦ Forward it to the output service",
+    "created_at": "2026-01-30T06:59:43.873Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "7dd05f0d-535f-4602-8833-6d629a099505",
+    "source": "slack",
+    "text": "ok, there may be some restrictions with JSON schema. So, perhaps a spec review of this - if we are exposing JSON input directly.",
+    "created_at": "2026-01-30T06:59:43.816Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "9f27124c-1df1-4a22-a547-884faf9430bb",
+    "source": "slack",
+    "text": "I have clarified the requirements with NFCU regarding their intended use of JSON schema. They have confirmed that their use case specifically involves utilizing their own JSON schema for data binding.\nWhile I discussed the possibility of leveraging the Render API with FDM—without relying on external JSON data—they emphasized the need to pass JSON data aligned with their custom schema. To accommodate this, I proposed an alternative approach: using FDM without a data source. So there is no need to support separate json schema.",
+    "created_at": "2026-01-30T06:59:43.756Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "7c9e4c8c-368a-4b6e-9af8-0c41c72f706f",
+    "source": "slack",
+    "text": "IMO, we should ask them to use FDM rather than adding support to upload a json data file in the API since FDM has several other features like schema validation for these cases.",
+    "created_at": "2026-01-30T06:59:43.699Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "8c35fb29-ddc2-4a49-9615-0535dc7fb399",
+    "source": "slack",
+    "text": "Hi Salil,\n\nIMO We can support JSON data as input.\n\nWe are already using render API to generate pdf. The working of render API is as follows-\n• It fetches the data json from FDM data source and transform that to data.xml.\nSo IMO That should work by using render API with additional data.json.",
+    "created_at": "2026-01-30T06:59:43.641Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "1c756f38-8405-44e8-8248-5afb1c371a34",
+    "source": "slack",
+    "text": "<@U038XFD63GS> for render API’s OSGI APIs.",
+    "created_at": "2026-01-30T06:59:43.583Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "6c5e9017-d494-4408-a4db-baeb9442d576",
+    "source": "slack",
+    "text": "Thanks Vijay.\nWhats your thought on use of JSON data ?",
+    "created_at": "2026-01-30T06:59:43.527Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "cb39e0cd-90b2-450e-a131-812d7b8471cc",
+    "source": "slack",
+    "text": "cc: <@W4R5LUPK3> <@WQWCBV6NN> <@W9QMZFR39>",
+    "created_at": "2026-01-30T06:59:43.470Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752641688.566379"
+  },
+  {
+    "id": "c3f261c8-766f-4cfd-9f5e-212da7665364",
+    "source": "slack",
+    "text": "AFAIR its for both, but you may get it revalidated.\n<https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/operations/maintenance?lang=en#audit-purge>\n&gt; \n&gt; Currently, purging is not enabled by default, but this will change in the future.\n&gt; \n&gt; Environments that were created after the default purging is enabled will have the following default values:\n&gt;      Replication, DAM, and page audit logs older than 7 days are removed.\n&gt;       *All possible events are logged.*\n&gt; \n&gt; Environments that were created before the default purging is enabled will have the default values listed below, however it is recommended to lower those values in order to optimize performance.\n&gt;       Replication, DAM, and page audit logs older than 7 years are removed.\n&gt;       *All possible events are logged.*",
+    "created_at": "2026-01-30T06:59:43.414Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752818519.768909"
+  },
+  {
+    "id": "0b1cf760-4afa-4046-bca3-25c4c2636d41",
+    "source": "slack",
+    "text": "<@W4SG81T9C>: This is to purge audit logs - is there any doc to setup audit logs ?",
+    "created_at": "2026-01-30T06:59:43.358Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752818519.768909"
+  },
+  {
+    "id": "9501d315-8d72-45a0-9090-469a6baeb862",
+    "source": "slack",
+    "text": "&gt; If they can have any kind of audit logs or edit history - is it available OOTB or if they can enable it with minimal effort\nAudit logs are supported OOTB. For audit log maintenance you may refer <https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/operations/maintenance?lang=en#purge-tasks>",
+    "created_at": "2026-01-30T06:59:43.303Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752818519.768909"
+  },
+  {
+    "id": "68f418f7-d2f5-4655-9d28-30bcf003ea41",
+    "source": "slack",
+    "text": "Tagging <@W4SG81T9C> to answer above queries",
+    "created_at": "2026-01-30T06:59:43.248Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752818519.768909"
+  },
+  {
+    "id": "1140f6db-2299-41e1-8e85-7dd4505d1576",
+    "source": "slack",
+    "text": "<@W4RSW3ECC>: The LPL ask is to have versioning in forms - they have heard somewhere and want to know how they can use it .\n\n<@W4XTCQ07J>: LPL team wants some recommendation from our side : for following queries :\n• If they can have any kind of audit logs or edit history - is it available OOTB or if they can enable it with minimal effort \n• As of now they are publishing form via following route : they need our suggestion if the whole process can be controlled and secured \n    ◦ Author persona creates form on their dev instance\n    ◦ Once reviewed and verified they download the package \n    ◦ upload the package on their higher instances and then publish the forms\n    ◦",
+    "created_at": "2026-01-30T06:59:43.192Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752818519.768909"
+  },
+  {
+    "id": "f951a3ee-bbb2-47fe-b635-31cadf87cc98",
+    "source": "slack",
+    "text": "Isnt versioning for DAM assets like PDF, XDP supproted already ? cc: <@W4R5LUPK3>",
+    "created_at": "2026-01-30T06:59:43.133Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752818519.768909"
+  },
+  {
+    "id": "d48cdd86-61cc-4910-b5b2-6a2590a6ee75",
+    "source": "slack",
+    "text": "Yes, that is the plan.",
+    "created_at": "2026-01-30T06:59:43.075Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752823507.804559"
+  },
+  {
+    "id": "96f1661a-5cb9-4a3e-b3aa-c93de148c286",
+    "source": "slack",
+    "text": "ok.. what was the change ? and I assume you are ensuring that the same is also going in the upcoming Forms + Sites release. cc: <@W4RU4N66R>",
+    "created_at": "2026-01-30T06:59:43.018Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752823507.804559"
+  },
+  {
+    "id": "3f488ba3-f783-4184-bed6-eb7bcb41f833",
+    "source": "slack",
+    "text": "State of Pennsylvania (SOP), update:\nWe will need to give an updated private release, there was a backward incompatible change which we are going to revert.",
+    "created_at": "2026-01-30T06:59:42.963Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752823507.804559"
+  },
+  {
+    "id": "bf490471-0fba-4903-b367-d55b463faaec",
+    "source": "slack",
+    "text": "what is SOP ?",
+    "created_at": "2026-01-30T06:59:42.907Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1752823507.804559"
+  },
+  {
+    "id": "3fdea5ae-5956-44ae-a0d9-529b2a53cdf7",
+    "source": "slack",
+    "text": "We also did translation as part of the hackathon using AI",
+    "created_at": "2026-01-30T06:59:42.850Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "58026978-71b7-468b-b749-f8589734a365",
+    "source": "slack",
+    "text": "Yes we didn't use DC APIs. we built a custom service to serve for the hackathon usecase. from a productisation standpoint it needs to be further refined and converted to an API",
+    "created_at": "2026-01-30T06:59:42.791Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "03ff9d8a-2447-47c3-b13d-82335e44edd6",
+    "source": "slack",
+    "text": "<@W010NNJV7S8> I guess you mentioned the POC did not use DC APIs but is similar except that DC APIs use JSON data structure but the POC uses free flow excel data. Please confirm.",
+    "created_at": "2026-01-30T06:59:42.731Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "24e0616e-258c-4bb6-8d88-b3341a64ba62",
+    "source": "slack",
+    "text": "Good use case and thanks for the details",
+    "created_at": "2026-01-30T06:59:42.673Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "32484bb7-bce5-45e9-92a4-db84205900ae",
+    "source": "slack",
+    "text": "<@W4R4S9FS4> , iirc, <@W010NNJV7S8>'s hackathkm required doc cloud apis to be invoked. Is that so? If yes, then this will require additional doc cloud license.",
+    "created_at": "2026-01-30T06:59:42.617Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "237fe520-56d2-439c-b03f-bbb2b6070ce0",
+    "source": "slack",
+    "text": "Yes, <@W010NNJV7S8> will validate the proposal with SCs, partners to garner interest/repeatability.",
+    "created_at": "2026-01-30T06:59:42.558Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "9a85af12-f95b-4cae-84d5-58f3a8e1b072",
+    "source": "slack",
+    "text": "&gt; <@W010NNJV7S8> and I were discussing about the DoComm POC done in hackthon for word/excel based doc authoring if we can expand to PPT based authoring with data in free flow excel.\nThats the 3rd option.. even if we are able to create it soon, maintaining it would take time.. We should do if this is big opportunity or there is enough repeatability.",
+    "created_at": "2026-01-30T06:59:42.500Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "62f7e67c-9133-4694-b5d2-f7a29a1161d8",
+    "source": "slack",
+    "text": "pdf to pptx via pdfg: hopefully exportPDF should work <https://developer.adobe.com/experience-manager/reference-materials/6-5/forms/javadocs/index.html?com/adobe/fd/output/api/OutputService.html>",
+    "created_at": "2026-01-30T06:59:42.441Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "c693a371-f018-4d91-ae98-f5c5084435a9",
+    "source": "slack",
+    "text": "<@W010NNJV7S8> and I were discussing about the DoComm POC done in hackthon for word/excel based doc authoring if we can expand to PPT based authoring with data in free flow excel.",
+    "created_at": "2026-01-30T06:59:42.384Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "599db854-3ca8-4423-8ee4-7d20a51b0d95",
+    "source": "slack",
+    "text": "I am thinking following for now: Authoring in PPT since these would be marketing team with design agency, convert in background to PDF, import into Designer and add placeholders for data, merge data when final doc requested and send PDF (or better PPTX if possible?) The challenge would be to avoid human error in adding the data annotation in template since it would map from excel data. WDYT?",
+    "created_at": "2026-01-30T06:59:42.325Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "7e0f9403-e6d3-436f-b385-0c453437e4f8",
+    "source": "slack",
+    "text": "How can we achieve PDF to PPTX? PDFg?",
+    "created_at": "2026-01-30T06:59:42.266Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "ce232322-cae1-438c-a4c7-1fe57b37609d",
+    "source": "slack",
+    "text": "They want to get rid of entire thing including Seismic, need us for dynamic personalized doc gen.",
+    "created_at": "2026-01-30T06:59:42.209Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "03d82f90-7a8b-4f88-a332-a9edfc0876bf",
+    "source": "slack",
+    "text": "Good use case, thanks for sharing in details.\nOptions:\n1. Ask them to move to xdp and get rid of Siesmic and use pdf for download which is better perhaps.. If they want the users to change the content, then pdf to pptx.\n2. Are they also trying to get rid of Seismic. If not, they can use us for form filling and let doc generation be in Seismic - assuming its Seismic which takes care of this.\n3. Support pptx template and data merge - so, expand our doc generation capabilities to pptx. We perhaps can explore if this is a big oppo.. but looking at volumes, it doesnt look like a big oppo for us.",
+    "created_at": "2026-01-30T06:59:42.150Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "c049f76c-936b-4e84-94e9-ef89af161999",
+    "source": "slack",
+    "text": "Recording not available so shared screenshots for reference",
+    "created_at": "2026-01-30T06:59:42.093Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "0c9a6d21-ee2b-4b64-a4b1-d927b96cfea6",
+    "source": "slack",
+    "text": "Translations are done with original PPT template manually by 3rd party agency. Siesmic does the data merge and assembly only.",
+    "created_at": "2026-01-30T06:59:42.033Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "8cb4ea19-064d-4983-b2e1-3f3f44db0975",
+    "source": "slack",
+    "text": "Chinese doc served by Siesmic platform",
+    "created_at": "2026-01-30T06:59:41.976Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "50df2388-5be7-4a55-928f-f1e00058b40d",
+    "source": "slack",
+    "text": "Language specific versions can be requested after generating english doc",
+    "created_at": "2026-01-30T06:59:41.918Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "e9c29381-a047-4f43-94ac-f2643c2fa280",
+    "source": "slack",
+    "text": "Request form for internal users",
+    "created_at": "2026-01-30T06:59:41.859Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "9427721c-fe11-47e0-9199-5f6ba54cef20",
+    "source": "slack",
+    "text": "Internal sharepoint site for internal users",
+    "created_at": "2026-01-30T06:59:41.803Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "873bb5ea-a87e-40e1-b36f-c97c8f2af16b",
+    "source": "slack",
+    "text": "Excel data",
+    "created_at": "2026-01-30T06:59:41.743Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "47ec7f38-636b-4cae-a467-32eb0c604f04",
+    "source": "slack",
+    "text": "PPT template with placeholders",
+    "created_at": "2026-01-30T06:59:41.686Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "0e830170-2a9b-44e6-ba95-4efbd1ee6cc5",
+    "source": "slack",
+    "text": "Can be viewed, shared but not edited. Served by Siesmic platform directly, not stored in SFDC or customer's end.",
+    "created_at": "2026-01-30T06:59:41.626Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "ae561168-f063-40f9-bf86-d9854fa0b04b",
+    "source": "slack",
+    "text": "Sample final presentation for your reference: <https://eng17e.seismic.com/i/U1RcYPLUSSIGNHXPUv6W17uIaaGdt1S8npvn2PLUSSIGNPlospN8NisiEea7EbO4PKc04AriC9PLUSSIGNtKypV5WIhtPLUSSIGNacDRF___LNUUd2l297UfYkKH8aoyAcJMUiceNk9sM3x___PLUSSIGNC___PLUSSIGNVocd0EHmQC|https://eng17e.seismic.com/i/U1RcYPLUSSIGNHXPUv6W17uIaaGdt1S8npvn2PLUSSIGNPlospN8NisiE[…]7UfYkKH8aoyAcJMUiceNk9sM3x___PLUSSIGNC___PLUSSIGNVocd0EHmQC>",
+    "created_at": "2026-01-30T06:59:41.568Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "616189d7-6d12-44d0-aa2e-014395a6f23e",
+    "source": "slack",
+    "text": "• The content is refreshed every 6 months related to their bi-annual fiscal reports\n• Currently produced in house in a powerpoint format; much of it is manually created, but financial numbers are API'd in via Seismic ('Live Docs') – (they upload a table of all the financials by region)\n• They don’t want this to be available on a microsite because they want people to actually have a copy of the document sent to them; their sales team also use this to send to key accounts so it’s used both internally &amp; externally",
+    "created_at": "2026-01-30T06:59:41.508Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "68f42493-560f-43b4-a9bc-2991bccf8856",
+    "source": "slack",
+    "text": "Form: <https://www.macquarie.com/au/en/about/discover.html>",
+    "created_at": "2026-01-30T06:59:41.450Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753077095.280959"
+  },
+  {
+    "id": "f7151d57-c5a7-4d8b-bd0b-9051300ca3ce",
+    "source": "slack",
+    "text": "<@W4XTCQ07J> updated the doc, please check at <https://experienceleague.corp.adobe.com/docs/experience-manager-cloud-service/content/forms/setup-configure-migrate/enable-adaptive-forms-core-components.html|https://experienceleague.corp.adobe.com/docs/experience-manager-cloud-service/content/forms/[…]re-migrate/enable-adaptive-forms-core-components.html>",
+    "created_at": "2026-01-30T06:59:41.393Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753167461.480999"
+  },
+  {
+    "id": "ced5bb54-4202-47b1-aaab-e7d9a40aec57",
+    "source": "slack",
+    "text": "<@W4XTCQ07J>, Our documentation already mentions the below considerations:\n\n*Considerations*\n• When you create a fresh AEM Forms as a Cloud Service program, <https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/forms/setup-configure-migrate/enable-adaptive-forms-core-components#are-adaptive-forms-core-components-enabled-for-my-environment|Adaptive Forms Core Components and Headless Adaptive Forms are already enabled for your environment>.\n• If your existing Cloud Service environment provides option to <https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/forms/adaptive-forms-authoring/authoring-adaptive-forms-core-components/create-an-adaptive-form-on-forms-cs/creating-adaptive-form-core-components|create Core Components-based Adaptive Forms>, Adaptive Forms Core Components and Headless Adaptive Forms are already enabled for your environment and you can serve Core Component based Adaptive Forms as headless forms to channels such as mobile, web, native apps, and services that require a headless representation of Adaptive Forms.\n• If you have an older Forms as a Cloud Service program where Core Components are <https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/forms/setup-configure-migrate/enable-adaptive-forms-core-components#enable-components|not enabled>, you can <https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/forms/setup-configure-migrate/enable-adaptive-forms-core-components#enable-headless-adaptive-forms-for-an-aem-forms-as-a-cloud-service-environment|add Adaptive Forms Core Components dependencies> to your AEM as a Cloud Service repository and deploy the repository to your Cloud Service environments to enable Headless Adaptive Forms.\n\nAs discussed, we will add more robust checks around how to find if core components are enabled.",
+    "created_at": "2026-01-30T06:59:41.336Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753167461.480999"
+  },
+  {
+    "id": "40fcd7d9-7014-4e58-ae9d-44fcde377dfe",
+    "source": "slack",
+    "text": "<@WAM5KDYBZ> this is the issue I was discussing with you today, could you help make the required changes to doc.",
+    "created_at": "2026-01-30T06:59:41.279Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753167461.480999"
+  },
+  {
+    "id": "1d97593b-3f8f-4c07-b330-7e78dc3ccbcd",
+    "source": "slack",
+    "text": "<@W4XTCQ07J>, is there recording of this meeting. It would help me understand the context better.",
+    "created_at": "2026-01-30T06:59:41.225Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753167461.480999"
+  },
+  {
+    "id": "a596e739-b41e-42be-9818-1872ba7207d9",
+    "source": "slack",
+    "text": "<@WAM5KDYBZ> There are documentation improvements which are required for simpler cases. For Carpenter their developer was not an expert - and content was not easy for him. He performed some steps - which were not needed.\nWith CC part of FAR we need to update the docs to ensure new users are not thinking of updating archetype to enable CC.",
+    "created_at": "2026-01-30T06:59:41.170Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753167461.480999"
+  },
+  {
+    "id": "734c32db-008b-4972-aa6f-19158f93c0ca",
+    "source": "slack",
+    "text": "Yes, data in json format",
+    "created_at": "2026-01-30T06:59:41.113Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "ed206db3-139d-4b5e-afd5-08129abd97cd",
+    "source": "slack",
+    "text": "<@W4RU4N66R> , when you say JSON, do you mean data in JSON format only? The case which Aditya described. Please confirm.",
+    "created_at": "2026-01-30T06:59:41.056Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "5474f9cd-4bd6-4484-97ef-5404a646c8b3",
+    "source": "slack",
+    "text": "So basically, just a JSON -&gt; XML transformer insertion at a suitable point in the execution path?",
+    "created_at": "2026-01-30T06:59:40.998Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "1309970a-f66d-44c1-ae1a-60c1082e723f",
+    "source": "slack",
+    "text": "• No schema validation needed for JSON input, similar to how XML input is currently handled.",
+    "created_at": "2026-01-30T06:59:40.941Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "ea7238b7-cd80-4f83-a203-a5bb4846a7e3",
+    "source": "slack",
+    "text": "&gt; Is this solely about adding support for JSON data in Output APIs? i.e. XDP template and JSON data?\nInstead of XML supporting JSON and template can be XDP or acroform",
+    "created_at": "2026-01-30T06:59:40.885Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "b2494007-91eb-458a-8866-07e16fb2b199",
+    "source": "slack",
+    "text": "&gt; Are there any timelines attached to JSON Support in Output Service for LPL?\nI told we will do feasibility and confirm the timeline",
+    "created_at": "2026-01-30T06:59:40.828Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "e747f624-cd29-489c-835a-ea1511518ec3",
+    "source": "slack",
+    "text": "Is this solely about adding support for JSON data in Output APIs? i.e. XDP template and JSON data?\nOr are there additional expectations?",
+    "created_at": "2026-01-30T06:59:40.767Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "c6cfb899-ef71-4759-a045-37f01d9762e7",
+    "source": "slack",
+    "text": "Thanks for the context <@W4RU4N66R>. DoR is tightly bound with AF structure. Output is independent of that and needs to be thought through. Are there any timelines attached to JSON Support in Output Service for LPL? If yes, please share. We need to review the feasibility and corresponding effort.\ncc: <@W4R5WN6LR>",
+    "created_at": "2026-01-30T06:59:40.708Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "ce1990ea-c9c9-4d7d-a639-6dcd686f41e6",
+    "source": "slack",
+    "text": "<@W9QMZFR39> We discussed this yesterday and aligned on supporting JSON in the Output Service.\n\nKey points:\n• Customers use a mix of XDP and Adaptive Forms.\n• For Adaptive Forms and IC, JSON has already been adopted as the input format:\n    ◦ Driven by technical considerations and simplification.\n    ◦ Aligned with the direction customers are moving toward.\n• Output Service is currently the only one that does not support JSON. Other services such as: *DoR API, Submission API and Rendition API* already support JSON input.\n• *Low effort path*: DoR API, which already wraps the Output Service and supports JSON (but Adaptive Forms is required), can be transformed into a utility and reused across scenarios to enable JSON support more broadly.",
+    "created_at": "2026-01-30T06:59:40.648Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "cd131107-c48a-444b-bf8d-bd671fcc56fe",
+    "source": "slack",
+    "text": "&gt; They are asking for *JSON input support for the Output API*. I believe a VIP was initiated for this feature have we made any decision on it yet?\n<@W4RU4N66R>, no decision was made to support JSON in Output Service yet. Is this a hard requirement for them? Can you please share more details?\ncc: <@W4R5WN6LR>, <@U038XFD63GS>",
+    "created_at": "2026-01-30T06:59:40.589Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "6ba45e05-c0fb-4b17-9a26-3702934933bf",
+    "source": "slack",
+    "text": "<@W4RU4N66R>",
+    "created_at": "2026-01-30T06:59:40.534Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "11444c20-c2c8-4ec3-9b10-0560099951a2",
+    "source": "slack",
+    "text": "<@W9QMZFR39> - They are asking for *JSON input support for the Output API*. I believe a VIP was initiated for this feature have we made any decision on it yet?",
+    "created_at": "2026-01-30T06:59:40.479Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "82255920-cdf1-4d4d-9ddd-32011e02bf5a",
+    "source": "slack",
+    "text": "<@U0208FN960H> did they shared XDPs? can you attach to this thread",
+    "created_at": "2026-01-30T06:59:40.423Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753263610.334209"
+  },
+  {
+    "id": "9c723c80-7aec-4dd4-aafc-d4146111f9e4",
+    "source": "slack",
+    "text": "They’ve already built their form using foundation components, including a table. <@W4XTCQ07J> – could someone assist with creating a sample custom component for them? Let’s discuss in scrum today.",
+    "created_at": "2026-01-30T06:59:40.363Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "e15175eb-39df-462c-b70b-09663842cc28",
+    "source": "slack",
+    "text": "Oh you mean site page is using CC and is not being migrated to EDS? If yes, then makes sense.",
+    "created_at": "2026-01-30T06:59:40.302Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "85d5d983-32d2-4084-b652-a99570c3672c",
+    "source": "slack",
+    "text": "Yes\n• Need additional efforts for embedding Adaptive form block in AEM client library which not yet tested. \n• Customer have to maintain 2 different technologies for any kind of customisation be it theme or custom components i.e. for sites they have to work with CC and block for forms and same for theme (BEM vs non BEM)",
+    "created_at": "2026-01-30T06:59:40.245Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "8fb94634-6c6d-43bd-94bd-b1d82030d0d3",
+    "source": "slack",
+    "text": "Is there any reason for this recommendation?",
+    "created_at": "2026-01-30T06:59:40.186Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "bd9fc7fb-9878-48c8-b282-dd2e38070a47",
+    "source": "slack",
+    "text": "If page just have form then we can recommended UE but form is embed in site page then CC recommended option",
+    "created_at": "2026-01-30T06:59:40.128Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "56307e98-c1ad-4e5d-b64b-56ea9d58db8f",
+    "source": "slack",
+    "text": "IIRC Medtronics has EDS license also.. so should be better to move it to UE-Xwalk based forms rather than CC based, whenever required.",
+    "created_at": "2026-01-30T06:59:40.073Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "1f5c66f4-0ddb-4f24-a90e-1e121dea9dad",
+    "source": "slack",
+    "text": "<@U06NF880220> please loop in <@W4XTCQ07J> and <@W4R5M9P4H> into email",
+    "created_at": "2026-01-30T06:59:40.016Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "5ea9ad6d-f95f-4998-8618-754225864d02",
+    "source": "slack",
+    "text": "Yes, the process is the same",
+    "created_at": "2026-01-30T06:59:39.959Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "366ac384-78b1-45da-a8cd-3a77465554d9",
+    "source": "slack",
+    "text": "Will the above <https://experienceleague.adobe.com/en/docs/experience-manager-65/content/forms/customize-aem-forms/custom-appearance-widget-adaptive-form|documentation> work for Cloud as well? as it states it applies to 6.5",
+    "created_at": "2026-01-30T06:59:39.901Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "bc10a07c-305c-41fe-ae0f-e11b34365a8c",
+    "source": "slack",
+    "text": "That would depend on their current implementation. If the form is already built using foundation components and they simply want to enable the auto-complete functionality, the documentation I shared should be sufficient for that use case. In such cases, there’s no need to migrate to core components.\n\nHowever, any new forms they develop should ideally be based on core components.",
+    "created_at": "2026-01-30T06:59:39.844Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "134e1a90-8bd9-40af-92d8-eb2d660eb39c",
+    "source": "slack",
+    "text": "<@W4R5M9P4H> The customer as stated on the mail is flexible to use foundation or core-components forms, they are just willing to achieve the use-case.",
+    "created_at": "2026-01-30T06:59:39.786Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "70ef2b41-cd05-495f-b213-7bb041298428",
+    "source": "slack",
+    "text": "Documentation: <https://experienceleague.adobe.com/en/docs/experience-manager-65/content/forms/customize-aem-forms/custom-appearance-widget-adaptive-form>",
+    "created_at": "2026-01-30T06:59:39.728Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "e8794620-4d37-4fb4-a657-b09c64f019d1",
+    "source": "slack",
+    "text": "This is foundation component and not core component",
+    "created_at": "2026-01-30T06:59:39.670Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "ed263504-c1f6-442f-8048-736090610bf5",
+    "source": "slack",
+    "text": "We have a meeting today",
+    "created_at": "2026-01-30T06:59:39.612Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "d45f915c-c1a0-4d0a-b4b0-7baf67098c2e",
+    "source": "slack",
+    "text": "<@W4XTCQ07J>: Can you ask someone from your team to guide customer on creating a custom component",
+    "created_at": "2026-01-30T06:59:39.552Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "a85a9379-70e1-463c-b1f3-d20fef7410af",
+    "source": "slack",
+    "text": "Adding <@W4RU4N66R>, <@U0213T59LMN>",
+    "created_at": "2026-01-30T06:59:39.495Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753268464.031949"
+  },
+  {
+    "id": "cfb40c60-ae42-451a-844c-6c4482e5af31",
+    "source": "slack",
+    "text": "<@U0213T59LMN> - Last meeting notes of Brunswick",
+    "created_at": "2026-01-30T06:59:39.434Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753289795.262769"
+  },
+  {
+    "id": "0618b8fc-773e-4216-a2e6-4b98097e3b64",
+    "source": "slack",
+    "text": "Recording <https://teams.microsoft.com/l/meetingrecap?driveId=b%21Up3a6EaGmkeLJor-KllyBbvx8XA-4zBAvR2Geq4Y2sZTr_1zgLOtRKRA81cvIhG1&amp;driveItemId=01YKSIIWSIBJSWQZ2IEFFISSUQ4QHDTG2W&amp;sitePath=https%3A%2F%2Fadobe-my.sharepoint.com%2F%3Av%3A%2Fp%2Ftaneja%2FEUgKZWhnSCFKiUqQ5A45m1YBc8zMRn97AeOaDQqGsVvgzg&amp;fileUrl=https%3A%2F%2Fadobe-my.sharepoint.com%2F%3Av%3A%2Fp%2Ftaneja%2FEUgKZWhnSCFKiUqQ5A45m1YBc8zMRn97AeOaDQqGsVvgzg&amp;iCalUid=040000008200E00074C5B7101A82E00800000000809776045FF7DB01000000000000000010000000BCA892D6F3715B4F87FBFCDBE9A87684&amp;threadId=19%3Ameeting_MTc4NzhhNjgtMzAzNC00NjBjLTgwNGYtNzU5OGY4MzUwMTM4%40thread.v2&amp;organizerId=2a8f5037-c006-46a1-a4f8-885913465151&amp;tenantId=fa7b1b5a-7b34-4387-94ae-d2c178decee1&amp;callId=601ed733-d0d9-45f9-88a6-2351c4b46850&amp;threadType=Meeting&amp;meetingType=Scheduled&amp;subType=RecapSharingLink_RecapChiclet|link>\n\n<@W5HEU5M7Y> have you created teams channel? if yes please include <@W4XTCQ07J>\n\n&gt; Regarding the auto-complete - that needs to be picked as a core-component - right?\nYes",
+    "created_at": "2026-01-30T06:59:39.376Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753289795.262769"
+  },
+  {
+    "id": "2ea65bcb-9a8b-400e-9875-6658bca4360d",
+    "source": "slack",
+    "text": "Lets discuss offline. When is the planned date for the engagement start. Also, do we have some of the docs above. Please include me in the channel/forward the mail/recording - will help get more context.\nRegarding the auto-complete - that needs to be picked as a core-component - right?",
+    "created_at": "2026-01-30T06:59:39.316Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753289795.262769"
+  },
+  {
+    "id": "bf86948c-18d9-4bec-8d71-5e33a2bc2688",
+    "source": "slack",
+    "text": "<@W4XTCQ07J> - We were planning to propose Edge Delivery implementation but form is inside Sites Page ( CC based) so we decided to implement via CC so can you please include someone from you team in VIP.\n\nCC - <@W5HEU5M7Y>",
+    "created_at": "2026-01-30T06:59:39.260Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753289795.262769"
+  },
+  {
+    "id": "68dda2cd-5da1-473d-a657-16cae58cc7d7",
+    "source": "slack",
+    "text": "Hi <@W4XTCQ07J>,\nIIUC the requirement is to generate PDFs tailored to different locales. To achieve this, we can try the following approaches for authoring XDPs:\n• *Option 1: Script-Based Localization (Single XDP)*\n    ◦ *Approach*: Utilize locale-specific scripts within Designer to dynamically translate labels/captions.\n    ◦ *Advantages*: Maintains a single XDP file, simplifying management.\n    ◦ *Considerations*: This method may lead to a complex and heavy XDP structure, potentially impacting maintainability.\n• *Option 2 (Recommended): Data Binding with Localized XML*\n    ◦ *Approach*: Bind each label/caption to external data sources, similar to field value bindings. Prepare separate `data.xml` files for each locale, containing localized content.\n    ◦ *Advantages*: Cleaner separation of contents, easier to manage and scale across multiple locales.\n    ◦ *Implementation*: As a reference, we can create a sample XDP along with localized data and schema files to demonstrate this approach.\n*Note:* we can discuss these approaches in details.\ncc: <@W4R5LUPK3> <@WQWCBV6NN>",
+    "created_at": "2026-01-30T06:59:39.206Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753338485.392099"
+  },
+  {
+    "id": "750d0796-f1a8-4746-85a3-4935fa6db40b",
+    "source": "slack",
+    "text": "Adding <@WE163TH43> for XFA Translation workflow",
+    "created_at": "2026-01-30T06:59:39.150Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753338485.392099"
+  },
+  {
+    "id": "4e60ebfd-1909-4494-98cb-1bd1801751e3",
+    "source": "slack",
+    "text": "Also, one thing they shared (feedback at end of meeting):\nThe biggest concern part after the meeting was - there is no option for translation in XFA (as they spend a lot of time in XFA authoring). For AF side they were satisfied from demo and happy with the next demo plan.\n\nI checked with them - they would even be happy if the XFA is translated - and has formatting issues - as it would provide them with something better to start with (could we create a custom Translation workflow - in Project mode to handle this)?\n\nChecked with them if they have plans to move to cloud - they mentioned about a security compliance which is blocking them - <@W4R4S9FS4> Mahomed (TAM) mentioned that you are aware of the same. Could you share more insights.\n\ncc: <@W4R5LUPK3>",
+    "created_at": "2026-01-30T06:59:39.091Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753338485.392099"
+  },
+  {
+    "id": "35017531-2202-49c6-a891-7434038a8412",
+    "source": "slack",
+    "text": "Attaching usecase doc from customer",
+    "created_at": "2026-01-30T06:59:39.035Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753341197.855709"
+  },
+  {
+    "id": "23eef032-02dd-4e01-b392-c16549e1e9f4",
+    "source": "slack",
+    "text": "Created Jira`s for customer issues -\n\nFont issue - <https://jira.corp.adobe.com/browse/FORMS-21101|FORMS-21101>\nSubform/Content area deletion - <https://jira.corp.adobe.com/browse/FORMS-21103|FORMS-21103>\nPreset selection - [this was already planned and in progress] - <https://jira.corp.adobe.com/browse/FORMS-21104|FORMS-21104>\nContent overflow - <https://jira.corp.adobe.com/browse/FORMS-21105|FORMS-21105>",
+    "created_at": "2026-01-30T06:59:38.978Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753422104.162069"
+  },
+  {
+    "id": "d0fcc9ef-31d6-4270-9c6e-23dec4daf994",
+    "source": "slack",
+    "text": "<@WE163TH43> <@U03Q109GQMT> Please follow up on the Action Items (Document sharing, or any other details) over email and include me.\nAnd please raise jiras for customer reported issues with appropriate label (e.g customer_reported)",
+    "created_at": "2026-01-30T06:59:38.919Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753422104.162069"
+  },
+  {
+    "id": "e7e91629-523d-49fc-aecb-5373b9858a95",
+    "source": "slack",
+    "text": "cc: <@W4R5LUPK3> <@WQWCBV6NN> <@W9QMZFR39>",
+    "created_at": "2026-01-30T06:59:38.856Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753422104.162069"
+  },
+  {
+    "id": "da7f8e47-f5af-405e-a7ff-ed838a638857",
+    "source": "slack",
+    "text": "They corrupted their GIT, and lack basic AEM/Forms kowledge (they at a time mentioned that submission was failing - though they had not configured the submit action).",
+    "created_at": "2026-01-30T06:59:38.796Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753440017.033979"
+  },
+  {
+    "id": "e1c88ea0-f460-4a86-a65a-a12720173f11",
+    "source": "slack",
+    "text": "<@WQ6GEBZHN> Why did the core component setup take so long? Could you please share the RCA? Since core components are now part of the product, there ideally shouldn’t have been any major roadblocks.",
+    "created_at": "2026-01-30T06:59:38.733Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753440017.033979"
+  },
+  {
+    "id": "7038cd46-280d-463f-8387-cb0d4188cdb7",
+    "source": "slack",
+    "text": "Resource limitation from Jett2 and not us, right ?",
+    "created_at": "2026-01-30T06:59:38.666Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753692325.536539"
+  },
+  {
+    "id": "7ac7937e-ddd9-4a98-8f27-1ed4d0889eb8",
+    "source": "slack",
+    "text": "<@W4RSW3ECC> - Jet2 VIP is moved to Jan due to resources limitation",
+    "created_at": "2026-01-30T06:59:38.608Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753692325.536539"
+  },
+  {
+    "id": "71bc6d1e-3bf4-4edf-9bb6-7134c11f0789",
+    "source": "slack",
+    "text": "Thanks <@U031G7ZLRRC> for highlighting this. <@U061P671RN1> will be working on this together with <@W4R5WN6LR>. She can get in touch with you to understand what has been done as part of hackthon project. We can then further decide the course of action.",
+    "created_at": "2026-01-30T06:59:38.552Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753857539.257899"
+  },
+  {
+    "id": "9784df70-2a90-4243-906a-de917a15b9ae",
+    "source": "slack",
+    "text": "<@U031G7ZLRRC>: Thanks for sharing this . The use case shared was JSON format for data input. We along with <@W9QMZFR39> team can have a discussion on this and see if it fits the use case.",
+    "created_at": "2026-01-30T06:59:38.496Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753857539.257899"
+  },
+  {
+    "id": "9c5d5b24-66aa-4529-ba20-6b9025fc4de0",
+    "source": "slack",
+    "text": "<@U0213T59LMN> Is the JSON support in the Output service intended for templates or for data files?\nDuring a recent hackathon (<https://adobe.brightidea.com/D44557?idea_count=2|link>), we worked on enabling JSON input for data files and successfully rendered PDFs using simple JSON formats. If this is aligned with that effort, we could consider building on it further to handle more complex and edge cases.\ncc: <@W4R5LUPK3> <@WQWCBV6NN>",
+    "created_at": "2026-01-30T06:59:38.433Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1753857539.257899"
+  },
+  {
+    "id": "764fc29f-c534-4e1f-bda7-fbe33f9ec18d",
+    "source": "slack",
+    "text": "Summary:\n• Their first form also has below critical gaps:\n    ◦ Partial validation before Save (limited to some fields and initial state), and no validation on Save in Inbox, and then all validation in submit.\n    ◦ Identification of task items in Inbox\n• Row items which are required immediately: 24/27/28/42\n• Also,\n    ◦ Should not close screen on save\n    ◦ Option to Re-assign task",
+    "created_at": "2026-01-30T06:55:45.626Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1754065259.937609"
+  },
+  {
+    "id": "5291c007-726e-4253-b7df-d86a5b0cfe68",
+    "source": "slack",
+    "text": "Yes there is a product issue : <https://jira.corp.adobe.com/browse/CQ-4360771>",
+    "created_at": "2026-01-30T06:55:45.416Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1754385899.189189"
+  },
+  {
+    "id": "38a33311-8a9a-4da7-b569-fcb276a25b47",
+    "source": "slack",
+    "text": "<@WQ6GEBZHN> Are there doc or product issues found as part of this discussion to avoid such issues in future with other customers? cc: <@WAM5KDYBZ>",
+    "created_at": "2026-01-30T06:55:45.209Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1754385899.189189"
+  },
+  {
+    "id": "40fa12ca-25a6-4965-97d8-8d81f616be85",
+    "source": "slack",
+    "text": "Hi <@WQ6GEBZHN>, Please find the doc and wiki as attached :\nDoc :  <https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/forms/setup-configure-migrate/setup-local-development-environment#docker-microservices|https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/forms/[…]p-configure-migrate/setup-local-development-environment>\nwiki : <https://wiki.corp.adobe.com/display/lc/EC+Service+Local+SDK+-+Design>\n\n\ncc: <@W9QMZFR39> <@W4R5WN6LR> <@W4XTCQ07J>",
+    "created_at": "2026-01-30T06:55:45.000Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1754385899.189189"
+  },
+  {
+    "id": "12de3aa1-abf4-408b-b55a-c634f61a6e99",
+    "source": "slack",
+    "text": "<@U061P671RN1>, please help provide SDK set up documentation",
+    "created_at": "2026-01-30T06:55:44.793Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1754385899.189189"
+  },
+  {
+    "id": "520b3dda-9f31-478b-a468-8246c21ec4b0",
+    "source": "slack",
+    "text": "<@W4R5WN6LR> do we have any public wiki/doc to setup DoR docker with AEM SDK on local machine (customer is on windows)?\ncc : <@W4XTCQ07J> <@W9QMZFR39>",
+    "created_at": "2026-01-30T06:55:44.586Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1754385899.189189"
+  },
+  {
+    "id": "7a753cbf-b27d-4f2d-a2e4-fb6de35094ac",
+    "source": "slack",
+    "text": "cc: <@W9QMZFR39>, <@W4R5LUPK3>, <@WQWCBV6NN>",
+    "created_at": "2026-01-30T06:55:44.380Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1754464276.787949"
+  },
+  {
+    "id": "19ab37b7-0e6f-4611-ba5e-454ebb426dab",
+    "source": "slack",
+    "text": "Documentation for existing APIs with the disclaimer that there may be updates/changes shared over mail thread.",
+    "created_at": "2026-01-30T06:55:44.171Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1754466338.592969"
+  },
+  {
+    "id": "41e2e22c-97e4-420a-acc1-467294d830ed",
+    "source": "slack",
+    "text": "<@U038XFD63GS> for Action items on sharing the documentation, please ack once done",
+    "created_at": "2026-01-30T06:55:43.963Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1754466338.592969"
+  },
+  {
+    "id": "a48ce698-8126-4603-ba09-9285d8712df7",
+    "source": "slack",
+    "text": "cc: <@W9QMZFR39>, <@W4R5LUPK3>, <@WQWCBV6NN>",
+    "created_at": "2026-01-30T06:55:43.758Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1754466338.592969"
+  },
+  {
+    "id": "0c29f3fc-b6b5-4798-ba12-c6ccbb13072f",
+    "source": "slack",
+    "text": "• *Discussion on Barcode Forms:* Lisa and Sudhanshu discussed the impact of translation on barcode forms, confirming that the barcode information would not be affected by the translation process. <@WBV97LK8D> could you help confirm the same.\nAre we also translating data used to encode used to encode in barcode ? or we are only translating field captions and static text ?\n\nCC <@WQWCBV6NN>",
+    "created_at": "2026-01-30T06:55:43.551Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755050145.928519"
+  },
+  {
+    "id": "5224bbad-10b5-4ed3-ac79-e7225e7c5548",
+    "source": "slack",
+    "text": "cc: <@W9QMZFR39>, <@W4R5LUPK3>, <@WQWCBV6NN>\n\nAlso, <@WLWHN4TV3> / <@U0213T59LMN> in the next meeting we will need someone from the FDM team to answer questions around it.",
+    "created_at": "2026-01-30T06:55:43.342Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755065013.404399"
+  },
+  {
+    "id": "869196ca-c79f-4ff5-9fd7-e54615beb868",
+    "source": "slack",
+    "text": "Recording link: <https://adobe-my.sharepoint.com/:v:/p/navneeta/EUOE5iNNMABNqhdgBcDPGk0BBbHuSlmh0QqWVq0XhVT3VA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&amp;e=5305QW|Forms Experience Builder Feedback-20250813_203459-Meeting Recording.mp4>\ncc: <@W4R4S9FS4>",
+    "created_at": "2026-01-30T06:55:43.133Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755148388.713359"
+  },
+  {
+    "id": "aa3cfe77-deb8-492e-8ca2-3bf089bf6009",
+    "source": "slack",
+    "text": "We should show both approach\n• Screenshot of existing marketo forms to AF\n• Use Data-&gt;Marketo-&gt; select required fields",
+    "created_at": "2026-01-30T06:55:42.923Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755495816.532369"
+  },
+  {
+    "id": "0c53f62b-91e4-4127-a7db-9bbcffac3d16",
+    "source": "slack",
+    "text": "<@W4RU4N66R>: Migrating existing form - you mean existing marketo form as a source and AF as output via Exp builder ?",
+    "created_at": "2026-01-30T06:55:42.716Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755495816.532369"
+  },
+  {
+    "id": "0c8c89ef-2e74-47a0-80d2-ed9c026cf5f2",
+    "source": "slack",
+    "text": "<@U0213T59LMN>, <@U06NF880220>, <@U03N27GAZDZ> We need to demonstrate the *Marketo connector to Lumen* by migrating the existing form using Experience Builder. I am planning to schedule this session for Wednesday.\n\n<https://www.lumen.com/en-us/explore/data-protection-bundle.htmlhttps://lumen.com/en-us/marketplace/chat-contact-form.html>\n\nCC - <@WLWHN4TV3>",
+    "created_at": "2026-01-30T06:55:42.509Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755495816.532369"
+  },
+  {
+    "id": "2b511392-756e-4ae9-9193-11e07470daf7",
+    "source": "slack",
+    "text": "<@W9QMZFR39> approach which <@U0560P0MCJJ> mentioned will continue to work even if you create XDP using editor or system, only thing you need to ensure is structure of DAM asset is similar to what we have for  XDP of uploaded",
+    "created_at": "2026-01-30T06:55:42.302Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "0142c41c-ae5e-474c-9aca-23d5e235a03a",
+    "source": "slack",
+    "text": "I guess my point is not clear — For upload it will continue to work but for XDP created within the system (not uploaded), we will have to add create version similar to AF, won’t we?",
+    "created_at": "2026-01-30T06:55:42.093Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "65341345-1ecc-49b3-92ba-aa64dba20fe8",
+    "source": "slack",
+    "text": "&gt; Will it also work if I create XDP directly from Create button in FM UI (given the content structure in JCR remains same)?\nIdeally, yes, it will continue to work for that as well since the versioning is done on JCR content node only.",
+    "created_at": "2026-01-30T06:55:41.885Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "df0a374d-2c97-4a36-a3da-7f4423f9a9e8",
+    "source": "slack",
+    "text": "&gt; It will continue to work in case of XDP upload scenario. Will it also work if I create XDP directly from Create button in FM UI (given the content structure in JCR remains same)?\nIf JCR remain same then yes it will work",
+    "created_at": "2026-01-30T06:55:41.678Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "1377e66a-d43b-44a9-9c8e-510942c218c9",
+    "source": "slack",
+    "text": "> If the asset like AF is created and updated with a editor in AEM\n<@W9QMZFR39> This workaround is for DAM assets, AF (specifically v2 only) is versioned directly from formsmanager. In formsmanager we do support `cq:page` _[i.e. your form content]_ versioning OOTB, so similar to how we version assets under `/assets.html/...` we can version AFv2 under `/aem/forms.html/...`\nWhich also means that any content for AF created in editor can be versioned in FM UI.\nNote: AFv1 is not versioned currently.",
+    "created_at": "2026-01-30T06:55:41.469Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "220a4ea8-7e12-4538-8157-7f632d740659",
+    "source": "slack",
+    "text": "&gt; It also works when we upload XDP from FM UI instead of DAM asset.\nI meant the same.\n\n&gt; It should continue to work if you are maintain same DAM structure node but not if you started creating a page representation. I feel we did a mistake of introducing new nodes ( DAM &amp; Page) for AF as we need to maintain both and few functionality available in DAM &amp; others in Page so we should rely on one node structure\nIt will continue to work in case of XDP upload scenario. Will it also work if I create XDP directly from Create button in FM UI (given the content structure in JCR remains same)?",
+    "created_at": "2026-01-30T06:55:41.256Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "598d3a4c-74a1-42be-b6f1-f36b486bb449",
+    "source": "slack",
+    "text": "&gt; this approach works well when asset in DAM is created via file upload mechanism, right?\nIt also works when we upload XDP from FM UI instead of DAM asset.\n\n&gt; we are planning to provide XDP create and edit functionality via IC editor from FM UI\nIt should continue to work if you are maintain same DAM structure node but not if you started creating a page representation. I feel we did a mistake of introducing new nodes ( DAM &amp; Page) for AF as we need to maintain both and few functionality available in DAM &amp; others in Page so we should rely on one node structure",
+    "created_at": "2026-01-30T06:55:41.048Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "5b0eb06e-c86b-4fe0-b54d-e73d5fcb46e2",
+    "source": "slack",
+    "text": "Secondly, we are planning to provide XDP create and edit functionality via IC editor from FM UI. As and when that comes, this approach of version creation during XDP upload will not to be supplemented by AF like versioning approach where XDP is created within the system.",
+    "created_at": "2026-01-30T06:55:40.841Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "900968a6-057a-456f-ad0c-e4204c5b9985",
+    "source": "slack",
+    "text": "<@U0560P0MCJJ>, this approach works well when asset in DAM is created via file upload mechanism, right?\nIf the asset like AF is created and updated with a editor in AEM only then how do we handle versioning? There must be a different approach for the same.",
+    "created_at": "2026-01-30T06:55:40.634Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "2bcfa10c-eeb1-4399-bf29-1e840333e33e",
+    "source": "slack",
+    "text": "<@W4XTCQ07J>, <@U0560P0MCJJ> - We demonstrated a workaround to the customer yesterday. Andy mentioned that they were already aware of this approach, but noted that it is quite difficult to train their team on it. For now, we have asked them to continue using the workaround, while we explore the possibility of exposing a *version button* directly in FM UI if feasible.\n\nCC - <@W5HEU5M7Y>",
+    "created_at": "2026-01-30T06:55:40.426Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "68e5d2d6-5ac5-4ba1-9575-06ab2f97053e",
+    "source": "slack",
+    "text": "Tested a *workaround solution* for the XDP versioning feature via the versioning capabilities within *Assets*, and that is working as expected.\n*Workaround Steps followed:*\n1. Upload the initial custom XDP from *`/aem/forms.html/content/dam/formsanddocuments`*.\n2. Navigate to *`/assets.html/content/dam/formsanddocuments`* to manage versioning of the XDP.\n3. Update the XDP as needed.\n4. Re-upload the updated or newly edited XDP via `*/assets.html/...*.`\n5. When prompted, create a new version for the edited XDP.\n6. Associate the custom XDP with the desired form to use it.\n7. Repeat the update and version creation process as needed for subsequent changes.\n*note:* The initial XDP must always be uploaded through *`/aem/forms.html/...`* before versioning can be managed via *Assets*.\n\ncc: <@W4XTCQ07J> <@W4SG81T9C>",
+    "created_at": "2026-01-30T06:55:40.218Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "50dde09b-f1be-4ef0-8eb0-5105522749e3",
+    "source": "slack",
+    "text": "<@W4R5LUPK3>, <@W4XTCQ07J> - LPL is looking for versioning support for XDP and <@W5HEU5M7Y> committed Nov.\n\n<@U0213T59LMN>, <@W4RU5J3JR>, <@U03N27GAZDZ> - We need to collect and document *best practices from Sites and Assets* and create a tailored version for *Forms*. This should cover the full lifecycle: *Development, Review process, Testing and Production*\n\nFor Assets, we can take <@W4RRL6DDY>’s help.\n\nLet’s schedule a meeting tomorrow to review a proposal.",
+    "created_at": "2026-01-30T06:55:40.008Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755496487.205169"
+  },
+  {
+    "id": "fb62debb-f4b4-410f-9150-0c61869de8bf",
+    "source": "slack",
+    "text": "They also asked for usage of individual FDM elements in different assets.",
+    "created_at": "2026-01-30T06:55:39.800Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755672781.880159"
+  },
+  {
+    "id": "5aa9924f-c1f2-466e-8c94-2e49a6faf7a3",
+    "source": "slack",
+    "text": "cc: <@W4R5LUPK3>, <@WQWCBV6NN>",
+    "created_at": "2026-01-30T06:55:39.593Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755672781.880159"
+  },
+  {
+    "id": "4d20540a-be66-4c0f-89f9-936131a7effa",
+    "source": "slack",
+    "text": "<@W4R4S9FS4> The customer is currently on an on-premises environment and manages a large number of forms. Since the fix related to $record and $data is also available on the cloud, we can encourage them to consider migrating to the cloud.\n\ncc : <@W4XTCQ07J>",
+    "created_at": "2026-01-30T06:55:39.385Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755680337.712189"
+  },
+  {
+    "id": "548bc080-1180-46ba-99dd-85415fb865f1",
+    "source": "slack",
+    "text": "update - have enabled fonts on their env, currently their pipeline is failing that too with nfcu specific changes in building, have updated the customer about it.",
+    "created_at": "2026-01-30T06:55:39.176Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755793481.062359"
+  },
+  {
+    "id": "f8558d81-7e11-444f-9f33-224590afe6e1",
+    "source": "slack",
+    "text": "Per my discussion with <@W5HEU5M7Y>, he will present the roadmap on next Thursday after internal discussion and alignment by <@W010NNJV7S8>.",
+    "created_at": "2026-01-30T06:55:38.968Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1755837410.014009"
+  },
+  {
+    "id": "8427c395-a485-4eeb-80c9-d6aa5c3f1a53",
+    "source": "slack",
+    "text": "Thanks, let me check",
+    "created_at": "2026-01-30T06:55:38.760Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "9675eec8-85b7-4856-84ac-8014f09821ae",
+    "source": "slack",
+    "text": "<@U05TSNKRNP8> you are added to administrator group",
+    "created_at": "2026-01-30T06:55:38.551Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "f0a5eba9-be3c-4590-b310-b2b4677011e3",
+    "source": "slack",
+    "text": "<@W9QMZFR39>: This instance is created in forms - pipeline org which has limited access to certain group only - can we create a new env in moonlight org which is accessible by majority of us .\nIf it is not possible - i do not have access rights to update permission for harman - kindly provide sufficient access to harman so that he can create cloud config for AEP",
+    "created_at": "2026-01-30T06:55:38.344Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "f54eee5b-d621-441f-ae36-bdb3f57657bd",
+    "source": "slack",
+    "text": "<@U03Q109GQMT> will need admin access to create a cloud config , please help here . I can't see even global container . I am blocked here .\ncc <@W9QMZFR39> <@U0213T59LMN>",
+    "created_at": "2026-01-30T06:55:38.136Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "b433e393-2e08-496b-9e56-1808e56bdfc1",
+    "source": "slack",
+    "text": "<@U05TSNKRNP8> added you to this.",
+    "created_at": "2026-01-30T06:55:37.929Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "cb9f2b75-8efa-46ca-ac38-2f155a279f7b",
+    "source": "slack",
+    "text": "<@U03Q109GQMT> can you give access to this environment",
+    "created_at": "2026-01-30T06:55:37.721Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "260f0346-83fc-4363-9c86-5840a8590de4",
+    "source": "slack",
+    "text": "<@U0213T59LMN> we have IC available on <https://author-p113352-e264052-cmstg.adobeaemcloud.com/>",
+    "created_at": "2026-01-30T06:55:37.514Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "adae4b4d-bc65-4338-be3d-71e5f71bf9f1",
+    "source": "slack",
+    "text": "And we can align on use case we want to present",
+    "created_at": "2026-01-30T06:55:37.305Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "99385403-b0ab-42c9-b498-c6805e54e450",
+    "source": "slack",
+    "text": "<@W9QMZFR39>: If you have setup any env - please share with us we will create the FDM and AEP integration in that .",
+    "created_at": "2026-01-30T06:55:37.098Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "07e7b4b6-ab8f-4197-b2c1-3839e4974db5",
+    "source": "slack",
+    "text": "This is for AF. Experience for IC would be different as per my discussion with <@U0213T59LMN>",
+    "created_at": "2026-01-30T06:55:36.889Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "4b5ef998-ed40-4ffb-9e72-addd63159572",
+    "source": "slack",
+    "text": "Sure, I can share that",
+    "created_at": "2026-01-30T06:55:36.681Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "5e7211e4-fba4-4c7e-bb68-73166d2184cc",
+    "source": "slack",
+    "text": "<@U0213T59LMN>, can we have a small screen recording of FDM based on AEP/AJO next week to be shared with the customer?\ncc: <@W5HEU5M7Y>",
+    "created_at": "2026-01-30T06:55:36.472Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  },
+  {
+    "id": "37b5db44-6088-4bb2-b542-d2ac2062a63a",
+    "source": "slack",
+    "text": "Yes integration is possible via both connector and fdm based",
+    "created_at": "2026-01-30T06:55:36.264Z",
+    "customers": [],
+    "channel": "C04D195JVGS",
+    "thread_ts": "1756223195.549159"
+  }
+]

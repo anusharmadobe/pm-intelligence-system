@@ -1,0 +1,602 @@
+[
+  {
+    "id": "f4fed697-2add-435f-a832-85fcf4cdc4b6",
+    "title": "Forms - Feature Request - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.969Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "79f9a8d3-3145-4207-90f1-9785fad6a2f5",
+    "title": "IC Editor - Feature Request - editor (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: IC Editor, Feature Request, Issue/Blocker. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.969Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "07ec0333-ff01-45c6-8e6f-d05613deed08",
+    "title": "Data Binding - Forms - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Data Binding, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.968Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "cc640a93-8027-43f8-994f-9e654b870a9e",
+    "title": "Feature Request - Issue/Blocker - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request, Issue/Blocker, Forms. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.967Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e26398b0-a922-4e03-a11a-6d25790e8722",
+    "title": "Forms Experience Builder - Automated Forms Conversion - conversion (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Automated Forms Conversion, Core Components, Data Binding, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.967Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "f287ee40-a5ae-4c56-950e-d34ef20ffea4",
+    "title": "Automated Forms Conversion - Core Components - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Automated Forms Conversion, Core Components, Forms, Feature Request, Issue/Blocker, Forms Experience Builder, Data Binding. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.966Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "9120965a-6f0b-4e8c-a115-f20de8a3d4a4",
+    "title": "Feature Request - Issue/Blocker - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request, Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.965Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "db049a62-0127-40e4-8fed-72026ac5881d",
+    "title": "IC Editor - Forms - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: IC Editor, Forms, Feature Request. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.965Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e1b8b5fa-5512-4029-a503-421370c5d5bb",
+    "title": "Forms - Feature Request - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.964Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "b72eca5e-f450-4519-9fac-e2d7343c6549",
+    "title": "Issue/Blocker - new_user - error (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.964Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "beaae67f-3dca-4173-aebf-a4b9b096e54f",
+    "title": "Forms - Feature Request - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.963Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "4259a4b4-2835-4c8e-beaa-6af86afe35bc",
+    "title": "Forms Experience Builder - Core Components - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Core Components, Forms, Issue/Blocker. Sources: slack. Types: feedback, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.963Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "3283b263-7dca-41a7-ac7b-0235e7bf8102",
+    "title": "Core Components - Forms - accenture (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Core Components, Forms, Feature Request. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.962Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d2b3d517-7d56-40f8-9b47-166d86825e68",
+    "title": "Forms - Feature Request - form (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.961Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "8f15258b-30dc-45bc-92ae-a120c437b063",
+    "title": "Issue/Blocker - new_user - private (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.960Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "f1b72220-ee70-407e-8519-d53107d5ab1c",
+    "title": "Forms - Feature Request - data (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.959Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "959181ae-a64a-41e7-993d-b23154836d57",
+    "title": "Feature Request - https - recording (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.958Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "7278091e-6a7e-4248-80b6-a1897d4f1328",
+    "title": "IC Editor - Forms - issue (4 signals)",
+    "description": "Cluster of 4 related signals. Topics: IC Editor, Forms, Feature Request, Issue/Blocker, Data Binding. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.957Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "9684ca4d-3b2e-48a9-bbe2-17745ad0136e",
+    "title": "Feature Request - output - timelines (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.956Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "b19fcdc0-95d8-4952-af49-15b42a4fb112",
+    "title": "Feature Request - json - input (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.956Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "70764972-68ce-489a-bf2e-90ee48e25912",
+    "title": "Feature Request - data - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.954Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "05e82aad-5e90-4b4a-81ae-6f1502f2ed0e",
+    "title": "Core Components - Forms - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Core Components, Forms, Issue/Blocker. Sources: slack. Types: issue, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.954Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "5eb4e281-0ab5-4a99-a14b-248ca3d2f931",
+    "title": "Forms - json - data (6 signals)",
+    "description": "Cluster of 6 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.951Z",
+    "signal_count": "6"
+  },
+  {
+    "id": "926c527f-1b8f-4ff1-abe9-876977068296",
+    "title": "Data Binding - Feature Request - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Data Binding, Feature Request, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.951Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "2c08b6d1-150f-4c7f-9b60-e7e043ea14d0",
+    "title": "IC Editor - Forms - support (4 signals)",
+    "description": "Cluster of 4 related signals. Topics: IC Editor, Forms, Feature Request, Data Binding. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.949Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "481da30b-1cfb-4b22-b923-507395158858",
+    "title": "Forms - Feature Request - locale (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.948Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "c8d7eb54-208a-419e-a906-dcf899c9124b",
+    "title": "Forms Experience Builder - Forms - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms, Feature Request, Issue/Blocker, Core Components. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.947Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "09aed4aa-ede7-4088-8b7e-db3e4ac43ea0",
+    "title": "Forms Experience Builder - Forms - marketo (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.946Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "cb35ca6b-027a-49cc-8e84-67ee55b26ddb",
+    "title": "Forms - existing - marketo (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.945Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "32673bdf-1fc8-4b66-b0ac-fd840b1796ce",
+    "title": "Forms - Feature Request - assets (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.944Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "8a4fc301-941d-48d0-96e5-d12cf2f506d2",
+    "title": "Feature Request - Issue/Blocker - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request, Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.943Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d86fce18-2e4b-4203-8fbd-4149a3722ed0",
+    "title": "Forms Experience Builder - Core Components - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Core Components, Data Binding, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.942Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "fc15ce6d-842d-437a-95ae-7f0d48391bf7",
+    "title": "work - create - content (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.941Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e4ecd918-ce35-4c17-99f6-12094f13fc5a",
+    "title": "Feature Request - work - structure (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.940Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "18e4a0cc-656a-4682-be5b-6b0b5bc90cc7",
+    "title": "Data Binding - Feature Request - support (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Data Binding, Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.939Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "9c43a209-6d92-4700-b875-46405e30b3a6",
+    "title": "Issue/Blocker - wam5kdybz - issues (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Issue/Blocker. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.937Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e5d8840b-315a-409c-b31f-abd14bce13dd",
+    "title": "Feature Request - w9qmzfr39 - need (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.936Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "6cc8a692-53ac-4f2f-873d-1dc39ad23e9d",
+    "title": "Forms - forms - https (4 signals)",
+    "description": "Cluster of 4 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.935Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "929e1941-10bb-47ab-9be6-e3b64a59548a",
+    "title": "integration - based - possible (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.934Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "94ba06d3-4282-4b1d-8ef4-d8be856ebd6d",
+    "title": "sure - share - w4ru4n66r (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.933Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e622677d-bcfd-4001-b5f8-72442905bbc8",
+    "title": "Core Components - Forms - andy (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Core Components, Forms, Go-Live, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.932Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "3acbe510-06b8-4b48-a900-74c474ebfd92",
+    "title": "Forms - Feature Request - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: pain_point.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.931Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "51683485-9580-4244-9f0d-95388aaa7133",
+    "title": "Data Binding - Forms - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Data Binding, Forms, Feature Request, Core Components. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.930Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "1e4298fa-79f6-4c4d-afd9-78d02278cab7",
+    "title": "Data Binding - Forms - fields (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Data Binding, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.929Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "522137a9-bf34-4d56-a964-579a4c355d25",
+    "title": "Forms Experience Builder - Forms - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.928Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "407f83b7-f34b-4ee8-becc-47562148f67f",
+    "title": "Forms Experience Builder - Forms - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.928Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "bc25c386-bf03-4276-a475-83daa7591073",
+    "title": "Forms - Feature Request - their (4 signals)",
+    "description": "Cluster of 4 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.927Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "23c2e080-e533-46d4-9235-3c8e81a10ad9",
+    "title": "Forms - Feature Request - nfcu (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.927Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "1e82e81d-e107-4b2c-af9d-76f263e108d9",
+    "title": "w4xtcq07j - w6cbb4953 (6 signals)",
+    "description": "Cluster of 6 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.926Z",
+    "signal_count": "6"
+  },
+  {
+    "id": "beba8cd4-9467-4833-a452-144ede8f90c6",
+    "title": "Forms - Feature Request - form (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request, Issue/Blocker, Core Components. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.925Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "5fe3f56c-2acf-4498-88dc-ddd890ad80ae",
+    "title": "Forms - Go-Live - andy (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Go-Live, Feature Request, Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.924Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "fed79fd4-ad96-4bf8-8413-02278f8385da",
+    "title": "Forms - form - forms (5 signals)",
+    "description": "Cluster of 5 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.923Z",
+    "signal_count": "5"
+  },
+  {
+    "id": "bb9595dd-132f-4596-94c0-b1302cb4a064",
+    "title": "Forms - Issue/Blocker - jira (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Issue/Blocker. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.922Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "cc4f7d4e-3172-4a0b-8e47-5fc713e70696",
+    "title": "Forms - forms - adobe (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.922Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "02a8249d-647b-4ea9-bd48-82867e0b655c",
+    "title": "Forms - Go-Live - custom (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Go-Live, Feature Request. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.921Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "f4ff5911-8054-43e1-9a7d-42a9c17a6818",
+    "title": "Forms Experience Builder - Forms - form (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.920Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "2e37ef46-bf1b-43fa-9072-1fd665e86266",
+    "title": "Forms - Go-Live - form (4 signals)",
+    "description": "Cluster of 4 related signals. Topics: Forms, Go-Live, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.919Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "e4e14f36-b096-417d-a32f-4cdc3729bdcc",
+    "title": "https - slack - archives (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.918Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "4f212a6b-81ed-4aac-9fa1-8766635ccf26",
+    "title": "Core Components - Forms - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Core Components, Forms, Go-Live, Feature Request, Issue/Blocker, Forms Experience Builder. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.917Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e7c36f16-dbb9-4ac6-87e6-00b3ab78a761",
+    "title": "Forms - Feature Request - mayank (7 signals)",
+    "description": "Cluster of 7 related signals. Topics: Forms, Feature Request, Issue/Blocker, Go-Live, Core Components. Sources: slack. Types: issue, feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.916Z",
+    "signal_count": "7"
+  },
+  {
+    "id": "fdf202d6-1da0-45fd-be16-f953b0563a16",
+    "title": "w4rsw3ecc (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.914Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "f45d7df5-0979-46a5-96f9-92a6781c16a1",
+    "title": "Forms - Go-Live - sakshi (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Go-Live, Feature Request, Issue/Blocker. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.913Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "b22d3c8b-45a5-4579-ab6e-7f4f9dbaaca8",
+    "title": "w4r5lupk3 - wqwcbv6nn - w9qmzfr39 (5 signals)",
+    "description": "Cluster of 5 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.912Z",
+    "signal_count": "5"
+  },
+  {
+    "id": "d3d589ca-2844-47d5-ac5f-405eab73ec9b",
+    "title": "Forms - Go-Live - andy (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Go-Live, Feature Request, Issue/Blocker. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.911Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "c23ea97d-3ef0-4ebb-baed-ef6d2dabda59",
+    "title": "Forms - consent - form (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.910Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "690216d1-b3b7-4a62-8bde-bd47d7c63464",
+    "title": "Forms Experience Builder - Forms - enabling (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.909Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "93b049b7-fbc7-4fe5-b5c5-653bc6e8c7c7",
+    "title": "Feature Request - json - need (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.908Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "dfb378ba-ef25-4a39-a0fa-e5bc3617e514",
+    "title": "Forms - Go-Live - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Forms, Go-Live, Feature Request, Issue/Blocker, IC Editor, Data Binding. Sources: slack. Types: feature_request, feedback, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.907Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "8881939f-b9fb-407f-aa4d-e478a1d00f9a",
+    "title": "Forms Experience Builder - Forms - darshan (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.906Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "ba32fb90-1036-4cbc-8d16-264b4da82e61",
+    "title": "Forms - Feature Request - support (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.905Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "ba7da903-d493-497f-89d5-3dfe17d2232f",
+    "title": "Forms - Feature Request - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Forms, Feature Request, Issue/Blocker. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.904Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "cde887d1-96ef-4361-977b-75efe180bb5d",
+    "title": "Forms - Go-Live - dates (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Go-Live. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.903Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "ae2b9591-d551-4f33-a1f5-40aaa1d299a8",
+    "title": "w4ru4n66r - w4r5y3yhx (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.903Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "9361e5ad-c313-4d73-bec8-44e963eb7d03",
+    "title": "Forms Experience Builder - Forms - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms, Feature Request. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.902Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "c4ae6ae8-81f9-487b-9c5a-590d39a9c0da",
+    "title": "Feature Request - meeting - schedule (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.893Z",
+    "signal_count": "2"
+  }
+]

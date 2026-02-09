@@ -1,0 +1,615 @@
+{
+  "totalOpportunities": 100,
+  "topPriorities": [
+    {
+      "id": "6fd86142-8a24-477b-a84c-b870823676d4",
+      "title": "Abbvie & Stericycle - Forms - form (2 signals)",
+      "description": "Cluster of 2 related signals. Customers: Abbvie, Stericycle, Shred-it. Topics: Forms, Feature Request, Integrations, Authoring UX. Sources: slack. Types: feature_request, feedback.",
+      "status": "new",
+      "created_at": "2026-02-06T07:22:58.126Z",
+      "roadmapScore": {
+        "overallScore": 51,
+        "impactScore": 49,
+        "confidenceScore": 68.75,
+        "effortScore": 47,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 2,
+          "uniqueCustomers": 3,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0.975,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "a01adf5c-f313-4c99-828e-d2f10167684c",
+          "source": "slack",
+          "source_ref": "1752601935.879449",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Varun Dua* :new_user:\n:customervivo:*Customer Name : Abbvie*\n:clock2: *Date :* 2025-07-15\n:group-people: *Attendees :* <@W4RT1B152>, <@W5HEU5M7Y>, <@W4XTCQ07J>\n:loading-2248:*Notes*\nAttendees\n• Shameem Gouse Lazam Sayyad\n• Shivendra Vikram Singh\n• Kevin Ausburn\nMeeting Notes:\n\n*Introduction:* The team had some knowledge of Sites Optimizer and gave them an introduction of the Forms Opportunities. Shivendra mentioned that it is good that Form Opportunities are also presented within a single tool. They were earlier confused with what Forms is doing vs Sites.\n\n*Sampling in Optel*\nWe emphasised that the analysis and opportunity suggestion is AI driven but since they had low traffic it takes time to collect enough data. There was a question if we can change the sampling rate. We confirmed that it is done during experimentation but generally it is 1% of all site visits\n\n*Opportunities*\nThey wanted to look at the examples of different type of opportunities and we shared with them the drop off analysis and Form Navigation.\nThe Form Navigation Opportunities made total sense to them while it was mentioned that suggestions for the drop off hypothesis has to be proven by an experiment.\n\n*Business KPIs*\nThe team shared the details of the KPIs they currently monitor via an agency which includes navigations within the site pages, field drop offs, conversion rate.\nThey are also interested in time taken to fill a form which they are not able to measure currently\n\n*Integration during development cycle*\nAs they are in the process of modernizing their forms, they wanted to identify certain opportunities before going live as well. They wanted to understand if the tooling can integrate during the development phase (figma designs etc) as they have a huge development process (business justification, processes etc) if something needs to be changed on prod.\n\nWe mentioned that we would be creating a knowledge base once we have proven hypothesis and use that to suggest best practices or common pitfalls during the design phase as well.\n\n*Next Steps*\nThe team liked the idea and wanted to try it out on their environment. We need to enable the FT on their environment. They are also in talks to get a trial version of Sites Optimizer.\n:todo_done: *Next Action*\n",
+          "normalized_content": "new_user varun dua new_user customervivo customer name abbvie clock2 date 2025 07 15 group people attendees w4rt1b152 w5heu5m7y w4xtcq07j loading 2248 notes attendees shameem gouse lazam sayyad shivendra vikram singh kevin ausburn meeting notes introduction the team had some knowledge of sites optimizer and gave them an introduction of the forms opportunities shivendra mentioned that it is good that form opportunities are also presented within a single tool they were earlier confused with what forms is doing vs sites sampling in optel we emphasised that the analysis and opportunity suggestion is ai driven but since they had low traffic it takes time to collect enough data there was a question if we can change the sampling rate we confirmed that it is done during experimentation but generally it is 1 of all site visits opportunities they wanted to look at the examples of different type of opportunities and we shared with them the drop off analysis and form navigation the form navigation opportunities made total sense to them while it was mentioned that suggestions for the drop off hypothesis has to be proven by an experiment business kpis the team shared the details of the kpis they currently monitor via an agency which includes navigations within the site pages field drop offs conversion rate they are also interested in time taken to fill a form which they are not able to measure currently integration during development cycle as they are in the process of modernizing their forms they wanted to identify certain opportunities before going live as well they wanted to understand if the tooling can integrate during the development phase figma designs etc as they have a huge development process business justification processes etc if something needs to be changed on prod we mentioned that we would be creating a knowledge base once we have proven hypothesis and use that to suggest best practices or common pitfalls during the design phase as well next steps the team liked the idea and wanted to try it out on their environment we need to enable the ft on their environment they are also in talks to get a trial version of sites optimizer todo_done next action",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-07-15",
+            "pmName": "Varun Dua",
+            "slackTs": "1752601935.879449",
+            "attendees": [
+              "W4RT1B152",
+              "W5HEU5M7Y",
+              "W4XTCQ07J"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": true,
+            "replyCount": 8,
+            "customerName": "Abbvie*",
+            "quality_score": 100
+          },
+          "created_at": "2025-07-15T17:52:15.879Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "7c277237-c964-40fc-9f08-341d9e4ed330",
+          "source": "slack",
+          "source_ref": "1752571527.287109",
+          "signal_type": "feedback",
+          "content": ":new_user: *Varun Dua* :new_user:\n:customervivo:*Customer Name : Stericycle*\n:clock2: *Date :* 2025-07-14\n:group-people: *Attendees :* <@W4RU4N66R>, <@W4XTCQ07J>, <@W4RT1B152>, <@WLWHN4TV3>\n:loading-2248:*Notes*\nAttendees\n• *Colin Vlasak* – Marketing Owner, Stericycle &amp; Shred-it\n• *Dillon Sorensen* – Colin’s Manager, Waste Management (parent company of Stericycle)\n\n*Meeting notes*\n\n*Explained Site Optimizer:*\n• Demonstrated how Site Optimizer uses operational telemetry and AI analysis to surface accessibility and conversion opportunities.\n• Clarified the Early-Access “Forms Optimization” program: our team will both run experiments and implement fixes, given that we have required access.\n*Discussed the Opportunities present in Shredit and Stericycle Domains:*\n• Colin understood the opportunities and mentioned that they have been doing that in the past but did not have the bandwidth to do the same after the acquisition. Though he mentioned two important things: \n    ◦ Quality of leads is more important but was open to experimentation given that the sales agrees to it.\n    ◦ For _Forms Navigation_, success will be measured by the combined conversion uplift of the source page *and* the form page, not the form page alone.\n    ◦ Confirmed that experiment data can be integrated with their analytics server.\n*Business KPIs and CPL:* Colin explained that the main KPI for form submissions is the conversion rate, which is monitored to identify trends and trigger deeper analysis if needed. Though shredit has a similar form across all the pages, Stericycle has different measure for different forms.\n\nThey measure CPL from the paid traffic and Colin will supply current *cost-per-lead (CPL)* figures for paid traffic in a follow-up note.\n\n*Experimentation Framework:* Vijay cleared the doubts regarding licensing and availability of experimentation framework in their environment\n\n*Access to Site Optimizer:* Colin  inquired about access to the Site Optimizer, explained that portal access with only Form specific Opportunities is forthcoming; meanwhile, form-specific insights will be shared as documents.\n\nNext Steps:\n\n*Share the Data for Review:* (Colin)\nThey will review the form optimization insights and discuss with the sales team or senior leaders to determine the feasibility of implementing the suggested changes.\n\n*VIP Program Participation:* They will Discuss internally and confirm participation in the VIP program for form optimization testing.\n\n*Follow-up Meeting:* Schedule a follow-up meeting for the week of July 28th to discuss the form optimisation opportunities and next steps.\n\n*Document Authoring (Separate topic than Forms Optimizer)*\nVijay and Colin discussed Document Authoring (Dark Alley) and how they can leverage it for Forms. Vijay will be setting up a separate meeting with them demonstrate those capabilities\n:todo_done: *Next Action*\n",
+          "normalized_content": "new_user varun dua new_user customervivo customer name stericycle clock2 date 2025 07 14 group people attendees w4ru4n66r w4xtcq07j w4rt1b152 wlwhn4tv3 loading 2248 notes attendees colin vlasak marketing owner stericycle amp shred it dillon sorensen colin s manager waste management parent company of stericycle meeting notes explained site optimizer demonstrated how site optimizer uses operational telemetry and ai analysis to surface accessibility and conversion opportunities clarified the early access forms optimization program our team will both run experiments and implement fixes given that we have required access discussed the opportunities present in shredit and stericycle domains colin understood the opportunities and mentioned that they have been doing that in the past but did not have the bandwidth to do the same after the acquisition though he mentioned two important things quality of leads is more important but was open to experimentation given that the sales agrees to it for _forms navigation_ success will be measured by the combined conversion uplift of the source page and the form page not the form page alone confirmed that experiment data can be integrated with their analytics server business kpis and cpl colin explained that the main kpi for form submissions is the conversion rate which is monitored to identify trends and trigger deeper analysis if needed though shredit has a similar form across all the pages stericycle has different measure for different forms they measure cpl from the paid traffic and colin will supply current cost per lead cpl figures for paid traffic in a follow up note experimentation framework vijay cleared the doubts regarding licensing and availability of experimentation framework in their environment access to site optimizer colin inquired about access to the site optimizer explained that portal access with only form specific opportunities is forthcoming meanwhile form specific insights will be shared as documents next steps share the data for review colin they will review the form optimization insights and discuss with the sales team or senior leaders to determine the feasibility of implementing the suggested changes vip program participation they will discuss internally and confirm participation in the vip program for form optimization testing follow up meeting schedule a follow up meeting for the week of july 28th to discuss the form optimisation opportunities and next steps document authoring separate topic than forms optimizer vijay and colin discussed document authoring dark alley and how they can leverage it for forms vijay will be setting up a separate meeting with them demonstrate those capabilities todo_done next action",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-07-14",
+            "pmName": "Varun Dua",
+            "slackTs": "1752571527.287109",
+            "attendees": [
+              "W4RU4N66R",
+              "W4XTCQ07J",
+              "W4RT1B152",
+              "WLWHN4TV3"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": true,
+            "replyCount": 1,
+            "customerName": "Stericycle*",
+            "quality_score": 95
+          },
+          "created_at": "2025-07-15T09:25:27.287Z",
+          "is_duplicate_of": null
+        }
+      ],
+      "themes": [],
+      "customers": [
+        "Abbvie",
+        "Shred-it",
+        "Stericycle"
+      ]
+    },
+    {
+      "id": "0a8dd2e7-1fa4-4dc8-9ff0-756a4f069e1c",
+      "title": "LPL Financials & LPL Financial - Forms - forms (5 signals)",
+      "description": "Cluster of 5 related signals. Customers: LPL Financials, LPL Financial. Topics: Forms, Feature Request, Issue/Blocker, Automated Forms Conversion, Core Components, Forms Experience Builder, Adobe Sign Integration, Guide Bridge, Manual work required to address gaps in the automated conversion process, Dark theme issue makes forms appear in dark mode based on system settings, Form conversion flakiness requires retrying the conversion process, Manual effort required to delete repeated fields like account numbers, Limitation in converting repeatable panels multiple times, Multisigners issue being investigated by the internal team, Authoring UX, Integrations, Data Binding, Rendering & PDF, Speed and efficiency concerns with AEM in handling forms with many fields, Challenges in converting forms into AEM side, Headers and repeated fields issues in forms conversion, Core Component Editor issues in dev environment, Header fields not translated during automated forms conversion, Issues with text extraction and XFA elements in forms conversion example, Integration, Performance, Migration, Intermittent issues with form publishing; updated version doesn't reflect on publish instance, Security & Compliance, Adaptive Forms, Scalability takes significant time and effort to design and bind a large number of forms, Current process involves few steps like binding in XDP, changing in transformation code making it inefficient and time-consuming, Existing framework does not scale effectively for a large number of forms, requiring manual mapping and binding, Scalability. Sources: slack. Types: feature_request, issue.",
+      "status": "new",
+      "created_at": "2026-02-06T07:22:58.135Z",
+      "roadmapScore": {
+        "overallScore": 50,
+        "impactScore": 46.69925001442312,
+        "confidenceScore": 83.5,
+        "effortScore": 20,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 5,
+          "uniqueCustomers": 2,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0.97,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "47d6279b-7395-466c-955f-42f54bc8a00d",
+          "source": "slack",
+          "source_ref": "1750777388.779649",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : LPL Financials*\n:clock2: *Date :* 2025-06-24\n:group-people: *Attendees :* <@W4RU4N66R>, <@U0208FN960H>, <@W4RRL6DDY>, <@U0213T59LMN>\n:loading-2248:*Notes*\n• *Forms Conversion Progress:* Satya Deep provided an update on the conversion of 15 out of 19 forms, noting that some manual work is required to address gaps in the automated conversion process. They aim to reduce the manual effort needed after form conversion.\n• *Binder and Dor Binder Requirement:* Satya Deep mentioned that the team is working on a PR to implement changes for the binder and door binder requirement. They need input from Naveen's team to understand what should be populated into the attribute groups.\n• *Adobe AI Capabilities:* Naveen inquired about leveraging Adobe AI capabilities, and Satya Deep confirmed that it is enabled and can be tried out. However, some manual intervention may be required to make the forms fully functional.\n• *Guide Bridge Change:* Satya Deep mentioned an open item related to the guide bridge, which has been merged and is available for use.\n• *Forms Conversion Demonstration:* Mayank demonstrated the conversion of forms, highlighting that 15 out of 19 forms were converted successfully. The remaining forms were too large and require the implementation of async functionality.\n• *Dark Theme Issue:* Mayank addressed the dark theme issue, explaining that the theme depends on the system settings. If the system is set to dark mode, the form will appear in dark mode.\n• *Form Conversion Flakiness:* Satya Deep and Mayank discussed the flakiness in form conversion, noting that retrying the conversion process usually resolves the issue.\n• *Adobe Sign Integration:* Naveen confirmed that the forms will use Adobe Sign for e-signatures. The user will fill out the form in HTML, and the form will be sent for e-signature using Adobe's API.\n• *Manual Effort in Form Conversion:* Raciel and Mayank discussed the manual effort required to delete repeated fields like account numbers. They suggested providing guidance during the import process to avoid manual deletion.\n• *Repeatable Panels Limitation:* Mayank mentioned a limitation in converting repeatable panels, where the same rows are converted multiple times instead of being implemented as repeatable panels.\n• *Multisigners Issue:* Mayank reported an issue with multisigners, which is being investigated by the internal team. They hope to provide an ETA for the solution by the end of the week.\n• *Testing and Feedback:* Naveen and Raciel agreed to test the converted forms and provide feedback. They will also share additional forms for conversion and testing.\n• *Future Plan:* Naveen mentioned that they have approximately 1500 forms to test with Adobe AI capabilities. They aim to address manual tasks using AI to meet tight timelines.\n\n:todo_done: *Next Action*\n• *Form Conversion Status:* Verify the conversion status of the 19 forms and ensure they are correctly mapped and functional. (Raciel)\n• *Adobe AI Capabilities:* Test the Adobe AI capabilities on the converted forms and provide feedback on any misalignments or issues. (Raciel)\n• *Guidance for Form Import:* Provide guidance during form import to avoid repeated fields like account numbers on every page. (Raciel)\n• *Email Commands List:* Send an email with a list of useful commands for form conversion to Andy. (Mayank)\n• *Onboarding Yash:* Onboard Yash into the environment and provide necessary access. (Raciel)\n• *Manual Task List:* Collate and share a list of manual tasks that need to be addressed using AI capabilities. (Naveen)\n• *Form Testing:* Thoroughly test all 19 migrated forms and explore all capabilities offered by the tool. (Raciel)\n",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name lpl financials clock2 date 2025 06 24 group people attendees w4ru4n66r u0208fn960h w4rrl6ddy u0213t59lmn loading 2248 notes forms conversion progress satya deep provided an update on the conversion of 15 out of 19 forms noting that some manual work is required to address gaps in the automated conversion process they aim to reduce the manual effort needed after form conversion binder and dor binder requirement satya deep mentioned that the team is working on a pr to implement changes for the binder and door binder requirement they need input from naveen s team to understand what should be populated into the attribute groups adobe ai capabilities naveen inquired about leveraging adobe ai capabilities and satya deep confirmed that it is enabled and can be tried out however some manual intervention may be required to make the forms fully functional guide bridge change satya deep mentioned an open item related to the guide bridge which has been merged and is available for use forms conversion demonstration mayank demonstrated the conversion of forms highlighting that 15 out of 19 forms were converted successfully the remaining forms were too large and require the implementation of async functionality dark theme issue mayank addressed the dark theme issue explaining that the theme depends on the system settings if the system is set to dark mode the form will appear in dark mode form conversion flakiness satya deep and mayank discussed the flakiness in form conversion noting that retrying the conversion process usually resolves the issue adobe sign integration naveen confirmed that the forms will use adobe sign for e signatures the user will fill out the form in html and the form will be sent for e signature using adobe s api manual effort in form conversion raciel and mayank discussed the manual effort required to delete repeated fields like account numbers they suggested providing guidance during the import process to avoid manual deletion repeatable panels limitation mayank mentioned a limitation in converting repeatable panels where the same rows are converted multiple times instead of being implemented as repeatable panels multisigners issue mayank reported an issue with multisigners which is being investigated by the internal team they hope to provide an eta for the solution by the end of the week testing and feedback naveen and raciel agreed to test the converted forms and provide feedback they will also share additional forms for conversion and testing future plan naveen mentioned that they have approximately 1500 forms to test with adobe ai capabilities they aim to address manual tasks using ai to meet tight timelines todo_done next action form conversion status verify the conversion status of the 19 forms and ensure they are correctly mapped and functional raciel adobe ai capabilities test the adobe ai capabilities on the converted forms and provide feedback on any misalignments or issues raciel guidance for form import provide guidance during form import to avoid repeated fields like account numbers on every page raciel email commands list send an email with a list of useful commands for form conversion to andy mayank onboarding yash onboard yash into the environment and provide necessary access raciel manual task list collate and share a list of manual tasks that need to be addressed using ai capabilities naveen form testing thoroughly test all 19 migrated forms and explore all capabilities offered by the tool raciel",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-06-24",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1750777388.779649",
+            "attendees": [
+              "W4RU4N66R",
+              "U0208FN960H",
+              "W4RRL6DDY",
+              "U0213T59LMN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "LPL Financials*",
+            "quality_score": 95
+          },
+          "created_at": "2025-06-24T15:03:08.779Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "d51fadc7-aa07-4d36-8821-002aeaacb64a",
+          "source": "slack",
+          "source_ref": "1749191283.815329",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : LPL Financials*\n:clock2: *Date :* 2025-06-05\n:group-people: *Attendees :* <@W4RU5J3JR>, <@W4RU708G5>, <@W4RRL6DDY>\n:loading-2248:*Notes*\n• *Sandbox Environment Access:* Mayank requested access to the sandbox environment for himself, Satya Deep, and Yash. Raciel agreed to provide access to the dev environment and asked for their email addresses.\n• *Form Migration Timeline:* Mayank inquired about the timeline for migrating 700 to 800 forms by July. Michelle confirmed that the timeline has not changed and the forms are currently in DocuSign and another internal system.\n• *Access to Forms:* Mayank asked if the forms are available in the dev environment. Michelle and Raciel clarified that only a sample of 30 to 50 forms is available, and the actual forms are in another tool.\n• *Form Conversion Process:* Mayank and Arneh discussed the process of converting forms into adaptive forms. Arneh mentioned the need to execute the pipeline before adding the forms to the environment.Andy informed Arneh that the pipeline would kick off in the next 15 to 20 minutes and take about 30 to 40 minutes to fully deploy. Arneh planned to do manual steps to enable components on the templates.\n• *Form Testing and QA Cycle:* Mayank asked about the next steps after converting a form into an adaptive form. Andy explained the QA cycle, which includes cleaning up the form, generating a PDF, and running end-to-end tests.\n• *Speed and Efficiency Concerns:* Michelle expressed concerns about the speed and efficiency of AEM in handling forms with many fields. She emphasised the need for a speedy editing cycle and the ability to quickly replace forms.Mayank suggested increasing the frequency of meetings to speed up the form conversion process. He proposed meeting more often to ensure the quality of converted forms and address any issues.\n• *Form Selection for Conversion:* Andy and Arneh discussed selecting a specific form from the box account for conversion. Andy randomly picked a form, and Arneh planned to convert it and share the results.Satya Deep proposed using the Teams channel for rapid communication and feedback on form conversion. Andy and Michelle agreed to try using the Teams channel for notifications and updates.Satya Deep and Raciel discussed the need for access to the box and SharePoint accounts to upload and download forms. Raciel planned to grant access to the team members.\n*Next Steps:* Mayank summarised the next steps, including increasing meeting frequency, using the Teams channel for communication, and ensuring access to box and SharePoint accounts. The team agreed to proceed with these plans.\n:todo_done: *Next Action*\nF*ollow-up tasks :* \n\n• S*andbox Environment Access:* Shared email addresses to obtain access to the sandbox environment. (Mayank, Satya Deep)\n• *Form Migration:* Upload converted forms to the dev environment and notify the team. Convert the Sturman1.pdf form and share the converted form with the team.(Arneh)\n• *Pipeline Execution:* Execute the pipeline and notify the team once completed. (Andy)\n• *Teams Channel Communication:* Add Michelle to the Teams channel for rapid communication. (Arneh)\n• *Box Access:* Request Naveen to provide access to <http://box.com|box.com> or SharePoint for form uploads. (Mayank)",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name lpl financials clock2 date 2025 06 05 group people attendees w4ru5j3jr w4ru708g5 w4rrl6ddy loading 2248 notes sandbox environment access mayank requested access to the sandbox environment for himself satya deep and yash raciel agreed to provide access to the dev environment and asked for their email addresses form migration timeline mayank inquired about the timeline for migrating 700 to 800 forms by july michelle confirmed that the timeline has not changed and the forms are currently in docusign and another internal system access to forms mayank asked if the forms are available in the dev environment michelle and raciel clarified that only a sample of 30 to 50 forms is available and the actual forms are in another tool form conversion process mayank and arneh discussed the process of converting forms into adaptive forms arneh mentioned the need to execute the pipeline before adding the forms to the environment andy informed arneh that the pipeline would kick off in the next 15 to 20 minutes and take about 30 to 40 minutes to fully deploy arneh planned to do manual steps to enable components on the templates form testing and qa cycle mayank asked about the next steps after converting a form into an adaptive form andy explained the qa cycle which includes cleaning up the form generating a pdf and running end to end tests speed and efficiency concerns michelle expressed concerns about the speed and efficiency of aem in handling forms with many fields she emphasised the need for a speedy editing cycle and the ability to quickly replace forms mayank suggested increasing the frequency of meetings to speed up the form conversion process he proposed meeting more often to ensure the quality of converted forms and address any issues form selection for conversion andy and arneh discussed selecting a specific form from the box account for conversion andy randomly picked a form and arneh planned to convert it and share the results satya deep proposed using the teams channel for rapid communication and feedback on form conversion andy and michelle agreed to try using the teams channel for notifications and updates satya deep and raciel discussed the need for access to the box and sharepoint accounts to upload and download forms raciel planned to grant access to the team members next steps mayank summarised the next steps including increasing meeting frequency using the teams channel for communication and ensuring access to box and sharepoint accounts the team agreed to proceed with these plans todo_done next action f ollow up tasks s andbox environment access shared email addresses to obtain access to the sandbox environment mayank satya deep form migration upload converted forms to the dev environment and notify the team convert the sturman1 pdf form and share the converted form with the team arneh pipeline execution execute the pipeline and notify the team once completed andy teams channel communication add michelle to the teams channel for rapid communication arneh box access request naveen to provide access to http box com box com or sharepoint for form uploads mayank",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-06-05",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1749191283.815329",
+            "attendees": [
+              "W4RU5J3JR",
+              "W4RU708G5",
+              "W4RRL6DDY"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": true,
+            "replyCount": 2,
+            "customerName": "LPL Financials*",
+            "quality_score": 95
+          },
+          "created_at": "2025-06-06T06:28:03.815Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "29cfdd39-7187-48aa-8096-4075c801d725",
+          "source": "slack",
+          "source_ref": "1748586355.857299",
+          "signal_type": "issue",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : LPL Financials*\n:clock2: *Date :* 2025-05-29\n:group-people: *Attendees :* <@W4RU5J3JR>, <@W4RU708G5>, <@W4RRL6DDY>, <@W4R4VBWQG>\n:loading-2248:*Notes*\n*Forms Conversion Challenges:* Naveen (LPL) discussed the challenges faced in converting forms into the AEM side, mentioning that previous attempts either failed or did not meet the standard. They sought assistance from the team to resolve these issues. Also enabling Adobe AI capabilities, specifically for editing adaptive forms.\n*Forms Conversion Demonstration:* <@W4R4VBWQG> demonstrated the conversion of forms from afcs to adaptive form v2, showing the workflow and the output PDF generated with filled information. They addressed issues with headers and repeated fields.\n\n*Forms Conversion Milestones:* We offered a VIP offering to them and asked for their commitment , go LIVE dates , internal milestones , success criteria and number of go LIVE forms.\n\n*JSON Structure Support:* Naveen Sharma requested support for JSON structure in form binding, as it would save time and increase API performance. They discussed the challenges faced in converting forms and how Gen AI could help overcome them.\n\n*Implementation Partner:* Naveen Sharma mentioned that their implementation partner, Proficient, was helping with migrating user forms into AM forms. They discussed the timeline for going live with the forms(700-800forms), targeting July-August.\n\n*Optimised Web Forms:* We discussed the possibility of optimising web forms by converting textual data into terms and conditions. They considered the business requirements and user experience on the web.\n.\n*Forms Sharing Process:* Naveen Sharma asked about the best way to share a large number of PDFs for conversion. We suggested using a sandbox environment or sharing through email or Slack or Teams, and creating categories for forms to target.\n:todo_done: *Next Action*\n• Naveen Sharma summarised the action items, including looking into header issues, enabling AI capabilities, and setting short-term and long-term goals for integration\n• *Core Component Editor Issues:* Andy demonstrated issues with the core component editor in their dev environment - <@W4RU708G5>: Please follow up with core component team to unblock LPL (cc: <@W4XTCQ07J>)\n• Investigate and resolve the issue with header fields not being translated to the form during automated forms conversion - <@W4RU708G5> / <@W4RU5J3JR> \n• *Forms Conversion Example:* Andy shared a successful conversion example, highlighting issues with text extraction and XFA elements - <@W4RU708G5>: Action item on us to send to dedicated team if they can help",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name lpl financials clock2 date 2025 05 29 group people attendees w4ru5j3jr w4ru708g5 w4rrl6ddy w4r4vbwqg loading 2248 notes forms conversion challenges naveen lpl discussed the challenges faced in converting forms into the aem side mentioning that previous attempts either failed or did not meet the standard they sought assistance from the team to resolve these issues also enabling adobe ai capabilities specifically for editing adaptive forms forms conversion demonstration w4r4vbwqg demonstrated the conversion of forms from afcs to adaptive form v2 showing the workflow and the output pdf generated with filled information they addressed issues with headers and repeated fields forms conversion milestones we offered a vip offering to them and asked for their commitment go live dates internal milestones success criteria and number of go live forms json structure support naveen sharma requested support for json structure in form binding as it would save time and increase api performance they discussed the challenges faced in converting forms and how gen ai could help overcome them implementation partner naveen sharma mentioned that their implementation partner proficient was helping with migrating user forms into am forms they discussed the timeline for going live with the forms 700 800forms targeting july august optimised web forms we discussed the possibility of optimising web forms by converting textual data into terms and conditions they considered the business requirements and user experience on the web forms sharing process naveen sharma asked about the best way to share a large number of pdfs for conversion we suggested using a sandbox environment or sharing through email or slack or teams and creating categories for forms to target todo_done next action naveen sharma summarised the action items including looking into header issues enabling ai capabilities and setting short term and long term goals for integration core component editor issues andy demonstrated issues with the core component editor in their dev environment w4ru708g5 please follow up with core component team to unblock lpl cc w4xtcq07j investigate and resolve the issue with header fields not being translated to the form during automated forms conversion w4ru708g5 w4ru5j3jr forms conversion example andy shared a successful conversion example highlighting issues with text extraction and xfa elements w4ru708g5 action item on us to send to dedicated team if they can help",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-05-29",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1748586355.857299",
+            "attendees": [
+              "W4RU5J3JR",
+              "W4RU708G5",
+              "W4RRL6DDY",
+              "W4R4VBWQG"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": true,
+            "replyCount": 3,
+            "customerName": "LPL Financials*",
+            "quality_score": 100
+          },
+          "created_at": "2025-05-30T06:25:55.857Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "b9d1c1bf-146d-45ca-b413-37376dc9ee5b",
+          "source": "slack",
+          "source_ref": "1746420576.656299",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Darshan Mahor* :new_user:\n:customervivo:*Customer Name : LPL Financial*\n:clock2: *Date :* 2025-04-30\n:group-people: *Attendees :* <@W4R4VBWQG>\n:loading-2248:*Notes*\n• Customer discuss about mandatory and option forms.\n• The customer mentioned that, in addition to generating an XDP from the legacy PDF, they also need to create an Adaptive Form.\n•  They mentioned that that binding needs to be performed twice— once in the XDP and again in the Adaptive Form.\n•  Due to certain legal requirements regarding the format of the generated PDFs, they are using XDP to ensure compliance.\n• Publishing Issues: They reported intermittent issues with form publishing, where the updated version doesn’t always reflect on the publish instance, requiring manual unpublish and republish actions. I requested them to share a specific form where this happened; they will provide it when the issue occurs again.\n:todo_done: *Next Action*\n• *Adaptive Form Conversion:* Check if there is an option available to retain the bindings during the adaptive form conversion process. Please note that we need same binding in XDP also.\n• *Publishing Issues:* Customer will share details of any recent forms that were published but did not show the new version on the publish instance to investigate the issue.\n• In next meeting Customer will show the custom forms issue that they are facing will importing them in  AEM Forms Designer.",
+          "normalized_content": "new_user darshan mahor new_user customervivo customer name lpl financial clock2 date 2025 04 30 group people attendees w4r4vbwqg loading 2248 notes customer discuss about mandatory and option forms the customer mentioned that in addition to generating an xdp from the legacy pdf they also need to create an adaptive form they mentioned that that binding needs to be performed twice once in the xdp and again in the adaptive form due to certain legal requirements regarding the format of the generated pdfs they are using xdp to ensure compliance publishing issues they reported intermittent issues with form publishing where the updated version doesn t always reflect on the publish instance requiring manual unpublish and republish actions i requested them to share a specific form where this happened they will provide it when the issue occurs again todo_done next action adaptive form conversion check if there is an option available to retain the bindings during the adaptive form conversion process please note that we need same binding in xdp also publishing issues customer will share details of any recent forms that were published but did not show the new version on the publish instance to investigate the issue in next meeting customer will show the custom forms issue that they are facing will importing them in aem forms designer",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-04-30",
+            "pmName": "Darshan Mahor",
+            "slackTs": "1746420576.656299",
+            "attendees": [
+              "W4R4VBWQG"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "LPL Financial*",
+            "quality_score": 95
+          },
+          "created_at": "2025-05-05T04:49:36.656Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "9a879849-c606-4691-a7a7-e7dd21597711",
+          "source": "slack",
+          "source_ref": "1744825792.076749",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Darshan Mahor* :new_user:\n:customervivo:*Customer Name : LPL Financial*\n:clock2: *Date :* 2025-04-16\n:group-people: *Attendees :* <@W4R4VBWQG>, <@W9QMZFR39>, <@W5HEU5M7Y>\n:loading-2248:*Notes*\n*Major pain points for Customer that we need to handle in VIP Engagement:*\n• *Scalability Issues:* Scalability has been identified as a major challenge, it takes significant time and effort  to design and bind a large number of forms.\n• *Binding Steps:* The current process involves few steps like binding in XDP , changing in transformation code etc , making it inefficient and time-consuming.\n• *Framework Limitations:* The existing framework does not scale effectively for a large number of forms. Each new form requires manual mapping and binding, which is unsustainable for the 2,000-3,000 forms that need to be converted.\nWe need to provide the approach via which customer can successfully transform their pending forms is scalable manner (if possible via some automation)\n\n*Summary:*\n• The incoming JSON does not follow a standard schema and may change with new forms and fields.\n• Currently, for each new form, customers must manually design it in the Designer. If new fields are added, they also need to update the transformation code and XSD schema.\n• The customer mentioned that they have several mandatory forms for specific customers, implemented via Adaptive Forms for data capturing. Data from these forms will be included in the incoming JSON and used to generate PDFs via the Output Service. We plan to discuss this further in upcoming meetings.\n• Additionally, the customer mentioned that they still need to migrate 2,000-3,000 forms.\n*Topics for upcoming meetings:*\n• The usage of Adaptive Forms and their integration into the incoming JSON.\n• *Analyze Metadata Call:* Explain and show the process of retrieving form metadata and its necessity in the workflow.\n• *Review Custom Endpoint:* Discuss the custom endpoint of PDF generation and what additional steps are being performed in that.\n:todo_done: *Next Action*\n• The customer will provide additional sample files for us to analyze the form patterns and identify reusable elements. Additionally, they will share the schema for the incoming JSON.\n• We need to establish regular sync-up meetings with the customer's development team, specifically the small group of engineers responsible for designing their forms.",
+          "normalized_content": "new_user darshan mahor new_user customervivo customer name lpl financial clock2 date 2025 04 16 group people attendees w4r4vbwqg w9qmzfr39 w5heu5m7y loading 2248 notes major pain points for customer that we need to handle in vip engagement scalability issues scalability has been identified as a major challenge it takes significant time and effort to design and bind a large number of forms binding steps the current process involves few steps like binding in xdp changing in transformation code etc making it inefficient and time consuming framework limitations the existing framework does not scale effectively for a large number of forms each new form requires manual mapping and binding which is unsustainable for the 2 000 3 000 forms that need to be converted we need to provide the approach via which customer can successfully transform their pending forms is scalable manner if possible via some automation summary the incoming json does not follow a standard schema and may change with new forms and fields currently for each new form customers must manually design it in the designer if new fields are added they also need to update the transformation code and xsd schema the customer mentioned that they have several mandatory forms for specific customers implemented via adaptive forms for data capturing data from these forms will be included in the incoming json and used to generate pdfs via the output service we plan to discuss this further in upcoming meetings additionally the customer mentioned that they still need to migrate 2 000 3 000 forms topics for upcoming meetings the usage of adaptive forms and their integration into the incoming json analyze metadata call explain and show the process of retrieving form metadata and its necessity in the workflow review custom endpoint discuss the custom endpoint of pdf generation and what additional steps are being performed in that todo_done next action the customer will provide additional sample files for us to analyze the form patterns and identify reusable elements additionally they will share the schema for the incoming json we need to establish regular sync up meetings with the customer s development team specifically the small group of engineers responsible for designing their forms",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-04-16",
+            "pmName": "Darshan Mahor",
+            "slackTs": "1744825792.076749",
+            "attendees": [
+              "W4R4VBWQG",
+              "W9QMZFR39",
+              "W5HEU5M7Y"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": true,
+            "replyCount": 7,
+            "customerName": "LPL Financial*",
+            "quality_score": 100
+          },
+          "created_at": "2025-04-16T17:49:52.076Z",
+          "is_duplicate_of": null
+        }
+      ],
+      "themes": [],
+      "customers": [
+        "LPL Financial",
+        "LPL Financials"
+      ]
+    },
+    {
+      "id": "73507fbf-ddc3-47cc-81f5-d89e829fd113",
+      "title": "NFL & UPS.com - Forms Experience Builder - forms (3 signals)",
+      "description": "Cluster of 3 related signals. Customers: NFL, UPS.com, Lumen. Topics: Forms Experience Builder, Forms, Feature Request, Automated Forms Conversion, Authoring UX, Integrations, Core Components, Migration. Sources: slack. Types: feedback.",
+      "status": "new",
+      "created_at": "2026-02-06T07:22:58.097Z",
+      "roadmapScore": {
+        "overallScore": 50,
+        "impactScore": 51,
+        "confidenceScore": 73.33333333333334,
+        "effortScore": 29,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 3,
+          "uniqueCustomers": 3,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0.9666666666666667,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "61bc843d-8ad6-4349-ae8d-8bca818da29a",
+          "source": "slack",
+          "source_ref": "1761800607.873069",
+          "signal_type": "feedback",
+          "content": ":new_user: *Ravisanker E* :new_user:\n:customervivo:*Customer Name : NFL*\n:clock2: *Date :* 2025-10-15\n:group-people: *Attendees :* <@W012PACNGHJ>, <@W4RU4N66R>, <@W5HEU5M7Y>, <@U0213T59LMN>\n:loading-2248:*Notes*\nThis session was targeted at the marketing team at NFL.\n\n• Introduced the AEM forms product offering and its various capabilities. \n• Followed by a demo of authoring an already live NFL form in the universal editor, showcasing various capabilities like configuring AEP schema and submit action, authoring content via the experience builder, auto-mapping schema elements to form fields, authoring a custom component and managing assets in dam etc.\n• The NFL team was really impressed with the Experience Builder capabilities and how simple authoring is in UE.\n• Forms team clarified their queries related to integrating pre fill, experimentation, adobe analytics, embedding UE authoring form in a non AEM site etc.\n• The NFL team also expressed their interest in Form Optimiser offering to enhance the conversion for their forms\n:todo_done: *Next Action*\n",
+          "normalized_content": "new_user ravisanker e new_user customervivo customer name nfl clock2 date 2025 10 15 group people attendees w012pacnghj w4ru4n66r w5heu5m7y u0213t59lmn loading 2248 notes this session was targeted at the marketing team at nfl introduced the aem forms product offering and its various capabilities followed by a demo of authoring an already live nfl form in the universal editor showcasing various capabilities like configuring aep schema and submit action authoring content via the experience builder auto mapping schema elements to form fields authoring a custom component and managing assets in dam etc the nfl team was really impressed with the experience builder capabilities and how simple authoring is in ue forms team clarified their queries related to integrating pre fill experimentation adobe analytics embedding ue authoring form in a non aem site etc the nfl team also expressed their interest in form optimiser offering to enhance the conversion for their forms todo_done next action",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-10-15",
+            "pmName": "Ravisanker E",
+            "slackTs": "1761800607.873069",
+            "attendees": [
+              "W012PACNGHJ",
+              "W4RU4N66R",
+              "W5HEU5M7Y",
+              "U0213T59LMN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "NFL*",
+            "quality_score": 95
+          },
+          "created_at": "2025-10-30T05:03:27.873Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "e36f7cd4-8296-4e67-8b67-14174534c694",
+          "source": "slack",
+          "source_ref": "1758169848.391489",
+          "signal_type": "feedback",
+          "content": ":new_user: *Vijay Kumar Jalagari* :new_user:\n:customervivo:*Customer Name : <http://UPS.com|UPS.com>*\n:clock2: *Date :* 2025-09-17\n:group-people: *Attendees :* <@W4RU4N66R>, <@U0213T59LMN>, <@W4R4S9FS4>, <@U03N27GAZDZ>\n:loading-2248:*Notes*\n• *Introduction:* Michael, Simon Habtu, Emily, John, and Dallas discussed the integration of AEM forms on <http://ups.com|ups.com>. The meeting aimed to explore the best ways to leverage AEM forms, compare them with Marketo forms, and understand the backend connections required for implementation. \n• *AEM Forms vs Marketo Forms:* Michael and Emily clarified that <http://ups.com|ups.com> should move 100% to AEM forms, reserving Marketo forms for Marketo pages. Simon Habtu explained the option of using Marketo for backend connections to Salesforce, but the focus remained on AEM forms. \n• *Forms Creation and Integration:* Meghali, the technical consultant, demonstrated the process of creating forms on EDS, including the use of Universal Editor and Forms Experience Builder. The session covered the core features, rapid form generation, and publishing forms on EDS. \n• *Themes and Customisation:* Dallas inquired about creating themes for different business requirements. Meghali and Manu explained the process of creating and integrating themes within the EDS environment, highlighting the flexibility and customisation options available. \n• *API Integration and Data Storage:* Dallas raised concerns about storing data and the best practices for API calls. Vijay Kumar explained the support for API integration, including the use of API integration tools and the importance of configuring client credentials for authentication. \n• *Forms Experience Builder:* Vijay Kumar showcased the Forms Experience Builder, demonstrating its AI-based capabilities for creating forms from screenshots and updating fields. The tool aims to speed up form authoring and enhance user experience.\n• *Next Steps and Follow-Up:* Simon Habtu and Michael discussed the next steps, including enabling API integration in the dev environment and setting up a follow-up call to discuss the scale of form creation activities. The team also considered the possibility of participating in the VIP program for forms. \n\n:todo_done: *Next Action*\n*API Integration and Data Storage:*\n• Share the environment details over email to enable API integration in the dev environment. (Team) \n*Next Steps and Follow-Up:*\n• Set up a follow-up call to discuss the scale of form creation activities and the possibility of participating in the VIP program for forms. (Michael) 9\n• Determine the point of contact for signing the beta agreement for the Forms Experience Builder. (Simon Habtu)\n",
+          "normalized_content": "new_user vijay kumar jalagari new_user customervivo customer name http ups com ups com clock2 date 2025 09 17 group people attendees w4ru4n66r u0213t59lmn w4r4s9fs4 u03n27gazdz loading 2248 notes introduction michael simon habtu emily john and dallas discussed the integration of aem forms on http ups com ups com the meeting aimed to explore the best ways to leverage aem forms compare them with marketo forms and understand the backend connections required for implementation aem forms vs marketo forms michael and emily clarified that http ups com ups com should move 100 to aem forms reserving marketo forms for marketo pages simon habtu explained the option of using marketo for backend connections to salesforce but the focus remained on aem forms forms creation and integration meghali the technical consultant demonstrated the process of creating forms on eds including the use of universal editor and forms experience builder the session covered the core features rapid form generation and publishing forms on eds themes and customisation dallas inquired about creating themes for different business requirements meghali and manu explained the process of creating and integrating themes within the eds environment highlighting the flexibility and customisation options available api integration and data storage dallas raised concerns about storing data and the best practices for api calls vijay kumar explained the support for api integration including the use of api integration tools and the importance of configuring client credentials for authentication forms experience builder vijay kumar showcased the forms experience builder demonstrating its ai based capabilities for creating forms from screenshots and updating fields the tool aims to speed up form authoring and enhance user experience next steps and follow up simon habtu and michael discussed the next steps including enabling api integration in the dev environment and setting up a follow up call to discuss the scale of form creation activities the team also considered the possibility of participating in the vip program for forms todo_done next action api integration and data storage share the environment details over email to enable api integration in the dev environment team next steps and follow up set up a follow up call to discuss the scale of form creation activities and the possibility of participating in the vip program for forms michael 9 determine the point of contact for signing the beta agreement for the forms experience builder simon habtu",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-09-17",
+            "pmName": "Vijay Kumar Jalagari",
+            "slackTs": "1758169848.391489",
+            "attendees": [
+              "W4RU4N66R",
+              "U0213T59LMN",
+              "W4R4S9FS4",
+              "U03N27GAZDZ"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "<http://UPS.com|UPS.com>*",
+            "quality_score": 95
+          },
+          "created_at": "2025-09-18T04:30:48.391Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "5051bebc-5743-43eb-b2ab-04e11d7d7e35",
+          "source": "slack",
+          "source_ref": "1755495816.532369",
+          "signal_type": "feedback",
+          "content": ":new_user: *Vijay Kumar Jalagari* :new_user:\n:customervivo:*Customer Name : Lumen*\n:clock2: *Date :* 2025-08-13\n:group-people: *Attendees :* <@W4RU4N66R>, <@W5HEU5M7Y>\n:loading-2248:*Notes*\n_AI-generated content. Make sure to check for accuracy._\n*Key Topics:*\n• *Introduction:* Arun, Kathy Behler, Jennifer Wroblewski, Shami, Vijay Kumar, and Christina Trujillo discussed the use of Forms in AEM, Marketo, and RTCDP. The meeting aimed to understand the use cases, discuss recent innovations, and explain how the connectors work. \n• *Current Forms Setup:* Jennifer Wroblewski and Shami explained that their forms are currently built in Marketo and embedded into site pages using HTML. They aim to centralise forms management in AEM while retaining backend automation through Marketo. \n• *Marketo Connector:* Arun explained the functionality of the Marketo connector, which allows easy mapping of existing Marketo forms onto AEM forms and introduces a new trigger specific to AEM form submissions. This enables the reuse of smart campaigns and activities built in Marketo. \n• *Forms Migration:* Jennifer Wroblewski mentioned that they have more than 50 forms to migrate from Marketo to AEM. Arun inquired about the reusability of form fragments and the scale of the migration. \n• *Edge Delivery Services:* Shami confirmed that their current forms are cloud-based, but they are considering using edge delivery services for other projects. Arun highlighted that Forms are supported on Edge delivery services and can be built using the Universal Editor. \n• *AAP Connector:* Arun described the AAP connector, which allows form data to be submitted into an XDM-based schema in RTCDP. This data can then be used for personalising journeys and segmenting users into audiences for downstream use in AAP apps. \n• *Form Experience Builder:* Arun and Vijay Kumar introduced the Form Experience Builder, which uses Gen. AI to create forms quickly by interpreting screenshots or hand-drawn images. This tool aims to ease the form creation process and help scale the migration of forms. \n• *Next Steps:* Arun and Vijay Kumar discussed the next steps, including enabling the connectors and innovations on Lumens instances, sharing documentation, and scheduling a follow-up meeting to focus on the Marketo part and the migration process. \n:todo_done: *Next Action*\n*Marketo Connector:*\n• Share documentation on setting up the connection between AEM Forms and Marketo, including the required credentials. (Arun, Vijay Kumar) \n*Form Experience Builder:*\n• Send the beta agreement for the Form Experience Builder to Christina Trujillo for review and approval. (Vijay Kumar) \n• Schedule a follow-up meeting towards the end of next week to focus on the Marketo part and the migration process. (Christina Trujillo)\n• Enable the connectors and innovations on Lumens instances. (Vijay Kumar) ",
+          "normalized_content": "new_user vijay kumar jalagari new_user customervivo customer name lumen clock2 date 2025 08 13 group people attendees w4ru4n66r w5heu5m7y loading 2248 notes _ai generated content make sure to check for accuracy _ key topics introduction arun kathy behler jennifer wroblewski shami vijay kumar and christina trujillo discussed the use of forms in aem marketo and rtcdp the meeting aimed to understand the use cases discuss recent innovations and explain how the connectors work current forms setup jennifer wroblewski and shami explained that their forms are currently built in marketo and embedded into site pages using html they aim to centralise forms management in aem while retaining backend automation through marketo marketo connector arun explained the functionality of the marketo connector which allows easy mapping of existing marketo forms onto aem forms and introduces a new trigger specific to aem form submissions this enables the reuse of smart campaigns and activities built in marketo forms migration jennifer wroblewski mentioned that they have more than 50 forms to migrate from marketo to aem arun inquired about the reusability of form fragments and the scale of the migration edge delivery services shami confirmed that their current forms are cloud based but they are considering using edge delivery services for other projects arun highlighted that forms are supported on edge delivery services and can be built using the universal editor aap connector arun described the aap connector which allows form data to be submitted into an xdm based schema in rtcdp this data can then be used for personalising journeys and segmenting users into audiences for downstream use in aap apps form experience builder arun and vijay kumar introduced the form experience builder which uses gen ai to create forms quickly by interpreting screenshots or hand drawn images this tool aims to ease the form creation process and help scale the migration of forms next steps arun and vijay kumar discussed the next steps including enabling the connectors and innovations on lumens instances sharing documentation and scheduling a follow up meeting to focus on the marketo part and the migration process todo_done next action marketo connector share documentation on setting up the connection between aem forms and marketo including the required credentials arun vijay kumar form experience builder send the beta agreement for the form experience builder to christina trujillo for review and approval vijay kumar schedule a follow up meeting towards the end of next week to focus on the marketo part and the migration process christina trujillo enable the connectors and innovations on lumens instances vijay kumar",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-08-13",
+            "pmName": "Vijay Kumar Jalagari",
+            "slackTs": "1755495816.532369",
+            "attendees": [
+              "W4RU4N66R",
+              "W5HEU5M7Y"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": true,
+            "replyCount": 3,
+            "customerName": "Lumen*",
+            "quality_score": 100
+          },
+          "created_at": "2025-08-18T05:43:36.532Z",
+          "is_duplicate_of": null
+        }
+      ],
+      "themes": [],
+      "customers": [
+        "Lumen",
+        "NFL",
+        "UPS.com"
+      ]
+    },
+    {
+      "id": "44bf14b6-c63a-48ce-9471-c6d663d8dffe",
+      "title": "Brusnwick & Brunswick - Forms - form (4 signals)",
+      "description": "Cluster of 4 related signals. Customers: Brusnwick, Brunswick. Topics: Forms, Go-Live, Feature Request, Issue/Blocker, ECID deployment pending, preventing rule editor updates, Performance, Cloudflare blocking submissions for new forms, Authoring UX, Migration, Core Components, Data Binding, Integrations, Rendering & PDF. Sources: slack. Types: issue, feature_request, feedback.",
+      "status": "new",
+      "created_at": "2026-02-06T07:22:58.096Z",
+      "roadmapScore": {
+        "overallScore": 49,
+        "impactScore": 44.69925001442312,
+        "confidenceScore": 78.125,
+        "effortScore": 25,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 4,
+          "uniqueCustomers": 2,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0.9624999999999999,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "868c1c0c-3cf3-4191-9ec4-75e4e90572be",
+          "source": "slack",
+          "source_ref": "1762311254.939099",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Shraddha Singh* :new_user:\n:customervivo:*Customer Name : Brusnwick*\n:clock2: *Date :* 2025-11-04\n:group-people: *Attendees :* <@U06NF880220>\n:loading-2248:*Notes*\n*ECID Deployment and Rule Editor Updates:* Shraddha, Christy, and Andy discussed the deployment status of the ECID code, with Christy confirming the ECID deployment is pending and planning to notify the team upon completion, after which Shraddha will update the rule editor and share changes via e-mail for further testing.\n\n*Form Submit Tracking and Satellite Tracking Discussion:* Andy and Sarah Warzecha raised the need for reliable form submit tracking for analytics, discussing past use of satellite tracking and seeking Shraddha's guidance on alternative mechanisms, with plans for Sarah to provide more information via e-mail and Shraddha to investigate further.\n\n*Form Styling and Theme Implementation for Multiple Brands:* Andy, Sarah Warzecha, and Shraddha discussed the need to develop scalable form styling solutions for different brands, moving away from previous workarounds and planning to translate ECL styling from Figma into AEM form themes, with internal sessions proposed for further exploration.\n\n*Deployment Planning and Documentation for Stage and Production Environments:* Andy, Shraddha, and Christy coordinated on planning the deployment of forms to stage and production environments, discussing the status of documentation, timing, and the need for collaborative sessions to ensure all steps are captured and executed, with Speaker 1 preparing an Excel sheet to track changes.\n\n*Marketo Connector Setup and Form Building Access:* Andy and Shraddha confirmed that Marketo connectors are set up for both stage and production environments, but noted that access to AEM forms is pending, preventing form creation until deployment is complete.\n\n*Page Policy and Client Library Optimisation:* Shraddha, Andy, and Christy discussed optimising page policies by removing unnecessary client libraries and form-related properties from pages without forms, with Christy noting the need to identify relevant pages and possibly define new templates.\n:todo_done: *Next Action*\n*ECID Deployment Confirmation:* Send an email to confirm when the ECID code has been deployed so that rule changes and testing can proceed. (Christy)\n\n*Rule Editor Update Communication:* Share the details of the changes made to the rule editor for ECID with Andy and Christy via email. (Shraddha)\n\n*Satellite/Form Submit Tracking Information:* Provide additional information via email regarding the current implementation and requirements for satellite/form submit tracking to assist with further investigation. (Sarah Warzecha)\n\n*Satellite Tracking Investigation:* Investigate alternative mechanisms for form submit tracking beyond satellite tracking and prepare to discuss findings in the next meeting. (Shraddha)\n\n*Documentation Update and Sharing:* Update the deployment documentation (Excel sheet) to include recent ECID changes, custom functions, and dispatcher/CDN steps, then share the link with the team for review. (Shraddha)\n\n*Form Styling and Themes Internal Session:* Organise an internal session with relevant team members to discuss how ECL styling in Figma can be translated into AEM forms themes. (Sarah Warzecha)\n\n*Page Template/Form Usage Identification:* Identify which page templates currently use forms and which do not, to support optimisation of client libraries and design policies for performance. (Heidi Reinke)",
+          "normalized_content": "new_user shraddha singh new_user customervivo customer name brusnwick clock2 date 2025 11 04 group people attendees u06nf880220 loading 2248 notes ecid deployment and rule editor updates shraddha christy and andy discussed the deployment status of the ecid code with christy confirming the ecid deployment is pending and planning to notify the team upon completion after which shraddha will update the rule editor and share changes via e mail for further testing form submit tracking and satellite tracking discussion andy and sarah warzecha raised the need for reliable form submit tracking for analytics discussing past use of satellite tracking and seeking shraddha s guidance on alternative mechanisms with plans for sarah to provide more information via e mail and shraddha to investigate further form styling and theme implementation for multiple brands andy sarah warzecha and shraddha discussed the need to develop scalable form styling solutions for different brands moving away from previous workarounds and planning to translate ecl styling from figma into aem form themes with internal sessions proposed for further exploration deployment planning and documentation for stage and production environments andy shraddha and christy coordinated on planning the deployment of forms to stage and production environments discussing the status of documentation timing and the need for collaborative sessions to ensure all steps are captured and executed with speaker 1 preparing an excel sheet to track changes marketo connector setup and form building access andy and shraddha confirmed that marketo connectors are set up for both stage and production environments but noted that access to aem forms is pending preventing form creation until deployment is complete page policy and client library optimisation shraddha andy and christy discussed optimising page policies by removing unnecessary client libraries and form related properties from pages without forms with christy noting the need to identify relevant pages and possibly define new templates todo_done next action ecid deployment confirmation send an email to confirm when the ecid code has been deployed so that rule changes and testing can proceed christy rule editor update communication share the details of the changes made to the rule editor for ecid with andy and christy via email shraddha satellite form submit tracking information provide additional information via email regarding the current implementation and requirements for satellite form submit tracking to assist with further investigation sarah warzecha satellite tracking investigation investigate alternative mechanisms for form submit tracking beyond satellite tracking and prepare to discuss findings in the next meeting shraddha documentation update and sharing update the deployment documentation excel sheet to include recent ecid changes custom functions and dispatcher cdn steps then share the link with the team for review shraddha form styling and themes internal session organise an internal session with relevant team members to discuss how ecl styling in figma can be translated into aem forms themes sarah warzecha page template form usage identification identify which page templates currently use forms and which do not to support optimisation of client libraries and design policies for performance heidi reinke",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-11-04",
+            "pmName": "Shraddha Singh",
+            "slackTs": "1762311254.939099",
+            "attendees": [
+              "U06NF880220"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Brusnwick*",
+            "quality_score": 95
+          },
+          "created_at": "2025-11-05T02:54:14.939Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "5e2f06ce-8f86-4f46-b8b8-456fca396eeb",
+          "source": "slack",
+          "source_ref": "1762139888.047429",
+          "signal_type": "issue",
+          "content": ":new_user: *Shraddha Singh* :new_user:\n:customervivo:*Customer Name : Brunswick*\n:clock2: *Date :* 2025-10-30\n:group-people: *Attendees :* <@U06NF880220>\n:loading-2248:*Notes*\n*ECID Function Deployment and Rule Modification:* Shraddha updated Andy and Joseph on the deployment of the new ECID async function, which will require a subsequent rule modification once Christy deploys the code, and clarified that only the ECID field will change while FBCID and GCID will continue to be read from cookies.\n\n*Cloudflare Blocking Issue with New Forms:* Andy raised the recurring issue of Cloudflare blocking submissions for new forms and discussed the need for a permanent solution with Shraddha, indicating plans to address it further with Christy.\n\n*Forms Authoring and Fragment Demo Discussion:* Shraddha and Andy discussed the need for a forms fragment demo, with Andy concluding that, based on recent experience, the demo is unnecessary as the forms will remain static and permissions-based within AEM.\n\n*Documentation Updates and Sharing:* Shraddha informed Andy that they are updating the project documentation to include more details and will share the completed version via email once finished.\n\n*Testing, Environment Migration, and Ownership Planning:* Andy outlined the next steps for testing, migrating forms to higher environments, ensuring access, and clarifying ongoing ownership and maintenance responsibilities within AEM and Marketo.\n:todo_done: *Next Action*\n*ECID Function Deployment:* Notify the team when the ECID code is deployed in the QA environment so that tests can be submitted to ensure it passes through to Marketo. (Shraddha)\n.\n*Cloudflare Form Submission Issue:* Discuss with Christy offline to implement a permanent solution for the recurring Cloudflare form submission blocking issue on new pages or regions. (Andy)\n.\n*Documentation Enhancement:* Add further details to the documentation being created and share the updated version via email once complete. (Shraddha)",
+          "normalized_content": "new_user shraddha singh new_user customervivo customer name brunswick clock2 date 2025 10 30 group people attendees u06nf880220 loading 2248 notes ecid function deployment and rule modification shraddha updated andy and joseph on the deployment of the new ecid async function which will require a subsequent rule modification once christy deploys the code and clarified that only the ecid field will change while fbcid and gcid will continue to be read from cookies cloudflare blocking issue with new forms andy raised the recurring issue of cloudflare blocking submissions for new forms and discussed the need for a permanent solution with shraddha indicating plans to address it further with christy forms authoring and fragment demo discussion shraddha and andy discussed the need for a forms fragment demo with andy concluding that based on recent experience the demo is unnecessary as the forms will remain static and permissions based within aem documentation updates and sharing shraddha informed andy that they are updating the project documentation to include more details and will share the completed version via email once finished testing environment migration and ownership planning andy outlined the next steps for testing migrating forms to higher environments ensuring access and clarifying ongoing ownership and maintenance responsibilities within aem and marketo todo_done next action ecid function deployment notify the team when the ecid code is deployed in the qa environment so that tests can be submitted to ensure it passes through to marketo shraddha cloudflare form submission issue discuss with christy offline to implement a permanent solution for the recurring cloudflare form submission blocking issue on new pages or regions andy documentation enhancement add further details to the documentation being created and share the updated version via email once complete shraddha",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-10-30",
+            "pmName": "Shraddha Singh",
+            "slackTs": "1762139888.047429",
+            "attendees": [
+              "U06NF880220"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Brunswick*",
+            "quality_score": 95
+          },
+          "created_at": "2025-11-03T03:18:08.047Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "03529f07-e70e-4ea1-b18e-6e8a9303670e",
+          "source": "slack",
+          "source_ref": "1761302429.679959",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : Brunswick*\n:clock2: *Date :* 2025-10-23\n:group-people: *Attendees :* <@U06NF880220>, <@W4SG81T9C>, <@U0213T59LMN>\n:loading-2248:*Notes*\n• *Testing and Validation of Custom Functions for ECID, FCLID, GCLID:* Andy, Mayank, Christy, and the team discussed ongoing testing of custom functions for ECID, FCLID, and GCLID, including the need for development team review and validation of cookie-based retrieval methods, with Shraddha preparing a sample function for ECID and Christy agreeing to verify cookie values in production.\n• *Documentation of Custom Changes and Deployment Processes:* Mayank, Sarah, Andy, and Christy discussed the need for comprehensive documentation of all custom changes, including technical and business details, to facilitate smoother deployments across environments, with Mayank's team agreeing to draft the technical documentation and Christy's team to supplement with environment-specific information.\n• *Multilingual Form Translation and Integration in AEM:* Andy, Sakshi, Christy, Ben, and Mayank discussed the process for translating forms into multiple languages using AEM, including the use of dictionaries, translation providers, and embedding translated forms, with action items to set up Microsoft Translation and share relevant documentation.\n• *Reusable Form Fragments and Authoring Restrictions:* Andy, Sakshi, Mayank, and Sarah discussed strategies for locking down required form fields using fragments or custom components in AEM, aiming for reusability without strict security, and agreed to schedule a demo in the next meeting to illustrate the setup.\n• *Theme Integration for Forms:* Andy and Mayank briefly discussed the need to address theme integration for forms, noting that the current approach uses existing website styling, with plans to involve Ben McKnight and cover this topic in the next meeting.\n:todo_done: *Next Action*\n• *Custom Functions Verification:* Verify that the correct cookie keys are being referenced for ECID, FCLID, and GCLID in production and inform the team if any are missing or incorrect. (Christy)\n• *ECID Custom Function Deployment:* Share the sample custom function for ECID and ensure it is included in the JS file for deployment as done previously. (Shraddha)\n• *Documentation of Custom Changes:* Create and share documentation detailing all custom changes (including Cloudflare, template changes, custom function deployment, etc.) for review by the team in the next meeting. (Mayank)\n• *Microsoft Translation Setup:* Obtain and configure the Microsoft Translation key in production to enable machine translation for forms. (Ben, Christy)\n• *Translation Documentation:* Send documentation on how to whitelist properties for custom components to ensure they are included in translations. (Sakshi)\n• *Fragment Demo Preparation:* Prepare a demo for the next meeting to show how to create and use fragments for locking down required form fields. (Sakshi)\n• *Theme Usage Clarification:* Invite Ben McKnight to the next meeting to discuss how themes are used for forms and clarify differences from website styling. (Andy)\n• *Pipeline Notification:* Notify the team once the pipeline has been run after receiving the ECID custom function so validation can proceed. (Christy)",
+          "normalized_content": "new_user mayank agarwal new_user customervivo customer name brunswick clock2 date 2025 10 23 group people attendees u06nf880220 w4sg81t9c u0213t59lmn loading 2248 notes testing and validation of custom functions for ecid fclid gclid andy mayank christy and the team discussed ongoing testing of custom functions for ecid fclid and gclid including the need for development team review and validation of cookie based retrieval methods with shraddha preparing a sample function for ecid and christy agreeing to verify cookie values in production documentation of custom changes and deployment processes mayank sarah andy and christy discussed the need for comprehensive documentation of all custom changes including technical and business details to facilitate smoother deployments across environments with mayank s team agreeing to draft the technical documentation and christy s team to supplement with environment specific information multilingual form translation and integration in aem andy sakshi christy ben and mayank discussed the process for translating forms into multiple languages using aem including the use of dictionaries translation providers and embedding translated forms with action items to set up microsoft translation and share relevant documentation reusable form fragments and authoring restrictions andy sakshi mayank and sarah discussed strategies for locking down required form fields using fragments or custom components in aem aiming for reusability without strict security and agreed to schedule a demo in the next meeting to illustrate the setup theme integration for forms andy and mayank briefly discussed the need to address theme integration for forms noting that the current approach uses existing website styling with plans to involve ben mcknight and cover this topic in the next meeting todo_done next action custom functions verification verify that the correct cookie keys are being referenced for ecid fclid and gclid in production and inform the team if any are missing or incorrect christy ecid custom function deployment share the sample custom function for ecid and ensure it is included in the js file for deployment as done previously shraddha documentation of custom changes create and share documentation detailing all custom changes including cloudflare template changes custom function deployment etc for review by the team in the next meeting mayank microsoft translation setup obtain and configure the microsoft translation key in production to enable machine translation for forms ben christy translation documentation send documentation on how to whitelist properties for custom components to ensure they are included in translations sakshi fragment demo preparation prepare a demo for the next meeting to show how to create and use fragments for locking down required form fields sakshi theme usage clarification invite ben mcknight to the next meeting to discuss how themes are used for forms and clarify differences from website styling andy pipeline notification notify the team once the pipeline has been run after receiving the ecid custom function so validation can proceed christy",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-10-23",
+            "pmName": "Mayank Agarwal",
+            "slackTs": "1761302429.679959",
+            "attendees": [
+              "U06NF880220",
+              "W4SG81T9C",
+              "U0213T59LMN"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Brunswick*",
+            "quality_score": 95
+          },
+          "created_at": "2025-10-24T10:40:29.679Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "18f4f0e4-a5df-4582-ac36-55dab46ba92b",
+          "source": "slack",
+          "source_ref": "1753289795.262769",
+          "signal_type": "feedback",
+          "content": ":new_user: *Vijay Kumar Jalagari* :new_user:\n:customervivo:*Customer Name : Brunswick*\n:clock2: *Date :* 2025-07-22\n:group-people: *Attendees :* <@W5HEU5M7Y>, <@W4RU4N66R>, <@U01G51VDXB8>, <@U03QB0GK45Q>, <@W4RSW3ECC>\n:loading-2248:*Notes*\n_AI-generated content. Make sure to check for accuracy._\n\n*Key Topics:*\n• *Introduction:* Arun, Ben McKnight, Vijay Kumar, Andy, and Sarah discussed the discovery work on the platform team, focusing on the requirements for Marketo form components shared across all brands. The meeting aimed to review the findings and confirm the requirements with Sarah's team. \n• *Marketo Form Requirements:* Ben McKnight presented the high-level requirements for the Marketo form component, which includes ease of use, custom scripts for analytics, collecting location data, configurable form names, and campaign tracking. The document covers all EBG and Marine forms. \n• *Form Customisation and API Integration:* Vijay Kumar and Andy discussed the static values in the forms and the potential need for API integration for dynamic data. They also talked about the possibility of introducing custom components for Google Places autocomplete and other dynamic behaviours. \n• *Form Creation Process:* Ben McKnight explained the current process for form creation, which involves the Marketo team building the form and the author adding it to the page. Andy mentioned the recent changes towards more component-based styling and the need for documentation on dynamic setups for country and language. \n• *Project Timeline and Collaboration:* Sarah and Andy discussed the project timeline, aiming for an August go-live date for the European group. Arun suggested setting up a Teams channel for collaboration and weekly meetings to track progress and address any blockers. \n• *Marketo Integration and Access:* Arun and Andy discussed the need for access to Marketo and AEM instances for the team. They also talked about the possibility of using hidden fields to segment data by region and the need for further discussions on Edge delivery services. \n:todo_done: *Next Action*\n• Share the document with the team for review and confirmation of the required features. (Ben McKnight) \n• Create a custom component for Google Places autocomplete and provide it as a sample. (Vijay Kumar) \n• Confirm with Arun before kicking off the project to ensure forms act independently. (Ben McKnight) \n• Share any existing documentation on form creation and dynamic behaviours with the team. (Andy) \n• Set up a Teams channel for collaboration and weekly meetings. (Arun)\n• Provide the requirements document and list of technical participants to Arun. (Sarah) \n• Share the names of team members who need access to AEM and Marketo instances. (Vijay Kumar) \n• Send more information on Edge delivery services and schedule an overview session. (Arun)",
+          "normalized_content": "new_user vijay kumar jalagari new_user customervivo customer name brunswick clock2 date 2025 07 22 group people attendees w5heu5m7y w4ru4n66r u01g51vdxb8 u03qb0gk45q w4rsw3ecc loading 2248 notes _ai generated content make sure to check for accuracy _ key topics introduction arun ben mcknight vijay kumar andy and sarah discussed the discovery work on the platform team focusing on the requirements for marketo form components shared across all brands the meeting aimed to review the findings and confirm the requirements with sarah s team marketo form requirements ben mcknight presented the high level requirements for the marketo form component which includes ease of use custom scripts for analytics collecting location data configurable form names and campaign tracking the document covers all ebg and marine forms form customisation and api integration vijay kumar and andy discussed the static values in the forms and the potential need for api integration for dynamic data they also talked about the possibility of introducing custom components for google places autocomplete and other dynamic behaviours form creation process ben mcknight explained the current process for form creation which involves the marketo team building the form and the author adding it to the page andy mentioned the recent changes towards more component based styling and the need for documentation on dynamic setups for country and language project timeline and collaboration sarah and andy discussed the project timeline aiming for an august go live date for the european group arun suggested setting up a teams channel for collaboration and weekly meetings to track progress and address any blockers marketo integration and access arun and andy discussed the need for access to marketo and aem instances for the team they also talked about the possibility of using hidden fields to segment data by region and the need for further discussions on edge delivery services todo_done next action share the document with the team for review and confirmation of the required features ben mcknight create a custom component for google places autocomplete and provide it as a sample vijay kumar confirm with arun before kicking off the project to ensure forms act independently ben mcknight share any existing documentation on form creation and dynamic behaviours with the team andy set up a teams channel for collaboration and weekly meetings arun provide the requirements document and list of technical participants to arun sarah share the names of team members who need access to aem and marketo instances vijay kumar send more information on edge delivery services and schedule an overview session arun",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-07-22",
+            "pmName": "Vijay Kumar Jalagari",
+            "slackTs": "1753289795.262769",
+            "attendees": [
+              "W5HEU5M7Y",
+              "W4RU4N66R",
+              "U01G51VDXB8",
+              "U03QB0GK45Q",
+              "W4RSW3ECC"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": true,
+            "replyCount": 4,
+            "customerName": "Brunswick*",
+            "quality_score": 100
+          },
+          "created_at": "2025-07-23T16:56:35.262Z",
+          "is_duplicate_of": null
+        }
+      ],
+      "themes": [],
+      "customers": [
+        "Brunswick",
+        "Brusnwick"
+      ]
+    },
+    {
+      "id": "da2fdbbd-1fb1-4dee-938f-ab5b9b1ba80c",
+      "title": "Toyota Financial Services & Ford - IC Editor - customer (2 signals)",
+      "description": "Cluster of 2 related signals. Customers: Toyota Financial Services, Ford. Topics: IC Editor, Forms, Feature Request, Authoring UX, Migration. Sources: slack. Types: feedback, feature_request.",
+      "status": "new",
+      "created_at": "2026-02-06T07:22:58.138Z",
+      "roadmapScore": {
+        "overallScore": 48,
+        "impactScore": 40.69925001442312,
+        "confidenceScore": 67.5,
+        "effortScore": 44,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 2,
+          "uniqueCustomers": 2,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0.95,
+          "channelDiversity": 1
+        }
+      },
+      "signals": [
+        {
+          "id": "aa68fd45-dffe-48c8-b908-3517f381346d",
+          "source": "slack",
+          "source_ref": "1747375576.560709",
+          "signal_type": "feedback",
+          "content": ":new_user: *Anirudh Aggarwal* :new_user:\n:customervivo:*Customer Name : Toyota Financial Services*\n:clock2: *Date :* 2025-05-15\n:group-people: *Attendees :* <@W9QMZFR39>, <@W4R5LUPK3>, <@W5HEU5M7Y>, <@WGVFDSK18>, <@U038XFD63GS>\n:loading-2248:*Notes*\nFolks for ACS team also attended this meet.\n\n- The customer was provided with a demo showcasing IC Cloud Editor and its capabilities in comparison to the existing on-premises editors.\n- The customer expressed positive feedback regarding the enhanced user experience and streamlined functionality offered by the cloud editor.\n- The customer requested information regarding the following:\n\t- Support for FDM/JSON data - Team informed that it is in development and will be available soon.\n\t- Availability of Agent UI on cloud - Team informed that it is planned for next phases.\n\t- Migration of (100s of) on-premise 6.5 ICs - Team informed about the VIP engagement to facilitate the migration.\n\t- Availability of PDF generation APIs corresponding to IC - Team provided a brief overview of the render API.\n\t- Nested fragments use-case - Initial analysis of the collateral revealed that nested fragments (Document Fragments inside Layout Fragments) were created due to lack of FDM support in designer and layout support in IC Editor. This requires further evaluation from both teams.\n:todo_done: *Next Action*\nNext Meeting Agenda:\n- PMs to share the roadmap and future timelines.\n- Customer and PMs to determine POC Scope together.",
+          "normalized_content": "new_user anirudh aggarwal new_user customervivo customer name toyota financial services clock2 date 2025 05 15 group people attendees w9qmzfr39 w4r5lupk3 w5heu5m7y wgvfdsk18 u038xfd63gs loading 2248 notes folks for acs team also attended this meet the customer was provided with a demo showcasing ic cloud editor and its capabilities in comparison to the existing on premises editors the customer expressed positive feedback regarding the enhanced user experience and streamlined functionality offered by the cloud editor the customer requested information regarding the following support for fdm json data team informed that it is in development and will be available soon availability of agent ui on cloud team informed that it is planned for next phases migration of 100s of on premise 6 5 ics team informed about the vip engagement to facilitate the migration availability of pdf generation apis corresponding to ic team provided a brief overview of the render api nested fragments use case initial analysis of the collateral revealed that nested fragments document fragments inside layout fragments were created due to lack of fdm support in designer and layout support in ic editor this requires further evaluation from both teams todo_done next action next meeting agenda pms to share the roadmap and future timelines customer and pms to determine poc scope together",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-05-15",
+            "pmName": "Anirudh Aggarwal",
+            "slackTs": "1747375576.560709",
+            "attendees": [
+              "W9QMZFR39",
+              "W4R5LUPK3",
+              "W5HEU5M7Y",
+              "WGVFDSK18",
+              "U038XFD63GS"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Toyota Financial Services*",
+            "quality_score": 95
+          },
+          "created_at": "2025-05-16T06:06:16.560Z",
+          "is_duplicate_of": null
+        },
+        {
+          "id": "8fd9e257-8079-4610-944c-d873bd5a41a9",
+          "source": "slack",
+          "source_ref": "1746508900.112879",
+          "signal_type": "feature_request",
+          "content": ":new_user: *Anirudh Aggarwal* :new_user:\n:customervivo:*Customer Name : Ford*\n:clock2: *Date :* 2025-05-05\n:group-people: *Attendees :* <@W9QMZFR39>, <@W010NNJV7S8>, <@U038XFD63GS>\n:loading-2248:*Notes*\n• The customer was provided with a demo showcasing IC Cloud Editor and its capabilities in comparison to the existing on-premises editors.\n• The customer expressed positive feedback regarding the enhanced user experience and streamlined functionality offered by the cloud editor.\n• The customer requested information regarding the migration strategy for their portfolio of 500-600 letters to the cloud platform. The team provided an overview of the VIP engagement program to facilitate this transition.\n• The customer was asked to explore the new editor and share honest feedback with the team for improvements.\n:todo_done: *Next Action*\n• *Sandbox Configuration:* Customer will share their sandbox details to enable the editor.\n• *VIP Engagement:* The customer will conduct an internal review of the VIP engagement program for the migration initiative and provide their assessment to our team.\n• *PostgreSQL Integration:* We need to check the feasibility and plans for integrating PostgreSQL database with the FDM.\n• *Script Editing Support:* Customer will share their requirements for custom functions/scripts in the cloud editor to explore potential solutions.",
+          "normalized_content": "new_user anirudh aggarwal new_user customervivo customer name ford clock2 date 2025 05 05 group people attendees w9qmzfr39 w010nnjv7s8 u038xfd63gs loading 2248 notes the customer was provided with a demo showcasing ic cloud editor and its capabilities in comparison to the existing on premises editors the customer expressed positive feedback regarding the enhanced user experience and streamlined functionality offered by the cloud editor the customer requested information regarding the migration strategy for their portfolio of 500 600 letters to the cloud platform the team provided an overview of the vip engagement program to facilitate this transition the customer was asked to explore the new editor and share honest feedback with the team for improvements todo_done next action sandbox configuration customer will share their sandbox details to enable the editor vip engagement the customer will conduct an internal review of the vip engagement program for the migration initiative and provide their assessment to our team postgresql integration we need to check the feasibility and plans for integrating postgresql database with the fdm script editing support customer will share their requirements for custom functions scripts in the cloud editor to explore potential solutions",
+          "severity": null,
+          "confidence": null,
+          "metadata": {
+            "date": "* 2025-05-05",
+            "pmName": "Anirudh Aggarwal",
+            "slackTs": "1746508900.112879",
+            "attendees": [
+              "W9QMZFR39",
+              "W010NNJV7S8",
+              "U038XFD63GS"
+            ],
+            "channelId": "C04D195JVGS",
+            "hasReplies": false,
+            "replyCount": 0,
+            "customerName": "Ford*",
+            "quality_score": 95
+          },
+          "created_at": "2025-05-06T05:21:40.112Z",
+          "is_duplicate_of": null
+        }
+      ],
+      "themes": [],
+      "customers": [
+        "Ford",
+        "Toyota Financial Services"
+      ]
+    }
+  ],
+  "quickWins": [],
+  "emerging": [],
+  "byImpact": {
+    "high": 0,
+    "medium": 16,
+    "low": 84
+  },
+  "byConfidence": {
+    "high": 13,
+    "medium": 53,
+    "low": 34
+  },
+  "averageScores": {
+    "impact": 21,
+    "confidence": 41,
+    "effort": 40,
+    "strategic": 50,
+    "urgency": 30
+  }
+}

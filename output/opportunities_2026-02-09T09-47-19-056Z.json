@@ -1,0 +1,1674 @@
+[
+  {
+    "id": "740b3d7f-7ed5-4c62-b88e-60564875c361",
+    "title": "Issue/Blocker - like - phone (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Issue/Blocker. Sources: manual. Types: community_comment.",
+    "status": "new",
+    "created_at": "2026-02-09T11:54:43.278Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "dc40fb6e-4945-43c7-8d5f-7ef3d4028f5d",
+    "title": "Spark & Rishi - Forms - headless (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Spark, Rishi. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.980Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "bedb4e43-37ec-4851-ae35-6b24178e0360",
+    "title": "NFCU - Forms - data (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: Forms, Feature Request, Issue/Blocker, IC Editor, MasterPage option causing confusion during fragment creation, Integrations, Fragment does not have the correct width when dropped on the canvas during document creation, PDF preview is not functioning correctly when a fragment is present in the document, MasterPage option in the editor is causing confusion for customers and needs to be hidden. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.979Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "a6217bc4-3b9e-463c-b576-87eb4358b6af",
+    "title": "LPL Financial - Forms - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL Financial. Topics: Forms, Feature Request, Automated Forms Conversion, Redundant call to fetch template based on formID, Migration, Hesitant to replace the BPM tool used for data capturing, Need to keep mapping for every form field with JSON field per form, Performance. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.978Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "a36a4a63-6548-4768-8949-cd40e43cbe04",
+    "title": "Issue/Blocker - Submission failing during sync calls - still (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Issue/Blocker, Submission failing during sync calls, Uncertainty about saving as draft solution, Saving as draft is seen as a workaround, Reliability. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.977Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "15f597e9-e88c-45d7-92bc-104f77cdc28f",
+    "title": "LPL Financial - Forms - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL Financial. Topics: Forms, Feature Request, Issue/Blocker, Data Binding, Intermittent issues with form publishing; updated version doesn’t always reflect on the publish instance, Security & Compliance, Automated Forms Conversion, Text overlapping issue during PDF import, Missing images during PDF import, Migration, Performance. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.976Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "395138e3-f2ce-40fe-afc9-4d402095a094",
+    "title": "NFCU - Feature Request - nfcu (4 signals)",
+    "description": "Cluster of 4 related signals. Customers: NFCU. Topics: Feature Request, Issue/Blocker, Forms, Data Binding, PDF Preview Issues, Conditional New Line in Text Box, Template as Reference Support, PDF Preview Issues with multiple fragments and fields, Rich Text Editor Misalignment of text contents, Authoring UX, Rendering & PDF, Redirection Issue: NFCU is experiencing a problem where clicking the edit option in Document, FM does not redirect to the correct ORG., Fragment Issue: The header and text field were not taking the full width. This issue has been fixed and confirmed by NFCU., PDF Preview Error: An error occurred when previewing a PDF with a fragment. This issue has also been fixed and confirmed by NFCU.. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.975Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "786e8a0f-d9ee-49c2-b988-104c41374b5f",
+    "title": "Toyota Financial Services & Ford - IC Editor - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Toyota Financial Services, Ford. Topics: IC Editor, Forms, Feature Request, Nested fragments use-case due to lack of FDM support in designer and layout support in IC Editor, Authoring UX, Migration, Rendering & PDF. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.975Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "bdfa36b8-258b-4acd-b0d9-57c6e9546ca1",
+    "title": "4point & Adobe - Forms - please (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: 4point, Adobe. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.973Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "6f17c13c-db1d-4650-9b04-48eacb930a37",
+    "title": "Charles Shwab & Charles Schwab - Data Binding - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: Charles Shwab, Charles Schwab, Martin, George, Muravitsky, Valerie, Petty, Michael, Teague, Stephanie, Kolluru, Abhishek, Paracka, Jacob J. Topics: Data Binding, Forms, Feature Request, Issue/Blocker, HTML5 Forms, Font issue on Mac with HTML5 forms, HTML extension for caching not coming on 6.5, Challenges with dynamic HTML forms caching, CSS and JS references in HTML forms need absolute path, Migration, Rendering & PDF, Adaptive Forms, Validation of strategy to hide certain parameters from the request, Fetch HTML from an application and insert in page, Hide HTTP URL used to fetch data, Cache HTML content in dispatcher, Differences between on-prem and Cloud versions for migration, Authoring UX, Security & Compliance, High manual effort in printing, filling, and validating forms, Difficulty in scaling and loading large HTML5 forms, Dispatcher caching is not effective for HTML5 forms, Performance. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.972Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "1d2c0645-5ef7-4399-beda-f6dcfa205f0c",
+    "title": "LPL Financials & LPL Financial - Automated Forms Conversion - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: LPL Financials, LPL Financial. Topics: Automated Forms Conversion, Core Components, Forms, Feature Request, Issue/Blocker, Forms Experience Builder, Data Binding, Challenges in converting forms into the AEM side, Issues with headers and repeated fields in forms conversion, Core component editor issues in dev environment, Header fields not translated during automated forms conversion, Issues with text extraction and XFA elements in forms conversion, Authoring UX, Performance, Migration, Integrations, Scalability issues with manual conversion and data binding, Time-consuming process of converting forms from Word documents to AEM forms, Scalability has been identified as a major challenge, it takes significant time and effort to design and bind a large number of forms., The current process involves few steps like binding in XDP, changing in transformation code etc, making it inefficient and time-consuming., The existing framework does not scale effectively for a large number of forms. Each new form requires manual mapping and binding, which is u. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.971Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "35931a93-e1b5-444a-b1d3-d4c20b0de473",
+    "title": "NFCU - IC Editor - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: IC Editor, Forms, Feature Request, FDM, Integrations, Rendering & PDF, Core Components, Delay in IC due to Architecture level changes, Authoring UX, Security & Compliance, Migration. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.970Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "c3a0cdc0-b4b0-4a25-a1e2-d3bbfc73a278",
+    "title": "NFCU - Integrations - token (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: Integrations. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.969Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "1afc111f-e04a-41ec-beaa-2e073b2e385a",
+    "title": "Abbvie & AbbVie - Feature Request - new_user (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: Abbvie, AbbVie. Topics: Feature Request, Issue/Blocker, Issue with custom error response where default AEM error page HTML was being returned, Client library configuration issues. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.968Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "d6f30309-d8db-494c-a7db-bd52d2e83372",
+    "title": "State of Pennsylvania - Forms - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: State of Pennsylvania. Topics: Forms, Feature Request, Issue/Blocker, Customization of page component breaking including custom functions, Customisation issues. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.967Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "31895447-3918-4252-b214-9f8c0776dd70",
+    "title": "AbbVie - Forms - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: AbbVie. Topics: Forms, Feature Request, Issue/Blocker, Error on Cloudflare CDN, Response header used to bypass default error pages of CDN is being stripped off. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.966Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "fd7443b2-483a-40c4-b95b-7d28eaa9db9b",
+    "title": "Jet2 - Forms Experience Builder - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Jet2. Topics: Forms Experience Builder, Core Components, Forms, Issue/Blocker, AEM forms, EDS forms, Misalignment in expectations and use of Adobe solutions, Pain points with multiple Adobe solutions, Lack of expertise on AEM forms, Authoring UX. Sources: slack. Types: feedback, issue.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.965Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "56d78156-4683-4d70-b896-c14964144e30",
+    "title": "Assured Edge Income Protector & Max Income Comparison - Forms - https (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Assured Edge Income Protector, Max Income Comparison, Corebridge Financial. Topics: Forms, Forms Experience Builder. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.964Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "827f0395-b4e7-4d7d-b750-26d3b70facfa",
+    "title": "IRS/DMAF & IRS/Accenture Federal - Core Components - accenture (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: IRS/DMAF, IRS/Accenture Federal, IRS, Accenture. Topics: Core Components, Forms, Feature Request, Concerns regarding multiple Feature Toggle, Integrations, Authoring UX, Need to share Local SDK with Accenture, Accenture to share the customization code, Postgress storage implementation code required for converter implementation, Large Attachment support required (Custom Core component), Multi-Signer support required, Custom component used for Save As Draft/Listing, Currently on SP21, no plans for SP23 yet, Save as Draft, Custom Submission, JSON to XML Conversion, Documentation for 'Save as Draft' feature not found for Core Component-based forms in on-premise setup, 'Save as Draft' functionality needs to be backported for Core Component-based forms on 6.5, Custom submission service needs to check if request header information can be accessed, No OOTB utility available to convert Core Component JSON data to XML, Migration. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.962Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "9781953d-fd14-47f7-b3e6-6de6b4a980b1",
+    "title": "NFCU - Forms - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: Forms, Feature Request, Data Binding, Forms Experience Builder, IC Editor, Core Components, Rendering & PDF, Authoring UX, Integrations. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.961Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d1e61edb-687a-4ad0-a99a-fbeb2d52872f",
+    "title": "Issue/Blocker - Forms - suggest (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Issue/Blocker, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.960Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e6604011-5100-4c7c-ba87-2faeafb88f1c",
+    "title": "Feature Request - apis - adobe (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.959Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "c5545084-1885-497b-8c8e-174541b6bf41",
+    "title": "NFCU - Feature Request - requirements (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.958Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "203debc4-4dd8-4cd2-af0d-d3987188e407",
+    "title": "Abbvie & Shivendra - Forms - sites (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Abbvie, Shivendra, Arun, Toto. Topics: Forms, Feature Request, Integrations. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.957Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "25bc585b-6e54-4dd3-b4ef-c06551cc7c25",
+    "title": "Forms - Automated Forms Conversion - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Automated Forms Conversion. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.956Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "2072d14b-653c-4767-a3a7-c0370e81e196",
+    "title": "NFCU - Feature Request - data (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.956Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "2dba23df-2428-431d-8c8a-2d75c5fb99ca",
+    "title": "NFCU - Go-Live - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: Go-Live, Feature Request, Forms, IC Editor, Security & Compliance. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.955Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "dbbd48b0-7cb1-4b85-b39c-093b71efcbf4",
+    "title": "State of Pennsylvania - Issue/Blocker - new_user (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: State of Pennsylvania. Topics: Issue/Blocker, Issues of SOP with latest private release, \"Exclude from dor if hidden\" not working in wizard, Issues with private build. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.954Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "8ce0e505-3f43-426a-b267-a01d6663967a",
+    "title": "Oppty: Macquarie | Global Credential Pack - Forms - data (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Oppty: Macquarie | Global Credential Pack. Topics: Forms, Feature Request, Authoring UX, Integrations. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.953Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d450d0bf-2a30-41a8-b420-bb7b24acb28c",
+    "title": "LPL financial & LPL Financial - Data Binding - andy (4 signals)",
+    "description": "Cluster of 4 related signals. Customers: LPL financial, LPL Financial. Topics: Data Binding, Forms, Feature Request, Issue/Blocker, Forms Experience Builder, Automated Forms Conversion, Double sign field issue, BindRefs for table fields, Authoring UX, Rendering & PDF, PDF Conversion requires browser to remain open, Extra sign field issue, Radio buttons and data bindings issue, Radio button not detected correctly, Bindings Issue, Special Characters in Bindings, Communication Service Issue, Error Toast Issue, Sign Field Issue, Manual Step for Door Bindings. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.952Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "632fd8e9-e525-4ce6-9f2c-d46331931fbd",
+    "title": "NFCU - IC Editor - issue (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: IC Editor, Forms, Feature Request, Issue/Blocker, FDM JSON Format Issue, Template Selection & Page Preset, Font Rendering in PDF Preview, Custom Font Upload, Content Overflow Limitation, Template vs. IC Editor Restrictions, Pagination & Master Page Settings, Subform & Content Area Deletion, Documentation for IC Editor, Rendering & PDF, 401 error while accessing the editor, Text appeared vertically aligned when importing XDPs created using legacy Designer, 500 error when attempting to save imported XDP. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.951Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "c962984d-fe23-4e41-88d1-4cf5509db32d",
+    "title": "NFCU - Issue/Blocker - please (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: NFCU. Topics: Issue/Blocker. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.951Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "c4e52983-bf65-4d14-aa9d-bd7325a7a556",
+    "title": "Carpenter (Partner : 4 Point ) & Carpenter - Core Components - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Carpenter (Partner : 4 Point ), Carpenter. Topics: Core Components, Forms, Issue/Blocker, Issues with local development, Authoring UX, Pipeline failing due to removed content from 'artifact' project, AEM not launching when starting local SDK instance. Sources: slack. Types: issue, feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.950Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "7613acf9-d878-4aff-b267-2b6f7af5043e",
+    "title": "LPL Financials - Forms - release (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL Financials. Topics: Forms, Feature Request, Issue/Blocker, Dark Mode Issue, PDF Conversion Issues, Dark Mode removal, Extra sign field issue. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.949Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "66fe7976-096c-4f50-bb2e-e3358b686355",
+    "title": "Darshan - Forms - case (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Darshan. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.947Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "516e8587-f2a7-4951-8cdf-c7cfb1496471",
+    "title": "GM Financial - IC Editor - support (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: GM Financial. Topics: IC Editor, Forms, Feature Request, Data Binding, Limited support for rendering tables across pages, Page number support not currently available, Authoring UX, Rendering & PDF, Migration, Integrations. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.946Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "42ebc505-3a68-4b76-b7b0-001510d9bc22",
+    "title": "Nedbank - Forms - locale (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Nedbank. Topics: Forms, Feature Request, Issue/Blocker, Forms Experience Builder, Sandbox access issues including permission problems, Authoring UX, Integrations, Rendering & PDF, Adaptive Forms, Multi-locale template issue in Adaptive Forms. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.945Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "234e145d-8c4e-4fb3-9d20-90617c6be80d",
+    "title": "GM Financial - Forms - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: GM Financial. Topics: Forms, Data Binding, IC Editor, Integrations. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.943Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d5855145-75d7-4435-be37-b830b2f0a173",
+    "title": "Feature Request - Data Binding - data (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Feature Request, Data Binding, Customer lacks understanding of web service design for data fetching via FDM. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.942Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "768c01ec-9c34-48ca-8200-9bfcca841450",
+    "title": "UPS - Forms Experience Builder - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: UPS. Topics: Forms Experience Builder, Forms, Feature Request, Issue/Blocker, Core Components, Issues with forms experience builder, image to forms generation, and PDF to form generation, Integrations, Automated Forms Conversion, Data Binding, Issues with layout changes and other commands, Authoring UX, Rendering & PDF, Performance. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.941Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "f9155973-da58-4bb0-809e-39f97c48bf3f",
+    "title": "LPL - Forms - assets (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL. Topics: Forms, Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.939Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "fa846520-bf68-44c5-b12b-b6347eb24239",
+    "title": "NFCU - Feature Request - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: Feature Request, Issue/Blocker, IC Editor, Publish APIs for communications are returning 404, 500 error on PDF preview when deleting and re-adding, Rendering & PDF, PDF Preview Issue, Themes not loading correctly in App Framework across consecutive updates. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.938Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "21a4bd76-15a7-4321-9dc2-b33bd1955cdb",
+    "title": "Brunswick - Core Components - form (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: Brunswick. Topics: Core Components, Forms, Go-Live, Feature Request, Issue/Blocker, Forms Experience Builder, Integrations, Authoring UX, Rendering & PDF, Migration. Sources: slack. Types: feature_request, feedback, issue.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.937Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "cb60b235-7017-4b15-81be-d8e07878b964",
+    "title": "Issue/Blocker - issues - issue (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Issue/Blocker. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.936Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e66e6a5d-c180-4f3b-b1b7-e7d212553a53",
+    "title": "AbbVie & IRS - Core Components - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: AbbVie, IRS. Topics: Core Components, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.934Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "52f8c662-7d15-465b-b65d-1ea4cc99e597",
+    "title": "Brunswick - Forms - forms (9 signals)",
+    "description": "Cluster of 9 related signals. Customers: Brunswick. Topics: Forms, Data Binding, Marketo API concurrency limits, Integrations, Authoring UX. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.933Z",
+    "signal_count": "9"
+  },
+  {
+    "id": "2d05e44a-0217-4c4e-97b6-c4cf434571f6",
+    "title": "LPL - Forms Experience Builder - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL. Topics: Forms Experience Builder, Forms, Feature Request, Issue/Blocker, Forms Search Inconsistency, 401 Authentication Errors, Authoring UX, Custom indexing issue resolved by creating a custom Lucene index, Forms Experience Builder metadata not updating when replacing PDFs, Forms Experience Builder field binding sometimes fails to map duplicates correctly, JWT Authentication Issue causing 401 errors on first servlet call, Performance. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.932Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "6ba3071d-3d0b-443c-811d-cb057f72ee69",
+    "title": "Brightline & NFL - Forms - forms (6 signals)",
+    "description": "Cluster of 6 related signals. Customers: Brightline, NFL, BrightLine, Busch Group, Spark NZ. Topics: Forms, Feature Request, Core Components, Integrations, Authoring UX, AI Assistant, Custom Components Support, Integration with External Sources. Sources: slack. Types: feedback, pain_point.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.930Z",
+    "signal_count": "6"
+  },
+  {
+    "id": "0365896a-ebed-4416-9970-6417413fd2e8",
+    "title": "NFCU - Forms - nfcu (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: NFCU. Topics: Forms, Feature Request, Rendering & PDF, Data Binding, Authoring UX. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.928Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "c35d4f21-c9e1-46d8-b8ea-8c4642ab05cc",
+    "title": "UPS & UPS.com - Forms Experience Builder - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: UPS, UPS.com. Topics: Forms Experience Builder, Forms, Feature Request, Go-Live, Integrations, Migration, Core Components, Authoring UX. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.927Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "c65f5364-4998-484c-96c8-50dec68762d1",
+    "title": "Continental Tires & KrisShop - Forms - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Continental Tires, KrisShop. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.926Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "fda9f043-97cd-4008-863d-7da9dc24eb67",
+    "title": "LPL & Brunswick - Forms - form (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: LPL, Brunswick. Topics: Forms, Feature Request, Issue/Blocker, Go-Live, Login Token Issue, Unbound Fields & Batch Conversion, Form Loading Issue, Browser Mandatory Field Bug, AEM Publishing Issues, Performance, AEM forms not loading on the published QA website, Dispatcher and Authentication Configuration Challenges, Access and Collaboration Barriers, Inability to test forms on the published site due to dispatcher restrictions, Intermittent failures when connecting new forms to Marketo via the engage connector, Hidden fields and conditional rules not transferring from adaptive form to published AEM site page, Client library inclusion required for adaptive form rules, Management of client library and configuration changes across environments, Locale and region logic for form fields, Integrations, Authoring UX. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.925Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "f0340309-4302-4823-bbc0-0e514ba5d2dd",
+    "title": "Brightline & LPL Financials - Forms - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: Brightline, LPL Financials. Topics: Forms, Feature Request, Issue/Blocker, Core Components, Producer Usability Challenges with Adobe Forms, Backend Configuration and Submission Process, Styling and Theming Issues with Embedded Forms, Authoring UX, Challenges in Form Creation and AEP Integration, Integrations, Automated Forms Conversion, Adobe AI Capabilities, Adobe Sign Integration, Manual work required to address gaps in automated forms conversion, Dark theme issue depends on system settings, Form conversion flakiness, Limitation in converting repeatable panels, Multisigners issue under investigation, Performance. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.923Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "9d973136-7f7b-46de-9844-23168e07ab66",
+    "title": "Forms - Issue/Blocker - jira (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Issue/Blocker, Wizard Data tab performance issue, Performance. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.921Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "08684cae-1c25-4587-8304-9d986f0c362a",
+    "title": "Brusnwick & Brunswick - Forms - christy (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: Brusnwick, Brunswick. Topics: Forms, Go-Live, Feature Request, Authoring UX, Performance, Core Components, Integrations. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.920Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "2c677137-295a-403f-9460-6bd6ad537ae4",
+    "title": "NFL & Lumen - Forms Experience Builder - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFL, Lumen. Topics: Forms Experience Builder, Forms, Automated Forms Conversion, IC Editor, Core Components, Data Binding, Authoring UX, Integrations, Marketo Connector, Forms Migration, Edge Delivery Services, AAP Connector, Form Experience Builder, Migration. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.919Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "5e29b412-b9f8-458d-a5e7-176590477d31",
+    "title": "https - slack - archives (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.917Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "6a447afc-1928-4825-95cb-aabddd9bfe65",
+    "title": "LPL Financials & LPL - Core Components - andy (5 signals)",
+    "description": "Cluster of 5 related signals. Customers: LPL Financials, LPL. Topics: Core Components, Forms, Go-Live, Feature Request, Issue/Blocker, Forms Experience Builder, Form Validation and Prefix Path Issue, Bulk PDF Import and Migration Progress, Layout and Mapping Issues in Converted Forms, Form Theming and Styling Considerations, Migration, Authoring UX, URL Rewriting Issue: Embedded form failures caused by model.json paths not being rewritten properly through Cloudflare and AEM filters, Core-Component Behavior: Issue occurs only in core components; foundation components load correctly due to differing callback handling, Blocker Confirmation: All current forms are blocked from UAT due to unresolved routing and model.json failures, Automated Forms Conversion, Form Conversion Process and Binding Issues, 401 Login Token Issue and Troubleshooting, Performance, PDF Conversion Issues with multiple sign-up fields and XML generated with respect to the table component, Table Component Issue in forms, XML Notation for PDF Service, Rendering & PDF, Integrations, PDF field repetition, Conversion Errors and New Approach, Manual steps required after form creation, Field Duplication Issue, Manual Edits and Errors, Handling Repeated Fields, Handling tables in forms, Data Binding. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.916Z",
+    "signal_count": "5"
+  },
+  {
+    "id": "10e13427-581d-4a60-9380-e945989e8dbd",
+    "title": "Brunswick - Forms - andy (5 signals)",
+    "description": "Cluster of 5 related signals. Customers: Brunswick. Topics: Forms, Feature Request, Issue/Blocker, Go-Live, Core Components, IC Editor, ECID not being submitted to Marketo from QA environment, Authoring UX, Integrations, Analytics Tracking during Marketo to AEM Forms Migration, Form Styling and Theme Implementation Challenges, Permissions and Access for Form Development, Multi-Brand Form Data Routing and Configuration, Migration, Cloudflare blocking submissions for new forms, Absence of AEM Forms core components and themes, Access issues for the Adobe team, Data Binding. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.914Z",
+    "signal_count": "5"
+  },
+  {
+    "id": "f429dec7-5488-4d0c-ab5e-ba870ec607e9",
+    "title": "Carpenter - Forms - sakshi (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: Carpenter. Topics: Forms, Go-Live, Feature Request, Issue/Blocker, Core Components, Forms Experience Builder, Automated Forms Conversion, Data Binding, Azure SQL Server Connectivity and Regional Restrictions, Dynamic Form Design, Theming, and Front-End Pipeline, Authoring UX, Integrations, Rendering & PDF, Migration, Difficulty understanding user roles, permissions, and deployment steps due to fragmented documentation, Security & Compliance, Troubleshooting Token Generation, Region Selection and GDPR Concerns. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.912Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "69a31131-7efb-4a95-a4f0-b998740bb7ea",
+    "title": "Brunswick - Forms - andy (4 signals)",
+    "description": "Cluster of 4 related signals. Customers: Brunswick. Topics: Forms, Go-Live, Feature Request, Issue/Blocker, Automated Forms Conversion, Data Binding, Form wizard and submission issues, Styling changes pending for Mercury Marine forms, Translation setup for forms pending, Authoring UX, Integrations, Performance, Migration challenges with form naming conventions and connector configurations, Marketo partitioning and data attribution concerns, Migration, Pipeline build failure preventing deployment and testing of dispatcher changes, New forms cannot connect to Marketo Engage due to persistent loading errors, Performance issue in the data tab of Wizard with large content and many nested nodes, Form Integration Issues on Regional Pages, Deployment and Pipeline Process for Form Functionality, Access and Environment Coordination Issues. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.909Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "22f43462-16ad-4431-9646-54c808418f30",
+    "title": "SmartDoc Technologies & Naveen - Forms Experience Builder - forms (7 signals)",
+    "description": "Cluster of 7 related signals. Customers: SmartDoc Technologies, Naveen, LPL. Topics: Forms Experience Builder, Forms, Feature Request, IC Editor. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.906Z",
+    "signal_count": "7"
+  },
+  {
+    "id": "65809193-496f-4fea-ad03-5ee324a62115",
+    "title": "Feature Request - json - need (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.904Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "5170d92a-f6cc-4adc-9166-817f507aa93b",
+    "title": "Fidelity Stock Plan Services - Forms - support (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Fidelity Stock Plan Services. Topics: Forms, Feature Request, Multi-threaded PDFG conversions not supported by default in Microsoft Office 2021 and Acrobat DC (FRL), Unable to run multi-threaded conversions with the latest versions of Windows Server and MS Office, Migration, Rendering & PDF. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.903Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "7c2a1bed-70a1-40bd-89c7-96f5a6779414",
+    "title": "UPS - Feature Request - meeting (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: UPS. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T08:36:09.900Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "acf5d22e-477f-496f-85a4-611cd88441fe",
+    "title": "Spark - Forms - headless (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Spark. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.144Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "3bb47153-26f1-443e-bf82-4093f3aa78bf",
+    "title": "LPL Financial & LPL - Forms - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL Financial, LPL. Topics: Forms, Feature Request, Automated Forms Conversion, Customer is hesitant to replace the BPM tool used for data capturing, Need to keep mapping for every form field with JSON field per form, Lack of data on migration time for older forms to AEM Forms, Migration, Performance, Adaptive Forms, Current vendor uses a multi-API or multi-step process: JSON → XML → Generate PDF → Create Agreement → Send for Signature, Customer would like to review existing architecture and explore ways to reduce the time required for generating and sending communications. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.143Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d6916688-8dd2-4051-8f3b-4d865db812d0",
+    "title": "NFCU - Forms - nfcu (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: NFCU. Topics: Forms, Feature Request, Issue/Blocker, Redirection Issue: NFCU is experiencing a problem where clicking the edit option in Document, FM does not redirect to the correct ORG., Fragment Issue: The header and text field were not taking the full width. This issue has been fixed and confirmed by NFCU., PDF Preview Error: An error occurred when previewing a PDF with a fragment. This issue has also been fixed and confirmed by NFCU., IC Editor, MasterPage option causing confusion in editor, Authoring UX, Integrations, Fragment width is incorrect when dropped on the canvas, PDF preview not functioning correctly with fragment in document, MasterPage option causing confusion for customers. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.142Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "d87c8506-2659-4b3f-9f86-039fd965c7d5",
+    "title": "Arneh - Automated Forms Conversion - import (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Arneh. Topics: Automated Forms Conversion, Forms, Data Binding, Rendering & PDF. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.141Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "3df9c600-8d0b-4180-ac91-9178fdbaf7dc",
+    "title": "Charles Shwab & Charles Schwab - Data Binding - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Charles Shwab, Charles Schwab. Topics: Data Binding, Forms, Feature Request, Issue/Blocker, Font issue on Mac with HTML5 forms, HTML extension for caching not coming on 6.5, CSS and JS references in HTML forms using relative paths, Migration, Rendering & PDF, Validation of strategy for custom servlet and HTML5 Form rendition, Hiding certain parameters from the request, Fetching HTML from an application or a web app for embedding, Hiding http URL used to fetch data, Caching HTML content in dispatcher, Differences between on-prem version and Cloud for AEM forms. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.141Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "b4e49d07-19f1-427d-bf9f-76e623429f99",
+    "title": "Feature Request - data - still (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.140Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "8475ba31-6980-4431-8cb4-3e4357e87eca",
+    "title": "NFCU - Feature Request - nfcu (4 signals)",
+    "description": "Cluster of 4 related signals. Customers: NFCU. Topics: Feature Request, Issue/Blocker, Data Binding, Forms, PDF Preview Issue, Themes are not loading correctly in the App Framework (AF) across consecutive updates, PDF Preview Issues, Conditional New Line in Text Box, Template as Reference Support may not fully resolve use case, Rendering & PDF, PDF preview issues with documents having multiple fragments and fields, Conditional new line handling in text boxes, PDF Preview Issues with multiple fragments and fields, Rich Text Editor Misalignment, Authoring UX. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.139Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "3e4238d9-d311-4e24-bbaf-fe347ad6e457",
+    "title": "Issue/Blocker - Submission failing due to custom code not throwing exceptions to the source - still (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Issue/Blocker, Submission failing due to custom code not throwing exceptions to the source, Uncertainty about saving as draft being the right solution, Reliability. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.139Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "da2fdbbd-1fb1-4dee-938f-ab5b9b1ba80c",
+    "title": "Toyota Financial Services & Ford - IC Editor - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Toyota Financial Services, Ford. Topics: IC Editor, Forms, Feature Request, Authoring UX, Migration. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.138Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "64d1ee0c-7f9e-4692-9381-d908f4371d13",
+    "title": "NFCU - Forms - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: Forms, Feature Request, IC Editor, Core Components, Delay in IC due to Architecture level changes, Integrations, Rendering & PDF, Security & Compliance, Authoring UX. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.137Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d250ce70-5401-49bc-8090-0845aaa59b33",
+    "title": "IRS/Accenture Federal & IRS - Core Components - accenture (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: IRS/Accenture Federal, IRS. Topics: Core Components, Forms, Feature Request, Need to share Local SDK with Accenture, Save as Draft, Custom Submission, JSON to XML Conversion, Save as Draft functionality not available for Core Component-based forms on 6.5., Accenture needs access to request header information in custom submission service., No OOTB utility available to convert Core Component JSON data to XML., Migration, Integrations. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.136Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "0a8dd2e7-1fa4-4dc8-9ff0-756a4f069e1c",
+    "title": "LPL Financials & LPL Financial - Forms - forms (5 signals)",
+    "description": "Cluster of 5 related signals. Customers: LPL Financials, LPL Financial. Topics: Forms, Feature Request, Issue/Blocker, Automated Forms Conversion, Core Components, Forms Experience Builder, Adobe Sign Integration, Guide Bridge, Manual work required to address gaps in the automated conversion process, Dark theme issue makes forms appear in dark mode based on system settings, Form conversion flakiness requires retrying the conversion process, Manual effort required to delete repeated fields like account numbers, Limitation in converting repeatable panels multiple times, Multisigners issue being investigated by the internal team, Authoring UX, Integrations, Data Binding, Rendering & PDF, Speed and efficiency concerns with AEM in handling forms with many fields, Challenges in converting forms into AEM side, Headers and repeated fields issues in forms conversion, Core Component Editor issues in dev environment, Header fields not translated during automated forms conversion, Issues with text extraction and XFA elements in forms conversion example, Integration, Performance, Migration, Intermittent issues with form publishing; updated version doesn't reflect on publish instance, Security & Compliance, Adaptive Forms, Scalability takes significant time and effort to design and bind a large number of forms, Current process involves few steps like binding in XDP, changing in transformation code making it inefficient and time-consuming, Existing framework does not scale effectively for a large number of forms, requiring manual mapping and binding, Scalability. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.135Z",
+    "signal_count": "5"
+  },
+  {
+    "id": "a9da2b2e-9793-4723-b5bb-a78d0f828504",
+    "title": "NFCU - Integrations - token (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: Integrations, Security & Compliance. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.134Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "412a9f3c-264e-4214-90a2-c8d683415b07",
+    "title": "Abbvie & AbbVie - Feature Request - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Abbvie, AbbVie. Topics: Feature Request, Issue/Blocker, Client library configuration issues. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.133Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "0e6e5994-e7a4-4927-a41d-9cbae2d3fe22",
+    "title": "AbbVie - Issue/Blocker - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: AbbVie. Topics: Issue/Blocker, Response header used to bypass default error pages of CDN being stripped off, Issue with custom error response returning default AEM error page HTML. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.133Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "9bd76a9b-a53e-4b22-bf0c-011081aaedc7",
+    "title": "State of Pennsylvania - Forms - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: State of Pennsylvania. Topics: Forms, Feature Request, Issue/Blocker, Customization of page component was breaking including custom functions added by customer, Customisation issues. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.132Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "7225e1c4-593b-495d-a65b-54058ddf0b4f",
+    "title": "Jet2 - Forms Experience Builder - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Jet2. Topics: Forms Experience Builder, Core Components, Forms, Issue/Blocker, AEM forms, Pain points with multiple Adobe solutions leading to serious escalation, Misalignment in expectations and lack of expertise from Jet2 side, Authoring UX. Sources: slack. Types: feedback, issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.132Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "2016f998-1aaa-42b6-8a95-f88d970f5247",
+    "title": "Forms - https - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.131Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d6674932-764e-485e-b20d-0a74e0d554d9",
+    "title": "Forms - Issue/Blocker - suggest (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Issue/Blocker. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.130Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "16b04dbd-4db0-4e03-ad51-09d45f9a8078",
+    "title": "Issue/Blocker - Lack of documentation for simplified custom component - discovery (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Issue/Blocker, Lack of documentation for simplified custom component, Discovery problem contributing to TTV and diminishing impact of UE customisation. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.130Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "c2af9791-9683-43d5-9882-9582908d69e0",
+    "title": "Feature Request - apis - adobe (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.129Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "f3fd5ee0-b526-4109-8282-fc7512768c47",
+    "title": "LPL Financials - Core Components - andy (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: LPL Financials. Topics: Core Components, Forms, Feature Request, Issue/Blocker, Data Binding, Forms Experience Builder, PDF Conversion Issues with multiple sign-up fields and XML for table component, Table Component Issue in forms with specific field names, XML Notation for PDF Service requires specific format, Changes required in Workbench standalone and optional code bases for table component issue, Testing and PR creation process for form updates, End-to-end testing of forms without table components, Release for multiple signer part by 16th July, Coordination for testing release of multiple signer part, Uploading Word document to assets, Rendering & PDF, PDF Conversion Issues, Formatting Issues, Retaining Signature Fields, PDF Types and Issues caused by converting Word documents to PDFs, Adaptive Forms and Signature Fields, Text Tagging for Fields, Acro Forms and Authoring Team, End-to-End Testing, Table Component Issues, PDF field repetition issue, Transient issue with pull request processing, Manual edits and errors in conversion process, Checkbox group errors during form conversion, Page transitions issues causing new sections, Handling repeated fields on each page, Concerns about handling tables in new approach, Authoring UX, Migration. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.128Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "6fd86142-8a24-477b-a84c-b870823676d4",
+    "title": "Abbvie & Stericycle - Forms - form (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Abbvie, Stericycle, Shred-it. Topics: Forms, Feature Request, Integrations, Authoring UX. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.126Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d08f0b93-8495-4d58-ad57-7f69fbd03c38",
+    "title": "NFCU - Data Binding - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: Data Binding, Forms, Feature Request, IC Editor, IC Editor lacks JSON schema support for data binding, Batch PDF Generation must use JSON instead of XML, Rendering & PDF, Integrations. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.125Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "82c0e48b-6c61-4b58-b776-ecfd4184f41f",
+    "title": "LPL & KB - Feature Request - json (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL, KB. Topics: Feature Request, Authoring UX, Rendering & PDF. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.125Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "8d479f23-8351-4080-b85e-e417270ae4ca",
+    "title": "NFCU - Feature Request - data (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: NFCU. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.124Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "5bdb2b35-7543-46af-881e-bf5e3f770def",
+    "title": "State of Pennsylvania - Issue/Blocker - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: State of Pennsylvania. Topics: Issue/Blocker, Issues of SOP with latest private release were discussed, Issues with private build. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.123Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "3a006a1c-3aca-453a-9aed-731682d43d9d",
+    "title": "mauriceblackburn.com.au - Forms - mauriceblackburn (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: mauriceblackburn.com.au. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.122Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "fb9b61c3-c951-4f48-acd9-4d33a058c07d",
+    "title": "Macquarie | Global Credential Pack - Forms - data (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Macquarie | Global Credential Pack. Topics: Forms, Feature Request, Authoring UX, Integration. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.122Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "61b34044-efde-4e5c-8eda-7bffffa98c1b",
+    "title": "Forms - served - siesmic (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.121Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "8dc687c4-763a-4bac-afae-0bf98dd3032c",
+    "title": "LPL financial - Data Binding - andy (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: LPL financial. Topics: Data Binding, Forms, Feature Request, Issue/Blocker, Automated Forms Conversion, Double sign field issue, BindRefs for table fields issue, PDF Conversion and Sync Code requires the browser to remain open during the process, Extra sign field needs a code reversion in Dev to test the fix, Issues with radio buttons and data bindings, Rendering & PDF, Authoring UX. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.120Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "6463020b-9c6b-4e7e-9241-b154aa481781",
+    "title": "Forms - form - page (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.120Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "665fd9f5-39db-48ea-89e2-96f0724f08d6",
+    "title": "NFCU - Issue/Blocker - please (4 signals)",
+    "description": "Cluster of 4 related signals. Customers: NFCU. Topics: Issue/Blocker, Migration. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.119Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "f28408e1-e5b6-433f-9845-6e020d027c67",
+    "title": "NFCU - Feature Request - data (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: NFCU. Topics: Feature Request, Authoring UX, Integrations, Rendering & PDF, IC Editor. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.118Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "0e3d0e5b-0da1-4364-bb8b-87a4bb195151",
+    "title": "Carpenter (Partner : 4 Point ) & Carpenter - Core Components - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Carpenter (Partner : 4 Point ), Carpenter. Topics: Core Components, Forms, Issue/Blocker, Issues with local development, Template and submission issues, Pipeline failing due to removed content from 'artifact' project, AEM not launching when starting local SDK instance. Sources: slack. Types: issue, feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.118Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "3a15e2d8-e453-44d9-b51a-3455c16010aa",
+    "title": "Darshan - Forms - json (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: Darshan. Topics: Forms, Rendering & PDF. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.117Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "e601abdf-49a9-433b-aa57-f9e41a078c3f",
+    "title": "GM Financial - IC Editor - support (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: GM Financial. Topics: IC Editor, Forms, Feature Request, Data Binding, Migration, Authoring UX, Rendering & PDF, Integrations. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.116Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "290107d6-bae9-426a-bd1f-ab73723bd3b8",
+    "title": "Nedbank - Forms - locale (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Nedbank. Topics: Forms, Feature Request, Issue/Blocker, Formatting issues in designer for translating XFA templates using Microsoft translation, Challenges in accessing the sandbox environment, Adaptive Forms, Multi-locale template issue with Adaptive Forms. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.115Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "a96fbac4-e0ca-4c7f-8956-bdccf53ca2a7",
+    "title": "Aftia (altec) & Altec (partner: Aftia) - Forms - wayland (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Aftia (altec), Altec (partner: Aftia). Topics: Forms, Feature Request, Issue/Blocker, Multiple form submissions counted for a single journey, Inbox works only on author, not on publish, Author only supports 10 concurrent users, causing load handling issues, Limitations and conflicts in product functionality causing frustration, Immediate blockers requiring development work by AFTIA, Core functionality issues needing custom development, Save as draft and resume issue, Validation requirements at different stages causing issues. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.114Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "0699b4e5-382b-4640-83f1-e8747ec94a0e",
+    "title": "Forms Experience Builder - Forms - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Forms Experience Builder, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.113Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "905b8005-ffdf-413e-8dbd-9183f3e7a193",
+    "title": "UPS - Forms Experience Builder - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: UPS. Topics: Forms Experience Builder, Forms, Feature Request, Issue/Blocker, Core Components, Issues with image to forms generation and PDF to form generation, Authoring UX, Integrations, Rendering & PDF, Layout changes and other commands affecting form generation, Data Binding. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.112Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "f15f3f8a-15a4-4435-9ded-1e884c431adb",
+    "title": "LPL - Forms - assets (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL. Topics: Forms, Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.111Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "9fcd4a70-269a-4706-b4ca-a0971ac16c26",
+    "title": "Brunswick - Forms - marketo (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: Brunswick. Topics: Forms, Forms Experience Builder, Migration, Integrations, Data Binding, Form Creation & Configuration, Marketo API concurrency limits and retry mechanisms, Handling 100K+ form submissions per year, Authoring UX, Performance. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.111Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "932e3fe8-32fc-4ca9-b6d1-4aa031d845d1",
+    "title": "Issue/Blocker - issues - issue (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Issue/Blocker. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.110Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "266ccedd-5a5d-47ef-9482-08696dd78ad2",
+    "title": "LPL financial & LPL Financials - Forms - testing (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL financial, LPL Financials. Topics: Forms, Feature Request, Add address field below the first name field not adding to desired location, Testing tool available on af2 form and most forms are af1, Migration, Forms Experience Builder, Automated Forms Conversion, Authoring UX, Performance. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.109Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "a19de0fb-f396-417f-a15f-886b77079d2e",
+    "title": "Forms - Core Components - forms (7 signals)",
+    "description": "Cluster of 7 related signals. Topics: Forms, Core Components, Adaptive Forms, Headless Adaptive Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.109Z",
+    "signal_count": "7"
+  },
+  {
+    "id": "a28dcef6-72ed-439d-83e4-eb60d90e2b47",
+    "title": "Brightline & BrightLine - Data Binding - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Brightline, BrightLine. Topics: Data Binding, Forms, Feature Request, Core Components, Access to Cloud instance pending from last meeting, Need clarity on AEP configuration for form submission, OOTB collateral (CC templates/themes) not available, Requirement to track confirmation on dev pipeline impact, Authoring UX, Integrations. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.107Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "560983d3-98af-40db-aa67-453d0e53c071",
+    "title": "Brightline & NFL - Forms - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: Brightline, NFL. Topics: Forms, Feature Request, Integrations, Core Components, Authoring UX. Sources: slack. Types: feedback, pain_point.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.107Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "73fccb41-ec0e-4583-bb23-ce31e3a4713c",
+    "title": "Brunswick - Core Components - christy (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Brunswick. Topics: Core Components, Forms, Go-Live, Feature Request, Issue/Blocker, Access Issues in Mercury Marine Environments, Pipeline Execution and Core Component Deployment, Integrations, Absence of AEM Forms core components and themes in environments, Access issues for the Adobe team in AEM and Cloud Manager. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.106Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "f9a289ef-2243-4a47-b2f4-c0bf564aa8b6",
+    "title": "Brunswick - Forms - andy (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Brunswick. Topics: Forms, Feature Request, Issue/Blocker, Core Components, Go-Live, Integrations, Rendering & PDF, Authoring UX. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.105Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "afb0994e-30fd-49e5-9856-74c67a301647",
+    "title": "LPL - Forms Experience Builder - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL. Topics: Forms Experience Builder, Forms, Feature Request, Issue/Blocker, Forms Search Inconsistency, 401 Authentication Errors, Custom indexing issue with Lucene resolved but uncertainty remains about safe index removal, Forms Experience Builder metadata not updating when replacing PDFs, Forms Experience Builder field binding fails to map duplicates correctly, JWT authentication issue causing 401 errors on first servlet call, Performance. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.104Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d0f8df2b-623e-468a-9a24-975ad784a691",
+    "title": "NFCU - Forms - nfcu (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: NFCU. Topics: Forms, Feature Request, Rendering API, Rule Editor, Signature Component, Barcode, Accessibility in XFA Forms, Font, Strikethrough, Insert Dynamic List through Data, Repeatable Rows/Columns, CS Service API, Authoring UX, Integrations, Rendering & PDF. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.104Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "a90a0e37-ade0-402a-96f8-52dc33d1cd1d",
+    "title": "Brunswick - Forms - form (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Brunswick. Topics: Forms, Go-Live, Feature Request, Issue/Blocker, Form Integration Issues on Regional Pages, Deployment and Pipeline Process for Form Functionality, AEM Form Integration and Hidden Fields Issue, Client Library Inclusion for Form Functionality, Environment Configuration and Deployment Strategy, Locale and Region Logic for Form Fields, Theme Ticket and Coordination with AEM Team, Integrations. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.103Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "651583c0-d329-4d21-95ff-a4117bf9ad84",
+    "title": "Continental Tires & KrisShop - Forms - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Continental Tires, KrisShop. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.102Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e88f7aea-8492-4b85-979d-f1dedcc170e2",
+    "title": "LPL & Brunswick - Forms - dispatcher (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL, Brunswick. Topics: Forms, Feature Request, Issue/Blocker, Login Token Issue, Unbound Fields & Batch Conversion, Form Loading Issue, Browser Mandatory Field Bug, AEM Publishing Issues, AEM forms not loading on published QA website, Dispatcher and authentication configuration challenges, Access and collaboration barriers, Inability to test forms on published site due to dispatcher restrictions, Intermittent failures when connecting new forms to Marketo via engage connector. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.101Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "58284d26-4162-40cd-bfcf-18a2f7da6236",
+    "title": "Brightline - Forms - form (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Brightline. Topics: Forms, Feature Request, Issue/Blocker, Core Components, Producer Usability Challenges with Adobe Forms, Styling and Theming Issues with Embedded Forms, Authoring UX, Challenges in Form Creation and AEP Integration, Integrations. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.100Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "febf4817-66ce-4023-9cc1-43cfe0006a06",
+    "title": "Forms - Issue/Blocker - jira (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Issue/Blocker, Wizard Data tab performance issue, Performance. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.100Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "877e75cf-b4f0-4332-bc03-4d6573d6f636",
+    "title": "Micron - Forms Experience Builder - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Micron. Topics: Forms Experience Builder, Core Components, Forms, Feature Request, Issue/Blocker, Data Binding, Rule editor fails to validate or allow editing of rules, Navigation after form submission is limited when forms are embedded via iframes, Foundation components do not automatically update the value attribute, Authoring UX, Integrations, Migration, Automated Forms Conversion, AI assistant available in AEM Forms editor but not in core component side of sites page builder, Complex rule sets need to be redefined manually during migration from foundation to core components, Troubles with extending existing components and JavaScript compatibility after migration, Security & Compliance, Performance. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.099Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "73507fbf-ddc3-47cc-81f5-d89e829fd113",
+    "title": "NFL & UPS.com - Forms Experience Builder - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: NFL, UPS.com, Lumen. Topics: Forms Experience Builder, Forms, Feature Request, Automated Forms Conversion, Authoring UX, Integrations, Core Components, Migration. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.097Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "44bf14b6-c63a-48ce-9471-c6d663d8dffe",
+    "title": "Brusnwick & Brunswick - Forms - form (4 signals)",
+    "description": "Cluster of 4 related signals. Customers: Brusnwick, Brunswick. Topics: Forms, Go-Live, Feature Request, Issue/Blocker, ECID deployment pending, preventing rule editor updates, Performance, Cloudflare blocking submissions for new forms, Authoring UX, Migration, Core Components, Data Binding, Integrations, Rendering & PDF. Sources: slack. Types: issue, feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.096Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "d8b28afb-10cd-4b48-b5d5-fdbda044a34f",
+    "title": "LPL Financials & LPL - Core Components - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: LPL Financials, LPL. Topics: Core Components, Forms, Go-Live, Feature Request, Issue/Blocker, Forms Experience Builder, Form Validation and Prefix Path Issue, Bulk PDF Import and Migration Progress, Layout and Mapping Issues in Converted Forms, Form Theming and Styling Considerations, Migration, Authoring UX, Automated Forms Conversion, Inability to process scanned PDFs and Word documents in PDF import tool, Friday night release failure due to large cluster lists, Rendering & PDF, Performance. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.095Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "cbaf580a-3091-4858-93b7-ce9134888145",
+    "title": "Brunswick - Forms - andy (4 signals)",
+    "description": "Cluster of 4 related signals. Customers: Brunswick. Topics: Forms, Feature Request, Issue/Blocker, Go-Live, Cloud Manager, ECID not being submitted to Marketo from QA environment, Authoring UX, Integrations, Permissions and Access for Form Development, Form Styling and Theme Implementation Across Brands, Analytics Tracking Transition from Marketo to AEM Forms, Multi-Brand Form Data Routing and Configuration, Migration, Pipeline Verification and Dependency Troubleshooting, Theme and Styling Challenges for Mercury Forms, Layout Customization and Editor Usability. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.094Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "f9fc0528-4c9f-4783-b84f-9bb09a2ef091",
+    "title": "Forms - custom - using (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.093Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "fb0d0f3b-33ea-4d11-9a45-81e9bbae058d",
+    "title": "Carpenter - Forms - sakshi (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Carpenter. Topics: Forms, Go-Live, Feature Request, Issue/Blocker, Core Components, Forms Experience Builder, Data Binding, Azure SQL Server Connectivity and Regional Restrictions, Integrations, Authoring UX, Rendering & PDF, Azure SQL Database Connectivity Troubleshooting, Dynamic Workflow and Form Integration in Adobe Experience Manager. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.092Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "2f50cecd-2bd7-43e0-8bf4-6e862b6415ac",
+    "title": "Brunswick - Forms - andy (3 signals)",
+    "description": "Cluster of 3 related signals. Customers: Brunswick. Topics: Forms, Go-Live, Feature Request, Issue/Blocker, Automated Forms Conversion, Data Binding, Form wizard and submission processes fail to load properly, Translation setup pending, Styling changes pending, Authoring UX, Integrations, Performance, Migration challenges with form naming conventions and connector configurations, Styling issues before go-live, Scalability and adapting hidden field logic for multiple brands, Marketo partitioning and data attribution issues, Migration, Dispatcher Pipeline Deployment Issues, Marketo Engage Integration Blocker, Form Styling and Privacy Rule Handling, Performance issue in the data tab of Wizard with large content and nested nodes. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.091Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "2fbf4612-ca8a-472d-b619-f0c14da82f04",
+    "title": "Feature Request - json - need (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.090Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "73b09fc0-9313-41f7-8624-aaa47f654c96",
+    "title": "Verizon - Forms - adobe (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Verizon. Topics: Forms, Go-Live, Feature Request, Issue/Blocker, IC Editor, Data Binding, Integrations, Security & Compliance, Migration, AEM Forms, Authoring UX, Rendering & PDF, Performance. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.089Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "16386f91-4099-4172-b50a-c9f8561f4a37",
+    "title": "Fidelity Stock Plan Services - Forms - support (2 signals)",
+    "description": "Cluster of 2 related signals. Customers: Fidelity Stock Plan Services. Topics: Forms, Feature Request, Unable to run multi-threaded conversions with the latest supported versions of Windows Server and MS Office, Migration, Multi-threaded PDFG conversions not supported by default in Adobe Acrobat DC (FRL). Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.087Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "54abe934-63fd-4c2f-9314-ddcc2c7b5c8b",
+    "title": "Forms - Go-Live - dates (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Go-Live. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-06T07:22:58.083Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "f4fed697-2add-435f-a832-85fcf4cdc4b6",
+    "title": "Forms - Feature Request - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.969Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "79f9a8d3-3145-4207-90f1-9785fad6a2f5",
+    "title": "IC Editor - Feature Request - editor (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: IC Editor, Feature Request, Issue/Blocker. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.969Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "07ec0333-ff01-45c6-8e6f-d05613deed08",
+    "title": "Data Binding - Forms - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Data Binding, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.968Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "cc640a93-8027-43f8-994f-9e654b870a9e",
+    "title": "Feature Request - Issue/Blocker - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request, Issue/Blocker, Forms. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.967Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e26398b0-a922-4e03-a11a-6d25790e8722",
+    "title": "Forms Experience Builder - Automated Forms Conversion - conversion (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Automated Forms Conversion, Core Components, Data Binding, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.967Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "f287ee40-a5ae-4c56-950e-d34ef20ffea4",
+    "title": "Automated Forms Conversion - Core Components - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Automated Forms Conversion, Core Components, Forms, Feature Request, Issue/Blocker, Forms Experience Builder, Data Binding. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.966Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "9120965a-6f0b-4e8c-a115-f20de8a3d4a4",
+    "title": "Feature Request - Issue/Blocker - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request, Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.965Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "db049a62-0127-40e4-8fed-72026ac5881d",
+    "title": "IC Editor - Forms - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: IC Editor, Forms, Feature Request. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.965Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "b72eca5e-f450-4519-9fac-e2d7343c6549",
+    "title": "Issue/Blocker - new_user - error (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.964Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e1b8b5fa-5512-4029-a503-421370c5d5bb",
+    "title": "Forms - Feature Request - new_user (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.964Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "beaae67f-3dca-4173-aebf-a4b9b096e54f",
+    "title": "Forms - Feature Request - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.963Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "4259a4b4-2835-4c8e-beaa-6af86afe35bc",
+    "title": "Forms Experience Builder - Core Components - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Core Components, Forms, Issue/Blocker. Sources: slack. Types: feedback, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.963Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "3283b263-7dca-41a7-ac7b-0235e7bf8102",
+    "title": "Core Components - Forms - accenture (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Core Components, Forms, Feature Request. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.962Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d2b3d517-7d56-40f8-9b47-166d86825e68",
+    "title": "Forms - Feature Request - form (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.961Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "8f15258b-30dc-45bc-92ae-a120c437b063",
+    "title": "Issue/Blocker - new_user - private (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.960Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "f1b72220-ee70-407e-8519-d53107d5ab1c",
+    "title": "Forms - Feature Request - data (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.959Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "959181ae-a64a-41e7-993d-b23154836d57",
+    "title": "Feature Request - https - recording (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.958Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "7278091e-6a7e-4248-80b6-a1897d4f1328",
+    "title": "IC Editor - Forms - issue (4 signals)",
+    "description": "Cluster of 4 related signals. Topics: IC Editor, Forms, Feature Request, Issue/Blocker, Data Binding. Sources: slack. Types: feature_request, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.957Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "b19fcdc0-95d8-4952-af49-15b42a4fb112",
+    "title": "Feature Request - json - input (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.956Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "9684ca4d-3b2e-48a9-bbe2-17745ad0136e",
+    "title": "Feature Request - output - timelines (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.956Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "70764972-68ce-489a-bf2e-90ee48e25912",
+    "title": "Feature Request - data - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.954Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "05e82aad-5e90-4b4a-81ae-6f1502f2ed0e",
+    "title": "Core Components - Forms - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Core Components, Forms, Issue/Blocker. Sources: slack. Types: issue, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.954Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "926c527f-1b8f-4ff1-abe9-876977068296",
+    "title": "Data Binding - Feature Request - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Data Binding, Feature Request, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.951Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "5eb4e281-0ab5-4a99-a14b-248ca3d2f931",
+    "title": "Forms - json - data (6 signals)",
+    "description": "Cluster of 6 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.951Z",
+    "signal_count": "6"
+  },
+  {
+    "id": "2c08b6d1-150f-4c7f-9b60-e7e043ea14d0",
+    "title": "IC Editor - Forms - support (4 signals)",
+    "description": "Cluster of 4 related signals. Topics: IC Editor, Forms, Feature Request, Data Binding. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.949Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "481da30b-1cfb-4b22-b923-507395158858",
+    "title": "Forms - Feature Request - locale (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.948Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "c8d7eb54-208a-419e-a906-dcf899c9124b",
+    "title": "Forms Experience Builder - Forms - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms, Feature Request, Issue/Blocker, Core Components. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.947Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "09aed4aa-ede7-4088-8b7e-db3e4ac43ea0",
+    "title": "Forms Experience Builder - Forms - marketo (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.946Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "cb35ca6b-027a-49cc-8e84-67ee55b26ddb",
+    "title": "Forms - existing - marketo (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.945Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "32673bdf-1fc8-4b66-b0ac-fd840b1796ce",
+    "title": "Forms - Feature Request - assets (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.944Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "8a4fc301-941d-48d0-96e5-d12cf2f506d2",
+    "title": "Feature Request - Issue/Blocker - nfcu (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request, Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.943Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "d86fce18-2e4b-4203-8fbd-4149a3722ed0",
+    "title": "Forms Experience Builder - Core Components - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Core Components, Data Binding, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.942Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "fc15ce6d-842d-437a-95ae-7f0d48391bf7",
+    "title": "work - create - content (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.941Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e4ecd918-ce35-4c17-99f6-12094f13fc5a",
+    "title": "Feature Request - work - structure (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.940Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "18e4a0cc-656a-4682-be5b-6b0b5bc90cc7",
+    "title": "Data Binding - Feature Request - support (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Data Binding, Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.939Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "9c43a209-6d92-4700-b875-46405e30b3a6",
+    "title": "Issue/Blocker - wam5kdybz - issues (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Issue/Blocker. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.937Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e5d8840b-315a-409c-b31f-abd14bce13dd",
+    "title": "Feature Request - w9qmzfr39 - need (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.936Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "6cc8a692-53ac-4f2f-873d-1dc39ad23e9d",
+    "title": "Forms - forms - https (4 signals)",
+    "description": "Cluster of 4 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.935Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "929e1941-10bb-47ab-9be6-e3b64a59548a",
+    "title": "integration - based - possible (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.934Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "94ba06d3-4282-4b1d-8ef4-d8be856ebd6d",
+    "title": "sure - share - w4ru4n66r (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.933Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e622677d-bcfd-4001-b5f8-72442905bbc8",
+    "title": "Core Components - Forms - andy (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Core Components, Forms, Go-Live, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.932Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "3acbe510-06b8-4b48-a900-74c474ebfd92",
+    "title": "Forms - Feature Request - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: pain_point.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.931Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "51683485-9580-4244-9f0d-95388aaa7133",
+    "title": "Data Binding - Forms - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Data Binding, Forms, Feature Request, Core Components. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.930Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "1e4298fa-79f6-4c4d-afd9-78d02278cab7",
+    "title": "Data Binding - Forms - fields (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Data Binding, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.929Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "522137a9-bf34-4d56-a964-579a4c355d25",
+    "title": "Forms Experience Builder - Forms - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.928Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "407f83b7-f34b-4ee8-becc-47562148f67f",
+    "title": "Forms Experience Builder - Forms - customer (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.928Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "23c2e080-e533-46d4-9235-3c8e81a10ad9",
+    "title": "Forms - Feature Request - nfcu (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.927Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "bc25c386-bf03-4276-a475-83daa7591073",
+    "title": "Forms - Feature Request - their (4 signals)",
+    "description": "Cluster of 4 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.927Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "1e82e81d-e107-4b2c-af9d-76f263e108d9",
+    "title": "w4xtcq07j - w6cbb4953 (6 signals)",
+    "description": "Cluster of 6 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.926Z",
+    "signal_count": "6"
+  },
+  {
+    "id": "beba8cd4-9467-4833-a452-144ede8f90c6",
+    "title": "Forms - Feature Request - form (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request, Issue/Blocker, Core Components. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.925Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "5fe3f56c-2acf-4498-88dc-ddd890ad80ae",
+    "title": "Forms - Go-Live - andy (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Go-Live, Feature Request, Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.924Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "fed79fd4-ad96-4bf8-8413-02278f8385da",
+    "title": "Forms - form - forms (5 signals)",
+    "description": "Cluster of 5 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.923Z",
+    "signal_count": "5"
+  },
+  {
+    "id": "cc4f7d4e-3172-4a0b-8e47-5fc713e70696",
+    "title": "Forms - forms - adobe (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.922Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "bb9595dd-132f-4596-94c0-b1302cb4a064",
+    "title": "Forms - Issue/Blocker - jira (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Issue/Blocker. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.922Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "02a8249d-647b-4ea9-bd48-82867e0b655c",
+    "title": "Forms - Go-Live - custom (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Go-Live, Feature Request. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.921Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "f4ff5911-8054-43e1-9a7d-42a9c17a6818",
+    "title": "Forms Experience Builder - Forms - form (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.920Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "2e37ef46-bf1b-43fa-9072-1fd665e86266",
+    "title": "Forms - Go-Live - form (4 signals)",
+    "description": "Cluster of 4 related signals. Topics: Forms, Go-Live, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.919Z",
+    "signal_count": "4"
+  },
+  {
+    "id": "e4e14f36-b096-417d-a32f-4cdc3729bdcc",
+    "title": "https - slack - archives (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.918Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "4f212a6b-81ed-4aac-9fa1-8766635ccf26",
+    "title": "Core Components - Forms - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Core Components, Forms, Go-Live, Feature Request, Issue/Blocker, Forms Experience Builder. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.917Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "e7c36f16-dbb9-4ac6-87e6-00b3ab78a761",
+    "title": "Forms - Feature Request - mayank (7 signals)",
+    "description": "Cluster of 7 related signals. Topics: Forms, Feature Request, Issue/Blocker, Go-Live, Core Components. Sources: slack. Types: issue, feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.916Z",
+    "signal_count": "7"
+  },
+  {
+    "id": "fdf202d6-1da0-45fd-be16-f953b0563a16",
+    "title": "w4rsw3ecc (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.914Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "f45d7df5-0979-46a5-96f9-92a6781c16a1",
+    "title": "Forms - Go-Live - sakshi (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Go-Live, Feature Request, Issue/Blocker. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.913Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "b22d3c8b-45a5-4579-ab6e-7f4f9dbaaca8",
+    "title": "w4r5lupk3 - wqwcbv6nn - w9qmzfr39 (5 signals)",
+    "description": "Cluster of 5 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.912Z",
+    "signal_count": "5"
+  },
+  {
+    "id": "d3d589ca-2844-47d5-ac5f-405eab73ec9b",
+    "title": "Forms - Go-Live - andy (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Go-Live, Feature Request, Issue/Blocker. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.911Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "c23ea97d-3ef0-4ebb-baed-ef6d2dabda59",
+    "title": "Forms - consent - form (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.910Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "690216d1-b3b7-4a62-8bde-bd47d7c63464",
+    "title": "Forms Experience Builder - Forms - enabling (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.909Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "93b049b7-fbc7-4fe5-b5c5-653bc6e8c7c7",
+    "title": "Feature Request - json - need (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.908Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "dfb378ba-ef25-4a39-a0fa-e5bc3617e514",
+    "title": "Forms - Go-Live - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Forms, Go-Live, Feature Request, Issue/Blocker, IC Editor, Data Binding. Sources: slack. Types: feature_request, feedback, issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.907Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "8881939f-b9fb-407f-aa4d-e478a1d00f9a",
+    "title": "Forms Experience Builder - Forms - darshan (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: issue.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.906Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "ba32fb90-1036-4cbc-8d16-264b4da82e61",
+    "title": "Forms - Feature Request - support (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feedback, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.905Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "ba7da903-d493-497f-89d5-3dfe17d2232f",
+    "title": "Forms - Feature Request - forms (3 signals)",
+    "description": "Cluster of 3 related signals. Topics: Forms, Feature Request, Issue/Blocker. Sources: slack. Types: issue, feature_request.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.904Z",
+    "signal_count": "3"
+  },
+  {
+    "id": "ae2b9591-d551-4f33-a1f5-40aaa1d299a8",
+    "title": "w4ru4n66r - w4r5y3yhx (2 signals)",
+    "description": "Cluster of 2 related signals. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.903Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "cde887d1-96ef-4361-977b-75efe180bb5d",
+    "title": "Forms - Go-Live - dates (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms, Go-Live. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.903Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "9361e5ad-c313-4d73-bec8-44e963eb7d03",
+    "title": "Forms Experience Builder - Forms - forms (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Forms, Feature Request. Sources: slack. Types: feature_request, feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.902Z",
+    "signal_count": "2"
+  },
+  {
+    "id": "c4ae6ae8-81f9-487b-9c5a-590d39a9c0da",
+    "title": "Feature Request - meeting - schedule (2 signals)",
+    "description": "Cluster of 2 related signals. Topics: Feature Request. Sources: slack. Types: feedback.",
+    "status": "new",
+    "created_at": "2026-02-05T12:04:43.893Z",
+    "signal_count": "2"
+  }
+]

@@ -1,0 +1,70 @@
+{
+  "name": "pm-intelligence-system",
+  "displayName": "PM Intelligence System",
+  "description": "Improve PM judgment quality and speed using structured signals + human-in-the-loop LLMs",
+  "publisher": "anuragadobe",
+  "version": "1.0.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./extension.js",
+  "icon": "ailogo.png",
+  "contributes": {
+    "commands": [
+      {
+        "command": "pm-intelligence.ingestSignal",
+        "title": "PM Intelligence: Ingest Signal"
+      },
+      {
+        "command": "pm-intelligence.detectOpportunities",
+        "title": "PM Intelligence: Detect Opportunities"
+      },
+      {
+        "command": "pm-intelligence.createJudgment",
+        "title": "PM Intelligence: Create Judgment"
+      },
+      {
+        "command": "pm-intelligence.createArtifact",
+        "title": "PM Intelligence: Create Artifact"
+      },
+      {
+        "command": "pm-intelligence.viewSignals",
+        "title": "PM Intelligence: View Signals"
+      },
+      {
+        "command": "pm-intelligence.viewOpportunities",
+        "title": "PM Intelligence: View Opportunities"
+      },
+      {
+        "command": "pm-intelligence.viewMetrics",
+        "title": "PM Intelligence: View Adoption Metrics"
+      },
+      {
+        "command": "pm-intelligence.compareLLMOpportunities",
+        "title": "PM Intelligence: Compare LLM Opportunities"
+      },
+      {
+        "command": "pm-intelligence.selectLLMModel",
+        "title": "PM Intelligence: Select LLM Model"
+      },
+      {
+        "command": "pm-intelligence.ingestSlackChannel",
+        "title": "PM Intelligence: Ingest Slack Channel (MCP)"
+      },
+      {
+        "command": "pm-intelligence.ingestSlackMentions",
+        "title": "PM Intelligence: Ingest Slack Mentions (MCP)"
+      },
+      {
+        "command": "pm-intelligence.listSlackChannels",
+        "title": "PM Intelligence: List Slack Channels (MCP)"
+      }
+    ]
+  }
+}

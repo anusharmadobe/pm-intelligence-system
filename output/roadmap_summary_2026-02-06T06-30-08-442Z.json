@@ -1,0 +1,159 @@
+{
+  "totalOpportunities": 75,
+  "topPriorities": [
+    {
+      "id": "79f9a8d3-3145-4207-90f1-9785fad6a2f5",
+      "title": "IC Editor - Feature Request - editor (2 signals)",
+      "description": "Cluster of 2 related signals. Topics: IC Editor, Feature Request, Issue/Blocker. Sources: slack. Types: issue, feature_request.",
+      "status": "new",
+      "created_at": "2026-02-05T12:04:43.969Z",
+      "roadmapScore": {
+        "overallScore": 21,
+        "impactScore": 5,
+        "confidenceScore": 0,
+        "effortScore": 50,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 0,
+          "uniqueCustomers": 0,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0,
+          "channelDiversity": 0
+        }
+      },
+      "signals": [],
+      "themes": [],
+      "customers": []
+    },
+    {
+      "id": "f4fed697-2add-435f-a832-85fcf4cdc4b6",
+      "title": "Forms - Feature Request - customer (2 signals)",
+      "description": "Cluster of 2 related signals. Topics: Forms, Feature Request. Sources: slack. Types: feature_request.",
+      "status": "new",
+      "created_at": "2026-02-05T12:04:43.969Z",
+      "roadmapScore": {
+        "overallScore": 21,
+        "impactScore": 5,
+        "confidenceScore": 0,
+        "effortScore": 50,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 0,
+          "uniqueCustomers": 0,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0,
+          "channelDiversity": 0
+        }
+      },
+      "signals": [],
+      "themes": [],
+      "customers": []
+    },
+    {
+      "id": "07ec0333-ff01-45c6-8e6f-d05613deed08",
+      "title": "Data Binding - Forms - forms (3 signals)",
+      "description": "Cluster of 3 related signals. Topics: Data Binding, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request, issue.",
+      "status": "new",
+      "created_at": "2026-02-05T12:04:43.968Z",
+      "roadmapScore": {
+        "overallScore": 21,
+        "impactScore": 5,
+        "confidenceScore": 0,
+        "effortScore": 50,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 0,
+          "uniqueCustomers": 0,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0,
+          "channelDiversity": 0
+        }
+      },
+      "signals": [],
+      "themes": [],
+      "customers": []
+    },
+    {
+      "id": "cc640a93-8027-43f8-994f-9e654b870a9e",
+      "title": "Feature Request - Issue/Blocker - nfcu (2 signals)",
+      "description": "Cluster of 2 related signals. Topics: Feature Request, Issue/Blocker, Forms. Sources: slack. Types: feature_request, issue.",
+      "status": "new",
+      "created_at": "2026-02-05T12:04:43.967Z",
+      "roadmapScore": {
+        "overallScore": 21,
+        "impactScore": 5,
+        "confidenceScore": 0,
+        "effortScore": 50,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 0,
+          "uniqueCustomers": 0,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0,
+          "channelDiversity": 0
+        }
+      },
+      "signals": [],
+      "themes": [],
+      "customers": []
+    },
+    {
+      "id": "e26398b0-a922-4e03-a11a-6d25790e8722",
+      "title": "Forms Experience Builder - Automated Forms Conversion - conversion (2 signals)",
+      "description": "Cluster of 2 related signals. Topics: Forms Experience Builder, Automated Forms Conversion, Core Components, Data Binding, Forms, Feature Request, Issue/Blocker. Sources: slack. Types: feature_request.",
+      "status": "new",
+      "created_at": "2026-02-05T12:04:43.967Z",
+      "roadmapScore": {
+        "overallScore": 21,
+        "impactScore": 5,
+        "confidenceScore": 0,
+        "effortScore": 50,
+        "strategicScore": 50,
+        "urgencyScore": 30,
+        "breakdown": {
+          "signalCount": 0,
+          "uniqueCustomers": 0,
+          "customerTierWeight": 0.5,
+          "themeCount": 0,
+          "trendDirection": "stable",
+          "averageSignalQuality": 0,
+          "channelDiversity": 0
+        }
+      },
+      "signals": [],
+      "themes": [],
+      "customers": []
+    }
+  ],
+  "quickWins": [],
+  "emerging": [],
+  "byImpact": {
+    "high": 0,
+    "medium": 0,
+    "low": 75
+  },
+  "byConfidence": {
+    "high": 0,
+    "medium": 0,
+    "low": 75
+  },
+  "averageScores": {
+    "impact": 5,
+    "confidence": 0,
+    "effort": 50,
+    "strategic": 50,
+    "urgency": 30
+  }
+}

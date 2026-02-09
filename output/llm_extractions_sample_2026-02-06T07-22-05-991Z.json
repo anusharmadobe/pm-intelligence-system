@@ -1,0 +1,2016 @@
+[
+  {
+    "signal_id": "7b2750db-64a5-43c1-b1e1-d5e999c08955",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [
+        {
+          "name": "Forms",
+          "confidence": 0.9
+        }
+      ],
+      "requests": [],
+      "customers": [
+        {
+          "name": "SunPharma",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:54:22.204Z",
+    "signal_content": ":new_user: *Mayank Agarwal* :new_user:\n:customervivo:*Customer Name : SunPharma*\n:clock2: *Date :* 2025-02-20\n:group-people: *Attendees :* <@U0208FN960H>, <@W4RU5J3JR>, <@W4R4S9FS4>, <@W010NNJV7S8>, <@U0213T59LMN>\n:loading-2248:*Notes*\n*Q2’25 (opportunity)*\n*SunPharma side - Sr Director (IT)* \nAdobe side - Solution COnsulting team - Chinmay and Navin\n*Partner - Depth (may be)*\n*Metrics:* \n• *100+ forms*\n• *20-30k submissions per year*\n*Use Case* :\n• Want to convert word based forms to AF \n• Prefill use cases - login user information should prefill\n• Audit trail - approval and reject → and refill and submit\n• Push data to external storage - mysql / nosql in a uber table and they will build intelligence on top of that data\n• Portal use case - to search and fill audit forms\n*Solutions Proposed* :\n• AFCS to convert word &gt;&gt; acroform &gt;&gt; AF\n• AF &gt;&gt; WF &gt;&gt; Storage + DoR\nNotes:\n• Showcase the complete demo from word to af to generated DoR\n• Also covered the Workflow part for approval process \n:todo_done: *Next Action*\nNo action on engineering as of now . The customer will discuss internally to decide on buying the licence."
+  },
+  {
+    "signal_id": "3e369a5d-ff12-4d21-a20a-d8e0620e2e2d",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Pause only Dev2 instance for future upgrades",
+          "category": "Instance Upgrades",
+          "severity": 3,
+          "confidence": 0.9
+        }
+      ],
+      "themes": [
+        {
+          "name": "Integrations",
+          "confidence": 0.9
+        },
+        {
+          "name": "Rendering & PDF",
+          "confidence": 0.9
+        },
+        {
+          "name": "Authoring UX",
+          "confidence": 0.8
+        }
+      ],
+      "features": [],
+      "requests": [
+        {
+          "text": "Inquired about the possibility of webhooks to enable customizations",
+          "confidence": 0.9
+        },
+        {
+          "text": "Expressed a desire for more frequent meetings",
+          "confidence": 0.8
+        },
+        {
+          "text": "Asked about any service API that provides .tiff to PDF conversion",
+          "confidence": 0.9
+        },
+        {
+          "text": "Remove the auto-upgrade restriction from all environments except Dev2",
+          "confidence": 0.9
+        }
+      ],
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:54:19.926Z",
+    "signal_content": ":new_user: *Vijay Srivastva* :new_user:\n:customervivo:*Customer Name : NFCU*\n:clock2: *Date :* 2025-02-27\n:group-people: *Attendees :* <@WE163TH43>, <@U03Q109GQMT>, <@WQWCBV6NN>, <@W010NNJV7S8>\n:loading-2248:*Notes*\n*Discussion Summary:*\n1. *ETA for FDM Integration:*\n    ◦ We communicated that the estimated time for the FDM integration is early April.\n2. *Webhooks and Customizations:*\n    ◦ The NFCU team inquired about the possibility of webhooks to enable customizations. Ranjeet mentioned that support for Word-based fragments and custom components is also on the roadmap.\n3. *Meeting Frequency:*\n    ◦ The NFCU team expressed a desire for more frequent meetings but will check internally if they can connect with us via Slack.\n4. *Instance Upgrades:*\n    ◦ We have paused all their instances for future upgrades. However, they requested to pause only their Dev2 instance.\n5. *Business Requirements:*\n    ◦ The NFCU team will share an Excel sheet with their business requirements.\n6. *CS Service API:*\n    ◦ The NFCU team asked about any service API that provides .tiff to PDF conversion. Ranjeet mentioned that a demo with AI (AFCS) will be presented in the next meeting.\n:todo_done: *Next Action*\n1. *Schedule a Demo:*\n    ◦ Schedule a demo with AI (AFCS) in the next meeting for .tiff to PDF conversion if required. Alternatively, we can use the other service (PDFG) as discussed in the ongoing email.\n2. *Remove Auto Upgrade Restriction:*\n    ◦ Remove the auto-upgrade restriction from all their environments except Dev2.\n"
+  },
+  {
+    "signal_id": "015a2064-1b97-48ee-ae8c-816e31d86fe1",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [],
+      "customers": [
+        {
+          "name": "INAIL",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:54:15.686Z",
+    "signal_content": "INAIL started with 1 application when they went live, now they have 3 and in the next months will become 7. Exact expected load is unknown and we are in touch with partner to find this out."
+  },
+  {
+    "signal_id": "8870c93c-7479-4567-9a28-1c73ab6f9a00",
+    "extraction": {
+      "issues": [],
+      "themes": [
+        {
+          "name": "Security & Compliance",
+          "confidence": 0.8
+        }
+      ],
+      "features": [],
+      "requests": [],
+      "customers": [
+        {
+          "name": "INAIL",
+          "confidence": 0.9
+        },
+        {
+          "name": "INPS",
+          "confidence": 0.9
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:54:14.757Z",
+    "signal_content": ":new_user: *Sufyan Haroon* :new_user:\n:customervivo:*Customer Name : INAIL &amp; INPS*\n:clock2: *Date :* 2025-03-05\n:group-people: *Attendees :* <@W9QMZFR39>, <@U036QHTDSQJ>\n:loading-2248:*Notes*\n*INAIL*\n• Their private end point for connection to Azure Blob store has started working. \n• They will now test the code for Output Batch, move to UAT, then to pre-prod and then live. \n• Validation on UAT will be quick but validation on pre-prod may take time as it will involve security. \n• Expected volumes for Output Batch use case are unknown and the customer is unwilling to share. \n• Emanuele will check for INAIL’s plan for onboarding more use cases on Output Sync API. Volumes continue to remain low. \n• Accessibility of PDFs generated remain a top-priority and is already being tracked.\n*INPS*\n• INPS is still working on their Output Batch management code on their end. \n• The architecture for the same reviewed and major modifications were suggested for simplifications. \n• ETA for going live with this use remain unknown.\n\n:todo_done: *Next Action*\n• INAIL to test Output Batch on UAT, pre-prod before going live. \n• INPS to design and implement infra for Output Batch creation and management."
+  },
+  {
+    "signal_id": "ef9e4361-c5c5-44bd-b1df-53ba90e91dfe",
+    "extraction": {
+      "issues": [],
+      "themes": [
+        {
+          "name": "Authoring UX",
+          "confidence": 0.8
+        },
+        {
+          "name": "Integrations",
+          "confidence": 0.8
+        },
+        {
+          "name": "Rendering & PDF",
+          "confidence": 0.8
+        }
+      ],
+      "features": [
+        {
+          "name": "Forms",
+          "confidence": 0.9
+        },
+        {
+          "name": "Rendering API",
+          "confidence": 0.9
+        },
+        {
+          "name": "Rule Editor",
+          "confidence": 0.9
+        },
+        {
+          "name": "Signature Component",
+          "confidence": 0.9
+        },
+        {
+          "name": "Barcode",
+          "confidence": 0.9
+        },
+        {
+          "name": "Accessibility in XFA Forms",
+          "confidence": 0.9
+        },
+        {
+          "name": "Font",
+          "confidence": 0.9
+        },
+        {
+          "name": "Strikethrough",
+          "confidence": 0.9
+        },
+        {
+          "name": "Insert Dynamic List through Data",
+          "confidence": 0.9
+        },
+        {
+          "name": "Repeatable Rows/Columns",
+          "confidence": 0.9
+        },
+        {
+          "name": "CS Service API",
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "Signature Component: No ETA yet",
+          "confidence": 0.9
+        },
+        {
+          "text": "Barcode (other than Code 3 of 9): Requested priority barcodes; customer agreed to work with Code 3 of 9 for now",
+          "confidence": 0.9
+        },
+        {
+          "text": "Calculation in Forms: Communicated ETA: April (same as rule editor)",
+          "confidence": 0.9
+        },
+        {
+          "text": "Accessibility in XFA Forms: Included in our roadmap; no ETA currently",
+          "confidence": 0.9
+        },
+        {
+          "text": "Font, Strikethrough: Communicated ETA: April",
+          "confidence": 0.9
+        },
+        {
+          "text": "Insert Dynamic List through Data: No ETA",
+          "confidence": 0.9
+        },
+        {
+          "text": "Repeatable Rows/Columns: No ETA",
+          "confidence": 0.9
+        }
+      ],
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:54:12.502Z",
+    "signal_content": ":new_user: *Vijay Srivastva* :new_user:\n:customervivo:*Customer Name : NFCU*\n:clock2: *Date :* 2025-03-06\n:group-people: *Attendees :* <@WE163TH43>, <@U03Q109GQMT>, <@W4R5WN6LR>, <@U061P671RN1>\n:loading-2248:*Notes*\n*Discussion Summary:*\n1. ETA for FDM , render API and Rule Editor:\n    ◦ Communicated ETA: April\n2. ETA for New Feature Requests:\n    ◦ Signature Component: No ETA yet\n    ◦ Barcode (other than Code 3 of 9): Requested priority barcodes; customer agreed to work with Code 3 of 9 for now\n    ◦ Calculation in Forms: Communicated ETA: April (same as rule editor)\n    ◦ Accessibility in XFA Forms: Included in our roadmap; no ETA currently\n    ◦ Font, Strikethrough: Communicated ETA: April\n    ◦ Insert Dynamic List through Data: No ETA\n    ◦ Repeatable Rows/Columns: No ETA\n3. CS Service API:\n    ◦ NFCU team scheduled another meeting for the .tiff to PDF demo.\n:todo_done: *Next Action*\n• NFCU will discuss other features in the next meeting and share an Excel sheet being prepared for their business unit.\n• NFCU need to go deeper in FDM workflow and they are planning to discuss FDM in more detail in next meeting.\ncc: <@WQWCBV6NN> <@W4R5LUPK3> <@W9QMZFR39>"
+  },
+  {
+    "signal_id": "b67ef7bb-5cd2-4f6b-9004-5f2826d84043",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Look and feel need improvement for better readability",
+          "category": "UI/UX",
+          "severity": 3,
+          "confidence": 0.8
+        },
+        {
+          "title": "Styling should be standardized across the entire website",
+          "category": "UI/UX",
+          "severity": 3,
+          "confidence": 0.8
+        },
+        {
+          "title": "Accessibility Standards: WCAG 2.1; QA to ensure readability through screen readers",
+          "category": "Accessibility",
+          "severity": 4,
+          "confidence": 0.9
+        }
+      ],
+      "themes": [
+        {
+          "name": "Migration",
+          "confidence": 0.9
+        },
+        {
+          "name": "Authoring UX",
+          "confidence": 0.8
+        },
+        {
+          "name": "Performance",
+          "confidence": 0.7
+        }
+      ],
+      "features": [
+        {
+          "name": "Forms",
+          "confidence": 0.9
+        },
+        {
+          "name": "Data Binding",
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        {
+          "text": "Customer would like to explore AEM form capabilities",
+          "confidence": 0.9
+        },
+        {
+          "text": "Customer requested a demo on calculator functionality (OOTB formulas)",
+          "confidence": 0.8
+        },
+        {
+          "text": "Customer does not capture data of number of submissions and would like to explore this option in AEM",
+          "confidence": 0.8
+        }
+      ],
+      "customers": [
+        {
+          "name": "Clark County",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:54:06.686Z",
+    "signal_content": ":new_user: *Lovely Mandal* :new_user:\n:customervivo:*Customer Name : Clark County*\n:clock2: *Date :* 2025-03-11\n:group-people: *Attendees :* <@W4RU4N66R>, <@W012PACNGHJ>, <@U01G51VDXB8>\n:loading-2248:*Notes*\n• Customer Use case : \n    ◦ Total number of Forms : 20 \n    ◦ Future use case: Clark County has PDF forms and would like to migrate to web-based forms.\n    ◦ Customer would like to explore AEM form capabilities \n    ◦ Most of the forms are Contact us Forms \n    ◦ Forms are capturing data through Email \n    ◦ Traffic*:* ~1,000 forms per month across all forms (may increase).\n    ◦ Need*:* Store data in a digitized format for future reference.\n    ◦ Accessibility Standards: WCAG 2.1 \n        ▪︎ QA in a later phase will ensure readability through screen readers.\n        ▪︎ Look and feel need improvement for better readability.\n        ▪︎ Styling should be standardized across the entire website.\n        ▪︎ Minimize developer effort.\n    ◦ Rules : OOTB rules for calculations \n    ◦ Rules : Sending the email to a particular group based on drop-down selection \n    ◦ Form Submitter, gets a Submission confirmation message. (No email)\n    ◦ Rule : Add links based on the drop -down selection. Ex: getting a marriage License. Provide a link which can, help navigate people where they need to go.\n    ◦ Form updates: Fairly static; may require annual updates.\n• Suggestions made by Adobe :\n    ◦ Store info in Spreadsheets \n    ◦ Suggested other submit actions as well\n    ◦ Using score based reCAPTCHA (invisible)\n    ◦ Form Submission ROI and Conversion improvement - Customer is interested in exploring this use case\n        ▪︎ Use case : user can come back and fill the form from where they have left \n• As of now, customer does not capture data of number of submissions. Would like to explore this option in AEM as well\n        ▪︎   \nDemos &amp; Discussions by Adobe\n1. Document-Based Approach\n    ◦ Explained spreadsheet-based form storage.\n    ◦ Demoed form properties, fields, publishing, and rule configurations.\n    ◦ Submission: Explained submit-to-email method.\n    ◦ Customer requested a demo on calculator functionality (OOTB formulas).\n2. WYSIWYG (Universal Editor) Approach\n    ◦ Introduced Adaptive Forms &amp; Data Submission Actions.\n    ◦ Briefly covered Universal Editor UI, built-in components, and styling options.\n    ◦ Demoed: \n        ▪︎ Rule Editor &amp; form publishing (secure bank use case).\n        ▪︎ Column structures &amp; custom component creation.\n        ▪︎ AI Assistant in form creation.\n    ◦ Mentioned Power Automate for workflow automation.\n\n:todo_done: *Next Action*\n• Customer Action Item : \n    ◦ To provide us with an email body template in which they need to send the form data.\n    ◦  \n• Adobe Action Item : \n    ◦ Arrange for another meeting to show case AEM capabilities like Submit actions, Data source, power Automate flow, capturing form conversion (ROI) \n"
+  },
+  {
+    "signal_id": "4a32c373-83ed-4093-8a5a-3ffb0076c009",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [
+        {
+          "text": "Requested use cases for Agent role: Select specific data (FDM data source) from the UI and either preview or send the letter; Send a letter for archival.",
+          "confidence": 1
+        }
+      ],
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:54:02.162Z",
+    "signal_content": ":new_user: *Vijay Srivastva* :new_user:\n:customervivo:*Customer Name : NFCU*\n:clock2: *Date :* 2025-03-13\n:group-people: *Attendees :* <@WE163TH43>, <@U03Q109GQMT>\n:loading-2248:*Notes*\nHere's a summary based on our discussion with the NFCU:\n• *Navigation Functionality*: Confirmed to be working fine by NFCU.\n• *Requested Use Cases for Agent* (Different role than Author):\n    a. Select specific data (FDM data source) from the UI and either preview or send the letter. They showcased their UI to select specific data and do the preview.\n    b. Send a letter for archival.\n\n:todo_done: *Next Action*\n• It would be better if we present a session on FDM to understand its practical application and let them determine if it fits their use case.\n"
+  },
+  {
+    "signal_id": "dbc5d1b3-133d-4fb9-b02a-904358104818",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Poor performance of large forms created with foundational components",
+          "category": "Performance",
+          "severity": 1,
+          "confidence": 0.9
+        },
+        {
+          "title": "Lack of XML schema support in core components",
+          "category": "Data Binding",
+          "confidence": 0.9
+        },
+        {
+          "title": "Need for a table component in core components",
+          "category": "Authoring UX",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Performance",
+          "confidence": 0.9
+        },
+        {
+          "name": "Migration",
+          "confidence": 0.8
+        },
+        {
+          "name": "Data Binding",
+          "confidence": 0.8
+        },
+        {
+          "name": "Authoring UX",
+          "confidence": 0.7
+        }
+      ],
+      "features": [
+        {
+          "name": "Core Components",
+          "confidence": 0.9
+        },
+        {
+          "name": "Forms",
+          "confidence": 0.8
+        },
+        {
+          "name": "GenAI",
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        {
+          "text": "JSON support in Designer",
+          "confidence": 0.9
+        },
+        {
+          "text": "Support and best practices for converting existing adaptive forms to foundational components using a utility tool",
+          "confidence": 0.8
+        },
+        {
+          "text": "Migration tool demo",
+          "confidence": 0.8
+        },
+        {
+          "text": "Follow up on enabling JSON schema support at the designer level",
+          "confidence": 0.8
+        },
+        {
+          "text": "Check the feasibility of supporting GitHub integration for custom functions on 6.5",
+          "confidence": 0.7
+        }
+      ],
+      "customers": [
+        {
+          "name": "IRS W&I Media & Publications",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:59.815Z",
+    "signal_content": ":new_user: *Sudhanshu Singh* :new_user:\n:customervivo:*Customer Name : IRS W&amp;I Media &amp; Publications*\n:clock2: *Date :* 2025-03-18\n:group-people: *Attendees :* <@W4XTCQ07J>, <@U02RMEY3D1C>\n:loading-2248:*Notes*\n_[Generated by AI]_ Meeting notes:\n*Key points:* They have around *100 forms to be created* (from PDF, and move existing AFv1 to AFv2), and they are on *on-prem Gov Cloud*. Performance is critical and open to evaluate React based rendition on a React page as well. Were happy to know about Review component, and Table not as critical as Review - and currently PDF forms used for Review as well. Interested in *Success Studio*, and *GenAI* capabilities (though I highlighted that some of the new innovations could not be available on on-prem). They want *JSON support in Designer*!\n*Participants from IRS side:* *Vara Prasada Rao Ande* (Publishing Program Specialist, Digital Mobile &amp; Adaptive Forms), *Terry James P* (Form Specialist - most probably.. He is working on one of the complex forms)*, Manno Steven R* (IRS leadership)\n\n• *Adobe Support Call:* Ande explained the purpose of the call, which is to discuss Adobe tickets and seek help from the Adobe Engineering team to convert existing adaptive forms to foundational components using a utility tool.\n    ◦ *Purpose of Call:* Ande explained that the call was initiated to discuss Adobe tickets and seek assistance from the Adobe Engineering team to convert existing adaptive forms to foundational components using a utility tool. The goal is to reduce the effort required for the conversion and implement best practices suggested by the Adobe team.\n    ◦ *Adobe Tickets:* Ande mentioned that several Adobe tickets were submitted, and the Adobe Support team recommended a call with the Adobe Engineering team to discuss tools and utilities for converting existing adaptive forms to foundational components.\n    ◦ *Utility Tool:* Ande highlighted the utility tool provided by Adobe, which can help automatically convert foundational component forms into core component forms, reducing the manual effort involved in the conversion process.\n    ◦ *Support and Best Practices:* The intention of the call is to get support from the Adobe Engineering team to reduce project effort and implement best practices for the conversion process.\n• *Migration Tool Demo:* Sudhanshu mentioned that they do not have the migration tool handy but can schedule a subsequent call to demo the tool and explain its support for migration.\n    ◦ *Tool Availability:* Sudhanshu stated that the migration tool is not currently available for demonstration but offered to schedule a subsequent call to demo the tool and explain its support for migration.\n    ◦ *Migration Support:* Sudhanshu explained that the migration tool supports the migration of the structure, easing the migration effort by providing initial content that can be modified for business logic.\n• *Current vs. Future Development:* Ande presented the current and future development process for adaptive forms, highlighting the challenges with core components and the decision to leverage the latest features of core components.\n    ◦ *Current Development:* Ande described the current development process, which involves creating adaptive forms using foundational components and XML schema for form submission.\n    ◦ *Future Development:* Ande outlined the future development process, which aims to use core components and JSON schema for form submission to leverage the latest features and improve performance.\n    ◦ *Challenges:* Ande highlighted the challenges faced with core components, including the lack of support for XML schema and the need to create both JSON and XML schemas, which adds complexity and effort to the development process.\n    ◦ *Decision to Leverage Core Components:* The decision to leverage core components was made to take advantage of the latest features and recommendations from Adobe, despite the challenges involved in the transition.\n• *Form Submission Formats:* Sudhanshu and Ande discussed the use of JSON and XML formats for form submission, with Sudhanshu recommending JSON for better performance and reduced dependencies.\n    ◦ *JSON vs. XML:* Sudhanshu recommended using JSON for form submission due to its better performance and reduced dependencies compared to XML.\n    ◦ *Current Use of XML:* Ande explained that the current process involves using XML schema for form submission, but they have recently started using JSON for new requirements from external systems.\n    ◦ *Performance Benefits:* Sudhanshu highlighted the performance benefits of using JSON, including improved client-side performance and reduced dependencies on third-party libraries like jQuery.\n    ◦ *Future Development with JSON:* Ande expressed the need for Adobe Engineering team support to enable JSON schema binding in the designer level to avoid the additional effort of maintaining both JSON and XML schemas.\n• *Large Forms Performance:* Terry emphasized the need for better performance in large forms and expressed interest in using core components and JSON submission to achieve this.\n    ◦ *Performance Issues:* Terry emphasized the poor performance of large forms created with foundational components and the need for better performance.\n    ◦ *Core Components:* Terry expressed interest in using core components and JSON submission to improve the performance of large forms.\n    ◦ *Lightweight Forms:* Terry highlighted the importance of creating lightweight forms with core components to ensure a faster and more efficient user experience.\n    ◦ *Performance Measurement:* Terry mentioned the need to measure the performance benefits of using core components and JSON submission for large forms.\n• *Review Component:* Terry highlighted the importance of the review component for their forms, and Sudhanshu confirmed that it will be available soon.\n    ◦ *Importance of Review Component:* Terry emphasized the critical need for a review component in their forms, which allows users to review their submissions before finalizing.\n    ◦ *Availability:* Sudhanshu confirmed that the review component will be available soon and provided details on its functionality, including the ability to review different panels and selectively choose components to review.\n• *Code Editor Challenges:* Ande raised concerns about the lack of a code editor for core component development, and Sudhanshu explained the rationale behind its removal and potential solutions.\n    ◦ *Concerns Raised:* Ande raised concerns about the lack of a code editor for core component development, which creates a strong dependency on the development team for writing custom functions.\n    ◦ *Rationale for Removal:* Sudhanshu explained that the code editor was removed to maintain a separation of phases and personas, with developers working in a Git repository for better source control and tracking changes.\n    ◦ *Potential Solutions:* Sudhanshu mentioned that on the cloud service, there is an option to store custom functions in a Git repository, which can be reviewed and made available in the visual rule editor without triggering a pipeline. He offered to check the feasibility of supporting this on the 6.5 setup.\n• *Table Component:* Ande and Sudhanshu discussed the need for a table component in core components, with Sudhanshu suggesting potential improvements and customer-driven development.\n    ◦ *Need for Table Component:* Ande highlighted the need for a table component in core components, which is currently available in foundational components but missing in core components.\n    ◦ *Potential Improvements:* Sudhanshu suggested potential improvements, such as using responsive layouts like accordions instead of tables for better mobile device compatibility.\n    ◦ *Customer-Driven Development:* Sudhanshu mentioned that the development of new components and improvements is customer-driven, and they are open to including critical requirements in their roadmap based on customer feedback.\n• *XML Schema Support:* Ande inquired about the support for XML schema in core components, and Sudhanshu confirmed that it is not currently supported and not in the immediate roadmap.\n    ◦ *Inquiry on XML Schema:* Ande inquired about the support for XML schema in core components, expressing the need to avoid the additional effort of maintaining both JSON and XML schemas.\n    ◦ *Current Support:* Sudhanshu confirmed that XML schema support is not currently available in core components and is not in the immediate roadmap.\n    ◦ *Future Plans:* Sudhanshu mentioned that they might revisit the requirement in the second half of the year if it becomes a critical requirement for customers.\n• *Migration Utility:* Sudhanshu shared links to the migration utility for converting foundation forms to core components and converting XFA forms to adaptive forms, and suggested a follow-up session for a demo.\n    ◦ *Shared Links:* Sudhanshu shared links to the migration utility for converting foundation forms to core components and converting XFA forms to adaptive forms.\n    ◦ *Follow-Up Session:* Sudhanshu suggested scheduling a follow-up session to demo the migration utility and provide further assistance with the conversion process _*(AFv1 to AFV2 and AFCS) -* cc:  <@U03BKR6K3R8>_ _<@U0213T59LMN>_ \n:todo_done: *Next Action*\n• *Migration Tool Demo:* Schedule a subsequent call to demo the migration tool and walk through the support available in the tool. (Sudhanshu)\n• *PPT Review:* Share the draft PPT with 7 slides and go through it during the meeting. (Ande)\n• *Form Conversion:* Share the complex form with the Adobe Engineering team for conversion and performance evaluation. (Ande, JP)\n• *XML and JSON Schema Support:* Follow up on enabling JSON schema support at the designer level to avoid using XML schema for new forms. (Sudhanshu)\n• *Documentation Sharing:* Share documentation and recordings related to the review component and other relevant features with the tea"
+  },
+  {
+    "signal_id": "bd648e39-55b9-416b-aef3-4ec9b9008482",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Fragment width is incorrect when dropped on the canvas",
+          "category": "IC Editor",
+          "severity": 3,
+          "confidence": 0.9
+        },
+        {
+          "title": "PDF preview not functioning correctly with fragment in document",
+          "category": "IC Editor",
+          "severity": 3,
+          "confidence": 0.9
+        },
+        {
+          "title": "MasterPage option causing confusion for customers",
+          "category": "IC Editor",
+          "severity": 2,
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "features": [
+        {
+          "name": "IC Editor",
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "FDM use case with filtered data",
+          "confidence": 0.8
+        },
+        {
+          "text": "Permission management for groups or users to edit communications",
+          "confidence": 0.8
+        },
+        {
+          "text": "Transformer to convert HTML table to XDP table",
+          "confidence": 0.8
+        }
+      ],
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:54.523Z",
+    "signal_content": ":new_user: *Vijay Srivastva* :new_user:\n:customervivo:*Customer Name : NFCU*\n:clock2: *Date :* 2025-03-20\n:group-people: *Attendees :* <@WE163TH43>\n:loading-2248:*Notes*\n*Discussion Summary*\n*Issues with the Editor:*\n1. *Fragment Width*: The fragment does not have the correct width when dropped on the canvas during document creation. This issue arises when the fragment is created outside of a subform.\n2. *PDF Preview*: The PDF preview is not functioning correctly when a fragment is present in the document.\n3. *MasterPage Option*: The masterPage option in the editor is causing confusion for customers and needs to be hidden.\n*New Features Requested for Demo to their Business Unit:*\n1. *FDM Use Case with filtered data*: NFCU requires a use case for data fetching using filters or any hooks that they can implement independently. An approach needs to be provided.\n2. *Permission Management*: NFCU needs the ability to grant permissions to groups or users to edit communications.\n*Non-Editor Use Case:*\n• NFCU needs to know if there is a transformer available to convert an HTML table to an XDP table.\n:todo_done: *Next Action*\n• Action Items\n1. *Fix PDF Preview and Fragment Width Issues*:\n    ◦ *PDF Preview*: Resolve the issue where the PDF preview is not functioning correctly when a fragment is present in the document.\n    ◦ *Fragment Width*: Address the problem where the fragment does not have the correct width when dropped on the canvas during document creation.\n2. *Provide Details for PDF Preview with Filtered Data*:\n    ◦ Ensure that the PDF preview using filtered data, allowing users to see the relevant information in the preview.\ncc: <@WQWCBV6NN> <@W4R5LUPK3> <@W9QMZFR39>"
+  },
+  {
+    "signal_id": "7e74f675-3f24-4ead-bdf7-378581188fb7",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [],
+      "customers": [
+        {
+          "name": "Brad",
+          "confidence": 0.9
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:50.080Z",
+    "signal_content": "Yes, we had a few engagements earlier, and if I recall correctly, Brad was the only one in that meeting.\nWe can simply show them CodeSandbox and let them explore it to better understand headless."
+  },
+  {
+    "signal_id": "5414ae68-6a4c-4d44-a5ff-a0521456bc8e",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [
+        {
+          "name": "Forms",
+          "confidence": 0.8
+        }
+      ],
+      "requests": [
+        {
+          "text": "Anything specific they are looking for in Headless Adaptive Forms?",
+          "confidence": 0.9
+        }
+      ],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:49.100Z",
+    "signal_content": "<@W4R5M9P4H> would you be available for the meeting?\nQQ - my understanding is that Rishi was already engaged with them for headless/SPA enhancements.\nAnything specific they are looking for in Headless Adaptive Forms?"
+  },
+  {
+    "signal_id": "aa12a8aa-e0b9-4a21-8b83-141999479c9f",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [
+        {
+          "text": "session tomorrow for headless forms demo from 9:00-9:30 am",
+          "confidence": 1
+        }
+      ],
+      "customers": [
+        {
+          "name": "Spark",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:47.978Z",
+    "signal_content": "<@W4XTCQ07J> Spark has asked for a session tomorrow for headless forms demo from 9:00-9:30 am. Can you please align someone to demonstrate the same ?\ncc: <@U0213T59LMN>"
+  },
+  {
+    "signal_id": "d0cdd2ea-c0bb-468b-b851-746c7a708188",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Fields from SFDC not visible in data source tree",
+          "category": "Data Binding",
+          "severity": 3,
+          "confidence": 0.9
+        },
+        {
+          "title": "Marketo Cloud Configuration screen needs improvements",
+          "category": "Authoring UX",
+          "confidence": 0.8
+        },
+        {
+          "title": "Data source properties in Adaptive Forms editor not listed alphabetically",
+          "category": "Authoring UX",
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Integrations",
+          "confidence": 0.9
+        },
+        {
+          "name": "Authoring UX",
+          "confidence": 0.8
+        }
+      ],
+      "features": [
+        {
+          "name": "Forms",
+          "confidence": 0.9
+        },
+        {
+          "name": "Data Binding",
+          "confidence": 0.8
+        },
+        {
+          "name": "IC Editor",
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        {
+          "text": "Need to provide timelines for enhancement in OOTB Marketo connector for implementing Form Fill Custom Activity and other issues",
+          "confidence": 0.9
+        }
+      ],
+      "customers": [
+        {
+          "name": "Spark NZ",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:46.812Z",
+    "signal_content": ":new_user: *Rahul Kumar Singh* :new_user:\n:customervivo:*Customer Name : Spark NZ*\n:clock2: *Date :* 2025-03-21\n:group-people: *Attendees :* <@U0213T59LMN>, <@U03N27GAZDZ>\n:loading-2248:*Notes*\n*Discussion Agenda: New OOTB Marketo Connector*\n• Brad from the Spark NZ team highlighted a few minor issues and suggestions, including improvements to the Marketo Cloud Configuration screen and ensuring the data source properties in the Adaptive Forms editor are listed alphabetically.\n• They currently have existing Marketo forms with smart lists and campaigns configured based on the “Marketo Form Fill” activity.\n• We explained that we are implementing an OOTB custom “Form Fill” activity similar to the Marketo Form Fill activity, allowing them to transition their campaigns and smart lists to this new custom activity.\n• Their smart lists in Marketo use the *Marketo assetId (form ID)* to segregate data. We suggested achieving the same functionality by creating a custom field in Marketo and populating it using a hidden field in Adaptive Forms.\n• They raised an issue where fields coming from SFDC were not visible in our data source tree. We need to investigate this further.\n• Brad acknowledged that the new OOTB integration is excellent and very easy to implement.\n• They tentatively plan to go live with their first form by the end of May.\n• Lastly, our *GenAI assistant* was briefly discussed. A follow-up meeting is scheduled for next week to discuss *AI-powered forms, the Universal Editor, and headless forms*.\n\n:todo_done: *Next Action*\n• Need to provide timelines for enhancement in OOTB Marketo connector for implementing Form Fill Custom Activity and other issues.\ncc: <@W4RU4N66R>"
+  },
+  {
+    "signal_id": "5d40713f-2c9a-42a8-8320-c359ad9de48e",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [
+        {
+          "text": "Automate the sling mapping and related use-case to avoid miss/regression in future.",
+          "confidence": 0.9
+        }
+      ],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:42.483Z",
+    "signal_content": "&gt; I have scheduled a meeting tomorrow - to identify if we can automate the sling mapping and related use-case - to avoid the miss/regression in future.\nIt can/should be automated, it was not done earlier due to time constraints"
+  },
+  {
+    "signal_id": "d7c4f8f6-447f-43e9-8634-73808aa305aa",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Miss/regression in sling mapping and related use-case",
+          "category": "unknown",
+          "severity": 1,
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "features": [],
+      "requests": [
+        {
+          "text": "Automate the sling mapping and related use-case",
+          "confidence": 0.9
+        }
+      ],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:41.292Z",
+    "signal_content": "FYI - I have scheduled a meeting tomorrow - to identify if we can automate the sling mapping and related use-case - to avoid the miss/regression in future."
+  },
+  {
+    "signal_id": "49870aea-735d-4e23-8d4e-f980939f405b",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [
+        {
+          "text": "Move to newer Java version for IRS ECM",
+          "confidence": 1
+        },
+        {
+          "text": "Moving to CC components for IRS W&I",
+          "confidence": 1
+        }
+      ],
+      "customers": [
+        {
+          "name": "IRS DMAF",
+          "confidence": 1
+        },
+        {
+          "name": "IRS ECM",
+          "confidence": 1
+        },
+        {
+          "name": "IRS W&I",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:40.032Z",
+    "signal_content": "*IRS Accounts:*\n• This request is related to *IRS DMAF* account (biggest account - where we have been actively engaged)\n• *IRS ECM* is another account (640K ARR) - where there are initial discussions on requirement to move to newer Java version (already live - this is the second year)\n• *IRS W&amp;I* where we connected with them in context of moving to CC components."
+  },
+  {
+    "signal_id": "83f192f7-ed50-4b53-9cf7-98197547c030",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Sling mapping regression identified and required multiple hotfixes",
+          "category": "Sling Mapping",
+          "severity": 3,
+          "confidence": 0.9
+        },
+        {
+          "title": "AF Rules not saved",
+          "category": "Forms",
+          "severity": 3,
+          "confidence": 0.9
+        },
+        {
+          "title": "File attachment duplication",
+          "category": "Forms",
+          "severity": 3,
+          "confidence": 0.9
+        },
+        {
+          "title": "Intermittent failures",
+          "category": "Forms",
+          "severity": 3,
+          "confidence": 0.9
+        },
+        {
+          "title": "Security fix for non-Forms issue",
+          "category": "Security",
+          "severity": 3,
+          "confidence": 0.9
+        }
+      ],
+      "themes": [
+        {
+          "name": "Security & Compliance",
+          "confidence": 0.8
+        }
+      ],
+      "features": [],
+      "requests": [
+        {
+          "text": "Need to identify and share a plan on how we can avoid hotfixes in future.",
+          "confidence": 0.9
+        },
+        {
+          "text": "Automation plan to avoid regression in this area.",
+          "confidence": 0.9
+        }
+      ],
+      "customers": [
+        {
+          "name": "IRS",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:38.456Z",
+    "signal_content": ":new_user: *Sudhanshu Singh* :new_user:\n:customervivo:*Customer Name : IRS (Internal meeting)*\n:clock2: *Date :* 2025-03-25\n:group-people: *Attendees :* <@W4XTCQ07J>, <@W5MFNAZ63>, <@WPJSSF62C>\n:loading-2248:*Notes*\n*Internal sync-up for concerns raised by IRS regarding multiple hotfixes delivered, and how we could avoid hotfix.*\n\n*Issue:*\n• The IRS features/support have a special requirement to introduce sling mapping - which was validated manually (complexity in automation/bandwidth) - since initially no other customer requested for this. But recently there are other customers using it.\n    ◦ The feature was delivered as a hotfix on SP21 - but later when merging to SP22 - a regression was identified for other customers and had to be reverted - and IRS had to be given a hotfix again.\n    ◦ In SP23 - this was introduced with an updated fix, and validated manually, but was broken (regression) to an invalid merge conflict resolution, and thus required an updated hotfix again.\n:todo_done: *Next Action*\n• Need to identify and share a plan on how we can avoid hotfixes in future - ensuring that all the hotfixes and included in next service pack.\n• Automation plan - to avoid regression in this area.\nThe <https://adobe.sharepoint.com/:x:/r/sites/PremierSupport/Shared%20Documents/Customers/IRS/TAM/Weekly%20Meeting%20Notes/0325-Mar-IRS-WMR.xlsx?d=w6147c1f635cd450db4badaac38a6337a&amp;csf=1&amp;web=1&amp;e=zbZ59u|hotfixes> that were delivered and to be automated include:\n• *Sling mapping related issues:*\n    ◦ <https://jira.corp.adobe.com/browse/FORMS-15894|FORMS-15894> (Sling mapping + submit)\n    ◦ <https://jira.corp.adobe.com/browse/FORMS-15755|FORMS-15755> / <https://jira.corp.adobe.com/browse/FORMS-15895|FORMS-15895> (sling mapping + draft save/delete)\n    ◦ <https://jira.corp.adobe.com/browse/FORMS-18069|FORMS-18069> (sling mapping + GuideBridge API)\n    ◦ <https://jira.corp.adobe.com/browse/FORMS-16479|FORMS-16479> (sling mapping + render draft)\n    ◦ <https://jira.corp.adobe.com/browse/FORMS-16949|FORMS-16949> / <https://jira.corp.adobe.com/browse/FORMS-17477|FORMS-17477> (sling mapping + draft)\n• *Other issues*\n    ◦ <https://jira.corp.adobe.com/browse/FORMS-16866|FORMS-16866> / <https://jira.corp.adobe.com/browse/FORMS-16698|FORMS-16698> (AF Rules not saved)\n    ◦ <https://jira.corp.adobe.com/browse/FORMS-19045|FORMS-19045> (Backport) / <https://jira.corp.adobe.com/browse/FORMS-19051|FORMS-19051> (Hotfix) - file attachment duplication\n    ◦ <https://jira.corp.adobe.com/browse/DISP-1037|DISP-1037> (intermittent failures - <@WLK0YHV9Q>)\n    ◦ <https://jira.corp.adobe.com/browse/GRANITE-51666|GRANITE-51666> (non-Forms - security fix)"
+  },
+  {
+    "signal_id": "bcc3ee50-39be-4775-8408-cffc41cab488",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [],
+      "customers": [
+        {
+          "name": "SP",
+          "confidence": 0.8
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:33.830Z",
+    "signal_content": "For the same customer and for the same timeline - we are also engaged for the use case of uploading big MBs attachment files in SP doc library and to achieve the same we are implementing a way to unblock customer and the approach will only be enabled for this customer"
+  },
+  {
+    "signal_id": "2ca42829-0a52-4811-b712-52a1805605fa",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [
+        {
+          "name": "Core Components",
+          "confidence": 1
+        }
+      ],
+      "requests": [
+        {
+          "text": "Request for Scribble to be made available in Core Components.",
+          "confidence": 1
+        }
+      ],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:32.892Z",
+    "signal_content": "From <@WBTGD8NCR> (TAM): Customer confirmed -\n&gt; _We are using the core components and not the older version (foundation components) . Since scribble is not available, it is something we requested for to be made available to us._\n&gt; _We would like to focus on scribble as it is something business is inclined towards using._\n&gt; _Older version-foundation- contains it but we aren’t using per adobe’s guidelines_"
+  },
+  {
+    "signal_id": "cd807899-090a-4515-8b21-cc9f23350b1b",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Forms lack a sign-and-send feature",
+          "category": "Feature Gap",
+          "severity": 3,
+          "confidence": 1
+        }
+      ],
+      "themes": [],
+      "features": [
+        {
+          "name": "Core Components",
+          "confidence": 1
+        }
+      ],
+      "requests": [
+        {
+          "text": "Check with the Product team on timelines for adding Scribble/Adobe Sign feature to Core Components.",
+          "confidence": 1
+        },
+        {
+          "text": "Add sign-and-send feature by the April end/May first week.",
+          "confidence": 1
+        }
+      ],
+      "customers": [
+        {
+          "name": "State of Pennsylvania Office of Administration",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:31.792Z",
+    "signal_content": ":new_user: *Sudhanshu Singh* :new_user:\n:customervivo:*Customer Name : State of Pennsylvania Office of Administration*\n:clock2: *Date :* 2025-03-25\n:group-people: *Attendees :* <@W4XTCQ07J>, <@WBTGD8NCR>\n:loading-2248:*Notes*\n*Current project relies on having users sign forms using either Scribble or Adobe Sign* (Foundation components based forms - since we never added these to core-components)\n\nThey require Adobe to add the following feature with Core Components.\n\n• The customer has requested to check with the Product team on timelines for this feature.\n• The customer would like business users to be able to use the Scribble/Adobe Sign feature to be able to sign documents prior to submissions. \n• Currently, the forms lack a sign-and-send feature. The customer would like to have this feature by the *April end/May first week*.\n:todo_done: *Next Action*\nAsked <@WBTGD8NCR> to confirm if Scribble Signature would meet their requirements. This would be less effort compared to Acrobat Sign support with Sign and Send feature (which is currently not in H1 plan) - cc: <@U0213T59LMN>\n\nHave asked to create separate FPR tickets for these (currently a common FPR tracks Scribble and Sign support requirements).\n\n<@U05K77PB9PX> could you please review the changes for Scribble Signature, and share the latest PR for review. cc: <@W4R5M9P4H> / <@W4SG81T9C>"
+  },
+  {
+    "signal_id": "3066f377-a07b-48ba-a313-744e5e6501a6",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:28.831Z",
+    "signal_content": "Received an update from SC team. Demo is scheduled for April 30, 2025. Pablo will do the demo and relay the feedback. We have provided the demo script and collateral."
+  },
+  {
+    "signal_id": "48490785-9284-41ff-8eb3-19d58cd02e29",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Feature gaps identified in IC Editor",
+          "category": "Feature Gaps",
+          "confidence": 1
+        }
+      ],
+      "themes": [],
+      "features": [
+        {
+          "name": "IC Editor",
+          "confidence": 1
+        }
+      ],
+      "requests": [],
+      "customers": [
+        {
+          "name": "Iberia",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:28.056Z",
+    "signal_content": ":new_user: *Sufyan Haroon* :new_user:\n:customervivo:*Customer Name : Iberia*\n:clock2: *Date :* 2025-03-25\n:group-people: *Attendees :* <@W4R5WN6LR>, <@W9QMZFR39>, <@W4A8FCM7W>\n:loading-2248:*Notes*\nIberia is a European airline.\nThis is a prospect customer. The communication is happening via email. They have a sample PDF which is a booking confirmation. We are currently working to create XDP/IC for the same in IC editor. The same will be demoed in a meeting on April 9 or 10.\n\nWhile working with IC editor, we have identified certain feature gaps which we will be following up with workarounds for now and discuss internally to address them in future.\n:todo_done: *Next Action*\n• Complete XDP/IC for the sample PDF. \n• Demo the same in the meeting. "
+  },
+  {
+    "signal_id": "2db50962-f194-4bf5-b9e9-4537ec03a976",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [
+        {
+          "text": "Do we have a capability where LLM can suggest to change the form in order to improve conversions?",
+          "confidence": 0.9
+        }
+      ],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:25.634Z",
+    "signal_content": "One more point that Brad mentioned during the call was.\n “Do we have a capability where LLM can suggest to change the form in order to improve conversions?” - which I think this would align with PSS.\n<@W4XTCQ07J>/ <@W4RT1B152>\n\n"
+  },
+  {
+    "signal_id": "53ac2e6c-c380-4129-8de7-0253252e117e",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [
+        {
+          "name": "Core Components",
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "They have custom components which they would like to use when form is getting created.",
+          "confidence": 0.9
+        }
+      ],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:24.532Z",
+    "signal_content": "&gt; They have custom components which they would like to use when form is getting created.\n<@U0213T59LMN>, <@U03N27GAZDZ> This ask been coming from multiple customer and also long pending in AFCS for CC. Lets try to create some proposal"
+  },
+  {
+    "signal_id": "a1278c6b-8f84-4059-ad8c-fadc4b51cab9",
+    "extraction": {
+      "issues": [
+        {
+          "title": "E2E testing has always been a pain point",
+          "category": "Testing",
+          "severity": 1,
+          "confidence": 1
+        }
+      ],
+      "themes": [
+        {
+          "name": "Authoring UX",
+          "confidence": 1
+        },
+        {
+          "name": "Rendering & PDF",
+          "confidence": 1
+        },
+        {
+          "name": "Integrations",
+          "confidence": 1
+        }
+      ],
+      "features": [
+        {
+          "name": "Forms Experience Builder",
+          "confidence": 1
+        },
+        {
+          "name": "Core Components",
+          "confidence": 1
+        },
+        {
+          "name": "IC Editor",
+          "confidence": 1
+        },
+        {
+          "name": "Forms",
+          "confidence": 1
+        }
+      ],
+      "requests": [
+        {
+          "text": "Can you give PDFs as attachment for creating form in assistant?",
+          "confidence": 1
+        },
+        {
+          "text": "Do you need the figma design to be publicly accessible or is there some authentication token we can provide?",
+          "confidence": 1
+        },
+        {
+          "text": "They have custom components which they would like to use when form is getting created.",
+          "confidence": 1
+        }
+      ],
+      "customers": [
+        {
+          "name": "Spark NZ",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:23.403Z",
+    "signal_content": ":new_user: *Navneet Agarwal* :new_user:\n:customervivo:*Customer Name : Spark NZ*\n:clock2: *Date :* 2025-03-27\n:group-people: *Attendees :* <@U0213T59LMN>, <@WLWHN4TV3>, <@W4R5M9P4H>\n:loading-2248:*Notes*\n• The team presented the GenAI capabilities in forms manager, core components form editor and Universal editor. Features demonstrated:\n    ◦ Figma to AF (FM)\n    ◦ User query to AF (FM)\n    ◦ Add panel using user query (CC editor)\n    ◦ Create rule (UE/CC editor)\n    ◦ Update Layout (CC editor)\n    ◦ Configure submit (CC editor)\n    ◦ Create form/panel using attachment (UE)\n    ◦ Add/delete/update fields (UE)\n    ◦ Update layout, move components (UE)\n• They use a lot of Figma designs to create the forms so the customer was willing to use this for their use cases.\n• The capabilities demonstrated can really help them reduce the time for authoring of a form as there are often last minute changes on the form.\n• They also mentioned, their designer can also use this for rapid prototyping.\n• They had a couple of questions around :\n    ◦ Can you give PDFs as attachment for creating form in assistant?  (Not supported as of now)\n    ◦ Do you need the figma design to be publicly accessible or is there some authentication token we can provide ? (Need to document this before giving them)\n    ◦ They have custom components which they would like to use when form is getting created. (Need to check internally how we can support this)\n• We also asked them in what other areas we can help them using the generative AI for example generating test cases etc. \n• They also mentioned the E2E testing has always been a pain point for them.\n• They will be enabling EDS in their next fiscal year which will be in July’25, until then they want the support for Assistant in CC Forms editor.\n• Rishi also answered their queries about headless and demonstrated the code sandbox that we have for headless components.\n• Based on their use-case they can explore to use react-native for rendering the headless.\n:todo_done: *Next Action*\n• Enabling AI Assistant for the customer.\n• Customer to come back with env details where this needs to be enabled.\n• Customer to discuss internally and come back with what other areas do they think GenAi can help them."
+  },
+  {
+    "signal_id": "00287adf-a5b1-45b1-877a-8c01c467275b",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Implementing tables in Adaptive Forms for Auto-DOR",
+          "category": "Forms",
+          "severity": 1,
+          "confidence": 0.9
+        },
+        {
+          "title": "Handling dynamic data: Excluding sections without data from the Document of Record",
+          "category": "Forms",
+          "severity": 1,
+          "confidence": 0.9
+        },
+        {
+          "title": "If an image in an Adaptive Form has a URL, they have a use-case to display the image in-line",
+          "category": "Forms",
+          "severity": 1,
+          "confidence": 0.8
+        }
+      ],
+      "themes": [],
+      "features": [
+        {
+          "name": "Forms",
+          "confidence": 0.8
+        }
+      ],
+      "requests": [],
+      "customers": [
+        {
+          "name": "NedBank",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:18.731Z",
+    "signal_content": ":new_user: *Rishi Mehta* :new_user:\n:customervivo:*Customer Name : NedBank*\n:clock2: *Date :* 2025-03-27\n:group-people: *Attendees :* <@W4R5M9P4H>, <@W4SG81T9C>\n:loading-2248:*Notes*\nDemonstrated Items:\n\n1. JSON Schema Conversion Demo\n2. Creating Adaptive Form Fragments\n3. Mapping and Formatting in Adaptive Forms\n4. Dynamic Fragment Display Based on Data\nOpen Items Related to Auto-DOR:\n1. Implementing tables in Adaptive Forms for Auto-DOR\n2. Handling dynamic data: Excluding sections without data from the Document of Record. Today the field is shown with empty value.\n3. If an image in an Adaptive Form has a URL, they have a use-case to display the image in-line\n:todo_done: *Next Action*\n1. Patch private release in nedbank environment\n2. Share relevant documentation to Nedbank\n3. Close open items wrt Auto DOR"
+  },
+  {
+    "signal_id": "2e93de26-77c8-4f96-bab7-fac4b783b920",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Testing on UAT was blocked",
+          "category": "Testing",
+          "severity": 1,
+          "confidence": 0.9
+        }
+      ],
+      "themes": [],
+      "features": [],
+      "requests": [],
+      "customers": [
+        {
+          "name": "HDFC Bank",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:15.215Z",
+    "signal_content": ":new_user: *Deepak Maurya* :new_user:\n:customervivo:*Customer Name : HDFC Bank*\n:clock2: *Date :* 2025-03-27\n:group-people: *Attendees :* <@W0177TQA62U>\n:loading-2248:*Notes*\nBank is updating Flow JSON version of *SmartEMI WhatsApp* journey. I shared latest json on 13th March that had minimal changes but Bank wanted to test end to end journey on their internal WABA account before moving to production and UAT testing was blocked .\n• During go live we made some production specific changes.\n• After October we haven't tested anything on UAT so there was gap.\nTeam is unblocked for testing, changes will be moved to prod soon.\n:todo_done: *Next Action*\n"
+  },
+  {
+    "signal_id": "2f55347c-f65d-4fe4-89f7-772cf1ab16ae",
+    "extraction": {
+      "issues": [
+        {
+          "title": "High manual effort in printing, filling, and validating forms",
+          "category": "Efficiency",
+          "severity": 3,
+          "confidence": 0.9
+        },
+        {
+          "title": "Difficulty in scaling and loading large HTML5 forms",
+          "category": "Performance",
+          "severity": 4,
+          "confidence": 0.9
+        },
+        {
+          "title": "Dispatcher caching is not effective for HTML5 forms",
+          "category": "Caching",
+          "severity": 4,
+          "confidence": 0.9
+        }
+      ],
+      "themes": [
+        {
+          "name": "Performance",
+          "confidence": 0.8
+        },
+        {
+          "name": "Rendering & PDF",
+          "confidence": 0.8
+        }
+      ],
+      "features": [
+        {
+          "name": "Forms",
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "Customer to share sample PDFs and schedule a follow-up meeting to review issues observed in HTML5 form rendering and performance",
+          "confidence": 0.9
+        }
+      ],
+      "customers": [
+        {
+          "name": "Charles Schwab",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:13.105Z",
+    "signal_content": ":new_user: *Vijay Kumar Jalagari* :new_user:\n:customervivo:*Customer Name : Charles Schwab*\n:clock2: *Date :* 2025-03-18\n:group-people: *Attendees :* <@W6CBB4953>, <@W4R4S9FS4>, <@W5HEU5M7Y>, <@W4RU4N66R>\n:loading-2248:*Notes*\n*Forms License:* *Yes, On-prem*\n*Primary Use Case:* HTML 5 Forms.\n*Adobe Products in Use:* DAM &amp; Ultimate Success\n*Attendees:* Michaell (Platform Manager), George (Platform Manager), Abhishek (SME), Dennis (Manager) and Stephane (Technical Lead)\n\n*Current State:*\n• Customer is currently using *XDP-based PDF forms*, with over *800+ forms* and associated *fragments*. \n• These PDFs are *printed and manually filled* by users. A *third-party vendor* reviews, validates, and contacts customers for any corrections. \n• Some forms span up to *30 pages*, adding complexity and validation effort. \n*Key Challenges:*\n\n• High manual effort in printing, filling, and validating forms. \n• Difficulty in *scaling and loading large HTML5 forms* (converted from XDP), particularly those with high page counts. \n• *Dispatcher caching is not effective* for these HTML5 forms, impacting performance. \n*Key Use Cases &amp; Goals:*\n\n• The customer aims to *reduce 90% of paper and manual validation costs* incurred via vendor processing. \n*Planned Approach (Phase-wise):*\n\n*Phase 1:*\n\n• Convert XDP to *HTML5* forms. \n• Implement *client-side validation* to reduce dependency on manual vendor review. \n• Currently in PoC phase but facing performance/scalability issues. \n*Phase 2:*\n\n• Add *prefill capability* using internal databases without query parameters (to avoid disclosure of information) \n• *Integrate with Adobe Sign* for digital signatures. \n\n*Adobe Recommendation:*\n\n• Migrate to *Adobe Cloud or AMS* to resolve *scaling and caching issues*, especially for large forms. \n\n:todo_done: *Next Action*\nCustomer to *share sample PDFs* and *schedule a follow-up meeting* to review issues observed in HTML5 form rendering and performance."
+  },
+  {
+    "signal_id": "a3847166-af2d-4a47-bb45-faa824b93bf2",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [],
+      "customers": [
+        {
+          "name": "Abbvie",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:09.514Z",
+    "signal_content": ":new_user: *Vijay Kumar Jalagari* :new_user:\n:customervivo:*Customer Name : Abbvie*\n:clock2: *Date :* 2025-03-19\n:group-people: *Attendees :* <@W6CBB4953>, <@W4R4S9FS4>, <@W5HEU5M7Y>, <@W4RU4N66R>\n:loading-2248:*Notes*\n*Forms License:* *Yes, On-prem to Cloud*\n*Primary Use Case:* Adaptive Forms.\n*Adobe Products in Use:* Sites &amp; Assets\n*Attendees:* Joe George (Director), Shivendra Vikram Singh (Platform Manager), Sudhakar Vudatha\n\n• The customer has *finalized plans to start migration work from next week (last week of March)*. \n• They have selected *Cognizant as the implementation partner*, who will work under the *guidance of Ajila*. \n• In addition to the current scope, they have a few more *commerce websites* where *form data needs to be submitted to Salesforce*. \n• Another team within *AbbVie* (likely *Botox* or a related department) has a use case involving *data hydration into AEP*. This data is then used for *audience creation* to support *prospecting patient journeys*. \n\n:todo_done: *Next Action*\n"
+  },
+  {
+    "signal_id": "f1fd985a-0e6c-4774-9407-d967d1c8d5d4",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Current vendor uses a multi-API or multi-step process: JSON → XML → Generate PDF → Create Agreement → Send for Signature",
+          "category": "Performance",
+          "confidence": 0.9
+        },
+        {
+          "title": "Customer would like to review existing architecture and explore ways to reduce the time required for generating and sending communications",
+          "category": "Performance",
+          "confidence": 0.9
+        }
+      ],
+      "themes": [],
+      "features": [
+        {
+          "name": "Adaptive Forms",
+          "confidence": 1
+        }
+      ],
+      "requests": [
+        {
+          "text": "Include the customer in the VIP program",
+          "confidence": 0.8
+        },
+        {
+          "text": "Review the current architecture and identify optimisation opportunities",
+          "confidence": 0.9
+        },
+        {
+          "text": "Define a successful path toward improving communication generation and exploring Adaptive Forms adoption",
+          "confidence": 0.9
+        }
+      ],
+      "customers": [
+        {
+          "name": "LPL",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:07.424Z",
+    "signal_content": ":new_user: *Vijay Kumar Jalagari* :new_user:\n:customervivo:*Customer Name : LPL*\n:clock2: *Date :* 2025-03-19\n:group-people: *Attendees :* <@W6CBB4953>, <@W4R4S9FS4>, <@W5HEU5M7Y>, <@W4RU4N66R>\n:loading-2248:*Notes*\n*Forms License:* *Yes,  Cloud*\n*Primary Use Case:* Regulated Communication &amp; Adaptive Forms.\n*Adobe Products in Use:* Sites &amp; Assets\n*Attendees:* Betsy (VP), Naveen Sharma (Manager)\n\n\n*Current State:*\n\n• Customer has *250+ XDP-based forms* in use. \n• They have an *in-house system* that triggers the account creation process on capturing some form fields and persists data in a *PostgreSQL database*. \n• The system exposes data via *JSON APIs*. \n• They use case is to generate and deliver approximately *2,500 communications per day*, referred to as “envelopes.” \n*Use Case:*\n\n• They aim to build communications and send them for signing. \n• The current vendor (likely *ACS*) has implemented a *multi-API or multi step process*: \n• JSON → XML → Generate PDF → Create Agreement → Send for Signature \n• The customer would like us to *review the existing architecture* and explore ways to *reduce the time required for generating and sending communications*. \n*Future Interest:*\n\n• After improving the communication flow, they are also considering *replacing their current in-house data capture system* with *Adaptive Forms*. \n\n:todo_done: *Next Action*\n• *Include the customer in the VIP program*. \n• *Review the current architecture* and identify optimisation opportunities. \n• *Define a successful path* toward improving communication generation and exploring Adaptive Forms adoption. \n"
+  },
+  {
+    "signal_id": "7d3613bb-0d2e-48a4-bfa8-f6695b4b65a4",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:03.399Z",
+    "signal_content": "Next Action\n• The customer will share a sample form. \n• The Adobe team will demonstrate how AEM Forms supports their end-to-end requirements and capabilities. \n"
+  },
+  {
+    "signal_id": "1932f1c8-1ea9-4161-bf8d-14d78e25daa9",
+    "extraction": {
+      "issues": [],
+      "themes": [
+        {
+          "name": "Authoring UX",
+          "confidence": 0.8
+        },
+        {
+          "name": "Integrations",
+          "confidence": 1
+        },
+        {
+          "name": "Rendering & PDF",
+          "confidence": 0.8
+        },
+        {
+          "name": "Performance",
+          "confidence": 0.8
+        },
+        {
+          "name": "Reliability",
+          "confidence": 0.8
+        },
+        {
+          "name": "Migration",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "Forms Experience Builder",
+          "confidence": 0.9
+        },
+        {
+          "name": "Automated Forms Conversion",
+          "confidence": 0.9
+        },
+        {
+          "name": "Core Components",
+          "confidence": 0.9
+        },
+        {
+          "name": "Data Binding",
+          "confidence": 0.9
+        },
+        {
+          "name": "Forms",
+          "confidence": 1
+        }
+      ],
+      "requests": [
+        {
+          "text": "Support for marketing and business forms, including workflow integration.",
+          "confidence": 1
+        },
+        {
+          "text": "Ability to build multi-step forms.",
+          "confidence": 1
+        },
+        {
+          "text": "Prefill forms using APIs.",
+          "confidence": 1
+        },
+        {
+          "text": "Interactive chart components within forms.",
+          "confidence": 1
+        },
+        {
+          "text": "Integration with Adobe Analytics and sending mail notifications on form submission.",
+          "confidence": 1
+        },
+        {
+          "text": "Interest in experimentation and headless form capabilities, especially for integration with Flutter-based mobile applications.",
+          "confidence": 1
+        },
+        {
+          "text": "Prefilling forms using Documents.",
+          "confidence": 1
+        }
+      ],
+      "customers": [
+        {
+          "name": "Farm Credit Services of America (FCSA)",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:53:02.535Z",
+    "signal_content": ":new_user: *Vijay Kumar Jalagari* :new_user:\n:customervivo:*Customer Name : Farm Credit Services of America (FCSA)*\n:clock2: *Date :* 2025-03-20\n:group-people: *Attendees :* <@W6CBB4953>, <@W4RU4N66R>, <@W4R4S9FS4>, <@W5HEU5M7Y>\n:loading-2248:*Notes*\n*Forms License:* *Yes,  Cloud*\n*Primary Use Case:* Regulated Communication &amp; Adaptive Forms.\n*Adobe Products in Use:* Sites &amp; Assets\nIn 2023, *FCSA invested in AEM Forms as a Cloud Service*. While they have not yet gone live with any forms, the initial focus was on migrating their *external websites to Adobe*. Now, they are ready to *explore use cases and AEM Forms capabilities* in more depth.\n\n*Key Use Cases:*\n\n• Support for both *marketing and business forms*, including *workflow integration* \n• Ability to build *multi-step forms* \n• Prefill forms using APIs \n• Interactive chart components within forms \n• Integration with Adobe Analytics and sending mail notifications, on form submission  \n• Interest in *experimentation* and *headless form capabilities*, especially for integration with *Flutter-based mobile applications* \n• Prefilling forms using *Documents*  \n\n:todo_done: *Next Action*\nThe customer will share a sample form."
+  },
+  {
+    "signal_id": "b7ee8667-e0c6-4fe2-b157-9a038e82a31a",
+    "extraction": {
+      "issues": [],
+      "themes": [
+        {
+          "name": "Integrations",
+          "confidence": 1
+        },
+        {
+          "name": "Authoring UX",
+          "confidence": 1
+        }
+      ],
+      "features": [
+        {
+          "name": "Forms",
+          "confidence": 1
+        }
+      ],
+      "requests": [],
+      "customers": [
+        {
+          "name": "DKV Mobility",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:56.441Z",
+    "signal_content": ":new_user: *Ravisanker E* :new_user:\n:customervivo:*Customer Name : DKV Mobility*\n:clock2: *Date :* 2025-03-28\n:group-people: *Attendees :* <@W4RU4N66R>, <@W012PACNGHJ>, <@WLWHN4TV3>\n:loading-2248:*Notes*\n• The customer has decided to proceed with the Universal Editor (UE) for forms authoring.\n• Explained the Form Data Model (FDM) support available in Forms, allowing integration with any open API. Demonstrated UE form creation using the Microsoft Dynamics 365 data schema.\n• Addressed their queries regarding Google Analytics integration.\n• Introduced the AI assistant for form creation via screenshots, additionally planned to have a separate session to showcase all *GenAI* authoring capabilities.\n\n:todo_done: *Next Action*\n• Customer to share GitHub and cloud instance accesses.\n• Add the form-block to the customer’s boilerplate code.\n• Set up the FDM connection to Microsoft Dynamics using the Swagger file provided by the customer.\n• Enable the necessary feature toggles on their instance."
+  },
+  {
+    "signal_id": "515e2c6e-8be6-4ade-a60b-661134026f24",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [
+        {
+          "text": "Customer needed clarification on product behaviour, which was provided. They would be sending some server logs to support for analysis.",
+          "confidence": 0.9
+        }
+      ],
+      "customers": [
+        {
+          "name": "UBS",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:53.483Z",
+    "signal_content": ":new_user: *Sakshi Arora* :new_user:\n:customervivo:*Customer Name : UBS*\n:clock2: *Date :* 2025-04-01\n:group-people: *Attendees :* <@W4SG81T9C>, <@U03H467JYQP>\n:loading-2248:*Notes*\nCustomer needed clarification on product behaviour, which was provided.\nThey would be sending some server logs to support for analysis.\n:todo_done: *Next Action*\n<@W4SG81T9C> will send a mail with product behaviour for browserless submission.\nSupport would be analysing the logs."
+  },
+  {
+    "signal_id": "4822ad13-d4d9-4115-9401-33f3935a8b40",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [
+        {
+          "text": "Details about their API, including swagger endpoint or file and authentication mechanism.",
+          "confidence": 0.9
+        }
+      ],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:50.915Z",
+    "signal_content": "Thanks, it would be great to know details about their API, if they have swagger endpoint or file for their rest API, it would be great and details about their authentication mechanism."
+  },
+  {
+    "signal_id": "04f5db11-8d7f-4137-bd6c-f3f516501465",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:49.375Z",
+    "signal_content": "<@WLWHN4TV3> As of now they are not aware of it but they mentioned that service exposes rest API end point. Let me know what additional information you need I can get that tomorrow."
+  },
+  {
+    "signal_id": "62883c68-6e6c-4fba-bbf2-eca372c25e7a",
+    "extraction": {
+      "issues": [],
+      "themes": [
+        {
+          "name": "Integrations",
+          "confidence": 0.9
+        }
+      ],
+      "features": [],
+      "requests": [
+        {
+          "text": "Check if the integration with their data source will be supported OOTB",
+          "confidence": 0.9
+        }
+      ],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:48.343Z",
+    "signal_content": "&gt; Need to check if the integration with their data source will be supported OOTB\nwhat is their end storage data source?"
+  },
+  {
+    "signal_id": "5139dfd3-19c0-4d84-ab48-bf6f6918569b",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:46.657Z",
+    "signal_content": "Added in <https://adobe-my.sharepoint.com/:x:/r/personal/ranjeet_adobe_com/_layouts/15/doc2.aspx?sourcedoc=%7B20a0d84c-895c-4b2e-9ed6-08b3d76974dd%7D&amp;action=edit&amp;activeCell=%27Communication%20Composer%20Tasks%27!C3&amp;wdinitialsession=f327c6e8-f05e-e90a-df3f-c74cfc0b4999&amp;wdrldsc=31&amp;wdrldc=1&amp;wdrldr=AccessTokenExpiredWarningUnauthenticated%2CRefreshin|Delrina Timeline.xlsx> under NFCU Tab. cc: <@W4R5LUPK3> <@WQWCBV6NN>"
+  },
+  {
+    "signal_id": "36cf677c-9bca-4b21-8786-23c274713b11",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [
+        {
+          "text": "Create a Tab in the provided SharePoint link listing all NFCU's requirements and current status",
+          "confidence": 1
+        }
+      ],
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:45.650Z",
+    "signal_content": "We are working on the IC RM slide, which we can share with NFCU.\nRegarding new Requirements from NFCU, <@WE163TH43> can you please create a Tab in <https://adobe-my.sharepoint.com/:x:/r/personal/ranjeet_adobe_com/_layouts/15/doc2.aspx?sourcedoc=%7B20a0d84c-895c-4b2e-9ed6-08b3d76974dd%7D&amp;action=edit&amp;activeCell=%27Communication%20Composer%20Tasks%27!C3&amp;wdinitialsession=f327c6e8-f05e-e90a-df3f-c74cfc0b4999&amp;wdrldsc=31&amp;wdrldc=1&amp;wdrldr=AccessTokenExpiredWarningUnauthenticated%2CRefreshin|Delrina_Timeline> listing all their requirements and current status\ncc: <@W010NNJV7S8> <@W5HEU5M7Y>"
+  },
+  {
+    "signal_id": "282f5942-b33c-4c03-8503-f7eb9c4b6857",
+    "extraction": {
+      "issues": [
+        {
+          "title": "MasterPage option causing confusion in editor",
+          "category": "IC Editor",
+          "severity": 2,
+          "confidence": 0.9
+        }
+      ],
+      "themes": [
+        {
+          "name": "Authoring UX",
+          "confidence": 0.8
+        },
+        {
+          "name": "Integrations",
+          "confidence": 0.8
+        }
+      ],
+      "features": [
+        {
+          "name": "IC Editor",
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "FDM Use Case with filtered data and OAuth/OAuth2 authentication protocols for data fetching",
+          "confidence": 0.9
+        },
+        {
+          "text": "Firm dates for general availability of requested features",
+          "confidence": 0.8
+        },
+        {
+          "text": "Communication archival requirements",
+          "confidence": 0.8
+        }
+      ],
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:43.593Z",
+    "signal_content": ":new_user: *Vijay Srivastva* :new_user:\n:customervivo:*Customer Name : NFCU*\n:clock2: *Date :* 2025-04-01\n:group-people: *Attendees :* <@WE163TH43>, <@U03Q109GQMT>, <@W4R4VBWQG>\n:loading-2248:*Notes*\n*Discussion Summary*\n\n*Issues with the Editor*\n1. *Resolved Issues:*\n    ◦ NFCU has confirmed that the earlier issues related to Fragment Width and PDF Preview have been fixed.\n2. *Pending Issues:*\n    ◦ MasterPage Option: The MasterPage option in the editor is causing confusion for customers. It needs to be hidden during fragment creation, as it is not relevant to this use case.\n*New Features Requested for Demo to Business Unit*\n1. *FDM Use Case with Filtered Data:*\n    ◦ NFCU requires a use case for data fetching using filters or hooks that they can implement independently.\n    ◦ <@WE163TH43> suggested creating the UI (preview screen) in the Editor and exploring the possibilities of fetching data from the data source via API calls.\n    ◦ <@W4R4VBWQG> requested the use of OAuth/OAuth2 authentication protocols for data fetching.\n2. *General Availability:*\n    ◦ NFCU is asking for firm dates for the general availability of the requested features.\n3. *Communication Archival Requirements:*\n    ◦ NFCU discussed their requirements for communication archival. \n:todo_done: *Next Action*\n• *FDM Use Case with filtered data -* Need to explore approach to full fill this use case.\n• *FDM Integration* - Need to check if the integration with their data source will be supported OOTB. We had some queries around that with NFCU."
+  },
+  {
+    "signal_id": "ddab10a7-db97-4485-8f06-454b7934460d",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Customer is hesitant to replace the BPM tool used for data capturing",
+          "category": "Integrations",
+          "severity": 3,
+          "confidence": 0.8
+        },
+        {
+          "title": "Need to keep mapping for every form field with JSON field per form",
+          "category": "Data Binding",
+          "severity": 2,
+          "confidence": 0.9
+        },
+        {
+          "title": "Lack of data on migration time for older forms to AEM Forms",
+          "category": "Migration",
+          "severity": 2,
+          "confidence": 0.9
+        }
+      ],
+      "themes": [
+        {
+          "name": "Migration",
+          "confidence": 0.9
+        },
+        {
+          "name": "Performance",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "Forms",
+          "confidence": 0.9
+        },
+        {
+          "name": "Automated Forms Conversion",
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "Customer wants us to review their current implementation and share the best way to implement it in AEM Forms to make the system more scalable",
+          "confidence": 0.9
+        }
+      ],
+      "customers": [
+        {
+          "name": "LPL Financial",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:36.501Z",
+    "signal_content": ":new_user: *Darshan Mahor* :new_user:\n:customervivo:*Customer Name : LPL Financial*\n:clock2: *Date :* 2025-04-02\n:group-people: *Attendees :* <@W9QMZFR39>, <@W4RSW3ECC>, <@W4R5LUPK3>, <@W5HEU5M7Y>, <@W4R4S9FS4>, <@W010NNJV7S8>\n:loading-2248:*Notes*\n*Current Document Generation flow*\n• The customer fetches JSON data from a web service (BPM tool used for account creation, which extracts form field data and persists it in a database).\n• JSON is transformed into XML through a two-step process:\n    ◦ Converting camel case JSON to XML.\n    ◦ Applying XSLT transformation to generate the final XML.\n• The latest template is fetched using custom code.\n• The generated XML and template are sent to the Generate PDF API.\n*Requirement and Concern:*\n• Customer wants us to review their current implementation and want us to share best way we can implement it in AEM Forms. Customer major concern is to make system more scalable.\n• Hesitant to replace the BPM tool that they use data for data capturing.\n• Customer also keep the mapping for every form field with Json field per Form. They need to keep it as both the schemas i.e., Json schema and schema that they use in template is different. \n• They have few older Forms also that they want to migrate to AEM Forms. We tried to get information about how much time it takes to them migrate 1 Form but they don't have this data available.\n:todo_done: *Next Action*\n• The customer will share collaterals i.e.,  sample XDPs, transformation code, existing forms from their other system, and the JSON schema, after receiving approval for sharing code and samples.\n• Once we receive the collaterals, we need to evaluate them to enhance the scalability of their current approach.\n"
+  },
+  {
+    "signal_id": "f77c5987-51c8-45dc-b2ba-cb056e691286",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Manual effort required for migrating forms and maintaining themes",
+          "category": "Migration",
+          "severity": 3,
+          "confidence": 0.8
+        }
+      ],
+      "themes": [
+        {
+          "name": "Authoring UX",
+          "confidence": 0.8
+        },
+        {
+          "name": "Migration",
+          "confidence": 0.8
+        }
+      ],
+      "features": [
+        {
+          "name": "Forms",
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "Create a workflow model for Policy Exception form",
+          "confidence": 0.9
+        },
+        {
+          "text": "Inquire about the look and feel of forms on the cloud",
+          "confidence": 0.8
+        },
+        {
+          "text": "Discuss pros and cons of migrating forms to the cloud",
+          "confidence": 0.8
+        },
+        {
+          "text": "Inquire about the storage and management of attached documents on the cloud",
+          "confidence": 0.8
+        },
+        {
+          "text": "Maintain the same look and feel for forms used by executives",
+          "confidence": 0.8
+        }
+      ],
+      "customers": [
+        {
+          "name": "Cintas",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:31.916Z",
+    "signal_content": ":new_user: *Sakshat Chahal* :new_user:\n:customervivo:*Customer Name : Cintas*\n:clock2: *Date :* 2025-04-02\n:group-people: *Attendees :* <@U0213T59LMN>, <@W4RU4N66R>, <@W010NNJV7S8>, <@W4RU5J3JR>, <@U05DURMMBGV>, <@WALHLA4PP>\n:loading-2248:*Notes*\nCustomer's Requirements:\n\nThe customer shared an automation process flow for their Policy Exception (PE) form, outlining the steps involved when a submitter submits a form. They wanted us to create a workflow model that would accurately implement the author’s decision-making process based on the submitted data.\n\nMeeting Notes:\nModel presentation: We demonstrated the custom workflow model  explaining the different pathways for approving, rejecting, or deferring the submitted form by showing how the workflow iterates through the list of approvers to assign it to different approvers.\n\nTheming: Cintas's team also inquired about the look and feel of the forms when moving to the cloud. We explained that the authoring UI would be modernized, but the form's appearance could be customized based on branding requirements. They also discussed the possibility of reusing existing themes.\n\nForm Migration and Maintenance: Their another ask was about the pros and cons of migrating forms to the cloud. It was explained that migrating forms would allow leveraging new capabilities like headless and generative UI, but there would be some manual effort required to recreate themes.\n\nDocument Storage and Management: They also enquired about the storage and management of attached documents on the cloud. It was explained that AEM forms do not persist any data, and the documents would need to be configured to go to the system of record. They also mentioned the possibility of using external data sources.\n\nForm Customisation: Finally, they asked about maintaining the same look and feel for forms used by executives. They were assured that the forms could be customised to match the existing appearance, but some manual effort would be required.\n:todo_done: *Next Action*\n• Model Validation: Cintas's representative in the meeting would share the Workflow model with other team members for validation and testing.\n• Form Look and Feel(on call): Vijay has already shared the published URL of an Adaptive Form built on Cloud using a custom theme to showcase the look and feel of forms on the cloud.\n• Their representative also suggested to schedule another call if they encounter any more concerns and questions.\n"
+  },
+  {
+    "signal_id": "fa93d5a6-4c54-408c-ba7f-3e659d696692",
+    "extraction": {
+      "issues": [],
+      "themes": [
+        {
+          "name": "Migration",
+          "confidence": 0.9
+        }
+      ],
+      "features": [
+        {
+          "name": "IC Editor",
+          "confidence": 0.9
+        }
+      ],
+      "requests": [
+        {
+          "text": "Implement user-friendly cloud-based editing for IC documents.",
+          "confidence": 0.9
+        },
+        {
+          "text": "Incorporate conditional/rules-based fragments/elements.",
+          "confidence": 0.9
+        },
+        {
+          "text": "Utilize IC 6.5 Document Fragments (text, list, layout).",
+          "confidence": 0.9
+        }
+      ],
+      "customers": [
+        {
+          "name": "FORD",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:27.663Z",
+    "signal_content": ":new_user: *Ranjeet Kumar Choudhary* :new_user:\n:customervivo:*Customer Name : FORD*\n:clock2: *Date :* 2025-04-03\n:group-people: *Attendees :* <@W5HEU5M7Y>, <@W4R5LUPK3>, <@W010NNJV7S8>, <@W4R5WN6LR>, <@WQWCBV6NN>\n:loading-2248:*Notes*\nUse Case: Generate static PDF documents (currently using Pinnacle VB-based system)\nCustomer Background:\n• The customer has 500 documents created using Interactive Communications (IC) in the print channel.\n• They are also utilizing XDPs.\n• The customer is transitioning to the cloud but faces challenges due to their reliance on IC.\n• They possess extensive experience with LiveCycle (LC).\nImmediate Requirements:\n• Implement user-friendly cloud-based editing for IC documents.\n• Incorporate conditional/rules-based fragments/elements (currently managed through scripting).\n• Utilize IC 6.5 Document Fragments (text, list, layout).\nMigration Needs:\n• Transition from IC 6.5 to a cloud-based solution.\n• The customer is an AEM Cloud Service (CS) Sites user and seeks immediate onboarding.\n• They are evaluating alternative solutions under leadership pressure.\n\n:todo_done: *Next Action*\nThe customer will provide collaterals, including XDPs, FDM, and data samples.\nUpon receipt of these collaterals, we need to evaluate the current solution."
+  },
+  {
+    "signal_id": "9c5ee29d-bf29-4c2c-8f2c-e184a44f41f7",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Redirection Issue: NFCU is experiencing a problem where clicking the edit option in Document, FM does not redirect to the correct ORG.",
+          "category": "Redirection",
+          "severity": 1,
+          "confidence": 1
+        },
+        {
+          "title": "Fragment Issue: The header and text field were not taking the full width. This issue has been fixed and confirmed by NFCU.",
+          "category": "Fragment",
+          "severity": 1,
+          "confidence": 1
+        },
+        {
+          "title": "PDF Preview Error: An error occurred when previewing a PDF with a fragment. This issue has also been fixed and confirmed by NFCU.",
+          "category": "PDF",
+          "severity": 1,
+          "confidence": 1
+        }
+      ],
+      "themes": [],
+      "features": [],
+      "requests": [
+        {
+          "text": "Clarification needed on the authentication protocol being used.",
+          "confidence": 1
+        },
+        {
+          "text": "Information required about the storage data source.",
+          "confidence": 1
+        },
+        {
+          "text": "Inquiry about the availability of a Swagger endpoint or file for their REST API.",
+          "confidence": 1
+        }
+      ],
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:24.482Z",
+    "signal_content": ":new_user: *Vijay Srivastva* :new_user:\n:customervivo:*Customer Name : NFCU*\n:clock2: *Date :* 2025-04-03\n:group-people: *Attendees :* <@WE163TH43>, <@W4R4VBWQG>, <@U03Q109GQMT>\n:loading-2248:*Notes*\n*Discussion Summary*\n*Issues Faced:*\n1. *Redirection Issue:* NFCU is experiencing a problem where clicking the edit option in Document, FM does not redirect to the correct ORG.\n2. *Fragment Issue:* The header and text field were not taking the full width. This issue has been *fixed* and confirmed by NFCU.\n3. *PDF Preview Error:* An error occurred when previewing a PDF with a fragment. This issue has also been *fixed* and confirmed by NFCU.\n*Queries for NFCU Regarding FDM:*\n1. *Authentication Protocol:* Clarification needed on the authentication protocol being used.\n2. *Storage Data Source:* Information required about the storage data source.\n3. *API Details:* Inquiry about the availability of a Swagger endpoint or file for their REST API.\n:todo_done: *Next Action*\n1. *Follow-Up on FDM Information:* Due to the absence of relevant personnel from NFCU, we were unable to gather the necessary information to use FDM. We will revisit this in the next meeting.\n2. *Redirection Issue:* Investigate and resolve the redirection issue where clicking the edit option in Document FM does not redirect to the correct organization."
+  },
+  {
+    "signal_id": "ccb6d33f-3878-45e4-a381-a2ec733a51b7",
+    "extraction": {
+      "issues": [],
+      "themes": [
+        {
+          "name": "Migration",
+          "confidence": 0.9
+        },
+        {
+          "name": "Rendering & PDF",
+          "confidence": 0.8
+        },
+        {
+          "name": "Authoring UX",
+          "confidence": 0.7
+        },
+        {
+          "name": "Integrations",
+          "confidence": 0.7
+        }
+      ],
+      "features": [
+        {
+          "name": "IC Editor",
+          "confidence": 0.9
+        },
+        {
+          "name": "Forms",
+          "confidence": 0.8
+        },
+        {
+          "name": "Data Binding",
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        {
+          "text": "JSON Data Support: GMF wants to use JSON data for generating PDFs.",
+          "confidence": 0.9
+        },
+        {
+          "text": "Collaborative Editing: They require support for collaborative editing of templates/communications.",
+          "confidence": 0.9
+        },
+        {
+          "text": "Reusable Components: Requesting support for reusable components such as Content Fragments.",
+          "confidence": 0.9
+        },
+        {
+          "text": "Component-Level Styling: Need for component-level styling within documents.",
+          "confidence": 0.9
+        },
+        {
+          "text": "Versioning Support: Require versioning capabilities.",
+          "confidence": 0.9
+        },
+        {
+          "text": "Government PDF Forms: Support for existing government PDF forms.",
+          "confidence": 0.9
+        },
+        {
+          "text": "Data Fetching from AEP: Need support for fetching data from AEP at runtime.",
+          "confidence": 0.9
+        },
+        {
+          "text": "Communication Channels: Email communication using AEP/AJO and print communication using AEM Forms.",
+          "confidence": 0.9
+        }
+      ],
+      "customers": [
+        {
+          "name": "GM Financial",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:19.480Z",
+    "signal_content": ":new_user: *Vijay Srivastva* :new_user:\n:customervivo:*Customer Name : GM Financial*\n:clock2: *Date :* 2025-04-03\n:group-people: *Attendees :* <@W5HEU5M7Y>, <@W4R5WN6LR>, <@WE163TH43>, <@W4R5LUPK3>, <@WQWCBV6NN>\n:loading-2248:*Notes*\n*Customer Summary: GMF*\n\n*Use Case:*\nGMF aims to create templates, documents, and fragments, and generate print-ready PDFs using data in XML or JSON formats.\n\n*Customer's Current Workflow:*\n• Currently using Smart Com to generate print-ready PDFs.\n• Possesses a large set of Smartform templates and seeks to migrate to IC Templates.\n*Requirements:*\n1. *JSON Data Support:* GMF wants to use JSON data for generating PDFs. We mentioned that this will be supported out-of-the-box (OOTB) using FDM.\n2. *Collaborative Editing:* They require support for collaborative editing of templates/communications.\n3. *Reusable Components:* Requesting support for reusable components such as Content Fragments. Currently, we support communication fragments, and content fragment support is on the roadmap.\n4. *Component-Level Styling:* Need for component-level styling within documents. Different themes in the same document will be handled by stylesheet support, which is on the roadmap.\n5. *Versioning Support:* Require versioning capabilities.\n6. *Government PDF Forms:* Support for existing government PDF forms. PDF support will be available.\n7. *Data Fetching from AEP:* Need support for fetching data from AEP at runtime.\n8. *Communication Channels:* Email communication using AEP/AJO and print communication using AEM Forms.\n*Migration Required*\n*Template Migration:* Migration from Smartform templates to IC templates.\n\n*Demonstration:*\n<@W4R5WN6LR> showcased a demo of the Communication Composer where we created a template from a provided image. The demonstration included:\n• *Communication Composer*: Showcased the capabilities of the communication composer.\n• *Data Binding:* Demonstrated data binding features.\n• *Fragment Support:* Highlighted the use of fragments.\n• *Locale Support:* Showed support for different locales.\n• *Master Page Concepts:* Explained master page concepts.\n• *PDF Preview:* Demonstrated the PDF preview functionality both using the editor and via a curl command.\n\n:todo_done: *Next Action*\n"
+  },
+  {
+    "signal_id": "5a6bc06c-62ff-494c-bde9-0f0f1f89ef47",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Marketo API concurrency limits and retry mechanisms",
+          "category": "API Limits",
+          "severity": 3,
+          "confidence": 1
+        },
+        {
+          "title": "Handling 100K+ form submissions per year",
+          "category": "Volume & Throughput",
+          "severity": 3,
+          "confidence": 1
+        }
+      ],
+      "themes": [
+        {
+          "name": "Integrations",
+          "confidence": 1
+        },
+        {
+          "name": "Authoring UX",
+          "confidence": 1
+        },
+        {
+          "name": "Performance",
+          "confidence": 1
+        }
+      ],
+      "features": [
+        {
+          "name": "Forms",
+          "confidence": 1
+        },
+        {
+          "name": "Data Binding",
+          "confidence": 1
+        },
+        {
+          "name": "Form Creation & Configuration",
+          "confidence": 1
+        }
+      ],
+      "requests": [
+        {
+          "text": "Investigate concurrency impact of Marketo API limits",
+          "confidence": 1
+        },
+        {
+          "text": "Provide estimates for form volume analysis",
+          "confidence": 1
+        },
+        {
+          "text": "Implement retries for API submissions",
+          "confidence": 1
+        },
+        {
+          "text": "Share details on multilingual support for translation capabilities",
+          "confidence": 1
+        }
+      ],
+      "customers": [
+        {
+          "name": "Brunswick",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:13.811Z",
+    "signal_content": ":new_user: *Rahul Kumar Singh* :new_user:\n:customervivo:*Customer Name : Brunswick*\n:clock2: *Date :* 2025-04-03\n:group-people: *Attendees :* <@W5HEU5M7Y>, <@W4RU4N66R>, <@U0213T59LMN>, <@WLWHN4TV3>\n:loading-2248:*Notes*\n*AEM Forms &amp; Marketo Integration Demonstration*\n• *Presenter:* Rahul Kumar Singh introduced AEM Forms and its Marketo integration.\n• *Demonstration:* Showcased form authoring, data flow, and lead generation.\n*Key Topics Covered*\n1. *Marketo Integration Setup:* Explained prerequisites (credentials) and AEM configuration.\n2. *Form Creation &amp; Configuration:* Demonstrated adaptive form creation, field selection, and binding with Marketo.\n3. *Dynamic Features:* Showcased rule editor, dynamic calculations, and external service invocation.\n4. *Form Submission &amp; Data Flow:* Covered data capture in Marketo, lead creation, and field mapping.\n5. *Marketo Campaigns:* Explained campaign creation, triggers, and email automation via custom AEM adaptive form fill activity.\n6. *AI-Assisted Form Creation:* Demonstrated form generation using AI and layout customization and rule setup.\n7. *API Limits &amp; Solutions:* Discussed Marketo’s API concurrency limits, retry mechanisms, and exponential backoff.\n8. *Hidden Fields &amp; Data Passing:* Confirmed use of hidden fields for data transfer.\n9. *Volume &amp; Throughput:* Addressed handling 100K+ form submissions per year.\n10. *Setup &amp; Customization:* Covered initial setup, development timeline, and Adobe VIP support.\ncc: <@W5HEU5M7Y> <@W4RU4N66R> <@U0213T59LMN>\n:todo_done: *Next Action*\n• *Marketo API Limits:* Investigate concurrency impact. (Rahul)\n• *Form Volume Analysis:* Provide estimates for further review. (Sarah)\n• *Retry Mechanism:* Implement retries for API submissions. (Rahul)\n• *Translation Capabilities:* Share details on multilingual support. (Arun)\n"
+  },
+  {
+    "signal_id": "cac96b18-e69c-4092-a4eb-7014a9145e61",
+    "extraction": {
+      "issues": [],
+      "themes": [
+        {
+          "name": "Migration",
+          "confidence": 0.9
+        },
+        {
+          "name": "Data Binding",
+          "confidence": 0.7
+        }
+      ],
+      "features": [
+        {
+          "name": "Core Components",
+          "confidence": 0.9
+        },
+        {
+          "name": "Forms",
+          "confidence": 0.8
+        },
+        {
+          "name": "Automated Forms Conversion",
+          "confidence": 0.7
+        }
+      ],
+      "requests": [
+        {
+          "text": "They want help/guidance on how they can meet this deadline in 90 days.",
+          "confidence": 0.8
+        },
+        {
+          "text": "We need to confirm if they need DoR.",
+          "confidence": 0.7
+        }
+      ],
+      "customers": [
+        {
+          "name": "IRS (DMAF account)",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:08.917Z",
+    "signal_content": ":new_user: *Sudhanshu Singh* :new_user:\n:customervivo:*Customer Name : IRS (DMAF account)*\n:clock2: *Date :* 2025-04-09\n:group-people: *Attendees :* <@W4XTCQ07J>, <@W5MFNAZ63>, <@W011G64JM5W>, <@WGQ0R5GNN>, <@W5L7W5N0Y>, <@U04RJDQHH43>, <@U049MU7BPDF>, <@U04BQ34BE4X>\n:loading-2248:*Notes*\n• Internal meeting - after Emily connected with Accenture Federal\n• They shared an update that they have ~ 200 forms to be modernised, the actual forms are yet to be finalized\n• They want to identify if we should continue with Foundation components or core components (more aligned to core-components) but want help/guidance on how they can meet this deadline in 90 days (which is now down to 85 days - since day 1 started last week).\n• They expect the forms to be XDP - since they have been heavy user of Designer (though they are yet to confirm)\n• Since the forms are not finalized - they do not have details on the prefill/submit and other requirements. But most of these forms were Reader Extended and then filled/submitted offline or through email.\n• We want to evaluate GenAI based form conversion for some of their form. In the meeting we discussed evaluating their 433-A (OIC) form (shared with <@W4RU708G5> offline) to see if this would have a better conversion with AFCS.\n• We need to confirm if they need DoR - since that would require binding to XFA elements as well - FYI <@W4RU708G5>.\n• Will be creating an internal slack channel for IRS to speed up communication. Also, <@W011G64JM5W> would be evaluating the Gen AI based form conversion on his environment (will be sharing the program/environment details).\ncc: <@W4RSW3ECC> <@W5HEU5M7Y>\n:todo_done: *Next Action*\n"
+  },
+  {
+    "signal_id": "bc1d665c-15c9-4618-a17b-b94be8e8939f",
+    "extraction": {
+      "issues": [
+        {
+          "title": "Text boxes and text fields read by screen readers despite 'speak disable' property",
+          "category": "Accessibility",
+          "severity": 1,
+          "confidence": 0.9
+        }
+      ],
+      "themes": [],
+      "features": [],
+      "requests": [],
+      "customers": [
+        {
+          "name": "Wells Fargo",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:05.295Z",
+    "signal_content": ":new_user: *Rupali Mittal* :new_user:\n:customervivo:*Customer Name : Wells Fargo*\n:clock2: *Date :* 2025-04-09\n:group-people: *Attendees :* <@U031G7ZLRRC>, <@W9WQCDCLU>, <@U0811FXQ61H>, <@U02EA5JPPJL>, <@U054BJ1RSKX>\n:loading-2248:*Notes*\n• The meeting was held to address the issue(<https://jira.corp.adobe.com/browse/LC-3922633>)  raised by Four Solutions Partner on behalf of Wells Fargo. Wells Fargo was not aware of this and wanted a demo of the issue and how we are planning to fix it. \n• The problem involves text boxes and text fields being read by screen readers even when the \"speak disable\" property is set to 1 in the template file.\n• We provided a demo of the issue and explained how to resolve it by making changes to the XCI and XDP files.\n• We walked through the process of marking a draw field in the template as an artifact, ensuring that \"speak disable\" is set to 1, preventing it from being read by the screen reader, and ensuring no tag is created.\n• We clarified the use of the \"taggingMode\" field in the XCI, which should be set to \"custom mode\" to make text fields uneditable, along with setting \"speak disable\" to 1.\n• The customer was satisfied with the solution, understanding that the issue can be fixed by updating the XCI and configuring the correct properties in Designer.\n• They expressed appreciation for the support we are providing in addressing accessibility issues in Designer and XMLFM.\n:todo_done: *Next Action*\n"
+  },
+  {
+    "signal_id": "ce761e17-c77c-444f-a649-4cbda198775d",
+    "extraction": {
+      "issues": [],
+      "themes": [],
+      "features": [],
+      "requests": [
+        {
+          "text": "Add the point for master pages in fragments as a point of discussion in our scrum sync ups.",
+          "confidence": 1
+        }
+      ],
+      "customers": []
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:03.017Z",
+    "signal_content": "<@W4R4VBWQG>, can you add the point for master pages in fragments as a point of discussion in our scrum sync ups?"
+  },
+  {
+    "signal_id": "af0efb22-53ba-43af-85d1-339580d3c5a7",
+    "extraction": {
+      "issues": [
+        {
+          "title": "MasterPage option in the editor is causing confusion for customers.",
+          "category": "IC Editor",
+          "severity": 1,
+          "confidence": 1
+        },
+        {
+          "title": "Redirection issue in dev2.",
+          "category": "IC Editor",
+          "severity": 1,
+          "confidence": 1
+        },
+        {
+          "title": "Fragment Issue - Header and text field is not taking full width.",
+          "category": "IC Editor",
+          "severity": 1,
+          "confidence": 1
+        },
+        {
+          "title": "Error when doing PDF preview with a fragment.",
+          "category": "IC Editor",
+          "severity": 1,
+          "confidence": 1
+        }
+      ],
+      "themes": [],
+      "features": [
+        {
+          "name": "IC Editor",
+          "confidence": 1
+        }
+      ],
+      "requests": [
+        {
+          "text": "Customer was asking the features that we are targeting for IC editor in coming releases.",
+          "confidence": 1
+        }
+      ],
+      "customers": [
+        {
+          "name": "NFCU",
+          "confidence": 1
+        }
+      ]
+    },
+    "source": "azure_openai",
+    "model": "gpt-4o",
+    "created_at": "2026-02-06T06:52:01.920Z",
+    "signal_content": ":new_user: *Darshan Mahor* :new_user:\n:customervivo:*Customer Name : NFCU*\n:clock2: *Date :* 2025-04-10\n:group-people: *Attendees :* <@U03Q109GQMT>\n:loading-2248:*Notes*\n*Discussion Summary*\n\n*IC Editor Issue:* \nAs of now we don't have any open issue with Editor .\n• MasterPage Option: The MasterPage option in the editor is causing confusion for customers. It needs to be hidden during fragment creation, as it is not relevant to this use case.  It will be released in a week.\n• Redirection issue in dev2 - Fixed, Customer verified it\n• Fragment Issue - Header and text field is not taking full width. – Fixed\n• When you have a fragment and do the pdf preview, we are getting an error. Customer  needs to test on env.\n:todo_done: *Next Action*\n• <@W4R4VBWQG> will send the queries regarding FDM to them over email.\n• Customer was asking the features that we are targeting for IC editor in coming releases, they have questions like what all features from desktop designer we are thinking to bring on IC editor etc.  I tried to ask what all they want but they don't have exact requirements."
+  }
+]

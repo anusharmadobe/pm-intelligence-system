@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-02-05T15:33:00Z",
+  "data_source": "Raw Slack Messages from customer_engagement_C04D195JVGS_complete.json",
+  "summary": {
+    "total_signals": 850,
+    "theme_associations": 385,
+    "signal_types": {
+      "feedback": 666,
+      "issue": 91,
+      "feature_request": 90,
+      "pain_point": 3
+    }
+  },
+  "top_themes": [
+    { "name": "Reliability", "signals": 28, "avg_confidence": 34 },
+    { "name": "Marketo Integration", "signals": 27, "avg_confidence": 82 },
+    { "name": "Access Control", "signals": 27, "avg_confidence": 51 },
+    { "name": "Form Data Model", "signals": 26, "avg_confidence": 77 },
+    { "name": "Integrations", "signals": 24, "avg_confidence": 50 },
+    { "name": "Availability", "signals": 23, "avg_confidence": 47 },
+    { "name": "Performance", "signals": 22, "avg_confidence": 33 },
+    { "name": "PDF Generation", "signals": 18, "avg_confidence": 69 },
+    { "name": "XDP Conversion", "signals": 17, "avg_confidence": 65 },
+    { "name": "Migration", "signals": 16, "avg_confidence": 60 }
+  ],
+  "top_customers": [
+    { "name": "NFCU", "engagements": 30 },
+    { "name": "Brunswick", "engagements": 23 },
+    { "name": "LPL", "engagements": 17 },
+    { "name": "LPL Financials", "engagements": 11 },
+    { "name": "Carpenter", "engagements": 10 },
+    { "name": "LPL Financial", "engagements": 10 },
+    { "name": "State of Pennsylvania", "engagements": 9 },
+    { "name": "GM Financial", "engagements": 8 },
+    { "name": "AbbVie", "engagements": 6 },
+    { "name": "Brightline", "engagements": 5 }
+  ],
+  "roadmap_opportunities": [
+    {
+      "theme": "Marketo Integration",
+      "priority": "HIGH",
+      "rationale": "27 signals with 82% confidence - Clear pattern of customer needs around Marketo integration"
+    },
+    {
+      "theme": "Form Data Model",
+      "priority": "HIGH",
+      "rationale": "26 signals with 77% confidence - Strong demand for improved FDM capabilities"
+    },
+    {
+      "theme": "PDF Generation",
+      "priority": "HIGH",
+      "rationale": "18 signals with 69% confidence - Recurring issues with PDF workflows"
+    },
+    {
+      "theme": "XDP Conversion",
+      "priority": "MEDIUM",
+      "rationale": "17 signals with 65% confidence - Migration pain point from XDP to adaptive forms"
+    },
+    {
+      "theme": "Migration",
+      "priority": "MEDIUM",
+      "rationale": "16 signals with 60% confidence - Legacy form migration is a consistent theme"
+    }
+  ],
+  "api_endpoints": {
+    "health": "http://localhost:3000/health",
+    "signals": "http://localhost:3000/api/signals",
+    "themes": "http://localhost:3000/api/themes",
+    "search_text": "http://localhost:3000/api/search/text?q=<query>",
+    "search_hybrid": "POST http://localhost:3000/api/search"
+  }
+}
