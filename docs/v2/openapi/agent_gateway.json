@@ -1,0 +1,271 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PM Intelligence Agent Gateway",
+    "version": "2.0.0",
+    "description": "Agent Gateway API for ChatGPT Enterprise Actions and external agents."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    }
+  },
+  "security": [{ "ApiKeyAuth": [] }],
+  "paths": {
+    "/api/agents/v1/health": {
+      "get": {
+        "summary": "Agent gateway health",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+    "/api/agents/v1/signals": {
+      "get": {
+        "summary": "Search signals",
+        "parameters": [
+          { "name": "query", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "source", "in": "query", "schema": { "type": "string" } },
+          { "name": "customer", "in": "query", "schema": { "type": "string" } },
+          { "name": "feature", "in": "query", "schema": { "type": "string" } },
+          { "name": "theme", "in": "query", "schema": { "type": "string" } },
+          { "name": "date_from", "in": "query", "schema": { "type": "string" } },
+          { "name": "date_to", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Search results" }
+        }
+      }
+    },
+    "/api/agents/v1/heatmap": {
+      "get": {
+        "summary": "Get heatmap",
+        "parameters": [
+          { "name": "dimension", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "metric", "in": "query", "schema": { "type": "string" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Heatmap data" }
+        }
+      }
+    },
+    "/api/agents/v1/trends": {
+      "get": {
+        "summary": "Get trends",
+        "parameters": [
+          { "name": "entity_type", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "direction", "in": "query", "schema": { "type": "string" } },
+          { "name": "window_days", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Trend data" }
+        }
+      }
+    },
+    "/api/agents/v1/opportunities": {
+      "get": {
+        "summary": "List opportunities",
+        "responses": {
+          "200": { "description": "Opportunities" }
+        }
+      }
+    },
+    "/api/agents/v1/customer/{name}": {
+      "get": {
+        "summary": "Customer profile",
+        "parameters": [
+          { "name": "name", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Customer profile" }
+        }
+      }
+    },
+    "/api/agents/v1/er-stats": {
+      "get": {
+        "summary": "Entity resolution stats",
+        "responses": {
+          "200": { "description": "ER stats" }
+        }
+      }
+    },
+    "/api/agents/v1/provenance/{id}": {
+      "get": {
+        "summary": "Signal provenance",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Provenance data" }
+        }
+      }
+    },
+    "/api/agents/v1/ingest": {
+      "post": {
+        "summary": "Ingest a signal",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Optional idempotency key to deduplicate repeated ingest requests per agent."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": { "type": "string" },
+                  "content": { "type": "string" },
+                  "timestamp": { "type": "string" },
+                  "metadata": { "type": "object" }
+                },
+                "required": ["source", "content"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Signal ingested" }
+        }
+      }
+    },
+    "/api/agents/v1/query": {
+      "post": {
+        "summary": "Answer a knowledge query",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": { "type": "string" },
+                  "limit": { "type": "integer" },
+                  "source": { "type": "string" },
+                  "customer": { "type": "string" },
+                  "feature": { "type": "string" },
+                  "theme": { "type": "string" }
+                },
+                "required": ["query"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Query response" }
+        }
+      }
+    },
+    "/api/agents/v1/sources": {
+      "get": {
+        "summary": "List sources",
+        "parameters": [
+          { "name": "type", "in": "query", "schema": { "type": "string" } },
+          { "name": "status", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Source registry list" }
+        }
+      },
+      "post": {
+        "summary": "Register a source",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source_name": { "type": "string" },
+                  "source_type": { "type": "string" },
+                  "status": { "type": "string" },
+                  "config": { "type": "object" }
+                },
+                "required": ["source_name", "source_type"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Source registered" }
+        }
+      }
+    },
+    "/api/agents/v1/sources/{id}": {
+      "get": {
+        "summary": "Get source details",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Source details" }
+        }
+      },
+      "patch": {
+        "summary": "Update source",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": { "type": "string" },
+                  "config": { "type": "object" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Source updated" }
+        }
+      }
+    },
+    "/api/agents/v1/reports/generate": {
+      "post": {
+        "summary": "Generate report",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "report_type": { "type": "string" },
+                  "time_window_days": { "type": "integer" },
+                  "format": { "type": "string" },
+                  "audience": { "type": "string" },
+                  "filter_area": { "type": "string" },
+                  "filter_customer": { "type": "string" }
+                },
+                "required": ["report_type"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Report text" }
+        }
+      }
+    }
+  }
+}

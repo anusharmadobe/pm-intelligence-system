@@ -162,9 +162,17 @@ This document catalogs EVERY component in the PM Intelligence System — both V1
 | `a2a_server_service` | `a2a_server.ts` | P2 (Week 13) | A2A protocol handler: Agent Card, JSON-RPC 2.0, skill routing, task lifecycle |
 | `agent_card` | `agent_card.json` | P2 (Week 13) | Agent Card served at `/.well-known/agent.json` for A2A discovery |
 | `agent_gateway_service` | `gateway.ts` | P2 (Week 13) | Express router: /api/agents/* with auth middleware (REST fallback) |
-| `agent_auth_middleware` | `auth_middleware.ts` | P2 (Week 13) | API key validation, rate limiting, permissions check (shared by A2A + REST) |
-| `agent_event_stream` | `event_stream.ts` | P2 (Week 13) | SSE endpoint for agent event subscriptions |
-| `agent_webhook_delivery` | `webhook_delivery.ts` | P2 (Week 13) | Webhook event delivery with retry and DLQ |
+| `agent_registry_service` | `agent_registry_service.ts` | P2 (Week 13) | API key management, auth, activity logging |
+| `event_bus_service` | `event_bus.ts` | P2 (Week 13) | Redis Streams event bus |
+| `event_dispatcher` | `event_dispatcher.ts` | P2 (Week 13) | Webhook delivery from the event bus |
+
+### 4.4.1 Web UI (frontend/)
+
+| Component | File | Priority | Purpose |
+|-----------|------|----------|---------|
+| `pm_intelligence_ui` | `frontend/index.html` | P2 (Week 13) | Role-based UI at `/ui` |
+| `pm_intelligence_ui_logic` | `frontend/app.js` | P2 (Week 13) | UI logic calling Agent Gateway |
+| `pm_intelligence_ui_styles` | `frontend/styles.css` | P2 (Week 13) | UI styling |
 
 ### 4.5 Agent Processes (agents/)
 

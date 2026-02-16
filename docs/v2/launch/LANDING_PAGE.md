@@ -75,7 +75,7 @@ Entities are connected in a knowledge graph. Customers use features. Customers h
 
 ### 5. Query
 
-Ask anything through Claude Code or Claude Cowork. 35 MCP tools work behind the scenes. You never see a query language — just natural conversation.
+Ask anything through ChatGPT Enterprise Actions, the built-in Web UI, or Claude Code/Cowork. MCP tools and the Agent Gateway work behind the scenes. You never see a query language — just natural conversation.
 
 ---
 
@@ -148,6 +148,8 @@ Programmatic access via REST API and A2A protocol. Build triage agents, report s
 | Metric | Value |
 |--------|-------|
 | MCP tools for human interaction | 35 |
+| ChatGPT Actions supported | Yes |
+| Web UI available | Yes |
 | A2A skills for agent interaction | 8 |
 | Data sources supported | 6 |
 | Human personas served | 4 |
@@ -163,15 +165,15 @@ Programmatic access via REST API and A2A protocol. Build triage agents, report s
 ```
 Sources                Knowledge                Consumers
 ────────             ──────────────            ──────────
-Slack          ──→                         ──→  Claude Code
-Transcripts    ──→   Entity Resolution     ──→  Claude Cowork
+Slack          ──→                         ──→  ChatGPT / UI / Claude
+Transcripts    ──→   Entity Resolution     ──→  ChatGPT / UI / Claude
 Documents      ──→   Knowledge Graph       ──→  AI Agents
 Web Scrapes    ──→   (Neo4j + PostgreSQL)  ──→  Stakeholders
 JIRA (TBD)     ──→                         ──→  Automation
 ```
 
 - **7-plane architecture** — Ingestion, Extraction, Entity Resolution, Knowledge, Intelligence, Event Bus, Consumption
-- **Three-protocol model** — MCP (humans), A2A (agents), REST (integrations)
+- **Three-protocol model** — MCP (humans), A2A (agents), REST (integrations + ChatGPT Actions)
 - **Two-pass LLM** — GPT-4o-mini for speed, GPT-4o for accuracy
 - **Human-in-the-loop** — Your feedback improves every aspect of the system
 
@@ -202,7 +204,8 @@ Built on open standards and proven open-source technologies:
 - **Redis** — queue, cache, event bus
 - **pyJedAI** — entity resolution
 - **Microsoft GraphRAG** — graph-based RAG
-- **MCP** (Anthropic) — human-AI tool protocol
+- **MCP** (Anthropic) — human-AI tool protocol (optional)
+- **ChatGPT Actions** — OpenAPI integration via Agent Gateway
 - **A2A** (Google) — agent-to-agent protocol
 - **Azure OpenAI** — LLM extraction (GPT-4o, GPT-4o-mini)
 
@@ -213,7 +216,7 @@ Built on open standards and proven open-source technologies:
 ### For PMs
 
 1. Ensure PM Intelligence is deployed (ask your admin)
-2. Open Claude Code or Claude Cowork
+2. Open ChatGPT Enterprise or the PM Intelligence UI (`/ui`)
 3. Ask: "What are the top customer issues this week?"
 4. That's it. No training required.
 
@@ -222,7 +225,7 @@ Built on open standards and proven open-source technologies:
 1. Clone the repository
 2. `docker compose up -d` (infrastructure)
 3. `npm install && npm run dev` (application)
-4. Configure MCP server in Claude
+4. Configure ChatGPT Actions or MCP server (optional)
 5. See the [Developer Guide](../DEVELOPER_GUIDE.md) for details
 
 ### For Agent Developers

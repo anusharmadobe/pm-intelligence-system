@@ -13,7 +13,7 @@ interface RequestRecord {
   resetTime: number;
 }
 
-class RateLimiter {
+export class RateLimiter {
   private requests: Map<string, RequestRecord> = new Map();
   private config: RateLimitConfig;
   private cleanupInterval: NodeJS.Timeout;

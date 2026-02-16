@@ -1,0 +1,173 @@
+* {
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f6f7fb;
+  color: #1f2937;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px;
+  background: #111827;
+  color: #f9fafb;
+}
+
+.api-panel {
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.api-panel input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #374151;
+  background: #1f2937;
+  color: #f9fafb;
+}
+
+.api-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabs button {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #e5e7eb;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background: #2563eb;
+  color: #fff;
+}
+
+main {
+  padding: 24px;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.panel {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+}
+
+.panel input,
+.panel select,
+.panel textarea {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+
+button {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #6b7280;
+}
+
+.output {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  min-height: 120px;
+  overflow: auto;
+}
+
+.status-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #9ca3af;
+  color: #111827;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 1024px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 16px;
+  }
+
+  .app-header {
+    padding: 16px;
+  }
+
+  .panel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabs button {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .api-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

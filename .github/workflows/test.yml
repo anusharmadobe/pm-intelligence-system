@@ -1,0 +1,180 @@
+name: Test & Coverage
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg15
+        env:
+          POSTGRES_DB: pm_intelligence_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      neo4j:
+        image: neo4j:5-community
+        env:
+          NEO4J_AUTH: neo4j/test_password
+        ports:
+          - 7687:7687
+        options: >-
+          --health-cmd "neo4j status"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create test environment file
+        run: |
+          cat > .env <<EOF
+          DB_HOST=localhost
+          DB_PORT=5432
+          DB_NAME=pm_intelligence_test
+          DB_USER=postgres
+          DB_PASSWORD=test_password
+
+          NEO4J_URI=bolt://localhost:7687
+          NEO4J_USER=neo4j
+          NEO4J_PASSWORD=test_password
+          NEO4J_DATABASE=neo4j
+
+          REDIS_URL=redis://localhost:6379
+          REDIS_PASSWORD=
+
+          # Mock LLM for tests
+          LLM_PROVIDER=mock
+          EMBEDDING_PROVIDER=mock
+
+          # Disable rate limiting for tests
+          DISABLE_RATE_LIMITING=true
+
+          # Test-specific settings
+          LOG_LEVEL=error
+          NODE_ENV=test
+          EOF
+
+      - name: Run database migrations
+        run: npm run migrate
+        env:
+          NODE_ENV: test
+
+      - name: Run tests with coverage
+        run: npm run test:coverage
+        env:
+          NODE_ENV: test
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/coverage-final.json
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+      - name: Check coverage threshold
+        run: |
+          COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+          echo "Coverage: $COVERAGE%"
+          if (( $(echo "$COVERAGE < 75" | bc -l) )); then
+            echo "❌ Coverage $COVERAGE% is below 75% threshold"
+            exit 1
+          else
+            echo "✅ Coverage $COVERAGE% meets 75% threshold"
+          fi
+
+      - name: Archive test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results-${{ matrix.node-version }}
+          path: |
+            coverage/
+            logs/
+
+      - name: Comment PR with coverage
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const coverage = JSON.parse(fs.readFileSync('coverage/coverage-summary.json', 'utf8'));
+            const pct = coverage.total.lines.pct;
+
+            const comment = `## Test Coverage Report
+
+            | Metric | Coverage |
+            |--------|----------|
+            | Lines | ${coverage.total.lines.pct}% |
+            | Statements | ${coverage.total.statements.pct}% |
+            | Functions | ${coverage.total.functions.pct}% |
+            | Branches | ${coverage.total.branches.pct}% |
+
+            ${pct >= 75 ? '✅' : '❌'} Coverage threshold: 75% (current: ${pct}%)
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint || echo "Linting not configured"
+        continue-on-error: true

@@ -1,4 +1,7 @@
 import express from 'express';
+import cors from 'cors';
+import multer from 'multer';
+import path from 'path';
 import { ingestSignal, RawSignal, getSignals, countSignals, SignalQueryOptions } from '../processing/signal_extractor';
 import { detectAndStoreOpportunities, detectAndStoreOpportunitiesIncremental, getAllOpportunities, getOpportunities, countOpportunities, OpportunityQueryOptions, mergeRelatedOpportunities, getPrioritizedOpportunities, getQuickWinOpportunities, getStrategicOpportunities, getEmergingOpportunities, getHighConfidenceOpportunities, getRoadmapSummary, getSignalsForOpportunity } from '../services/opportunity_service';
 import { createJudgment, getJudgmentsForOpportunity, createJudgmentFromData } from '../services/judgment_service';
@@ -23,8 +26,23 @@ import { getThemeHierarchy, getThemesAtLevel, getThemeById, getThemeBySlug, getT
 import { getEmbeddingStats, getSignalsWithoutEmbeddings, queueSignalForEmbedding, processEmbeddingQueue, getSignalEmbedding } from '../services/embedding_service';
 import { hybridSearch, textSearch, vectorSearch, findSimilarSignals, searchByTheme, searchByCustomer, HybridSearchOptions } from '../services/hybrid_search_service';
 import { createEmbeddingProviderFromEnv } from '../services/embedding_provider';
+import { createAgentGatewayRouter } from '../agents/gateway';
+import { createA2AServerRouter } from '../agents/a2a_server';
+import { getSystemHealth } from '../services/health_service';
+import { config } from '../config/env';
+import { NormalizerService } from '../ingestion/normalizer_service';
+import { TranscriptAdapter } from '../ingestion/transcript_adapter';
+import { DocumentAdapter } from '../ingestion/document_adapter';
+import { WebScrapeAdapter } from '../ingestion/web_scrape_adapter';
+import { IngestionPipelineService } from '../services/ingestion_pipeline_service';
 
 const app = express();
+const upload = multer({
+  limits: {
+    fileSize: config.ingestion.maxFileSizeMb * 1024 * 1024,
+    files: config.ingestion.maxBatchFiles
+  }
+});
 
 // Request logging middleware
 app.use((req, res, next) => {
@@ -36,7 +54,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || '*',
+    credentials: true
+  })
+);
 
 // Rate limiting middleware (disabled in dev when explicitly opted out)
 const disableRateLimiting =
@@ -47,16 +71,28 @@ if (!disableRateLimiting) {
   app.use(createRateLimitMiddleware(rateLimiters.general));
 }
 
-// Error logging middleware
-app.use((err: any, req: any, res: any, next: any) => {
+// Error handling middleware
+app.use((err: any, req: any, res: any, _next: any) => {
   logger.error('API error', {
     error: err.message,
     stack: err.stack,
     method: req.method,
     path: req.path
   });
-  next(err);
+  if (res.headersSent) {
+    return;
+  }
+  res.status(500).json({
+    error: 'Internal server error',
+    request_id: req.headers['x-request-id']
+  });
 });
+
+// Static UI (V2)
+app.use('/ui', express.static(path.join(__dirname, '../../frontend')));
+
+// OpenAPI specs for integrations (ChatGPT Actions)
+app.use('/openapi', express.static(path.join(__dirname, '../../docs/v2/openapi')));
 
 // Health check
 app.get('/health', async (req, res) => {
@@ -110,6 +146,28 @@ app.get('/health', async (req, res) => {
   res.status(statusCode).json(health);
 });
 
+// Aggregated system health (V2)
+app.get('/api/health', async (req, res) => {
+  try {
+    const health = await getSystemHealth();
+    const criticalStatuses = [
+      health.postgresql,
+      health.redis,
+      health.neo4j,
+      health.python_doc_parser
+    ];
+    const degraded = criticalStatuses.some((status) => status !== 'healthy');
+    res.status(degraded ? 503 : 200).json({
+      status: degraded ? 'degraded' : 'ok',
+      timestamp: new Date().toISOString(),
+      ...health
+    });
+  } catch (error: any) {
+    logger.error('System health endpoint failed', { error: error.message });
+    res.status(500).json({ status: 'error', error: error.message });
+  }
+});
+
 // Readiness check (for Kubernetes)
 app.get('/ready', async (req, res) => {
   try {
@@ -130,16 +188,9 @@ app.get('/live', (req, res) => {
 /**
  * POST /api/signals
  * Ingest a signal from external source
- * Rate limiting: Can be bypassed with X-Bulk-Ingestion header
+ * Rate limiting: Enforced for all requests
  */
 app.post('/api/signals', (req, res, next) => {
-  // Bypass rate limiting for bulk ingestion if header is present
-  // Express normalizes headers to lowercase
-  const bulkHeader = req.headers['x-bulk-ingestion'] || req.headers['X-Bulk-Ingestion'];
-  if (bulkHeader === 'true' || bulkHeader === '1') {
-    logger.info('Bulk ingestion mode: rate limiting bypassed', { header: bulkHeader });
-    return next();
-  }
   // Apply rate limiting middleware (5000 requests/minute)
   const middleware = createRateLimitMiddleware(rateLimiters.signalIngestion);
   return middleware(req, res, next);
@@ -175,12 +226,113 @@ app.post('/api/signals', (req, res, next) => {
 });
 
 /**
+ * POST /api/ingest/transcript
+ * Ingest a transcript (manual upload)
+ */
+app.post('/api/ingest/transcript', async (req, res) => {
+  try {
+    const { title, content, meeting_type, customer, date, metadata } = req.body || {};
+    if (!title || !content) {
+      return res.status(400).json({ error: 'title and content are required' });
+    }
+    const normalizer = new NormalizerService();
+    const adapter = new TranscriptAdapter(normalizer);
+    const pipeline = new IngestionPipelineService();
+    const signals = adapter.ingest({ title, content, meeting_type, customer, date, metadata });
+    await pipeline.ingest(signals);
+    return res.status(201).json({ status: 'ok', signal_count: signals.length });
+  } catch (error: any) {
+    logger.error('Transcript ingestion failed', { error: error.message });
+    return res.status(400).json({ error: error.message });
+  }
+});
+
+/**
+ * POST /api/ingest/document
+ * Ingest a document file (multipart/form-data)
+ */
+app.post('/api/ingest/document', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'file is required' });
+    }
+    let metadata: Record<string, unknown> | undefined;
+    if (req.body?.metadata) {
+      try {
+        metadata = JSON.parse(req.body.metadata);
+      } catch {
+        return res.status(400).json({ error: 'metadata must be valid JSON' });
+      }
+    }
+    const normalizer = new NormalizerService();
+    const adapter = new DocumentAdapter(normalizer);
+    const pipeline = new IngestionPipelineService();
+    const signals = await adapter.ingest({
+      filename: req.file.originalname,
+      buffer: req.file.buffer,
+      metadata
+    });
+    await pipeline.ingest(signals);
+    return res.status(201).json({ status: 'ok', signal_count: signals.length });
+  } catch (error: any) {
+    logger.error('Document ingestion failed', { error: error.message });
+    return res.status(400).json({ error: error.message });
+  }
+});
+
+/**
+ * POST /api/ingest/crawled
+ * Ingest crawled web content
+ */
+app.post('/api/ingest/crawled', async (req, res) => {
+  try {
+    const { url, content, captured_at, metadata } = req.body || {};
+    if (!url || !content) {
+      return res.status(400).json({ error: 'url and content are required' });
+    }
+    const normalizer = new NormalizerService();
+    const adapter = new WebScrapeAdapter(normalizer);
+    const pipeline = new IngestionPipelineService();
+    const signal = adapter.ingest({ url, content, captured_at, metadata });
+    await pipeline.ingest([signal]);
+    return res.status(201).json({ status: 'ok', signal_count: 1 });
+  } catch (error: any) {
+    logger.error('Web crawl ingestion failed', { error: error.message });
+    return res.status(400).json({ error: error.message });
+  }
+});
+
+/**
  * GET /api/signals
  * List signals with filtering and pagination
  * Query params: source, signalType, customer, topic, startDate, endDate, minQualityScore, limit, offset, orderBy, orderDirection
  */
 app.get('/api/signals', async (req, res) => {
   try {
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 100;
+    if (Number.isNaN(limit) || limit < 1 || limit > 1000) {
+      return res.status(400).json({ error: 'limit must be between 1 and 1000' });
+    }
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : 0;
+    if (Number.isNaN(offset) || offset < 0) {
+      return res.status(400).json({ error: 'offset must be 0 or greater' });
+    }
+    const orderBy = req.query.orderBy as string | undefined;
+    if (orderBy && !['created_at', 'quality_score', 'severity'].includes(orderBy)) {
+      return res.status(400).json({ error: 'orderBy must be created_at, quality_score, or severity' });
+    }
+    const orderDirection = req.query.orderDirection as string | undefined;
+    if (orderDirection && !['ASC', 'DESC'].includes(orderDirection)) {
+      return res.status(400).json({ error: 'orderDirection must be ASC or DESC' });
+    }
+
+    const minQualityScore = req.query.minQualityScore
+      ? parseInt(req.query.minQualityScore as string, 10)
+      : undefined;
+    if (req.query.minQualityScore && Number.isNaN(minQualityScore)) {
+      return res.status(400).json({ error: 'minQualityScore must be a number' });
+    }
+
     const options: SignalQueryOptions = {
       source: req.query.source as string | undefined,
       signalType: req.query.signalType as string | undefined,
@@ -188,11 +340,11 @@ app.get('/api/signals', async (req, res) => {
       topic: req.query.topic as string | undefined,
       startDate: req.query.startDate ? new Date(req.query.startDate as string) : undefined,
       endDate: req.query.endDate ? new Date(req.query.endDate as string) : undefined,
-      minQualityScore: req.query.minQualityScore ? parseInt(req.query.minQualityScore as string, 10) : undefined,
-      limit: req.query.limit ? parseInt(req.query.limit as string, 10) : 100,
-      offset: req.query.offset ? parseInt(req.query.offset as string, 10) : 0,
-      orderBy: (req.query.orderBy as 'created_at' | 'quality_score' | 'severity') || 'created_at',
-      orderDirection: (req.query.orderDirection as 'ASC' | 'DESC') || 'DESC'
+      minQualityScore,
+      limit,
+      offset,
+      orderBy: (orderBy as 'created_at' | 'quality_score' | 'severity') || 'created_at',
+      orderDirection: (orderDirection as 'ASC' | 'DESC') || 'DESC'
     };
     
     const [signals, total] = await Promise.all([
@@ -1492,5 +1644,18 @@ app.post('/webhooks/slack', createRateLimitMiddleware(rateLimiters.webhooks), cr
 app.post('/webhooks/teams', createRateLimitMiddleware(rateLimiters.webhooks), createTeamsWebhookHandler());
 app.post('/webhooks/grafana', createRateLimitMiddleware(rateLimiters.webhooks), createGrafanaWebhookHandler());
 app.post('/webhooks/splunk', createRateLimitMiddleware(rateLimiters.webhooks), createSplunkWebhookHandler());
+
+// Agent Gateway (V2)
+if (config.featureFlags.agentGateway) {
+  app.use('/api/agents/v1', createAgentGatewayRouter());
+} else {
+  logger.info('Agent Gateway disabled via feature flag');
+}
+// A2A Server (V2)
+if (config.featureFlags.a2aServer) {
+  app.use('/', createA2AServerRouter());
+} else {
+  logger.info('A2A Server disabled via feature flag');
+}
 
 export default app;

@@ -1,0 +1,94 @@
+[
+  {
+    "ts": "1234567890.123456",
+    "user": "U123456",
+    "text": "We're seeing timeout issues with PDF generation. Users are reporting 30-second waits before the system fails.",
+    "channel": "C04D195JVGS",
+    "thread_ts": null,
+    "reply_count": 3,
+    "reactions": [
+      {
+        "name": "+1",
+        "count": 5
+      }
+    ]
+  },
+  {
+    "ts": "1234567891.123457",
+    "user": "U234567",
+    "text": "I can reproduce this. It only happens with forms over 5MB. Smaller forms work fine.",
+    "channel": "C04D195JVGS",
+    "thread_ts": "1234567890.123456",
+    "reply_count": 0
+  },
+  {
+    "ts": "1234567892.123458",
+    "user": "U345678",
+    "text": "Adobe Experience Manager Forms (AEM Forms) needs better performance optimization for large PDFs.",
+    "channel": "C04D195JVGS",
+    "thread_ts": null,
+    "reply_count": 0
+  },
+  {
+    "ts": "1234567893.123459",
+    "user": "U456789",
+    "text": "Microsoft customer Contoso is asking for SSO integration. This is becoming a blocker for the deal.",
+    "channel": "C08T43UHK9D",
+    "thread_ts": null,
+    "reply_count": 2,
+    "reactions": [
+      {
+        "name": "eyes",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "ts": "1234567894.123460",
+    "user": "U567890",
+    "text": "Can we prioritize the authentication timeout issue? Multiple customers reporting this.",
+    "channel": "C08T43UHK9D",
+    "thread_ts": null,
+    "reply_count": 0
+  },
+  {
+    "ts": "1234567895.123461",
+    "user": "U678901",
+    "text": "The form validation bug is affecting Acme Corp's production environment. They need a fix ASAP.",
+    "channel": "C04D195JVGS",
+    "thread_ts": null,
+    "reply_count": 1
+  },
+  {
+    "ts": "1234567896.123462",
+    "user": "U789012",
+    "text": "Login issue still not resolved. Users getting 'Session expired' errors immediately after logging in.",
+    "channel": "C08T43UHK9D",
+    "thread_ts": null,
+    "reply_count": 0
+  },
+  {
+    "ts": "1234567897.123463",
+    "user": "U890123",
+    "text": "Performance degradation noticed in the dashboard. Page load times increased from 2s to 8s.",
+    "channel": "C04D195JVGS",
+    "thread_ts": null,
+    "reply_count": 4
+  },
+  {
+    "ts": "1234567898.123464",
+    "user": "U901234",
+    "text": "Export to Excel feature requested by 3 enterprise customers. This could be a differentiator.",
+    "channel": "C08T43UHK9D",
+    "thread_ts": null,
+    "reply_count": 0
+  },
+  {
+    "ts": "1234567899.123465",
+    "user": "U012345",
+    "text": "API rate limiting causing issues for GlobalTech integration. They're hitting 429 errors.",
+    "channel": "C04D195JVGS",
+    "thread_ts": null,
+    "reply_count": 2
+  }
+]

@@ -8,14 +8,14 @@
 
 ### What is PM Intelligence?
 
-PM Intelligence is a continuously updated knowledge graph that ingests product signals from multiple sources — Slack, meeting transcripts, documents, web scrapes — and unifies them into a single queryable system. It performs entity resolution to connect the same customer, feature, or issue across sources, and exposes the intelligence via natural language through Claude Code or Claude Cowork.
+PM Intelligence is a continuously updated knowledge graph that ingests product signals from multiple sources — Slack, meeting transcripts, documents, web scrapes — and unifies them into a single queryable system. It performs entity resolution to connect the same customer, feature, or issue across sources, and exposes the intelligence via ChatGPT Enterprise Actions, the built-in Web UI, or Claude Code/Cowork.
 
 ### How is it different from a regular database or search tool?
 
 Three things set it apart:
 1. **Entity Resolution** — "MSFT", "Microsoft", and "Microsoft Corporation" are recognized as the same entity across all sources. This is the core differentiator.
 2. **Knowledge Graph** — entities aren't flat rows; they have rich relationships (customers use features, customers have issues, issues relate to features). You can ask multi-hop questions.
-3. **Natural Language Interface** — you ask questions in plain English via Claude. No query languages, no dashboards, no training.
+3. **Natural Language Interface** — you ask questions in plain English via ChatGPT Enterprise or Claude. No query languages required.
 
 ### Who is this for?
 
@@ -27,7 +27,7 @@ Four personas:
 
 ### Do I need to learn a new tool?
 
-No. If you already use Claude Code or Claude Cowork, you already know the interface. PM Intelligence adds MCP tools behind the scenes, but you interact through the same natural language conversation.
+No. If you already use ChatGPT Enterprise or Claude Code/Cowork, you already know the interface. PM Intelligence adds tools behind the scenes, but you interact through the same natural language conversation (or via the Web UI at `/ui`).
 
 ### Does this replace JIRA, Confluence, or Slack?
 
@@ -203,15 +203,15 @@ Ask: "Show me agent health and costs." You'll see per-agent accuracy, response t
 
 ### Who can access the system?
 
-V2 is a single-PM deployment. All human interaction goes through Claude Code/Cowork MCP tools. Agent access requires a unique API key per agent with scoped permissions.
+V2 supports human interaction through ChatGPT Enterprise Actions, the Web UI, and Claude MCP tools. Agent access requires a unique API key per agent with scoped permissions.
 
 ### Is PII protected?
 
 PII is detected during extraction and flagged in metadata. In V2, PII is stored as-is (acceptable for single-PM local deployment). V3 adds PII masking and encryption at rest.
 
-### Are my conversations with Claude logged?
+### Are my conversations logged?
 
-The system logs the MCP tool calls and their results (for debugging and audit). It does not log your full conversation with Claude — that's handled by Claude Code/Cowork.
+The system logs tool calls and their results (for debugging and audit). It does not log your full conversation in ChatGPT or Claude — that is handled by your chat provider.
 
 ### Can agents see all data?
 
@@ -281,7 +281,7 @@ V2 is designed for 500-1000+ canonical entities (customers, features, issues, th
 ### What's coming in V3?
 
 Planned V3 features include:
-- Custom UI dashboard (if MCP proves insufficient)
+- Advanced UI dashboard customization
 - Multi-PM / multi-tenant support
 - PII masking and encryption at rest
 - Real-time streaming ingestion

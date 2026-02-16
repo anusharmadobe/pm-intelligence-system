@@ -15,6 +15,7 @@ export interface HybridSearchOptions {
   filters?: {
     source?: string;
     customer?: string;
+    feature?: string;
     theme?: string;
     startDate?: Date;
     endDate?: Date;
@@ -48,6 +49,9 @@ export async function hybridSearch(
     minScore = 0.3,
     filters = {}
   } = options;
+  const safeVectorWeight = Number.isFinite(vectorWeight) ? vectorWeight : 0.6;
+  const safeTextWeight = Number.isFinite(textWeight) ? textWeight : 0.4;
+  const safeMinScore = Number.isFinite(minScore) ? minScore : 0.3;
 
   const startTime = Date.now();
   const pool = getDbPool();
@@ -60,7 +64,7 @@ export async function hybridSearch(
     // Build filter conditions
     const filterConditions: string[] = [];
     const filterParams: any[] = [];
-    let paramIndex = 4; // Starting after vector, query text, limit
+    let paramIndex = 7; // Starting after vector, query text, limit, weights, minScore
 
     if (filters.source) {
       filterConditions.push(`s.source = $${paramIndex++}`);
@@ -83,8 +87,18 @@ export async function hybridSearch(
     }
 
     if (filters.customer) {
-      filterConditions.push(`s.metadata->'customers' ? $${paramIndex++}`);
-      filterParams.push(filters.customer);
+      filterConditions.push(`s.normalized_content ILIKE $${paramIndex++}`);
+      filterParams.push(`%${filters.customer.toLowerCase()}%`);
+    }
+
+    if (filters.feature) {
+      filterConditions.push(`s.normalized_content ILIKE $${paramIndex++}`);
+      filterParams.push(`%${filters.feature.toLowerCase()}%`);
+    }
+
+    if (filters.theme) {
+      filterConditions.push(`s.normalized_content ILIKE $${paramIndex++}`);
+      filterParams.push(`%${filters.theme.toLowerCase()}%`);
     }
 
     const filterClause = filterConditions.length > 0 
@@ -122,8 +136,8 @@ export async function hybridSearch(
           COALESCE(vr.contextual_summary, '') as contextual_summary,
           COALESCE(vr.vector_score, 0) as vector_score,
           COALESCE(tr.text_score, 0) as text_score,
-          (COALESCE(vr.vector_score, 0) * ${vectorWeight} + 
-           COALESCE(tr.text_score, 0) * ${textWeight}) as combined_score
+          (COALESCE(vr.vector_score, 0) * $4 + 
+           COALESCE(tr.text_score, 0) * $5) as combined_score
         FROM vector_results vr
         FULL OUTER JOIN text_results tr ON vr.signal_id = tr.signal_id
       )
@@ -135,14 +149,14 @@ export async function hybridSearch(
         c.contextual_summary
       FROM combined c
       JOIN signals s ON s.id = c.signal_id
-      WHERE c.combined_score >= ${minScore}
+      WHERE c.combined_score >= $6
       ORDER BY c.combined_score DESC
       LIMIT $3
     `;
 
     const result = await pool.query(
       hybridQuery,
-      [embeddingStr, query, limit, ...filterParams]
+      [embeddingStr, query, limit, safeVectorWeight, safeTextWeight, safeMinScore, ...filterParams]
     );
 
     const results: HybridSearchResult[] = result.rows.map(row => ({
@@ -221,6 +235,7 @@ export async function vectorSearch(
       ? `AND ${filterConditions.join(' AND ')}` 
       : '';
 
+    const limitParamIndex = paramIndex;
     const vectorQuery = `
       SELECT 
         s.*,
@@ -231,10 +246,10 @@ export async function vectorSearch(
       WHERE (1 - (se.embedding <=> $1::vector)) >= $2
         ${filterClause}
       ORDER BY se.embedding <=> $1::vector
-      LIMIT ${limit}
+      LIMIT $${limitParamIndex}
     `;
 
-    const result = await pool.query(vectorQuery, [embeddingStr, minSimilarity, ...filterParams]);
+    const result = await pool.query(vectorQuery, [embeddingStr, minSimilarity, ...filterParams, limit]);
 
     const results: HybridSearchResult[] = result.rows.map(row => ({
       signal: {

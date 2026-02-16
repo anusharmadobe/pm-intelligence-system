@@ -1,0 +1,497 @@
+[
+  {
+    "mention": "HTML injection security",
+    "context": "We are trying to embed an AEM Adaptive form in an external web page. HTML injection using Ajax and Jquery opened up a lot of security questions.",
+    "ground_truth_entity_id": "entity_001",
+    "ground_truth_canonical_name": "HTML Injection Security Issue",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Security concern with HTML injection"
+  },
+  {
+    "mention": "html injection vulnerability",
+    "context": "The HTML is being injected into the hosting page which cannot be sanitized by Angular due to JS and CSS.",
+    "ground_truth_entity_id": "entity_001",
+    "ground_truth_canonical_name": "HTML Injection Security Issue",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Variant of HTML injection security issue"
+  },
+  {
+    "mention": "security concerns around html",
+    "context": "My understanding is HTML injection how is Adobe recommending this approach with such security concerns around?",
+    "ground_truth_entity_id": "entity_001",
+    "ground_truth_canonical_name": "HTML Injection Security Issue",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Another variant - should match same entity"
+  },
+  {
+    "mention": "globals.functions undefined",
+    "context": "I've added console.logs and noticed that if I attempt to log globals.functions, it comes back as undefined.",
+    "ground_truth_entity_id": "entity_002",
+    "ground_truth_canonical_name": "Globals Functions Undefined Error",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "JavaScript error in AEM Forms"
+  },
+  {
+    "mention": "global functions not defined",
+    "context": "I obviously can't call global functions if they aren't defined in AEM core components.",
+    "ground_truth_entity_id": "entity_002",
+    "ground_truth_canonical_name": "Globals Functions Undefined Error",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Variant phrasing of same issue"
+  },
+  {
+    "mention": "PDF conversion slow",
+    "context": "While converting PDF to adaptive forms it's taking longer and it shows only 1% conversion.",
+    "ground_truth_entity_id": "entity_003",
+    "ground_truth_canonical_name": "PDF Conversion Performance Issue",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Performance problem with AFCS"
+  },
+  {
+    "mention": "slow pdf to adaptive form conversion",
+    "context": "AFCS conversion is very slow, stuck at 1% progress for long time.",
+    "ground_truth_entity_id": "entity_003",
+    "ground_truth_canonical_name": "PDF Conversion Performance Issue",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Same performance issue, different wording"
+  },
+  {
+    "mention": "Adaptive Form embedding",
+    "context": "Alternatives to Adaptive Form embedding in external web page using Angular.",
+    "ground_truth_entity_id": "entity_004",
+    "ground_truth_canonical_name": "Adaptive Form Embedding",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Feature for embedding forms"
+  },
+  {
+    "mention": "embedding adaptive forms",
+    "context": "We are trying to embed an AEM Adaptive form in an external web page.",
+    "ground_truth_entity_id": "entity_004",
+    "ground_truth_canonical_name": "Adaptive Form Embedding",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Same feature, verb-first phrasing"
+  },
+  {
+    "mention": "AF embedding",
+    "context": "AF embedding in external Angular page has security concerns.",
+    "ground_truth_entity_id": "entity_004",
+    "ground_truth_canonical_name": "Adaptive Form Embedding",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Abbreviated form - should still match"
+  },
+  {
+    "mention": "Custom functions",
+    "context": "Using custom functions in AEM Forms core components with globals.functions API.",
+    "ground_truth_entity_id": "entity_005",
+    "ground_truth_canonical_name": "Custom Functions",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Feature for custom JavaScript functions"
+  },
+  {
+    "mention": "custom function core component",
+    "context": "Create and use custom function core component in adaptive forms.",
+    "ground_truth_entity_id": "entity_005",
+    "ground_truth_canonical_name": "Custom Functions",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "More specific phrase for same feature"
+  },
+  {
+    "mention": "AFCS",
+    "context": "Configure the Automated Forms Conversion service (AFCS) for bulk PDF conversion.",
+    "ground_truth_entity_id": "entity_006",
+    "ground_truth_canonical_name": "Automated Forms Conversion Service",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Abbreviation should expand to full name"
+  },
+  {
+    "mention": "Automated Forms Conversion Service",
+    "context": "AFCS for AEM LTS on prem - converting 5000+ PDF and XDP files.",
+    "ground_truth_entity_id": "entity_006",
+    "ground_truth_canonical_name": "Automated Forms Conversion Service",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Full name of AFCS"
+  },
+  {
+    "mention": "forms conversion service",
+    "context": "Using Adobe's forms conversion service to migrate PDFs to adaptive forms.",
+    "ground_truth_entity_id": "entity_006",
+    "ground_truth_canonical_name": "Automated Forms Conversion Service",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Shortened variant"
+  },
+  {
+    "mention": "AEM Forms",
+    "context": "We are running AEM Forms on prem LTS version.",
+    "ground_truth_entity_id": "entity_007",
+    "ground_truth_canonical_name": "AEM Forms",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Product name"
+  },
+  {
+    "mention": "aem forms",
+    "context": "Latest AEM forms add-on installed on version 6.5.",
+    "ground_truth_entity_id": "entity_007",
+    "ground_truth_canonical_name": "AEM Forms",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Lowercase variant - should match"
+  },
+  {
+    "mention": "Adobe Experience Manager Forms",
+    "context": "Adobe Experience Manager Forms documentation for core components.",
+    "ground_truth_entity_id": "entity_007",
+    "ground_truth_canonical_name": "AEM Forms",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Full product name"
+  },
+  {
+    "mention": "Angular",
+    "context": "External web page that is built using Angular framework.",
+    "ground_truth_entity_id": "entity_008",
+    "ground_truth_canonical_name": "Angular",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Frontend framework"
+  },
+  {
+    "mention": "angular framework",
+    "context": "The hosting page uses Angular framework and cannot sanitize injected HTML.",
+    "ground_truth_entity_id": "entity_008",
+    "ground_truth_canonical_name": "Angular",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "With 'framework' suffix"
+  },
+  {
+    "mention": "AEMaaCS",
+    "context": "AEMaaCS AEM Forms using globals.functions comes back as undefined.",
+    "ground_truth_entity_id": "entity_009",
+    "ground_truth_canonical_name": "AEM as a Cloud Service",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Abbreviation for cloud service"
+  },
+  {
+    "mention": "AEM as a Cloud Service",
+    "context": "Experience Manager as a Cloud Service forms implementation.",
+    "ground_truth_entity_id": "entity_009",
+    "ground_truth_canonical_name": "AEM as a Cloud Service",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Full name"
+  },
+  {
+    "mention": "aem cloud service",
+    "context": "Deploying forms on AEM cloud service environment.",
+    "ground_truth_entity_id": "entity_009",
+    "ground_truth_canonical_name": "AEM as a Cloud Service",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Casual reference"
+  },
+  {
+    "mention": "iframe approach",
+    "context": "Alternatives discussed were using iFrame for form embedding.",
+    "ground_truth_entity_id": "entity_010",
+    "ground_truth_canonical_name": "iFrame Embedding",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Alternative embedding method"
+  },
+  {
+    "mention": "iFrame embedding",
+    "context": "Using iFrame to embed adaptive forms in external pages.",
+    "ground_truth_entity_id": "entity_010",
+    "ground_truth_canonical_name": "iFrame Embedding",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Explicit naming"
+  },
+  {
+    "mention": "Ajax and jQuery injection",
+    "context": "We tried the HTML injection using Ajax and jQuery as per documentation.",
+    "ground_truth_entity_id": "entity_011",
+    "ground_truth_canonical_name": "Ajax jQuery Injection Method",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Technical implementation method"
+  },
+  {
+    "mention": "ajax jquery html injection",
+    "context": "HTML injection using ajax and jquery libraries.",
+    "ground_truth_entity_id": "entity_011",
+    "ground_truth_canonical_name": "Ajax jQuery Injection Method",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Variant phrasing"
+  },
+  {
+    "mention": "setProperty validation",
+    "context": "I'm attempting to call globals.functions.setProperty(field, {valid: true}).",
+    "ground_truth_entity_id": "entity_012",
+    "ground_truth_canonical_name": "SetProperty Field Validation",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "API method for field validation"
+  },
+  {
+    "mention": "field property validation",
+    "context": "Setting field property to valid or invalid using globals.functions.",
+    "ground_truth_entity_id": "entity_012",
+    "ground_truth_canonical_name": "SetProperty Field Validation",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Descriptive variant"
+  },
+  {
+    "mention": "XDP conversion",
+    "context": "We have more than 5000+ PDF and XDP files to convert to adaptive forms.",
+    "ground_truth_entity_id": "entity_013",
+    "ground_truth_canonical_name": "XDP to Adaptive Form Conversion",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "File format conversion"
+  },
+  {
+    "mention": "xdp to adaptive form migration",
+    "context": "Bulk migration of XDP files to adaptive forms using AFCS.",
+    "ground_truth_entity_id": "entity_013",
+    "ground_truth_canonical_name": "XDP to Adaptive Form Conversion",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Migration terminology"
+  },
+  {
+    "mention": "client libs path mapping",
+    "context": "Them having to map the relative paths of client libs to AEM Server.",
+    "ground_truth_entity_id": "entity_014",
+    "ground_truth_canonical_name": "Client Library Path Mapping",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Configuration issue"
+  },
+  {
+    "mention": "clientlib relative paths",
+    "context": "Client library relative path configuration for embedded forms.",
+    "ground_truth_entity_id": "entity_014",
+    "ground_truth_canonical_name": "Client Library Path Mapping",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Technical term variant"
+  },
+  {
+    "mention": "headless delivery",
+    "context": "We are also discussing headless delivery as a longer term goal.",
+    "ground_truth_entity_id": "entity_015",
+    "ground_truth_canonical_name": "Headless Forms Delivery",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Headless architecture approach"
+  },
+  {
+    "mention": "headless forms",
+    "context": "Implementing headless forms architecture for AEM.",
+    "ground_truth_entity_id": "entity_015",
+    "ground_truth_canonical_name": "Headless Forms Delivery",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "More specific term"
+  },
+  {
+    "mention": "OAuth Server-to-Server",
+    "context": "Create an AFCS API project using OAuth Server-to-Server authentication.",
+    "ground_truth_entity_id": "entity_016",
+    "ground_truth_canonical_name": "OAuth Server-to-Server Authentication",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Auth method"
+  },
+  {
+    "mention": "oauth s2s",
+    "context": "Configure OAuth S2S for AFCS API access.",
+    "ground_truth_entity_id": "entity_016",
+    "ground_truth_canonical_name": "OAuth Server-to-Server Authentication",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Abbreviated form"
+  },
+  {
+    "mention": "Adobe Developer Console",
+    "context": "Developer uses Adobe Developer Console to create an AFCS API project.",
+    "ground_truth_entity_id": "entity_017",
+    "ground_truth_canonical_name": "Adobe Developer Console",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Adobe platform"
+  },
+  {
+    "mention": "developer console",
+    "context": "Create API credentials in the Adobe developer console.",
+    "ground_truth_entity_id": "entity_017",
+    "ground_truth_canonical_name": "Adobe Developer Console",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Short form"
+  },
+  {
+    "mention": "IMS configuration",
+    "context": "Create a single Adobe IMS configuration for Automated Forms Conversion Service.",
+    "ground_truth_entity_id": "entity_018",
+    "ground_truth_canonical_name": "Adobe IMS Configuration",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Identity management"
+  },
+  {
+    "mention": "Adobe Identity Management",
+    "context": "Adobe Identity Management configuration for service authentication.",
+    "ground_truth_entity_id": "entity_018",
+    "ground_truth_canonical_name": "Adobe IMS Configuration",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Full name for IMS"
+  },
+  {
+    "mention": "core components",
+    "context": "I was under the impression this was part of AEM core components.",
+    "ground_truth_entity_id": "entity_019",
+    "ground_truth_canonical_name": "AEM Core Components",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Component framework"
+  },
+  {
+    "mention": "aem core components",
+    "context": "Authoring adaptive forms using AEM core components.",
+    "ground_truth_entity_id": "entity_019",
+    "ground_truth_canonical_name": "AEM Core Components",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "With AEM prefix"
+  },
+  {
+    "mention": "Service Pack",
+    "context": "Ensure your AEM author is on 6.5 with the latest Service Pack installed.",
+    "ground_truth_entity_id": "entity_020",
+    "ground_truth_canonical_name": "AEM Service Pack",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Update package"
+  },
+  {
+    "mention": "aem sp",
+    "context": "Install latest AEM SP for forms compatibility.",
+    "ground_truth_entity_id": "entity_020",
+    "ground_truth_canonical_name": "AEM Service Pack",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Abbreviated"
+  },
+  {
+    "mention": "bulk PDF conversion",
+    "context": "Define batching and QA guidelines for scaling conversion across 5000+ forms.",
+    "ground_truth_entity_id": "entity_021",
+    "ground_truth_canonical_name": "Bulk PDF Conversion",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Batch processing feature"
+  },
+  {
+    "mention": "mass pdf migration",
+    "context": "Bulk migration of PDF forms to adaptive forms.",
+    "ground_truth_entity_id": "entity_021",
+    "ground_truth_canonical_name": "Bulk PDF Conversion",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Alternative terminology"
+  },
+  {
+    "mention": "forms-users group",
+    "context": "Create an AEM user with valid email and add it to the forms-users group.",
+    "ground_truth_entity_id": "entity_022",
+    "ground_truth_canonical_name": "Forms Users Group",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "User permission group"
+  },
+  {
+    "mention": "forms user access group",
+    "context": "User permissions managed through forms user access group.",
+    "ground_truth_entity_id": "entity_022",
+    "ground_truth_canonical_name": "Forms Users Group",
+    "entity_type": "feature",
+    "should_match": true,
+    "notes": "Descriptive variant"
+  },
+  {
+    "mention": "sanitization blocked by Angular",
+    "context": "HTML cannot be sanitized by Angular due to the JS and CSS existing.",
+    "ground_truth_entity_id": "entity_023",
+    "ground_truth_canonical_name": "Angular HTML Sanitization Issue",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Framework limitation"
+  },
+  {
+    "mention": "angular can't sanitize html",
+    "context": "Angular framework unable to sanitize injected HTML with JavaScript.",
+    "ground_truth_entity_id": "entity_023",
+    "ground_truth_canonical_name": "Angular HTML Sanitization Issue",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Casual phrasing"
+  },
+  {
+    "mention": "1% conversion progress stuck",
+    "context": "PDF conversion shows only 1% progress and is stuck.",
+    "ground_truth_entity_id": "entity_024",
+    "ground_truth_canonical_name": "Conversion Progress Stuck",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Progress indicator issue"
+  },
+  {
+    "mention": "conversion hanging at 1 percent",
+    "context": "AFCS conversion hanging at 1 percent for hours.",
+    "ground_truth_entity_id": "entity_024",
+    "ground_truth_canonical_name": "Conversion Progress Stuck",
+    "entity_type": "issue",
+    "should_match": true,
+    "notes": "Same issue, different wording"
+  },
+  {
+    "mention": "NEGATIVE: Network timeout",
+    "context": "Connection timeout when accessing external API.",
+    "ground_truth_entity_id": "entity_099",
+    "ground_truth_canonical_name": "API Connection Timeout",
+    "entity_type": "issue",
+    "should_match": false,
+    "notes": "NEGATIVE EXAMPLE: Different issue entirely"
+  },
+  {
+    "mention": "NEGATIVE: Database error",
+    "context": "SQL database connection failed during query execution.",
+    "ground_truth_entity_id": "entity_098",
+    "ground_truth_canonical_name": "Database Connection Error",
+    "entity_type": "issue",
+    "should_match": false,
+    "notes": "NEGATIVE EXAMPLE: Unrelated issue"
+  }
+]

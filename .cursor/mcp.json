@@ -11,6 +11,13 @@
         "mcp_Slack_slack_search_messages",
         "mcp_Slack_slack_get_thread_replies"
       ]
+    },
+    "pm-intelligence": {
+      "command": "node",
+      "args": ["backend/mcp/server.ts"],
+      "env": {
+        "MCP_SERVER_PORT": "3001"
+      }
     }
   }
 }

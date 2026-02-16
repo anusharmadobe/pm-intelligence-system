@@ -18,6 +18,30 @@
 - ✅ `TESTING_GUIDE.md` - Step-by-step testing instructions
 - ✅ `TESTING_STATUS.md` - This file
 
+### 4. V2 End-to-End Tests
+- ✅ `docs/tests/E2E_TEST_CASES.md` - V2 end-to-end test cases
+- ✅ `scripts/test_end_to_end_v2.ts` - Automated E2E script
+- ✅ `npm run test-e2e-v2` - Script runner added
+
+### 5. Latest V2 E2E Run
+- ✅ **2026-02-11** — `npm run test-e2e-v2` passed (query + source registry + health ok)
+
+### 6. Latest Health Check
+- ✅ **2026-02-11** — `/api/health` returned `status=ok` with ER + Doc Parser + GraphRAG services running
+
+## ✅ V2 E2E Success Criteria
+
+- [x] Agent registration
+- [x] Agent health check
+- [x] Idempotent ingest
+- [x] Knowledge query
+- [x] Source registry
+- [x] Customer profile query
+- [x] Heatmap and trends
+- [x] Opportunities list
+- [x] System health (ok or degraded)
+- [x] A2A query via `/a2a`
+
 ## 📋 Messages Ready for Ingestion
 
 The following 4 messages are ready to be ingested:

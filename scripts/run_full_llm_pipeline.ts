@@ -6,7 +6,7 @@
 
 import 'dotenv/config';
 import { spawn } from 'child_process';
-import { writeFileSync, mkdirSync, existsSync } from 'fs';
+import { writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 import { getDbPool, closeDbPool } from '../backend/db/connection';
 import { createLLMProviderFromEnv, LLMProvider } from '../backend/services/llm_service';
@@ -15,7 +15,8 @@ import { processEmbeddingQueue, getEmbeddingStats } from '../backend/services/em
 import { 
   detectAndStoreOpportunitiesWithEmbeddings,
   getOpportunitiesWithScores,
-  getRoadmapSummary
+  getRoadmapSummary,
+  mergeRelatedOpportunities
 } from '../backend/services/opportunity_service';
 import { runDeduplicationPass } from '../backend/services/deduplication_service';
 import { 
@@ -25,10 +26,12 @@ import {
   JiraIssueTemplate
 } from '../backend/services/jira_issue_service';
 import { logger } from '../backend/utils/logger';
+import { getRunMetrics } from '../backend/utils/run_metrics';
 
 // Configuration
 const OUTPUT_DIR = join(process.cwd(), 'output');
 const TIMESTAMP = new Date().toISOString().replace(/[:.]/g, '-');
+const PIPELINE_SIGNAL_SOURCE = process.env.PIPELINE_SIGNAL_SOURCE;
 
 interface PipelineStage {
   name: string;
@@ -77,6 +80,7 @@ class LLMPipeline {
       'embeddings',
       'deduplication',
       'clustering',
+      'opportunity_merge',
       'jira_generation',
       'export'
     ];
@@ -333,11 +337,15 @@ class LLMPipeline {
       const result = await detectAndStoreOpportunitiesWithEmbeddings({
         similarityThreshold: 0.7,
         minClusterSize: 2,
-        useHybrid: true
+        useHybrid: true,
+        signalSource: PIPELINE_SIGNAL_SOURCE
       });
       
       // Get opportunity scores
-      const scoredOpportunities = await getOpportunitiesWithScores();
+      const scoredOpportunities = await getOpportunitiesWithScores({}, {
+        signalSource: PIPELINE_SIGNAL_SOURCE,
+        requireExclusiveSource: Boolean(PIPELINE_SIGNAL_SOURCE)
+      });
       
       const stats = {
         newOpportunities: result.newOpportunities.length,
@@ -363,16 +371,41 @@ class LLMPipeline {
           }
         : { min: 0, max: 0, avg: 0 };
 
+      const customerCoverageQuery = PIPELINE_SIGNAL_SOURCE
+        ? `
+          SELECT COUNT(DISTINCT se.entity_id) as count
+          FROM opportunity_signals os
+          JOIN signal_entities se ON se.signal_id = os.signal_id
+          JOIN signals s ON s.id = os.signal_id
+          WHERE se.entity_type = 'customer' AND s.source = $1
+        `
+        : `
+          SELECT COUNT(DISTINCT se.entity_id) as count
+          FROM opportunity_signals os
+          JOIN signal_entities se ON se.signal_id = os.signal_id
+          WHERE se.entity_type = 'customer'
+        `;
+      const themeCoverageQuery = PIPELINE_SIGNAL_SOURCE
+        ? `
+          SELECT COUNT(DISTINCT sth.theme_id) as count
+          FROM opportunity_signals os
+          JOIN signal_theme_hierarchy sth ON sth.signal_id = os.signal_id
+          JOIN signals s ON s.id = os.signal_id
+          WHERE s.source = $1
+        `
+        : `
+          SELECT COUNT(DISTINCT sth.theme_id) as count
+          FROM opportunity_signals os
+          JOIN signal_theme_hierarchy sth ON sth.signal_id = os.signal_id
+        `;
+
       const customerCoverageResult = await pool.query(
-        `SELECT COUNT(DISTINCT se.entity_id) as count
-         FROM opportunity_signals os
-         JOIN signal_entities se ON se.signal_id = os.signal_id
-         WHERE se.entity_type = 'customer'`
+        customerCoverageQuery,
+        PIPELINE_SIGNAL_SOURCE ? [PIPELINE_SIGNAL_SOURCE] : []
       );
       const themeCoverageResult = await pool.query(
-        `SELECT COUNT(DISTINCT sth.theme_id) as count
-         FROM opportunity_signals os
-         JOIN signal_theme_hierarchy sth ON sth.signal_id = os.signal_id`
+        themeCoverageQuery,
+        PIPELINE_SIGNAL_SOURCE ? [PIPELINE_SIGNAL_SOURCE] : []
       );
 
       console.log(`   ✓ Score distribution: min=${scoreStats.min}, avg=${scoreStats.avg}, max=${scoreStats.max}`);
@@ -394,6 +427,27 @@ class LLMPipeline {
     }
   }
 
+  async runOpportunityMerge(): Promise<void> {
+    this.updateStage('opportunity_merge', { status: 'running', startTime: new Date() });
+    this.printStageHeader('Opportunity Merge');
+    try {
+      const merged = await mergeRelatedOpportunities(0.5);
+      console.log(`   ✓ Merged ${merged} overlapping opportunities`);
+      this.updateStage('opportunity_merge', {
+        status: 'completed',
+        endTime: new Date(),
+        result: { merged }
+      });
+    } catch (error: any) {
+      this.updateStage('opportunity_merge', {
+        status: 'failed',
+        endTime: new Date(),
+        error: error.message
+      });
+      console.log(`   ⚠ Opportunity merge failed: ${error.message}`);
+    }
+  }
+
   async runJiraGeneration(): Promise<JiraIssueTemplate[]> {
     if (this.config.skipJiraGeneration) {
       this.updateStage('jira_generation', { status: 'skipped' });
@@ -407,7 +461,14 @@ class LLMPipeline {
     try {
       console.log(`   Generating JIRA issues for top ${this.config.maxJiraIssues} opportunities...`);
       
-      const issues = await generateJiraIssuesForTopOpportunities(this.config.maxJiraIssues);
+      const issues = await generateJiraIssuesForTopOpportunities(
+        this.config.maxJiraIssues,
+        {},
+        {
+          signalSource: PIPELINE_SIGNAL_SOURCE,
+          requireExclusiveSource: Boolean(PIPELINE_SIGNAL_SOURCE)
+        }
+      );
       
       // Store templates
       for (const issue of issues) {
@@ -461,31 +522,59 @@ class LLMPipeline {
       }
       
       // Export roadmap summary
-      const summary = await getRoadmapSummary();
+      const summary = await getRoadmapSummary({}, {
+        signalSource: PIPELINE_SIGNAL_SOURCE,
+        requireExclusiveSource: Boolean(PIPELINE_SIGNAL_SOURCE)
+      });
       const summaryPath = join(this.config.outputDir!, `roadmap_summary_${TIMESTAMP}.json`);
       writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
       console.log(`   ✓ Exported roadmap summary to: ${summaryPath}`);
       
       // Export opportunities
-      const oppsResult = await pool.query(`
-        SELECT o.*, COUNT(os.signal_id) as signal_count
-        FROM opportunities o
-        LEFT JOIN opportunity_signals os ON o.id = os.opportunity_id
-        GROUP BY o.id
-        ORDER BY o.created_at DESC
-      `);
+      const oppsResult = PIPELINE_SIGNAL_SOURCE
+        ? await pool.query(
+            `
+              SELECT o.*, COUNT(os.signal_id) as signal_count
+              FROM opportunities o
+              JOIN opportunity_signals os ON o.id = os.opportunity_id
+              JOIN signals s ON s.id = os.signal_id
+              GROUP BY o.id
+              HAVING SUM(CASE WHEN s.source = $1 THEN 1 ELSE 0 END) = COUNT(*)
+              ORDER BY o.created_at DESC
+            `,
+            [PIPELINE_SIGNAL_SOURCE]
+          )
+        : await pool.query(`
+            SELECT o.*, COUNT(os.signal_id) as signal_count
+            FROM opportunities o
+            LEFT JOIN opportunity_signals os ON o.id = os.opportunity_id
+            GROUP BY o.id
+            ORDER BY o.created_at DESC
+          `);
       const oppsPath = join(this.config.outputDir!, `opportunities_${TIMESTAMP}.json`);
       writeFileSync(oppsPath, JSON.stringify(oppsResult.rows, null, 2));
       console.log(`   ✓ Exported ${oppsResult.rows.length} opportunities to: ${oppsPath}`);
       
       // Export signal extractions sample
-      const extractionsResult = await pool.query(`
-        SELECT se.*, s.content as signal_content
-        FROM signal_extractions se
-        JOIN signals s ON s.id = se.signal_id
-        ORDER BY se.created_at DESC
-        LIMIT 50
-      `);
+      const extractionsResult = PIPELINE_SIGNAL_SOURCE
+        ? await pool.query(
+            `
+              SELECT se.*, s.content as signal_content
+              FROM signal_extractions se
+              JOIN signals s ON s.id = se.signal_id
+              WHERE s.source = $1
+              ORDER BY se.created_at DESC
+              LIMIT 50
+            `,
+            [PIPELINE_SIGNAL_SOURCE]
+          )
+        : await pool.query(`
+            SELECT se.*, s.content as signal_content
+            FROM signal_extractions se
+            JOIN signals s ON s.id = se.signal_id
+            ORDER BY se.created_at DESC
+            LIMIT 50
+          `);
       const extractionsPath = join(this.config.outputDir!, `llm_extractions_sample_${TIMESTAMP}.json`);
       writeFileSync(extractionsPath, JSON.stringify(extractionsResult.rows, null, 2));
       console.log(`   ✓ Exported ${extractionsResult.rows.length} LLM extraction samples`);
@@ -495,6 +584,7 @@ class LLMPipeline {
       const reportPath = join(this.config.outputDir!, `pipeline_report_${TIMESTAMP}.md`);
       writeFileSync(reportPath, report);
       console.log(`   ✓ Generated pipeline report: ${reportPath}`);
+      getRunMetrics().exportToFile(join(this.config.outputDir!, 'run_metrics.json'));
       
       this.updateStage('export', { 
         status: 'completed', 
@@ -512,6 +602,98 @@ class LLMPipeline {
       });
       throw error;
     }
+  }
+
+  async writeReadinessSummary(): Promise<void> {
+    const pool = getDbPool();
+    const stageList = Array.from(this.stages.values());
+    const failedStages = stageList.filter((stage) => stage.status === 'failed').map((stage) => stage.name);
+    const completedStages = stageList.filter((stage) => stage.status === 'completed').map((stage) => stage.name);
+    const outputDir = this.config.outputDir!;
+
+    const counts = await pool.query(`
+      SELECT
+        (SELECT COUNT(*)::int FROM signals) AS signals,
+        (SELECT COUNT(*)::int FROM signal_extractions) AS extractions,
+        (SELECT COUNT(*)::int FROM entity_registry) AS entities,
+        (SELECT COUNT(*)::int FROM opportunities) AS opportunities,
+        (SELECT COUNT(*)::int FROM jira_issue_templates) AS jira_templates,
+        (SELECT COUNT(*)::int FROM failed_signal_attempts WHERE status = 'pending') AS remaining_failed,
+        (SELECT COUNT(*)::int FROM failed_signal_attempts) AS total_failed,
+        (SELECT COUNT(*)::int FROM failed_signal_attempts WHERE status = 'recovered') AS replay_recovered
+    `);
+    const row = counts.rows[0];
+    const providerSummary = {
+      llm_provider: process.env.LLM_PROVIDER || 'mock',
+      embedding_provider: process.env.EMBEDDING_PROVIDER || 'mock',
+      zero_mock: (process.env.LLM_PROVIDER || '').toLowerCase() !== 'mock' &&
+        (process.env.EMBEDDING_PROVIDER || '').toLowerCase() !== 'mock'
+    };
+
+    const files = existsSync(outputDir)
+      ? readdirSync(outputDir).map((file) => {
+          const filePath = join(outputDir, file);
+          return { file, size_bytes: statSync(filePath).size };
+        })
+      : [];
+    const allStagesHealthy = failedStages.length === 0;
+    const pass =
+      allStagesHealthy &&
+      row.signals > 0 &&
+      row.extractions > 0 &&
+      row.opportunities > 0 &&
+      row.jira_templates > 0 &&
+      providerSummary.zero_mock;
+    const status = pass ? 'PASS' : allStagesHealthy ? 'PARTIAL' : 'FAIL';
+
+    const readiness = {
+      status,
+      started_at: this.startTime.toISOString(),
+      completed_at: new Date().toISOString(),
+      total_duration_seconds: Math.round((Date.now() - this.startTime.getTime()) / 1000),
+      stages: stageList.map((stage) => ({
+        name: stage.name,
+        status: stage.status,
+        error: stage.error || null
+      })),
+      stage_summary: {
+        completed: completedStages,
+        failed: failedStages
+      },
+      counts: row,
+      provider_summary: providerSummary,
+      run_metrics: getRunMetrics().snapshot(),
+      artifacts: files
+    };
+
+    writeFileSync(join(outputDir, 'READINESS_SUMMARY.json'), JSON.stringify(readiness, null, 2));
+    const markdown = [
+      `# Readiness Summary`,
+      ``,
+      `Status: **${status}**`,
+      ``,
+      `## Stage Health`,
+      ...stageList.map((stage) => `- ${stage.name}: ${stage.status}${stage.error ? ` (${stage.error})` : ''}`),
+      ``,
+      `## Counts`,
+      `- Signals: ${row.signals}`,
+      `- Extractions: ${row.extractions}`,
+      `- Entities: ${row.entities}`,
+      `- Opportunities: ${row.opportunities}`,
+      `- JIRA templates: ${row.jira_templates}`,
+      `- Failed total: ${row.total_failed}`,
+      `- Failed remaining: ${row.remaining_failed}`,
+      `- Replay recovered: ${row.replay_recovered}`,
+      ``,
+      `## Provider Check`,
+      `- LLM provider: ${providerSummary.llm_provider}`,
+      `- Embedding provider: ${providerSummary.embedding_provider}`,
+      `- Zero mock: ${providerSummary.zero_mock ? 'yes' : 'no'}`,
+      ``,
+      `## Artifacts`,
+      ...files.map((entry) => `- ${entry.file} (${entry.size_bytes} bytes)`)
+    ].join('\n');
+    writeFileSync(join(outputDir, 'READINESS_SUMMARY.md'), markdown);
   }
 
   private generatePipelineReport(jiraIssues: JiraIssueTemplate[], summary: any): string {
@@ -619,8 +801,10 @@ ${issue.acceptanceCriteria.map(ac => `- ${ac}`).join('\n')}
       await this.runEmbeddings();
       await this.runDeduplication();
       await this.runClustering();
+      await this.runOpportunityMerge();
       const jiraIssues = await this.runJiraGeneration();
       await this.runExport(jiraIssues);
+      await this.writeReadinessSummary();
       
       this.printSummary();
       

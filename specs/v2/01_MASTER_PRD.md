@@ -10,7 +10,7 @@
 
 ## 1. Executive Summary
 
-The PM Intelligence System V2 evolves from a Slack-only signal processing pipeline into a **persistent, continuously-updated Knowledge Graph** that ingests heterogeneous data sources, performs high-quality entity resolution, and exposes PM intelligence as MCP tools consumable by Claude Code, Claude Cowork, Cursor, or any MCP-compatible host.
+The PM Intelligence System V2 evolves from a Slack-only signal processing pipeline into a **persistent, continuously-updated Knowledge Graph** that ingests heterogeneous data sources, performs high-quality entity resolution, and exposes PM intelligence via ChatGPT Enterprise Actions, a Web UI, and MCP tools (Claude Code/Cowork or any MCP-compatible host).
 
 **One-line vision:** A PM's entire product context — customers, features, issues, themes, decisions, competitive intel — unified in a queryable knowledge graph that any AI agent can leverage to do real work.
 
@@ -43,7 +43,7 @@ V2 extends V1 with:
 1. **Multi-source ingestion** — Meeting transcripts, documents (PPT/Word/Excel/PDF), external crawler output, JIRA/Wiki (via MCP, TBD)
 2. **Knowledge Graph** — Neo4j-based entity-relationship graph enabling multi-hop queries
 3. **Entity Resolution Engine** — The core differentiator. High-quality, continuously-improving entity matching with human feedback loops
-4. **MCP Server** — Expose all intelligence as MCP tools for Claude Code/Cowork
+4. **Agent Gateway + MCP Server** — Expose intelligence via ChatGPT Actions (OpenAPI) and MCP tools
 5. **Feedback Loops** — PM corrections flow back to improve extraction and resolution quality
 6. **Provenance Tracking** — Every insight traces back to source signals
 
@@ -57,7 +57,7 @@ V2 extends V1 with:
 |---|------|-------------------|
 | G1 | Unify PM context across all sources into a single queryable knowledge graph | 4+ source types ingested; all entities resolved to canonical forms |
 | G2 | Achieve high-quality entity resolution that improves over time | >85% auto-resolution accuracy within 30 days; >92% within 90 days |
-| G3 | Enable PMs to query their entire product context via Claude Code/Cowork | 12+ MCP tools exposed; <5s response time for common queries |
+| G3 | Enable PMs to query their entire product context via ChatGPT Actions, UI, or Claude | <5s response time for common queries |
 | G4 | Reduce PM synthesis time by 50%+ | Measure time-to-first-insight before/after |
 | G5 | Build trust through provenance and confidence scoring | Every insight has a source chain and calibrated confidence score |
 | G6 | Continuously improve through human feedback | PM corrections reduce ambiguous entity reviews by 50% within 60 days |
@@ -66,7 +66,7 @@ V2 extends V1 with:
 
 | # | Non-Goal | Reason |
 |---|----------|--------|
-| NG1 | Building a custom UI/dashboard | MCP + Claude Code/Cowork is our interaction surface. Revisit in V3. |
+| NG1 | Large, bespoke UI rebuild | We ship a lightweight UI in V2; full workflow UI can be expanded later. |
 | NG2 | General-purpose agent platform (a la OpenAI Frontier) | We build a PM-specific knowledge system, not an agent runtime. |
 | NG3 | Real-time streaming ingestion | Batch/on-demand ingestion is sufficient for V2. |
 | NG4 | Multi-PM/multi-tenant support | Single-PM deployment for V2. Multi-tenant in V3. |
@@ -83,7 +83,7 @@ V2 extends V1 with:
 
 **Profile:** Individual contributor PM responsible for one or more product areas. Uses the system daily to stay on top of customer signals, prioritize work, and generate artifacts.
 
-**Interface:** Claude Code or Claude Cowork (MCP tools)
+**Interface:** ChatGPT Actions, Web UI, or Claude Code/Cowork (MCP tools)
 
 **Key needs:**
 - Quickly answer customer impact questions ("Which customers are affected by auth timeout?")
@@ -118,7 +118,7 @@ V2 extends V1 with:
 
 **Profile:** Manages a team of PMs. Responsible for portfolio-level decisions: roadmap prioritization, resource allocation, strategic direction. Queries the system weekly or for specific strategic analyses, not daily operations.
 
-**Interface:** Claude Code or Claude Cowork (same MCP tools, different query patterns)
+**Interface:** ChatGPT Actions, Web UI, or Claude Code/Cowork (same tools, different query patterns)
 
 **Key needs:**
 - Aggregate views: heatmaps of issues across ALL product areas, not just one
@@ -151,7 +151,7 @@ V2 extends V1 with:
 
 **Profile:** A PM who just joined the team or is taking over a product area. Has zero institutional context. The knowledge graph's biggest value proposition is making this person productive in days instead of weeks.
 
-**Interface:** Claude Code or Claude Cowork (same tools, but heavier use of exploration and "teach me" patterns)
+**Interface:** ChatGPT Actions, Web UI, or Claude Code/Cowork (same tools, but heavier use of exploration and "teach me" patterns)
 
 **Key needs:**
 - Rapid context absorption: "Tell me everything about my product area"
@@ -210,7 +210,7 @@ V2 extends V1 with:
 
 | Aspect | Design |
 |--------|--------|
-| Interface | A2A Agent + optional lightweight web UI (V3) |
+| Interface | A2A Agent + Agent Gateway + Web UI (V2) |
 | Authentication | Separate API key per stakeholder team (scoped to their product area) |
 | Permissions | Read-only: customer profiles, issue status, roadmap items, heatmaps |
 | Cannot do | Ingest signals, modify entities, generate artifacts, access raw signals |
@@ -303,7 +303,7 @@ Autonomous agents **cannot directly modify the knowledge graph's entity structur
 
 | ID | Story | Acceptance Criteria |
 |----|-------|---------------------|
-| US-Q1 | As a PM, I can ask "Which customers are using Feature X?" via Claude Code | MCP tool returns customer list with usage evidence from knowledge graph |
+| US-Q1 | As a PM, I can ask "Which customers are using Feature X?" via ChatGPT, UI, or Claude | Tool returns customer list with usage evidence from knowledge graph |
 | US-Q2 | As a PM, I can ask "How many customers face Issue Y?" | Graph query returns count, list, severity breakdown, with provenance |
 | US-Q3 | As a PM, I can get a heatmap of top issues by feature area | Structured heatmap data returned, aggregated from knowledge graph |
 | US-Q4 | As a PM, I can trace any insight back to source signals | Provenance chain: insight → opportunities → signals → raw source |
@@ -313,7 +313,7 @@ Autonomous agents **cannot directly modify the knowledge graph's entity structur
 
 | ID | Story | Acceptance Criteria |
 |----|-------|---------------------|
-| US-E1 | As a PM, I can review ambiguous entity matches via Claude Code | Pending review queue returned via MCP, with context and confidence |
+| US-E1 | As a PM, I can review ambiguous entity matches via ChatGPT, UI, or Claude | Pending review queue returned with context and confidence |
 | US-E2 | As a PM, I can confirm or reject entity merges | Accept/reject updates entity registry, alias table, and knowledge graph |
 | US-E3 | As a PM, I can add manual aliases to entities | "Auth" should also match "Authentication" — manually add alias |
 | US-E4 | As a PM, I can split a wrongly merged entity | Undo merge, create separate entities, re-link signals |
@@ -460,7 +460,7 @@ See [08_DATA_CONTRACTS.md](./08_DATA_CONTRACTS.md) for full contracts. Key V2 ad
 See [02_ARCHITECTURE.md](./02_ARCHITECTURE.md) for full architecture. Summary:
 
 ```
-Consumption Plane  →  Claude Code / Cowork via MCP Server
+Consumption Plane  →  ChatGPT Actions / Web UI / Claude MCP
 Intelligence Plane →  Query Engine, Insight Generator, Trend Analysis, Heatmaps
 Knowledge Plane    →  Neo4j (graph) + pgvector (embeddings) + PostgreSQL (structured)
 Resolution Plane   →  Entity Resolution, Alias Management, Canonical Registry, Feedback

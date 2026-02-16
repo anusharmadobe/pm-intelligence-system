@@ -188,17 +188,18 @@ async function createOpportunityFromCluster(cluster: Signal[]): Promise<Opportun
         const extraction = typeof row.extraction === 'string'
           ? JSON.parse(row.extraction)
           : row.extraction;
-        (extraction?.customers || []).forEach((c: { name?: string }) => {
-          if (c?.name) allCustomers.add(c.name);
+        const entities = extraction?.entities || {};
+        (entities.customers || []).forEach((c: string) => {
+          if (c) allCustomers.add(c);
         });
-        (extraction?.features || []).forEach((f: { name?: string }) => {
-          if (f?.name) allTopics.add(f.name);
+        (entities.features || []).forEach((f: string) => {
+          if (f) allTopics.add(f);
         });
-        (extraction?.issues || []).forEach((i: { title?: string }) => {
-          if (i?.title) allTopics.add(i.title);
+        (entities.issues || []).forEach((i: string) => {
+          if (i) allTopics.add(i);
         });
-        (extraction?.themes || []).forEach((t: { name?: string }) => {
-          if (t?.name) allTopics.add(t.name);
+        (entities.themes || []).forEach((t: string) => {
+          if (t) allTopics.add(t);
         });
       } catch (error) {
         logger.debug('Failed to parse signal extraction for title enrichment', { error });
@@ -304,14 +305,20 @@ export async function storeOpportunity(opportunity: Opportunity, signalIds: stri
 /**
  * Gets signals that are not yet linked to any opportunity.
  */
-export async function getUnlinkedSignals(): Promise<Signal[]> {
+export async function getUnlinkedSignals(sourceFilter?: string): Promise<Signal[]> {
   const pool = getDbPool();
-  const result = await pool.query(
-    `SELECT s.* FROM signals s
-     LEFT JOIN opportunity_signals os ON s.id = os.signal_id
-     WHERE os.signal_id IS NULL AND s.is_duplicate_of IS NULL
-     ORDER BY s.created_at DESC`
-  );
+  let query = `
+    SELECT s.* FROM signals s
+    LEFT JOIN opportunity_signals os ON s.id = os.signal_id
+    WHERE os.signal_id IS NULL AND s.is_duplicate_of IS NULL
+  `;
+  const params: Array<string> = [];
+  if (sourceFilter) {
+    params.push(sourceFilter);
+    query += ` AND s.source = $${params.length}`;
+  }
+  query += ' ORDER BY s.created_at DESC';
+  const result = await pool.query(query, params);
   return result.rows.map(row => ({
     ...row,
     metadata: row.metadata ? (typeof row.metadata === 'string' ? JSON.parse(row.metadata) : row.metadata) : null,
@@ -503,6 +510,8 @@ export interface OpportunityQueryOptions {
   offset?: number;
   orderBy?: 'created_at' | 'title';
   orderDirection?: 'ASC' | 'DESC';
+  signalSource?: string;
+  requireExclusiveSource?: boolean;
 }
 
 /**
@@ -991,12 +1000,10 @@ async function estimateEffortScore(signals: Signal[], themes: string[]): Promise
         const extraction = typeof row.extraction === 'string'
           ? JSON.parse(row.extraction)
           : row.extraction;
-        featureCount += Array.isArray(extraction?.features) ? extraction.features.length : 0;
-        if (Array.isArray(extraction?.issues)) {
-          issueCount += extraction.issues.length;
-          highSeverityIssues += extraction.issues.filter((issue: { severity?: number }) =>
-            typeof issue?.severity === 'number' && issue.severity >= 4
-          ).length;
+        const entities = extraction?.entities || {};
+        featureCount += Array.isArray(entities?.features) ? entities.features.length : 0;
+        if (Array.isArray(entities?.issues)) {
+          issueCount += entities.issues.length;
         }
       } catch (error) {
         logger.debug('Failed to parse extraction for effort scoring', { error });
@@ -1199,17 +1206,29 @@ export async function getOpportunitiesWithScores(
 ): Promise<ScoredOpportunity[]> {
   const opportunities = await getOpportunities(queryOptions);
   const scoredOpportunities: ScoredOpportunity[] = [];
+  const { signalSource, requireExclusiveSource = false } = queryOptions;
   
   for (const opp of opportunities) {
     const signals = await getSignalsForOpportunity(opp.id);
-    const roadmapScore = await calculateRoadmapScore(opp, signals, config);
-    const customers = await extractUniqueCustomers(signals);
-    const themes = extractUniqueThemes(signals);
+    const filteredSignals = signalSource
+      ? signals.filter(signal => signal.source === signalSource)
+      : signals;
+
+    if (filteredSignals.length === 0) {
+      continue;
+    }
+    if (signalSource && requireExclusiveSource && filteredSignals.length !== signals.length) {
+      continue;
+    }
+
+    const roadmapScore = await calculateRoadmapScore(opp, filteredSignals, config);
+    const customers = await extractUniqueCustomers(filteredSignals);
+    const themes = extractUniqueThemes(filteredSignals);
     
     scoredOpportunities.push({
       ...opp,
       roadmapScore,
-      signals,
+      signals: filteredSignals,
       themes,
       customers
     });
@@ -1224,9 +1243,10 @@ export async function getOpportunitiesWithScores(
  */
 export async function getPrioritizedOpportunities(
   config: Partial<RoadmapScoringConfig> = {},
-  limit: number = 20
+  limit: number = 20,
+  queryOptions: OpportunityQueryOptions = {}
 ): Promise<ScoredOpportunity[]> {
-  const scoredOpportunities = await getOpportunitiesWithScores(config);
+  const scoredOpportunities = await getOpportunitiesWithScores(config, queryOptions);
   
   return scoredOpportunities
     .sort((a, b) => b.roadmapScore.overallScore - a.roadmapScore.overallScore)
@@ -1237,9 +1257,10 @@ export async function getPrioritizedOpportunities(
  * Gets quick-win opportunities (high impact, low effort)
  */
 export async function getQuickWinOpportunities(
-  limit: number = 10
+  limit: number = 10,
+  queryOptions: OpportunityQueryOptions = {}
 ): Promise<ScoredOpportunity[]> {
-  const scoredOpportunities = await getOpportunitiesWithScores();
+  const scoredOpportunities = await getOpportunitiesWithScores({}, queryOptions);
   
   // Quick wins: high impact + high effort score (low effort)
   return scoredOpportunities
@@ -1257,14 +1278,15 @@ export async function getQuickWinOpportunities(
  */
 export async function getStrategicOpportunities(
   priorities: string[],
-  limit: number = 10
+  limit: number = 10,
+  queryOptions: OpportunityQueryOptions = {}
 ): Promise<ScoredOpportunity[]> {
   const config: Partial<RoadmapScoringConfig> = {
     strategicPriorities: priorities,
     strategicWeight: 0.40  // Boost strategic weight
   };
   
-  const scoredOpportunities = await getOpportunitiesWithScores(config);
+  const scoredOpportunities = await getOpportunitiesWithScores(config, queryOptions);
   
   return scoredOpportunities
     .filter(opp => opp.roadmapScore.strategicScore >= 50)
@@ -1276,9 +1298,10 @@ export async function getStrategicOpportunities(
  * Gets emerging opportunities (trending up)
  */
 export async function getEmergingOpportunities(
-  limit: number = 10
+  limit: number = 10,
+  queryOptions: OpportunityQueryOptions = {}
 ): Promise<ScoredOpportunity[]> {
-  const scoredOpportunities = await getOpportunitiesWithScores();
+  const scoredOpportunities = await getOpportunitiesWithScores({}, queryOptions);
   
   return scoredOpportunities
     .filter(opp => 
@@ -1294,9 +1317,10 @@ export async function getEmergingOpportunities(
  */
 export async function getHighConfidenceOpportunities(
   minConfidence: number = 70,
-  limit: number = 10
+  limit: number = 10,
+  queryOptions: OpportunityQueryOptions = {}
 ): Promise<ScoredOpportunity[]> {
-  const scoredOpportunities = await getOpportunitiesWithScores();
+  const scoredOpportunities = await getOpportunitiesWithScores({}, queryOptions);
   
   return scoredOpportunities
     .filter(opp => opp.roadmapScore.confidenceScore >= minConfidence)
@@ -1308,7 +1332,8 @@ export async function getHighConfidenceOpportunities(
  * Gets roadmap summary for dashboard
  */
 export async function getRoadmapSummary(
-  config: Partial<RoadmapScoringConfig> = {}
+  config: Partial<RoadmapScoringConfig> = {},
+  queryOptions: OpportunityQueryOptions = {}
 ): Promise<{
   totalOpportunities: number;
   topPriorities: ScoredOpportunity[];
@@ -1324,7 +1349,7 @@ export async function getRoadmapSummary(
     urgency: number;
   };
 }> {
-  const scoredOpportunities = await getOpportunitiesWithScores(config);
+  const scoredOpportunities = await getOpportunitiesWithScores(config, queryOptions);
   
   const byImpact = {
     high: scoredOpportunities.filter(o => o.roadmapScore.impactScore >= 70).length,
@@ -1424,7 +1449,7 @@ const DEFAULT_EMBEDDING_CLUSTER_CONFIG: EmbeddingClusterConfig = {
   minClusterSize: 2,
   embeddingWeight: 0.7, // Prioritize embeddings
   useHybrid: true,
-  minAverageQuality: 0.35,
+  minAverageQuality: 0.5,
   overlapMergeThreshold: 0.5
 };
 
@@ -1765,15 +1790,16 @@ export async function findSimilarSignalsByEmbedding(
  * Detects and stores opportunities incrementally using embeddings
  */
 export async function detectAndStoreOpportunitiesWithEmbeddings(
-  config: Partial<EmbeddingClusterConfig> = {}
+  config: (Partial<EmbeddingClusterConfig> & { signalSource?: string }) = {}
 ): Promise<{
   newOpportunities: Opportunity[];
   signalsProcessed: number;
 }> {
-  const finalConfig = { ...DEFAULT_EMBEDDING_CLUSTER_CONFIG, ...config };
+  const { signalSource, ...clusterConfig } = config;
+  const finalConfig = { ...DEFAULT_EMBEDDING_CLUSTER_CONFIG, ...clusterConfig };
   
   // Get unlinked signals with embeddings
-  const unlinkedSignals = await getUnlinkedSignals();
+  const unlinkedSignals = await getUnlinkedSignals(signalSource);
   const signalIds = unlinkedSignals.map(s => s.id);
   
   if (signalIds.length === 0) {
@@ -1782,7 +1808,32 @@ export async function detectAndStoreOpportunitiesWithEmbeddings(
   
   // Get signals with embeddings
   const signalsWithEmbeddings = await getSignalsWithEmbeddings(signalIds);
-  const eligibleSignals = signalsWithEmbeddings.filter(signal => signal.embedding);
+  const pool = getDbPool();
+  const extractionDensityResult = await pool.query(
+    `
+      SELECT signal_id,
+        (
+          COALESCE(jsonb_array_length(extraction->'entities'->'customers'), 0) +
+          COALESCE(jsonb_array_length(extraction->'entities'->'features'), 0) +
+          COALESCE(jsonb_array_length(extraction->'entities'->'issues'), 0) +
+          COALESCE(jsonb_array_length(extraction->'entities'->'themes'), 0) +
+          COALESCE(jsonb_array_length(extraction->'entities'->'stakeholders'), 0)
+        )::int AS entity_count
+      FROM signal_extractions
+      WHERE signal_id = ANY($1)
+    `,
+    [signalIds]
+  );
+  const extractionDensity = new Map<string, number>();
+  extractionDensityResult.rows.forEach((row) => {
+    extractionDensity.set(row.signal_id, Number(row.entity_count) || 0);
+  });
+  const eligibleSignals = signalsWithEmbeddings.filter(
+    (signal) =>
+      Boolean(signal.embedding) &&
+      signal.content.length >= 80 &&
+      (extractionDensity.get(signal.id) || 0) > 0
+  );
   
   if (eligibleSignals.length === 0) {
     return { newOpportunities: [], signalsProcessed: 0 };

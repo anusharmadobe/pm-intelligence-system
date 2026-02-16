@@ -2,7 +2,7 @@
 
 > **For:** Engineers building, maintaining, or extending the system
 > **Version:** 1.0
-> **Last Updated:** 2026-02-09
+> **Last Updated:** 2026-02-11
 
 ---
 
@@ -22,6 +22,7 @@
 12. [Feature Flags](#12-feature-flags)
 13. [Database Migrations](#13-database-migrations)
 14. [Deployment](#14-deployment)
+15. [ChatGPT Enterprise Integration](#15-chatgpt-enterprise-integration)
 
 ---
 
@@ -33,7 +34,7 @@ PM Intelligence is a 7-plane system that ingests heterogeneous data, resolves en
 CONSUMPTION PLANE
   ├─ MCP Server (Claude Code / Cowork)     — 35 tools, human-facing
   ├─ A2A Server (external AI agents)       — 8 skills, agent-to-agent
-  └─ Agent Gateway (REST, simple agents)   — JSON API, API key auth
+  └─ Agent Gateway (REST + ChatGPT Actions) — JSON API, API key auth
 
 INTELLIGENCE PLANE
   └─ Query engine, heatmaps, trends, artifacts, reports
@@ -43,7 +44,7 @@ KNOWLEDGE PLANE
   └─ PostgreSQL + pgvector (source of truth, embeddings)
 
 ENTITY RESOLUTION PLANE
-  └─ pyJedAI + LLM matching + human feedback (Python microservice)
+  └─ TypeScript resolver + semantic embeddings + human feedback
 
 EXTRACTION PLANE
   └─ Two-pass LLM extraction (GPT-4o-mini → GPT-4o)
@@ -98,10 +99,15 @@ docker compose up -d
 docker compose ps  # All should show "healthy"
 
 # 6. Run database migrations
-npm run db:migrate
+npm run migrate
 
 # 7. Start the application
 npm run dev
+
+# UI is served at http://localhost:3000/ui
+
+# 8. (Optional) Start MCP server for Claude
+npx ts-node backend/mcp/server.ts
 ```
 
 ### 2.3 Required Environment Variables
@@ -119,6 +125,32 @@ NEO4J_PASSWORD=your_neo4j_password
 
 # Redis
 REDIS_URL=redis://localhost:6379
+REDIS_PASSWORD=your_redis_password
+
+# Agent Gateway + A2A
+FF_AGENT_GATEWAY=true
+FF_A2A_SERVER=true
+FF_EVENT_BUS=true
+START_EVENT_DISPATCHER=true
+START_CLEANUP_JOBS=true
+START_INGESTION_SCHEDULER=false
+INGESTION_SCHEDULER_INTERVAL_MINUTES=60
+AGENT_REGISTRATION_SECRET=your_registration_secret
+
+# CORS
+CORS_ORIGIN=*
+
+# MCP Server
+MCP_BIND_HOST=127.0.0.1
+MCP_API_KEY=your_mcp_key
+
+# Python Services
+PYTHON_SERVICE_KEY=your_internal_key
+
+# Retention
+SIGNAL_RETENTION_DAYS=365
+METRICS_RETENTION_DAYS=30
+UPLOAD_RETENTION_HOURS=24
 
 # Azure OpenAI (existing keys)
 AZURE_OPENAI_API_KEY=your_key
@@ -126,10 +158,29 @@ AZURE_OPENAI_ENDPOINT=https://your-instance.openai.azure.com
 AZURE_OPENAI_DEPLOYMENT=gpt-4o
 AZURE_OPENAI_FAST_DEPLOYMENT=gpt-4o-mini
 AZURE_OPENAI_EMBEDDING_DEPLOYMENT=your_embedding_deployment
+AZURE_REQUEST_TIMEOUT_MS=30000
+AZURE_RETRY_MAX_ATTEMPTS=4
+AZURE_RETRY_BASE_DELAY_MS=500
+AZURE_RETRY_MAX_DELAY_MS=10000
+
+# ChatGPT Enterprise (OpenAI-compatible, optional)
+LLM_PROVIDER=chatgpt_enterprise
+CHATGPT_ENTERPRISE_API_KEY=your_enterprise_key
+CHATGPT_ENTERPRISE_BASE_URL=https://your-enterprise-endpoint/v1
 
 # Slack
 SLACK_BOT_TOKEN=xoxb-your-token
 SLACK_CHANNEL_IDS=C04D195JVGS
+
+# Ingestion throughput/reliability
+INGESTION_CONCURRENCY=5
+INGESTION_BATCH_EXTRACTION=true
+LLM_EXTRACTION_BATCH_CONCURRENCY=5
+RATE_CTRL_MIN_CONCURRENCY=1
+RATE_CTRL_MAX_CONCURRENCY=20
+RATE_CTRL_INITIAL_CONCURRENCY=3
+RATE_CTRL_LATENCY_THRESHOLD_MS=4000
+RATE_CTRL_COOLDOWN_MS=3000
 ```
 
 **Full env catalog:** `specs/v2/11_THIRD_PARTY_TECH.md` §7
@@ -141,8 +192,7 @@ On boot, the system validates:
 2. PostgreSQL is reachable (runs `SELECT 1`)
 3. Neo4j is reachable (runs `RETURN 1`)
 4. Redis is reachable (runs `PING`)
-5. Python ER service is healthy (GET `/health` on `:5001`)
-6. Pending DB migrations are applied
+5. Pending DB migrations are applied
 
 If any check fails, the process logs the error and exits with code 1.
 
@@ -154,7 +204,6 @@ If any check fails, the process logs the error and exits with code 1.
 | MCP Server | 3001 | MCP (stdio or HTTP) |
 | A2A Server | 3000 | HTTP (`/a2a` path) |
 | Agent Gateway | 3000 | HTTP (`/api/agents/v1/` path) |
-| Entity Resolution (Python) | 5001 | HTTP |
 | Document Parser (Python) | 5002 | HTTP |
 | GraphRAG Indexer (Python) | 5003 | HTTP |
 | PostgreSQL | 5432 | PostgreSQL |
@@ -185,7 +234,6 @@ PM_cursor_system/
 │   ├── queues/           # BullMQ job definitions
 │   └── utils/            # Shared utilities, logging, correlation IDs
 ├── python/
-│   ├── entity_resolution/ # pyJedAI service (FastAPI)
 │   ├── document_parser/   # Unstructured.io service (FastAPI)
 │   └── graphrag_indexer/  # Microsoft GraphRAG service (FastAPI)
 ├── data/
@@ -225,10 +273,9 @@ docker compose up -d
 # Start TypeScript app (hot reload)
 npm run dev
 
-# Start Python services (in separate terminals)
-cd python/entity_resolution && uvicorn main:app --reload --port 5001
-cd python/document_parser && uvicorn main:app --reload --port 5002
-cd python/graphrag_indexer && uvicorn main:app --reload --port 5003
+# Start Python services (in separate terminals, from repo root)
+python -m uvicorn python.document_parser.main:app --reload --port 5002
+python -m uvicorn python.graphrag_indexer.main:app --reload --port 5003
 ```
 
 ### 4.2 Running Tests
@@ -240,30 +287,39 @@ npm test
 # Unit tests with coverage
 npm run test:coverage
 
-# Integration tests (requires Docker services)
-npm run test:integration
+# End-to-end tests (requires Docker services + API running)
+npm run test-e2e-v2
 
-# Python tests
-cd python/entity_resolution && pytest
+# Python tests (optional, if pytest configured)
 cd python/document_parser && pytest
-
-# Entity resolution benchmark (golden dataset)
-npm run test:benchmark:er
 ```
 
-### 4.3 Linting
+### 4.2.1 Agent Processes (Optional)
 
 ```bash
-npm run lint         # ESLint for TypeScript
-npm run lint:fix     # Auto-fix
+# Generate a scheduled report
+npm run agent:report-scheduler -- --report_type weekly_digest --time_window_days 7
+
+# Run data quality checks
+npm run agent:data-quality
+
+# Configure stakeholder access scope
+npm run agent:stakeholder-access -- --name "Exec Team" --scope '{"customers":["Acme Corp"]}'
+```
+
+### 4.3 Typechecking
+
+```bash
+npm run build        # TypeScript compile + typecheck
 ```
 
 ### 4.4 Database Operations
 
 ```bash
-npm run db:migrate        # Run pending migrations
-npm run db:migrate:status # Check migration status
-npm run db:seed           # Seed test data (dev only)
+npm run migrate           # Run pending migrations
+npm run setup-db-auto     # Create DB + apply migrations
+npm run seed              # Seed sample data (dev only)
+npm run seed-themes        # Seed theme taxonomy
 ```
 
 ---
@@ -389,11 +445,11 @@ The registration returns an API key (shown once).
 
 ```bash
 # Read entities
-curl -H "Authorization: Bearer $API_KEY" \
+curl -H "X-API-Key: $API_KEY" \
   http://localhost:3000/api/agents/v1/entities?type=customer
 
 # Subscribe to events (SSE)
-curl -H "Authorization: Bearer $API_KEY" \
+curl -H "X-API-Key: $API_KEY" \
   http://localhost:3000/api/agents/v1/events/stream
 ```
 
@@ -454,11 +510,7 @@ The entity resolution golden dataset (`test/fixtures/golden_entities/`) contains
 - Known entity pairs with expected merge/reject decisions
 - Ground truth for accuracy benchmarking
 - Must never regress below 85% accuracy across code changes
-
-```bash
-# Run ER benchmark
-npm run test:benchmark:er
-```
+ER benchmark automation is not wired yet. Use a custom script or notebook to compute accuracy against this dataset.
 
 ### 9.3 Test Data
 
@@ -506,6 +558,16 @@ ORDER BY created_at DESC;
 # Or check the pipeline status:
 SELECT * FROM signals WHERE id = '<signal_id>';
 SELECT * FROM signal_extractions WHERE signal_id = '<signal_id>';
+SELECT * FROM failed_signal_attempts WHERE signal_id = '<signal_id>';
+```
+
+**"How do I recover failed forum signals after a long run?"**
+```bash
+# Replay only failed signals that still have no extraction
+npx ts-node --transpile-only scripts/ingest_community_forums_v2.ts --replay-failures
+
+# Optional bounded replay
+npx ts-node --transpile-only scripts/ingest_community_forums_v2.ts --replay-failures --replay-limit=200
 ```
 
 **"Why is Neo4j out of sync?"**
@@ -526,7 +588,6 @@ npm run neo4j:sync
 curl http://localhost:3000/api/health
 
 # Individual service checks
-curl http://localhost:5001/health  # Entity Resolution
 curl http://localhost:5002/health  # Document Parser
 curl http://localhost:5003/health  # GraphRAG Indexer
 ```
@@ -592,6 +653,7 @@ test: add golden dataset entries for company name variants
 ## 12. Feature Flags
 
 Feature flags control phased rollout of V2 subsystems. All flags are environment variables prefixed with `FF_`.
+If `FF_AGENT_GATEWAY` or `FF_A2A_SERVER` is `false`, those routes are not mounted in the API server.
 
 | Flag | Default | Controls |
 |------|---------|----------|
@@ -603,6 +665,7 @@ Feature flags control phased rollout of V2 subsystems. All flags are environment
 | `FF_TWO_PASS_LLM` | `true` | Two-pass LLM extraction |
 | `FF_NEO4J_SYNC` | `true` | PostgreSQL → Neo4j sync |
 | `FF_HALLUCINATION_GUARD` | `true` | Extraction hallucination check |
+| `FF_ER_LLM_CONFIRMATION` | `false` | Optional LLM confirmation for borderline ER matches |
 
 **To toggle:** change the value in `.env` and restart the process.
 
@@ -621,16 +684,14 @@ All schema changes are **additive** in V2:
 ### Creating a Migration
 
 ```bash
-npm run db:migrate:create -- --name add_agent_version_history
-# Edit the generated file in backend/database/migrations/
-npm run db:migrate
+# Create a new SQL file in backend/db/migrations/, e.g.:
+# V2_008_add_agent_version_history.sql
+npm run migrate
 ```
 
 ### Rollback
 
-```bash
-npm run db:migrate:rollback  # Rolls back the last migration
-```
+Rollback automation is not configured. Create a compensating migration if a rollback is required.
 
 **Schema migration rules:** `specs/v2/05_MCP_SERVER.md` §10.6
 
@@ -662,6 +723,24 @@ docker compose down -v
 Infrastructure → Python services → TypeScript app → Agents
 
 The TypeScript app validates that all dependencies are healthy before accepting requests. See `specs/v2/02_ARCHITECTURE.md` §5.3 for the full startup sequence.
+
+---
+
+## 15. ChatGPT Enterprise Integration
+
+ChatGPT Enterprise integrates via **Actions** using the Agent Gateway OpenAPI spec.
+
+1. Register an agent API key:
+   ```bash
+   curl -X POST http://localhost:3000/api/agents/v1/auth/register \
+     -H "Content-Type: application/json" \
+     -d '{ "agent_name": "chatgpt-enterprise", "agent_class": "orchestrator", "permissions": { "read": true } }'
+   ```
+2. Import `docs/v2/openapi/agent_gateway.json` into ChatGPT Enterprise Actions.
+3. Set the base URL to your deployment (HTTPS recommended).
+4. Add the API key as `X-API-Key`.
+
+Full guide: `docs/v2/CHATGPT_ENTERPRISE_INTEGRATION.md`
 
 ---
 

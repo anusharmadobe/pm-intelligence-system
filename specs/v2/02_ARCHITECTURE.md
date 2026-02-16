@@ -15,8 +15,8 @@ V2 is organized into **seven horizontal planes** (six data planes + one cross-cu
 │                        CONSUMPTION PLANE                                  │
 │                                                                          │
 │  HUMAN INTERFACES:                                                       │
-│  Claude Code (MCP) │ Claude Cowork (MCP) │ Cursor │ REST API (existing) │
-│  via pm_intelligence_mcp_server (31 tools)                               │
+│  ChatGPT Actions │ Web UI (/ui) │ Claude Code/Cowork (MCP) │ Cursor      │
+│  via agent_gateway_service + pm_intelligence_mcp_server (31 tools)        │
 │                                                                          │
 │  AGENT INTERFACES:                                                       │
 │  A2A Server (/a2a) │ Agent Card (/.well-known/agent.json)               │
@@ -153,11 +153,11 @@ Signal → graphrag_indexer_service → communities + hierarchical summaries
 
 | Component | Type | Status | Description |
 |-----------|------|--------|-------------|
-| `entity_resolution_service` | Service | New | Core resolution engine (pyJedAI-powered) |
-| `entity_registry_service` | Service | New | CRUD for canonical entities |
-| `alias_management_service` | Service | New | Growing alias table management |
-| `canonical_entity_service` | Service | New | Merge/split/search canonical entities |
-| `feedback_service` | Service | New | Human correction queue and feedback processing |
+| `entity_resolution_service` | Service | Implemented | Core resolution engine (LLM-powered with embedding fallback) |
+| `entity_registry_service` | Service | Implemented | CRUD for canonical entities |
+| `alias_management_service` | Service | Implemented | Growing alias table management |
+| `canonical_entity_service` | Service | Implemented | Merge/split/search canonical entities |
+| `feedback_service` | Service | Implemented | Human correction queue and feedback processing |
 
 **Data flow:**
 ```
@@ -220,13 +220,14 @@ Complex query:  User → MCP tool → query_engine_service
 
 ### 2.6 Consumption Plane
 
-**Responsibility:** Expose system capabilities to all consumers — human personas via MCP, external agents via A2A protocol, internal agents via Event Bus, and simple integrations via Agent Gateway REST API.
+**Responsibility:** Expose system capabilities to all consumers — human personas via ChatGPT Actions, Web UI, and MCP; external agents via A2A protocol; internal agents via Event Bus; and simple integrations via Agent Gateway REST API.
 
 **Three-Protocol Model** (see `16_AGENTIC_INTERACTIONS.md` §10 for full rationale):
 
 | Protocol | Standard | Used By | When |
 |----------|----------|---------|------|
 | **MCP** | Anthropic open standard | Human personas via Claude Code/Cowork | Conversational, human-in-the-loop |
+| **ChatGPT Actions** | OpenAPI | Human personas via ChatGPT Enterprise | Tool calls via Agent Gateway |
 | **A2A** | Google open standard (v0.2.1) | External/third-party agents | Discoverable, interoperable, async |
 | **Internal Event Bus** | Custom (Redis Streams) | Co-located in-process agents | Low-latency, event-driven |
 | **Agent Gateway REST** | Custom REST API | Simple integrations (n8n, Zapier, JIRA) | Fallback for systems that can't implement A2A |
@@ -235,18 +236,19 @@ Complex query:  User → MCP tool → query_engine_service
 
 | Component | Type | Status | Description |
 |-----------|------|--------|-------------|
-| `pm_intelligence_mcp_server` | MCP Server | New | Primary human interface: 31 MCP tools for Claude Code/Cowork |
+| `pm_intelligence_mcp_server` | MCP Server | New | Human interface: 31 MCP tools for Claude Code/Cowork |
 | `a2a_server_service` | A2A Server | New | External agent interface: Agent Card + JSON-RPC 2.0 skills, A2A protocol compliant |
 | `agent_gateway_service` | HTTP API | New | Simple agent interface: REST API with API key auth, rate limiting, event subscription |
 | `event_bus_service` | Event Bus | New | Redis Streams-based event bus for agent subscriptions and system event propagation |
 | REST API (existing) | HTTP API | Existing (V1) | Continues to serve existing endpoints |
+| `pm_intelligence_ui` | Web UI | New | Role-based UI at `/ui` powered by Agent Gateway |
 | `source_registry_service` | Via API | New | Manage connected sources |
 | `report_generation_service` | Service | New | Generates shareable reports for PM Leader, stakeholder, and scheduled agent delivery |
 
 **Three access channels, same underlying services:**
 
 ```
-Human Personas     → MCP Server ─────────────→ Services → Knowledge Plane
+Human Personas     → ChatGPT Actions / UI / MCP ─→ Services → Knowledge Plane
 External Agents    → A2A Server ──────────────→ Services → Knowledge Plane
 Internal Agents    → Event Bus (subscribe) ───→ Services → Knowledge Plane
 Simple Integrations → Agent Gateway REST ──────→ Services → Knowledge Plane
@@ -258,18 +260,18 @@ Agent Gateway at: /api/agents/* (REST)
 
 | Consumer Type | Interface | Protocol | Authentication | Output Format |
 |---------------|-----------|----------|---------------|---------------|
-| Human via Claude Code/Cowork | MCP tools (31) | MCP | Localhost, no auth (V2) | Structured JSON → Claude formats as natural language |
+| Human via ChatGPT / UI / Claude | Agent Gateway + MCP | HTTP + MCP | API key for Agent Gateway | Structured JSON → UI/ChatGPT/Claude formats |
 | External AI Agent | A2A skills (8) | A2A (JSON-RPC 2.0) | API key in X-API-Key header | A2A Artifacts (structured JSON) |
 | Simple Integration | Agent Gateway REST | HTTP | API key per agent | Strict JSON, guaranteed schema |
 | Event Subscriber (Agent) | SSE stream or webhook | HTTP | API key + event permissions | SystemEvent JSON |
 
 **Human persona routing:**
 
-| Persona | Typical MCP Tool Usage |
-|---------|----------------------|
-| PM (Daily Driver) | search_signals, get_customer_profile, review_pending_entities, generate_artifact |
-| PM Leader (Strategist) | get_heatmap, get_trends, get_strategic_insights, generate_shareable_report |
-| New PM (Ramp-Up) | browse_knowledge_graph, get_knowledge_summary, list_entities |
+| Persona | Typical Interface Usage |
+|---------|-------------------------|
+| PM (Daily Driver) | ChatGPT Actions or UI for search, profiles, ingestion |
+| PM Leader (Strategist) | UI for heatmaps/trends + ChatGPT for summaries |
+| New PM (Ramp-Up) | UI entity browsing + knowledge summaries |
 
 **Agent persona routing:**
 
@@ -342,15 +344,15 @@ See [05_MCP_SERVER.md](./05_MCP_SERVER.md) for MCP tools, [16_AGENTIC_INTERACTIO
 ### 3.2 Query Flow
 
 ```
-1. User asks question via Claude Code/Cowork (natural language)
-2. Claude selects appropriate MCP tool(s) based on user intent
+1. User asks question via ChatGPT, UI, or Claude (natural language or form-based)
+2. ChatGPT/Claude selects appropriate tool(s) based on user intent
 3. MCP tool routes to service:
    - Simple lookup: direct service call (e.g., get_customer_profile → Neo4j)
    - Complex analysis: query_engine_service decomposes into sub-queries
    - Report generation: report_generation_service synthesizes multi-source data
 4. Service executes against Knowledge Plane (Neo4j + pgvector + PostgreSQL)
 5. Results enriched with provenance and confidence
-6. Response returned to Claude → user
+6. Response returned to ChatGPT/UI/Claude → user
 
 Persona-specific query patterns:
   PM:        "What's happening with Acme?" → get_customer_profile (targeted)
@@ -390,11 +392,6 @@ Persona-specific query patterns:
 | Technology | Version | Purpose | Cost |
 |------------|---------|---------|------|
 | Neo4j Community Edition | 5.x | Knowledge graph | Free (AGPL) |
-| Microsoft GraphRAG | Latest | Entity/relationship extraction | Free (MIT) |
-| pyJedAI | 0.2.8+ | Entity resolution | Free (Apache 2.0) |
-| Unstructured.io | Latest | Document parsing (PPT/Word/Excel/PDF) | Free (Apache 2.0) |
-| Python | 3.9+ | Runtime for ER/GraphRAG/Unstructured | Free |
-| FastAPI | Latest | Python microservice framework | Free |
 | Redis | 7+ | Job queue (BullMQ), caching | Free (BSD) |
 | BullMQ | Latest | Job scheduling for ingestion | Free (MIT) |
 | neo4j-driver (npm) | Latest | Node.js Neo4j driver | Free |
@@ -436,13 +433,9 @@ Persona-specific query patterns:
 │  │ - Express API (:3000)    │                │
 │  │ - MCP Server (:3001)     │                │
 │  │ - All V1+V2 services     │                │
-│  └──────────────────────────┘                │
-│                                               │
-│  ┌──────────────────────────┐                │
-│  │ Python Microservices     │                │
-│  │ - entity_resolution :5001│                │
-│  │ - document_parser :5002  │                │
-│  │ - graphrag_indexer :5003 │                │
+│  │   * Entity resolution    │                │
+│  │   * LLM extraction       │                │
+│  │   * Knowledge graph sync │                │
 │  └──────────────────────────┘                │
 └──────────────────────────────────────────────┘
 ```
@@ -517,20 +510,16 @@ Layer 1 — Infrastructure (Docker Compose):
   3. Redis                    ← health: redis-cli ping
   (all 3 can start in parallel; they have no interdependencies)
 
-Layer 2 — Python Microservices:
-  4. entity_resolution_service (:5001)  ← waits for PostgreSQL
-  5. document_parser_service   (:5002)  ← no DB dependency
-  6. graphrag_indexer_service   (:5003)  ← waits for PostgreSQL
-  (all 3 can start in parallel after Layer 1)
+Layer 2 — TypeScript Application:
+  4. Express API + MCP Server + A2A Server  ← waits for PostgreSQL, Neo4j, Redis
+  5. BullMQ workers (in-process)            ← starts with main process
+  6. Event Bus service                      ← starts with main process
+  7. Entity Resolution service (in-process) ← LLM-powered, no external service needed
+  8. LLM Extraction service (in-process)    ← Two-pass extraction with Azure OpenAI
 
-Layer 3 — TypeScript Application:
-  7. Express API + MCP Server + A2A Server  ← waits for PostgreSQL, Neo4j, Redis
-  8. BullMQ workers (in-process)            ← starts with main process
-  9. Event Bus service                      ← starts with main process
-
-Layer 4 — Agents (optional):
-  10. In-process agents (Report Scheduler, Slack Alert Bot, Data Quality)
-  11. Separate process agents (Triage Agent, JIRA Sync Agent)
+Layer 3 — Agents (optional):
+  9. In-process agents (Report Scheduler, Slack Alert Bot, Data Quality)
+  10. Separate process agents (Triage Agent, JIRA Sync Agent)
 ```
 
 **Startup validation**: The main process runs a startup health check sequence:
@@ -540,9 +529,9 @@ async function validateStartup(): Promise<void> {
   // 1. PostgreSQL: run SELECT 1
   // 2. Neo4j: run RETURN 1 via Bolt
   // 3. Redis: run PING
-  // 4. Python ER service: GET /health on :5001
-  // 5. Run pending DB migrations
-  // 6. Validate .env has all required variables (see §5.4)
+  // 4. Run pending DB migrations
+  // 5. Validate .env has all required variables (see §5.4)
+  // 6. Validate LLM provider connection (Azure OpenAI)
   // If any fail: log error, retry 3x with 5s backoff, then exit(1)
 }
 ```
@@ -553,11 +542,8 @@ async function validateStartup(): Promise<void> {
 |-------------|---------|--------------|-------|
 | Node.js | 18+ | `node -v` | LTS recommended |
 | npm/pnpm | Latest | `npm -v` | |
-| Python | 3.10+ | `python3 --version` | For ER, doc parser, GraphRAG |
 | Docker | Latest | `docker --version` | For PostgreSQL, Neo4j, Redis |
 | Docker Compose | v2+ | `docker compose version` | |
-| poppler | Latest | `pdftoppm -v` | System dep for PDF parsing |
-| tesseract | Latest | `tesseract --version` | System dep for OCR (optional) |
 
 ### 5.5 Environment Configuration
 
@@ -578,7 +564,7 @@ All configuration via `.env` file (see existing `.env.example`). V2 additions do
   - `correlation_id` (UUID propagated across service boundaries)
   - `signal_id` (when processing a specific signal)
   - `duration_ms` (for timed operations)
-- **Correlation IDs**: Generated at ingestion or MCP request entry. Propagated via HTTP headers (`X-Correlation-ID`) to Python services. All log entries and database writes include the correlation ID.
+- **Correlation IDs**: Generated at ingestion or MCP request entry. All log entries and database writes include the correlation ID for request tracing.
 - **Log aggregation**: All logs written to `data/logs/` with daily rotation. Structured JSON enables grep/jq analysis.
 - **Sensitive data redaction**: Winston configured with custom format that redacts API keys, PII patterns, and auth tokens before writing.
 
@@ -627,14 +613,10 @@ Neo4j circuit breaker:
              Sync operations queue to neo4j_sync_backlog
              Pipeline continues without Neo4j (PostgreSQL is SoT)
 
-Python services circuit breaker:
-  OPEN after: 3 consecutive failures in 30 seconds
-  When OPEN: Entity resolution falls back to alias-only matching
-             Document parsing returns error to caller
-             Pipeline continues with reduced quality (logged)
-
 Azure OpenAI circuit breaker:
   OPEN after: 5 rate limit errors OR 3 consecutive 500s
+  HALF_OPEN after: 60 seconds in OPEN state
+  CLOSED after: 3 consecutive successes in HALF_OPEN
   When OPEN: Extraction queued for later processing
              Entity matching falls back to string+embedding only (no LLM)
              Pipeline continues with reduced quality (logged)
@@ -669,10 +651,9 @@ When components are unavailable, the system degrades gracefully:
 | Component Down | Impact | Degradation | Recovery |
 |----------------|--------|-------------|----------|
 | Neo4j | No graph queries | Return PostgreSQL-only results; cache last known graph state | Auto-recover when Neo4j back; process sync backlog |
-| Python ER Service | No LLM-assisted entity matching | Fall back to alias matching + string similarity only | Queue unresolved entities for later; auto-recover |
-| Python Doc Parser | Can't parse uploaded files | Return error to user; suggest re-uploading later | Auto-recover |
-| Azure OpenAI | No LLM extraction/matching | Queue signals for later extraction; existing data still queryable | Process backlog when API recovers |
+| Azure OpenAI | No LLM extraction/matching | Queue signals for later extraction; fall back to embedding-only entity matching; existing data still queryable | Process backlog when API recovers |
 | Redis | No job scheduling | Run pipeline manually; lose caching (slower but functional) | Auto-recover |
+| PostgreSQL | System unavailable | Complete failure; no degradation possible (SoT unavailable) | Manual intervention required |
 
 #### 6.2.6 Idempotency
 
@@ -745,7 +726,6 @@ interface HealthCheckResponse {
     postgresql: { status: string; latency_ms: number };
     neo4j: { status: string; latency_ms: number; circuit_breaker: string };
     redis: { status: string; latency_ms: number };
-    python_er_service: { status: string; latency_ms: number; circuit_breaker: string };
     python_doc_parser: { status: string; latency_ms: number; circuit_breaker: string };
     azure_openai: { status: string; circuit_breaker: string };
   };
@@ -766,8 +746,7 @@ Cross-service requests are traced via correlation IDs:
 MCP tool call (Claude Code)
   → correlation_id generated
   → TypeScript service (logged with correlation_id)
-    → Python service call (correlation_id in X-Correlation-ID header)
-      → Azure OpenAI call (correlation_id in metadata)
+    → Azure OpenAI call (correlation_id in metadata)
     → Neo4j query (correlation_id in query metadata)
     → PostgreSQL write (correlation_id stored in record)
   → MCP response (includes correlation_id in metadata)
@@ -934,8 +913,8 @@ Uploaded files: Retained in data/uploads/ until post-processing cleanup (configu
 | PostgreSQL corruption | CRITICAL — all data at risk | Restore from daily backup; reprocess signals since backup | 1-2 hours |
 | Neo4j corruption | MEDIUM — graph queries unavailable | Full resync from PostgreSQL (automated) | 30 min |
 | Redis crash | LOW — cache cold, jobs restart | Redis restarts; BullMQ replays pending jobs | 2 min |
-| Python service crash | LOW — degraded quality | Restart Docker container; circuit breaker handles gap | 1 min |
-| Azure OpenAI outage | MEDIUM — no new extraction | Queue signals; process when API recovers | API-dependent |
+| Azure OpenAI outage | MEDIUM — no new extraction | Queue signals; fall back to embedding-only matching; process when API recovers | API-dependent |
+| Node.js process crash | MEDIUM — API unavailable | Auto-restart via process manager (PM2/systemd); resume from last checkpoint | 1-2 min |
 
 #### 6.6.3 Capacity Planning
 
@@ -952,10 +931,10 @@ All within single-machine capacity. Horizontal scaling not needed until >100K si
 
 ### 6.7 Testing Strategy
 
-- **Unit tests:** Entity resolution logic, validation rules, normalization (highest priority)
+- **Unit tests:** Entity resolution logic, validation rules, normalization, LLM entity matching (highest priority)
 - **Integration tests:** Full pipeline end-to-end (ingest → extract → resolve → graph → query)
 - **Contract tests:** MCP tool interfaces (input/output schema validation)
-- **Golden dataset benchmarks:** Entity resolution accuracy regression tests (run weekly)
+- **Golden dataset benchmarks:** Entity resolution accuracy regression tests (>85% target, run weekly)
 - **Load tests (V3):** Concurrent MCP requests, bulk ingestion throughput
-- **Chaos tests (V3):** Kill Neo4j mid-sync, kill Python service mid-resolution
-- **Cross-service tests:** TypeScript → Python HTTP contract tests (schema validation both sides)
+- **Chaos tests (V3):** Kill Neo4j mid-sync, Azure OpenAI outage simulation, Redis failure
+- **LLM tests:** Mock LLM responses for deterministic entity matching tests

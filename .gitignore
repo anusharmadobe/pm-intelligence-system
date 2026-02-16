@@ -3,4 +3,16 @@ dist/
 *.log
 logs/
 .env
+.env.local
 .DS_Store
+
+# Python virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# Pipeline output (regenerated on each run)
+output/
+
+# Backup / scratch
+backup/

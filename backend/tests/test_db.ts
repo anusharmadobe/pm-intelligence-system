@@ -58,6 +58,51 @@ export async function resetDatabase(): Promise<void> {
   try {
     await pool.query('TRUNCATE TABLE embedding_queue CASCADE');
   } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE entity_aliases CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE entity_registry CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE entity_resolution_log CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE entity_merge_history CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE neo4j_sync_backlog CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE feedback_log CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE prompt_versions CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE agent_activity_log CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE agent_version_history CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE agent_registry CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE system_metrics CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE alerts CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE graphrag_communities CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE source_registry CASCADE');
+  } catch (_e) { /* Table may not exist */ }
+  try {
+    await pool.query('TRUNCATE TABLE audit_log CASCADE');
+  } catch (_e) { /* Table may not exist */ }
   clearCustomerCache();
 }
 

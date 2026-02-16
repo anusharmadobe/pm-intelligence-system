@@ -209,12 +209,6 @@ PM Intelligence System V2
 │   └── A2A server implementation (NEW — JSON-RPC 2.0 handler, no external SDK required)
 │
 ├── Python 3.10+ (NEW)
-│   ├── Entity Resolution Service
-│   │   ├── pyjedai
-│   │   ├── fastapi + uvicorn
-│   │   ├── sentence-transformers (optional)
-│   │   └── httpx
-│   │
 │   ├── Document Parser Service
 │   │   ├── unstructured[all-docs]
 │   │   ├── fastapi + uvicorn
@@ -264,13 +258,11 @@ REDIS_PASSWORD=
 ER_AUTO_MERGE_THRESHOLD=0.9
 ER_HUMAN_REVIEW_THRESHOLD=0.6
 ER_REJECT_THRESHOLD=0.3
-ER_USE_LLM_MATCHING=true
 
 # ============================================================================
 # PYTHON SERVICES (NEW)
 # ============================================================================
 PYTHON_SERVICES_HOST=localhost
-ENTITY_RESOLUTION_PORT=5001
 DOCUMENT_PARSER_PORT=5002
 GRAPHRAG_INDEXER_PORT=5003
 
@@ -308,7 +300,7 @@ LLM_FAST_MAX_TOKENS=2048
 | License | Technologies | Obligations |
 |---------|-------------|-------------|
 | **MIT** | GraphRAG, MCP SDK, Express, BullMQ, multer, neo4j-driver, Knowledge Table, FastAPI | Include license notice. No restrictions. |
-| **Apache 2.0** | pyJedAI, Unstructured.io, Argilla, sentence-transformers, Docker | Include license + NOTICE. Patent grant. |
+| **Apache 2.0** | Unstructured.io, Argilla, sentence-transformers, Docker | Include license + NOTICE. Patent grant. |
 | **AGPL-3.0** | Neo4j Community Edition | If you modify Neo4j source and distribute: must share changes. Using Neo4j as-is (unmodified) via the driver is fine. |
 | **BSD-3** | Redis, uvicorn, httpx | Include license notice. No endorsement use. |
 | **PostgreSQL License** | PostgreSQL, pgvector | Very permissive. Include copyright notice. |
@@ -348,10 +340,8 @@ All environment variables organized by subsystem, with required/optional status 
 | `ER_AUTO_MERGE_THRESHOLD` | No | `0.9` | Score above which entities auto-merge |
 | `ER_HUMAN_REVIEW_THRESHOLD` | No | `0.6` | Score range requiring human review |
 | `ER_REJECT_THRESHOLD` | No | `0.3` | Score below which entities are rejected |
-| `ER_USE_LLM_MATCHING` | No | `true` | Enable LLM-assisted matching for ambiguous cases |
 | **Python Services** ||||
 | `PYTHON_SERVICES_HOST` | No | `localhost` | Python microservice host |
-| `ENTITY_RESOLUTION_PORT` | No | `5001` | Entity resolution service port |
 | `DOCUMENT_PARSER_PORT` | No | `5002` | Document parser service port |
 | `GRAPHRAG_INDEXER_PORT` | No | `5003` | GraphRAG indexer service port |
 | **MCP Server** ||||
@@ -381,6 +371,7 @@ All environment variables organized by subsystem, with required/optional status 
 | `FF_TWO_PASS_LLM` | No | `true` | Enable two-pass LLM extraction |
 | `FF_NEO4J_SYNC` | No | `true` | Enable PostgreSQL → Neo4j sync |
 | `FF_HALLUCINATION_GUARD` | No | `true` | Enable extraction hallucination check |
+| `FF_ER_LLM_CONFIRMATION` | No | `false` | Enable optional LLM confirmation for borderline ER matches |
 | **JIRA/Wiki (TBD)** ||||
 | `JIRA_MCP_SERVER` | No | (TBD) | JIRA MCP server configuration |
 | `WIKI_MCP_SERVER` | No | (TBD) | Wiki/Confluence MCP server configuration |

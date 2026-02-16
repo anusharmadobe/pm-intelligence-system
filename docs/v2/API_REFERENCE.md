@@ -15,9 +15,22 @@ PM Intelligence exposes three protocols for programmatic access:
 |----------|----------|----------|------|
 | **MCP Server** | Human personas via Claude Code/Cowork | stdio or `:3001` | None (MCP host handles) |
 | **A2A Server** | External AI agents | `/a2a` | API key (`X-API-Key`) |
-| **Agent Gateway REST** | Simple integrations (n8n, Zapier, scripts) | `/api/agents/v1/` | Bearer token |
+| **Agent Gateway REST** | Simple integrations (n8n, Zapier, scripts, ChatGPT Actions) | `/api/agents/v1/` | `X-API-Key` |
 
 This reference covers the **Agent Gateway REST API** and the **A2A Server**. For MCP tools, see the User Guide or `specs/v2/05_MCP_SERVER.md`.
+
+---
+
+## ChatGPT Enterprise Actions
+
+Use the OpenAPI spec at `docs/v2/openapi/agent_gateway.json` to add the Agent Gateway as an Action in ChatGPT Enterprise. See `docs/v2/CHATGPT_ENTERPRISE_INTEGRATION.md`.
+You can also fetch it from the running server at `http://localhost:3000/openapi/agent_gateway.json`.
+
+---
+
+## Web UI
+
+The built-in UI is served at `http://localhost:3000/ui`. It uses the Agent Gateway API for data access.
 
 ---
 
@@ -27,14 +40,17 @@ This reference covers the **Agent Gateway REST API** and the **A2A Server**. For
 
 Every registered agent gets a unique 256-bit API key at registration time. The key is shown once and stored as a bcrypt hash.
 
+If `AGENT_REGISTRATION_SECRET` is configured, `POST /api/agents/v1/auth/register` requires
+`X-Registration-Secret: <value>`.
+
 **For REST (Agent Gateway):**
 ```
-Authorization: Bearer pm_intel_ak_abc123...
+X-API-Key: agent_xxx
 ```
 
 **For A2A:**
 ```
-X-API-Key: pm_intel_ak_abc123...
+X-API-Key: agent_xxx
 ```
 
 ### Rate Limits
@@ -48,11 +64,7 @@ Exceeding limits returns `429 Too Many Requests`.
 
 ### Idempotency
 
-All write endpoints require an `Idempotency-Key` header. Duplicate writes within 24 hours return the original response.
-
-```
-Idempotency-Key: unique-request-id-abc123
-```
+`Idempotency-Key` is supported for `POST /api/agents/v1/ingest`. When provided, the gateway will return the original `signal_id` for repeated requests from the same agent.
 
 ---
 
@@ -68,13 +80,14 @@ GET /api/agents/v1/signals
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `entity_type` | string | No | Filter by entity type: `customer`, `feature`, `issue`, `theme` |
-| `entity_name` | string | No | Filter by entity name |
+| `query` | string | Yes | Natural language query |
+| `source` | string | No | Filter by source (`slack`, `transcript`, `document`, `web_scrape`, `jira`, `wiki`) |
+| `customer` | string | No | Filter by customer name |
+| `feature` | string | No | Filter by feature name |
+| `theme` | string | No | Filter by theme |
 | `date_from` | ISO date | No | Start date |
 | `date_to` | ISO date | No | End date |
-| `source` | string | No | Filter by source: `slack`, `transcript`, `document`, `web_scrape` |
-| `limit` | integer | No | Max results (default 20, max 100) |
-| `offset` | integer | No | Pagination offset |
+| `limit` | integer | No | Max results (default 20, max 50) |
 
 **Response:**
 ```json
@@ -103,10 +116,10 @@ GET /api/agents/v1/signals
 #### Ingest Signal
 
 ```
-POST /api/agents/v1/signals/ingest
+POST /api/agents/v1/ingest
 ```
 
-Headers: `Idempotency-Key` required.
+Headers: `Idempotency-Key` optional (recommended for safe retries).
 
 **Request body:**
 ```json
@@ -122,13 +135,42 @@ Headers: `Idempotency-Key` required.
 }
 ```
 
-**Response:** `201 Created`
+**Response:** `201 Created` (new signal) or `200 OK` (idempotent replay)
 ```json
 {
   "signal_id": "sig_def456",
-  "status": "processing",
-  "idempotency_key": "your-key",
-  "message": "Signal accepted for processing"
+  "status": "ok",
+  "idempotent": false
+}
+```
+
+#### Query Knowledge
+
+```
+POST /api/agents/v1/query
+```
+
+**Request body:**
+```json
+{
+  "query": "What are the top customer issues this month?",
+  "limit": 10,
+  "source": "slack",
+  "customer": "Acme",
+  "feature": "Checkout",
+  "theme": "latency"
+}
+```
+
+**Response:**
+```json
+{
+  "query": "What are the top customer issues this month?",
+  "answer": "…",
+  "confidence": 0.72,
+  "supporting_signals": [
+    { "id": "sig_123", "source": "slack", "snippet": "…", "created_at": "2026-02-10T10:00:00Z" }
+  ]
 }
 ```
 
@@ -142,9 +184,8 @@ GET /api/agents/v1/entities
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `type` | string | No | `customer`, `feature`, `issue`, `theme` |
-| `search` | string | No | Fuzzy search by name |
-| `limit` | integer | No | Default 50, max 200 |
+| `query` | string | No | Search by name (fuzzy) |
+| `limit` | integer | No | Default 25, max 100 |
 
 **Response:**
 ```json
@@ -165,41 +206,25 @@ GET /api/agents/v1/entities
 }
 ```
 
-#### Propose Entity Link
+#### Propose Entity Merge
 
 ```
-POST /api/agents/v1/entities/link
+POST /api/agents/v1/entities/propose
 ```
 
-Agents can **propose** linking an external ID to an entity. This creates a feedback entry for human review.
+Agents can propose entity merges or aliasing. This creates a feedback entry for human review.
 
 ```json
 {
-  "entity_id": "ent_abc123",
-  "external_system": "jira",
-  "external_id": "PROD-1234",
-  "link_type": "tracks_issue"
+  "entity_name": "Acme Corp",
+  "entity_type": "customer",
+  "candidate_entity_id": "ent_abc123",
+  "confidence": 0.82,
+  "notes": "Alias from CRM import"
 }
 ```
 
-**Response:** `202 Accepted` (queued for human review)
-
-#### Propose Entity Status Update
-
-```
-POST /api/agents/v1/entities/status
-```
-
-```json
-{
-  "entity_id": "ent_abc123",
-  "status": "resolved",
-  "source": "jira_sync_agent",
-  "evidence": "JIRA ticket PROD-1234 marked as Done"
-}
-```
-
-**Response:** `202 Accepted`
+**Response:** `201 Created` (queued for human review)
 
 ### 2.3 Intelligence
 
@@ -222,14 +247,9 @@ GET /api/agents/v1/heatmap
   "metric": "severity_weighted",
   "rows": [
     {
-      "name": "Auth Timeout",
-      "type": "issue",
-      "columns": {
-        "Acme Corp": 12,
-        "BigCorp": 8,
-        "DataFlow": 5
-      },
-      "total": 28
+      "x": "Auth Timeout",
+      "y": "Acme Corp",
+      "value": 12
     }
   ],
   "generated_at": "2026-02-09T14:30:00Z"
@@ -266,20 +286,16 @@ POST /api/agents/v1/reports/generate
 
 Report types: `weekly_digest`, `customer_health`, `issue_summary`, `trend_analysis`, `executive_brief`, `competitive_intel`.
 
-**Response:** `202 Accepted` (report generated asynchronously)
+**Response:** `200 OK`
 ```json
 {
-  "report_id": "rpt_abc123",
-  "status": "generating",
-  "estimated_completion_seconds": 30
+  "report": "# WEEKLY DIGEST\n\nTime window: last 30 days\n..."
 }
 ```
 
 #### Get Latest Report
 
-```
-GET /api/agents/v1/reports/latest?type=weekly_digest
-```
+_Note: `/api/agents/v1/reports/latest` is not implemented in V2. Use `POST /api/agents/v1/reports/generate`._
 
 ### 2.5 Issues
 
@@ -301,7 +317,48 @@ POST /api/agents/v1/issues/flag
 
 **Response:** `202 Accepted` (creates feedback entry + alert)
 
-### 2.6 Entity Resolution Stats
+### 2.6 Source Registry
+
+#### List Sources
+
+```
+GET /api/agents/v1/sources
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `type` | string | No | Filter by source type |
+| `status` | string | No | `connected`, `error`, `disabled` |
+
+#### Register Source
+
+```
+POST /api/agents/v1/sources
+```
+
+```json
+{
+  "source_name": "crawler_bot",
+  "source_type": "web_scrape",
+  "status": "connected",
+  "config": { "schedule": "0 */6 * * *" }
+}
+```
+
+#### Update Source
+
+```
+PATCH /api/agents/v1/sources/{id}
+```
+
+```json
+{
+  "status": "error",
+  "config": { "last_error": "timeout" }
+}
+```
+
+### 2.7 Entity Resolution Stats
 
 ```
 GET /api/agents/v1/er-stats
@@ -319,7 +376,7 @@ GET /api/agents/v1/er-stats
 }
 ```
 
-### 2.7 System Health
+### 2.8 System Health
 
 ```
 GET /api/agents/v1/health
@@ -328,21 +385,12 @@ GET /api/agents/v1/health
 **Response:**
 ```json
 {
-  "status": "healthy",
-  "services": {
-    "postgresql": "healthy",
-    "neo4j": "healthy",
-    "redis": "healthy",
-    "entity_resolution": "healthy",
-    "document_parser": "healthy"
-  },
-  "uptime_seconds": 86400,
-  "pipeline_status": "idle",
-  "dlq_count": 0
+  "status": "ok",
+  "timestamp": "2026-02-09T14:30:00Z"
 }
 ```
 
-### 2.8 Events
+### 2.9 Events
 
 #### Subscribe to Events (SSE)
 
@@ -354,11 +402,10 @@ Returns a Server-Sent Events stream. Events include:
 
 | Event Type | Payload | When |
 |-----------|---------|------|
-| `signal.ingested` | `{ signal_id, source, entity_count }` | New signal processed |
-| `entity.created` | `{ entity_id, name, type }` | New entity discovered |
-| `entity.merged` | `{ canonical_id, merged_id }` | Entity merge completed |
-| `issue.escalated` | `{ entity_id, urgency, reason }` | Issue flagged as critical |
-| `report.generated` | `{ report_id, type }` | Report ready |
+| `signal.ingested` | `{ signal_id, source }` | New signal processed |
+| `pipeline.completed` | `{ signal_id }` | Pipeline finished for a signal |
+| `entity.created` | `{ entity_id, canonical_name, entity_type }` | New entity discovered |
+| `entity.merged` | `{ canonical_entity_id, alias, feedback_id }` | Alias merge accepted |
 
 **Example SSE stream:**
 ```
@@ -380,6 +427,52 @@ GET /api/agents/v1/events/history
 | `event_type` | string | No | Filter by event type |
 | `since` | ISO date | No | Events after this time |
 | `limit` | integer | No | Default 100, max 1000 |
+
+---
+
+## 2.10 Ingestion REST API (Internal)
+
+These endpoints are intended for internal workflows and manual uploads. For external agents, use the Agent Gateway `/ingest` endpoint.
+
+### Ingest Transcript
+
+```
+POST /api/ingest/transcript
+```
+
+```json
+{
+  "title": "Customer sync - Feb 10",
+  "content": "...",
+  "meeting_type": "customer",
+  "customer": "Acme Corp",
+  "date": "2026-02-10T10:00:00Z",
+  "metadata": { "source": "manual" }
+}
+```
+
+### Ingest Document
+
+```
+POST /api/ingest/document
+```
+
+Multipart form with `file` and optional `metadata` JSON string.
+
+### Ingest Crawled Web Content
+
+```
+POST /api/ingest/crawled
+```
+
+```json
+{
+  "url": "https://example.com",
+  "content": "extracted page text",
+  "captured_at": "2026-02-10T10:00:00Z",
+  "metadata": { "source": "crawler" }
+}
+```
 
 ---
 
@@ -406,44 +499,49 @@ GET /.well-known/agent.json
   },
   "skills": [
     {
-      "id": "query_knowledge",
-      "name": "Query Knowledge Graph",
-      "description": "Search and retrieve entities, signals, relationships from the PM knowledge graph"
+      "id": "query-knowledge",
+      "name": "Query Knowledge",
+      "description": "Answer a natural language question with supporting signals"
     },
     {
-      "id": "ingest_signal",
+      "id": "ingest-signal",
       "name": "Ingest Signal",
       "description": "Submit a new signal for processing through the extraction and ER pipeline"
     },
     {
-      "id": "get_heatmap",
-      "name": "Generate Heatmap",
+      "id": "query-heatmap",
+      "name": "Issue Heatmap",
       "description": "Generate issue/feature heatmaps across customers"
     },
     {
-      "id": "get_trends",
+      "id": "query-trends",
       "name": "Get Trends",
       "description": "Retrieve emerging, declining, or stable trends"
     },
     {
-      "id": "get_customer_profile",
-      "name": "Get Customer Profile",
+      "id": "query-customer-profile",
+      "name": "Customer Profile",
       "description": "Retrieve comprehensive customer profile with issues, features, signals"
     },
     {
-      "id": "generate_report",
+      "id": "query-opportunities",
+      "name": "Opportunity Priorities",
+      "description": "Retrieve prioritized opportunities and scores"
+    },
+    {
+      "id": "generate-report",
       "name": "Generate Report",
       "description": "Generate various report types (weekly digest, customer health, etc.)"
     },
     {
-      "id": "flag_issue",
-      "name": "Flag Issue",
-      "description": "Flag an issue as urgent with evidence and recommended action"
+      "id": "propose-entity-change",
+      "name": "Entity Change Proposal",
+      "description": "Propose entity merges or cleanup for human review"
     },
     {
-      "id": "get_system_health",
-      "name": "Get System Health",
-      "description": "Check system health and service statuses"
+      "id": "query-provenance",
+      "name": "Provenance Chain",
+      "description": "Trace an insight back to source signals"
     }
   ]
 }
@@ -473,7 +571,7 @@ X-API-Key: pm_intel_ak_abc123...
         }
       ]
     },
-    "skill_id": "query_knowledge"
+    "skill_id": "query-knowledge"
   },
   "id": "req-001"
 }
@@ -528,7 +626,7 @@ POST /a2a
       "role": "user",
       "parts": [{ "type": "text", "text": "Generate a full portfolio report" }]
     },
-    "skill_id": "generate_report"
+    "skill_id": "generate-report"
   },
   "id": "req-002"
 }
@@ -588,7 +686,7 @@ The response streams as SSE with task status updates.
   "error": {
     "code": -32602,
     "message": "Invalid params: skill_id 'unknown_skill' not found",
-    "data": { "available_skills": ["query_knowledge", "ingest_signal", "..."] }
+  "data": { "available_skills": ["query-knowledge", "ingest-signal", "..."] }
   },
   "id": "req-001"
 }
@@ -616,18 +714,21 @@ The response streams as SSE with task status updates.
 For agents that cannot maintain SSE connections, register a webhook:
 
 ```
-POST /api/agents/v1/webhooks/register
+POST /api/agents/v1/events/webhook
+To unregister:
+```
+DELETE /api/agents/v1/events/webhook
+```
 ```
 
 ```json
 {
-  "url": "https://my-agent.example.com/webhook",
-  "event_types": ["signal.ingested", "issue.escalated"],
-  "secret": "webhook-signing-secret"
+  "webhook_url": "https://my-agent.example.com/webhook",
+  "event_subscriptions": ["signal.ingested", "pipeline.completed"]
 }
 ```
 
-Webhook payloads are signed with HMAC-SHA256 using the shared secret. Failed deliveries are retried 3 times with exponential backoff.
+Webhook delivery is handled by the event dispatcher. Failed deliveries are logged in `agent_activity_log`.
 
 ---
 
@@ -640,12 +741,12 @@ import requests
 
 BASE_URL = "http://localhost:3000/api/agents/v1"
 API_KEY = "pm_intel_ak_abc123..."
-HEADERS = {"Authorization": f"Bearer {API_KEY}"}
+HEADERS = {"X-API-Key": API_KEY}
 
 # Search signals
-signals = requests.get(f"{BASE_URL}/signals", 
+signals = requests.get(f"{BASE_URL}/signals",
     headers=HEADERS,
-    params={"entity_type": "issue", "limit": 10}
+    params={"query": "auth timeout", "limit": 10}
 ).json()
 
 # Get heatmap
@@ -655,8 +756,8 @@ heatmap = requests.get(f"{BASE_URL}/heatmap",
 ).json()
 
 # Ingest a signal
-resp = requests.post(f"{BASE_URL}/signals/ingest",
-    headers={**HEADERS, "Idempotency-Key": "unique-id-001"},
+resp = requests.post(f"{BASE_URL}/ingest",
+    headers=HEADERS,
     json={
         "source": "external_agent",
         "source_identifier": "my-agent-finding-001",
@@ -672,14 +773,14 @@ const BASE_URL = 'http://localhost:3000/api/agents/v1';
 const API_KEY = 'pm_intel_ak_abc123...';
 
 // Search entities
-const entities = await fetch(`${BASE_URL}/entities?type=customer`, {
-  headers: { Authorization: `Bearer ${API_KEY}` },
+const entities = await fetch(`${BASE_URL}/entities?query=payments`, {
+  headers: { 'X-API-Key': API_KEY },
 }).then(r => r.json());
 
-// Subscribe to events (SSE)
-const eventSource = new EventSource(`${BASE_URL}/events/stream`, {
-  headers: { Authorization: `Bearer ${API_KEY}` },
-});
+// Poll events history
+const events = await fetch(`${BASE_URL}/events/history`, {
+  headers: { 'X-API-Key': API_KEY },
+}).then(r => r.json());
 eventSource.addEventListener('signal.ingested', (event) => {
   const data = JSON.parse(event.data);
   console.log(`New signal: ${data.signal_id} from ${data.source}`);
@@ -690,11 +791,11 @@ eventSource.addEventListener('signal.ingested', (event) => {
 
 ```bash
 # List customers
-curl -H "Authorization: Bearer $API_KEY" \
+curl -H "X-API-Key: $API_KEY" \
   "$BASE_URL/entities?type=customer&limit=5"
 
 # Flag an issue
-curl -X POST -H "Authorization: Bearer $API_KEY" \
+curl -X POST -H "X-API-Key: $API_KEY" \
   -H "Content-Type: application/json" \
   -H "Idempotency-Key: flag-$(date +%s)" \
   -d '{"entity_name":"Auth Timeout","urgency":"critical","reason":"Spike detected"}' \

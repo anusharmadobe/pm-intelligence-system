@@ -2,13 +2,18 @@
 
 > **For:** Product Managers, PM Leaders, New PMs, Stakeholders
 > **Version:** 1.0
-> **Last Updated:** 2026-02-09
+> **Last Updated:** 2026-02-11
 
 ---
 
 ## Welcome
 
-PM Intelligence is a continuously updated knowledge graph that ingests data from all the places product signals live — Slack, meeting transcripts, documents, web scrapes — and unifies them into a single queryable system. You interact with it through **Claude Code** or **Claude Cowork** using natural language. No dashboards to learn, no UIs to navigate.
+PM Intelligence is a continuously updated knowledge graph that ingests product signals from Slack, meeting transcripts, documents, and web scrapes, and unifies them into a single queryable system.
+
+You can interact with it in three ways:
+- **ChatGPT Enterprise Actions** (recommended) using the Agent Gateway API
+- **PM Intelligence Web UI** at `/ui`
+- **Claude Code/Cowork via MCP** (optional, still supported)
 
 Ask a question. Get an answer backed by real data with a traceable source chain.
 
@@ -33,18 +38,39 @@ Ask a question. Get an answer backed by real data with a traceable source chain.
 
 ### Prerequisites
 
-- Access to **Claude Code** or **Claude Cowork** with the PM Intelligence MCP server configured
-- Your instance of PM Intelligence running (ask your admin if unsure)
+- A running PM Intelligence instance (ask your admin if unsure)
+- One of:
+  - ChatGPT Enterprise with Actions enabled
+  - Access to the PM Intelligence Web UI (`/ui`)
+  - Claude Code/Cowork with the MCP server configured
 
 ### Your First Interaction
 
-Open Claude Code (or Cowork) and simply ask a question:
+Pick an interface and ask a question. Example in ChatGPT Enterprise:
 
 ```
 You: "What are the top customer issues this week?"
 ```
 
-Claude will query the knowledge graph, synthesize the data, and respond with a structured answer including signal counts, affected customers, severity, and trends. You never need to know which tools are running behind the scenes.
+The system will query the knowledge graph, synthesize the data, and respond with a structured answer including signal counts, affected customers, severity, and trends.
+
+### Interfaces at a Glance
+
+| Interface | Best For | How to Use |
+|-----------|----------|------------|
+| **ChatGPT Enterprise Actions** | Daily Q&A, reports, summaries | Import `docs/v2/openapi/agent_gateway.json` and add API key |
+| **Web UI** | Visual exploration, admin workflows | Visit `/ui` in your browser |
+| **MCP (Claude)** | Conversational PM workflows | Run MCP server and ask in Claude |
+
+### Using the Web UI
+
+Open `http://localhost:3000/ui`. Paste an Agent Gateway API key (or register a read-only key from the UI). Each tab maps to a persona workflow:
+- For deeper details, see `docs/v2/UI_GUIDE.md`.
+- **PM Dashboard:** signal search, customer profile, query, ingestion
+- **PM Leader:** heatmaps, trends, opportunities
+- **New PM:** entity browse
+- **Stakeholder:** report generation
+- **Admin & Agents:** agent registration, source registry, event history
 
 ### What You Can Do
 
@@ -80,7 +106,7 @@ You'll get:
 - Pending entity reviews that need your attention
 - A count of new signals ingested since you last checked
 
-**Pro tip:** Make this your first Claude conversation each morning. Over time, the system learns your product area's patterns and surfaces more relevant signals.
+**Pro tip:** Make this your first daily conversation (ChatGPT Enterprise, UI, or Claude). Over time, the system learns your product area's patterns and surfaces more relevant signals.
 
 ### 2.2 Customer Impact Analysis
 
@@ -547,9 +573,9 @@ Every response indicates how recent the data is. The system tracks:
 
 ---
 
-## Appendix: Quick Reference — All 35 MCP Tools
+## Appendix: Quick Reference — MCP Tools
 
-You don't need to know tool names — Claude selects them automatically. But for reference:
+You don't need to know tool names — Claude selects them automatically. ChatGPT Enterprise uses Actions via the Agent Gateway. The list below is for MCP reference only.
 
 | Category | Tools | What They Do |
 |----------|-------|-------------|

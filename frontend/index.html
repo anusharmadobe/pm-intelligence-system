@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PM Intelligence V2</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <h1>PM Intelligence V2</h1>
+        <p>Context layer UI for PM, PM Leaders, and stakeholders.</p>
+      </div>
+      <div class="api-panel">
+        <label for="apiKeyInput">
+          Agent API Key
+          <input id="apiKeyInput" type="password" placeholder="Paste X-API-Key" />
+        </label>
+        <div class="api-actions">
+          <button id="saveApiKey">Save Key</button>
+          <button id="clearApiKey" class="secondary">Clear</button>
+          <button id="logoutApiKey" class="secondary">Logout</button>
+        </div>
+        <div class="api-actions">
+          <button id="registerReadOnly" class="secondary">Register Read-Only Agent</button>
+          <span id="apiKeyStatus" class="status-pill">No key</span>
+        </div>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="PM Intelligence Tabs">
+      <button data-tab="pm" role="tab" id="tab-pm" aria-controls="pm" aria-selected="true" tabindex="0">PM Dashboard</button>
+      <button data-tab="leader" role="tab" id="tab-leader" aria-controls="leader" aria-selected="false" tabindex="-1">PM Leader</button>
+      <button data-tab="newpm" role="tab" id="tab-newpm" aria-controls="newpm" aria-selected="false" tabindex="-1">New PM</button>
+      <button data-tab="stakeholder" role="tab" id="tab-stakeholder" aria-controls="stakeholder" aria-selected="false" tabindex="-1">Stakeholder</button>
+      <button data-tab="admin" role="tab" id="tab-admin" aria-controls="admin" aria-selected="false" tabindex="-1">Admin & Agents</button>
+      <button data-tab="health" role="tab" id="tab-health" aria-controls="health" aria-selected="false" tabindex="-1">System Health</button>
+    </nav>
+
+    <main>
+      <section id="pm" class="tab-panel" role="tabpanel" aria-labelledby="tab-pm">
+        <h2>PM Dashboard</h2>
+        <div class="panel-grid">
+          <div class="panel">
+            <h3>Search Signals</h3>
+            <label>Query <input id="searchQuery" type="text" placeholder="payments latency" /></label>
+            <label>
+              Source
+              <select id="searchSource">
+                <option value="all">All</option>
+                <option value="slack">Slack</option>
+                <option value="transcript">Transcript</option>
+                <option value="document">Document</option>
+                <option value="web_scrape">Web Scrape</option>
+                <option value="jira">Jira</option>
+                <option value="wiki">Wiki</option>
+              </select>
+            </label>
+            <label>Date From <input id="searchDateFrom" type="date" /></label>
+            <label>Date To <input id="searchDateTo" type="date" /></label>
+            <button id="runSearch">Run Search</button>
+            <pre id="searchResults" class="output"></pre>
+          </div>
+
+          <div class="panel">
+            <h3>Customer Profile</h3>
+            <label>Customer Name <input id="customerName" type="text" placeholder="Acme Corp" /></label>
+            <button id="fetchCustomer">Fetch Profile</button>
+            <pre id="customerProfile" class="output"></pre>
+          </div>
+
+          <div class="panel">
+            <h3>Ask a Question</h3>
+            <label>Question <input id="queryText" type="text" placeholder="What are the top issues?" /></label>
+            <button id="runQuery">Run Query</button>
+            <pre id="queryResult" class="output"></pre>
+          </div>
+
+          <div class="panel">
+            <h3>Ingest Signal (Agent Gateway)</h3>
+            <label>Source <input id="ingestSource" type="text" placeholder="manual" /></label>
+            <label>Content <textarea id="ingestContent" rows="4"></textarea></label>
+            <label>Metadata (JSON) <textarea id="ingestMetadata" rows="3" placeholder='{"source":"ui"}'></textarea></label>
+            <button id="ingestSignal">Ingest</button>
+            <pre id="ingestResult" class="output"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="leader" class="tab-panel" role="tabpanel" aria-labelledby="tab-leader">
+        <h2>PM Leader</h2>
+        <div class="panel-grid">
+          <div class="panel">
+            <h3>Heatmap</h3>
+            <label>
+              Dimension
+              <select id="heatmapDimension">
+                <option value="issues_by_customer">Issues by Customer</option>
+                <option value="issues_by_feature">Issues by Feature</option>
+                <option value="features_by_customer">Features by Customer</option>
+                <option value="themes_by_signal_volume">Themes by Signal Volume</option>
+              </select>
+            </label>
+            <label>
+              Metric
+              <select id="heatmapMetric">
+                <option value="customer_count">Customer Count</option>
+                <option value="signal_count">Signal Count</option>
+                <option value="severity_weighted">Severity Weighted</option>
+              </select>
+            </label>
+            <label>Limit <input id="heatmapLimit" type="number" value="10" /></label>
+            <button id="runHeatmap">Generate Heatmap</button>
+            <pre id="heatmapResults" class="output"></pre>
+          </div>
+
+          <div class="panel">
+            <h3>Trends</h3>
+            <label>
+              Entity Type
+              <select id="trendEntityType">
+                <option value="issue">Issue</option>
+                <option value="feature">Feature</option>
+                <option value="theme">Theme</option>
+                <option value="customer">Customer</option>
+              </select>
+            </label>
+            <label>
+              Direction
+              <select id="trendDirection">
+                <option value="all">All</option>
+                <option value="emerging">Emerging</option>
+                <option value="growing">Growing</option>
+                <option value="stable">Stable</option>
+                <option value="declining">Declining</option>
+              </select>
+            </label>
+            <label>Window Days <input id="trendWindow" type="number" value="28" /></label>
+            <button id="runTrends">Get Trends</button>
+            <pre id="trendResults" class="output"></pre>
+          </div>
+
+          <div class="panel">
+            <h3>Roadmap Opportunities</h3>
+            <button id="runOpportunities">Load Opportunities</button>
+            <pre id="opportunityResults" class="output"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="newpm" class="tab-panel" role="tabpanel" aria-labelledby="tab-newpm">
+        <h2>New PM Ramp-Up</h2>
+        <div class="panel-grid">
+          <div class="panel">
+            <h3>Browse Entities</h3>
+            <label>Search <input id="entitySearch" type="text" placeholder="payments" /></label>
+            <button id="runEntitySearch">Search</button>
+            <pre id="entityResults" class="output"></pre>
+          </div>
+          <div class="panel">
+            <h3>Entity Detail</h3>
+            <label>Entity ID <input id="entityId" type="text" placeholder="uuid" /></label>
+            <button id="fetchEntity">Load Entity</button>
+            <pre id="entityDetail" class="output"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="stakeholder" class="tab-panel" role="tabpanel" aria-labelledby="tab-stakeholder">
+        <h2>Stakeholder Reports</h2>
+        <div class="panel-grid">
+          <div class="panel">
+            <h3>Generate Shareable Report</h3>
+            <label>
+              Report Type
+              <select id="reportType">
+                <option value="weekly_digest">Weekly Digest</option>
+                <option value="customer_health_summary">Customer Health</option>
+                <option value="roadmap_summary">Roadmap Summary</option>
+                <option value="customer_impact_brief">Customer Impact Brief</option>
+                <option value="competitive_intel">Competitive Intel</option>
+                <option value="product_area_overview">Product Area Overview</option>
+              </select>
+            </label>
+            <label>Audience
+              <select id="reportAudience">
+                <option value="general">General</option>
+                <option value="leadership">Leadership</option>
+                <option value="engineering">Engineering</option>
+                <option value="design">Design</option>
+                <option value="cs_sales">CS/Sales</option>
+              </select>
+            </label>
+            <label>Time Window (days) <input id="reportWindow" type="number" value="30" /></label>
+            <button id="runReport">Generate</button>
+            <pre id="reportOutput" class="output"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="admin" class="tab-panel" role="tabpanel" aria-labelledby="tab-admin">
+        <h2>Admin & Agents</h2>
+        <div class="panel-grid">
+          <div class="panel">
+            <h3>Register Agent</h3>
+            <label>Name <input id="agentName" type="text" placeholder="ui-agent" /></label>
+            <label>
+              Class
+              <select id="agentClass">
+                <option value="orchestrator">Orchestrator</option>
+                <option value="autonomous">Autonomous</option>
+                <option value="integration">Integration</option>
+              </select>
+            </label>
+            <label><input id="agentPermRead" type="checkbox" checked /> Read</label>
+            <label><input id="agentPermWrite" type="checkbox" /> Write</label>
+            <label><input id="agentPermEvents" type="checkbox" checked /> Events</label>
+            <button id="registerAgent">Register Agent</button>
+            <pre id="agentRegistration" class="output"></pre>
+          </div>
+
+          <div class="panel">
+            <h3>Events History</h3>
+            <button id="loadEvents">Load Events</button>
+            <pre id="eventsOutput" class="output"></pre>
+          </div>
+
+          <div class="panel">
+            <h3>Source Registry</h3>
+            <label>Name <input id="sourceName" type="text" placeholder="crawler_bot" /></label>
+            <label>
+              Type
+              <select id="sourceType">
+                <option value="manual">Manual</option>
+                <option value="slack">Slack</option>
+                <option value="transcript">Transcript</option>
+                <option value="document">Document</option>
+                <option value="web_scrape">Web Scrape</option>
+                <option value="jira">Jira</option>
+                <option value="wiki">Wiki</option>
+              </select>
+            </label>
+            <button id="registerSource">Register Source</button>
+            <button id="loadSources" class="secondary">Load Sources</button>
+            <pre id="sourcesOutput" class="output"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="health" class="tab-panel" role="tabpanel" aria-labelledby="tab-health">
+        <h2>System Health</h2>
+        <button id="refreshHealth">Refresh</button>
+        <pre id="healthOutput" class="output"></pre>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

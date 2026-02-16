@@ -26,6 +26,20 @@
 - **Opportunities Detected**: 1
 - **Clustering**: Working correctly
 
+### 5. V2 End-to-End Script ✅
+- **Status**: PASSED
+- **Script**: `scripts/test_end_to_end_v2.ts`
+- **Checks**:
+  - Agent registration
+  - Agent gateway health
+  - Signal ingestion
+  - Customer profile
+  - Heatmap
+  - Trends
+  - Opportunities
+  - System health
+  - A2A JSON-RPC
+
 ## 📊 Test Results Details
 
 ### Signal Breakdown

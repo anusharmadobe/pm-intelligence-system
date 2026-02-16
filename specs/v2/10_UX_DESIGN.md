@@ -8,28 +8,27 @@
 
 ## 1. Design Philosophy
 
-### 1.1 MCP-First, No Custom UI (V2)
+### 1.1 Conversation-First + Web UI (V2)
 
-The system serves **four distinct personas** (see §1.3) entirely through **Claude Code** and **Claude Cowork** via MCP tools. There is no custom dashboard, web app, or GUI in V2.
+The system serves **multiple personas** (see §1.3) through **ChatGPT Enterprise Actions**, **Claude MCP tools**, and a lightweight **Web UI** at `/ui`.
 
 **Why:**
-- Avoid 3-4 months of frontend development before delivering PM value
-- Claude Code/Cowork already have excellent UIs for conversational interaction
-- PMs already use these tools — zero new tool adoption
-- MCP tools are immediately usable from any MCP-compatible host
-- Custom UI can be added in V3 if MCP proves insufficient
+- Conversation remains the fastest path to answers and artifacts
+- UI enables onboarding, admin workflows, and visual exploration
+- ChatGPT Actions standardize tool access for enterprise teams
+- MCP remains available for Claude users and existing workflows
 
-**The user's "UI" is natural language conversation with Claude, backed by structured MCP tool responses.**
+**The primary interface is still natural language, with the UI providing structured views and controls.**
 
-### 1.2 Conversation as Interface
+### 1.2 Conversation and UI as Interface
 
 The interaction model is:
 ```
-User speaks naturally → Claude selects appropriate MCP tool(s) → 
+User speaks naturally → ChatGPT/Claude selects appropriate tool(s) → 
 System returns structured data → Claude synthesizes into natural language response
 ```
 
-The user never needs to know which MCP tool is being called. Claude handles tool selection, parameter mapping, and response formatting.
+The user never needs to know which tool is being called. ChatGPT/Claude handles tool selection, parameter mapping, and response formatting.
 
 ### 1.3 Personas Driving UX Decisions
 
@@ -41,8 +40,35 @@ The UX design is informed by four personas (fully defined in `01_MASTER_PRD.md` 
 | **PM Leader — Strategist** | VP Product / PM Director | Broad, aggregated, strategic | Weekly | Portfolio heatmaps, trend reports, shareable summaries |
 | **New PM — Ramp-Up** | Onboarding PM | Exploratory, learning, comprehensive | Daily (first 2-4 weeks) | Context absorption, knowledge graph browsing, entity glossary |
 | **Stakeholder — Consumer** | Eng Manager, Designer, Sales, CS | Indirect (receives PM-generated artifacts) | Never (direct) | Artifact quality, data backing, clear structure |
+| **Ops/Admin** | Platform, IT, Security | Operational oversight | Weekly | Health checks, event logs, access control |
+| **Agent Builder** | Automation / Integration engineer | API-driven | Weekly | API keys, OpenAPI, event subscriptions |
 
 **Design implication:** Every interaction pattern below is tagged with the persona(s) it serves. MCP tool responses must be rich enough for all persona needs without requiring persona-specific tool variants.
+
+---
+
+### 1.4 Web UI Views (V2)
+
+The Web UI at `/ui` ships as a lightweight, role-based interface for quick exploration and admin workflows.
+
+| Persona | Primary UI Views |
+|---------|------------------|
+| PM — Daily Driver | Signal search, customer profile, manual ingestion |
+| PM Leader — Strategist | Heatmaps, trends, roadmap opportunities |
+| New PM — Ramp-Up | Entity search and entity detail |
+| Stakeholder — Consumer | Shareable report generation |
+| Ops/Admin | System health, event history |
+| Agent Builder | Agent registration, API key management |
+
+---
+
+### 1.5 UI Interaction Patterns
+
+- **PM Dashboard:** search signals by query and filters, view customer profile, ingest manual signals.
+- **PM Leader:** generate heatmaps, trends, and opportunity lists for weekly planning.
+- **New PM:** browse entities and open detail views with aliases and provenance.
+- **Stakeholder:** generate shareable reports for leadership, CS, and engineering.
+- **Ops/Admin:** monitor system health and event history; register agents for integrations.
 
 ---
 

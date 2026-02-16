@@ -4,6 +4,20 @@ PM Intelligence System for structured signals, opportunity detection, and roadma
 
 Note: The Cursor extension is archived at `backup/cursor_extension/` and is not active.
 
+## V2 Overview
+
+V2 adds a full context layer for PM workflows:
+
+- **Ingestion adapters** (Slack, transcripts, documents, web scrape)
+- **LLM extraction** with validation + hallucination guards
+- **Entity resolution** with human feedback loops
+- **Knowledge graph sync** (PostgreSQL as source of truth, Neo4j mirror)
+- **Agent Gateway** for ChatGPT Enterprise Actions and external agents
+- **MCP server** for Claude Code/Cowork tool access (optional)
+- **Web UI** at `/ui`
+- **Agent Gateway + A2A server** for external agent interactions
+- **Python microservices** for document parsing and GraphRAG indexing
+
 ## Architecture
 
 The system follows a strict 4-layer architecture:
@@ -22,6 +36,43 @@ Flow: `signals → opportunities → judgments → artifacts`
 - Human-in-the-loop required for judgments
 - Judgments are append-only (no overwrites)
 - No autonomous decisions
+
+## V2 Quick Start
+
+1. **Start infrastructure**
+   ```bash
+   docker compose up -d
+   ```
+
+2. **Python services**
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+   uvicorn python.document_parser.main:app --port 5002
+   uvicorn python.graphrag_indexer.main:app --port 5003
+   ```
+
+3. **Install + migrate**
+   ```bash
+   npm install
+   npm run migrate
+   npm run build
+   ```
+
+4. **Start API server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Start MCP server (Cursor/Claude tools, optional)**
+   ```bash
+   npx ts-node backend/mcp/server.ts
+   ```
+
+6. **Agent Gateway + A2A**
+   - Agent Gateway: `http://localhost:3000/api/agents/v1`
+   - A2A Agent Card: `http://localhost:3000/.well-known/agent.json`
 
 ## Quick Start
 
@@ -206,6 +257,12 @@ This system EXISTS to:
 ├── backup/cursor_extension/    # Archived Cursor IDE extension
 └── specs/              # Immutable contracts (DO NOT MODIFY)
 ```
+
+## Docs
+
+- V2 specs: `specs/v2/`
+- User and developer guides: `docs/v2/`
+- Architecture notes: `docs/analysis/`
 
 ### Building
 

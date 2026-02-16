@@ -1,0 +1,137 @@
+[
+  {
+    "id": "forum_thread_001",
+    "title": "PDF Generation Timeout in AEM Forms",
+    "body": "We are experiencing timeout issues when generating PDFs from adaptive forms. The process fails after 30 seconds with a timeout error. This happens consistently with forms that have more than 5 pages or contain embedded images.",
+    "author": "john_smith",
+    "created_at": "2024-01-10T09:30:00Z",
+    "tags": ["aem-forms", "pdf", "timeout", "performance"],
+    "view_count": 127,
+    "like_count": 8,
+    "replies": [
+      {
+        "id": "reply_001",
+        "body": "I'm experiencing the same issue. It seems to be related to the size of the form. Forms under 2MB work fine, but anything larger times out.",
+        "author": "sarah_jones",
+        "created_at": "2024-01-10T10:15:00Z",
+        "is_accepted_answer": false
+      },
+      {
+        "id": "reply_002",
+        "body": "This is a known issue. You need to increase the timeout setting in your OSGi configuration. Set com.adobe.fd.fp.timeout to 60000 (60 seconds). Also, ensure your server has sufficient memory allocated.",
+        "author": "adobe_expert",
+        "created_at": "2024-01-10T11:00:00Z",
+        "is_accepted_answer": true
+      }
+    ]
+  },
+  {
+    "id": "forum_thread_002",
+    "title": "SSO Integration with SAML 2.0",
+    "body": "Looking for guidance on integrating Single Sign-On (SSO) using SAML 2.0 with AEM Forms. We need to support multiple identity providers (Azure AD, Okta, OneLogin). Has anyone successfully implemented this?",
+    "author": "mike_chen",
+    "created_at": "2024-01-12T14:20:00Z",
+    "tags": ["sso", "saml", "authentication", "azure-ad"],
+    "view_count": 89,
+    "like_count": 5,
+    "replies": [
+      {
+        "id": "reply_003",
+        "body": "Yes, I've implemented SAML SSO with Azure AD. You'll need to configure the SAML Authentication Handler in OSGi. The key is to map the SAML attributes correctly to AEM user properties.",
+        "author": "security_admin",
+        "created_at": "2024-01-12T15:00:00Z",
+        "is_accepted_answer": true
+      }
+    ]
+  },
+  {
+    "id": "forum_thread_003",
+    "title": "Form Validation Not Working After Upgrade",
+    "body": "After upgrading to AEM Forms 6.5.15, our custom form validation rules stopped working. The forms submit without validation, which is a critical issue for our production environment. Has anyone else encountered this?",
+    "author": "developer_1",
+    "created_at": "2024-01-15T08:45:00Z",
+    "tags": ["validation", "upgrade", "bug", "critical"],
+    "view_count": 203,
+    "like_count": 12,
+    "replies": [
+      {
+        "id": "reply_004",
+        "body": "Check your clientlibs. The validation scripts might not be loading due to a breaking change in the client library management.",
+        "author": "dev_ops_guru",
+        "created_at": "2024-01-15T09:30:00Z",
+        "is_accepted_answer": false
+      },
+      {
+        "id": "reply_005",
+        "body": "This is a known regression in 6.5.15. Adobe released a hotfix (CFP 6.5.15.1) that addresses this. Apply the cumulative fix pack and the validation should work again.",
+        "author": "adobe_support",
+        "created_at": "2024-01-15T10:00:00Z",
+        "is_accepted_answer": true
+      }
+    ]
+  },
+  {
+    "id": "forum_thread_004",
+    "title": "Performance Issues with Large Forms",
+    "body": "Our application has forms with 100+ fields and complex business logic. The page load time is unacceptable (8-10 seconds). We've tried lazy loading and caching, but performance is still poor. Any optimization tips?",
+    "author": "perf_engineer",
+    "created_at": "2024-01-18T13:00:00Z",
+    "tags": ["performance", "optimization", "large-forms"],
+    "view_count": 156,
+    "like_count": 9,
+    "replies": [
+      {
+        "id": "reply_006",
+        "body": "Consider breaking the form into multiple steps/pages. Use the wizard pattern to improve perceived performance. Also, defer loading of non-critical fields.",
+        "author": "ux_designer",
+        "created_at": "2024-01-18T14:00:00Z",
+        "is_accepted_answer": false
+      },
+      {
+        "id": "reply_007",
+        "body": "We faced similar issues. The solution was to: 1) Enable fragment caching, 2) Use async loading for complex calculations, 3) Minimize the use of repeatable panels. This reduced our load time to under 2 seconds.",
+        "author": "solutions_architect",
+        "created_at": "2024-01-18T15:00:00Z",
+        "is_accepted_answer": true
+      }
+    ]
+  },
+  {
+    "id": "forum_thread_005",
+    "title": "Export to Excel Feature Request",
+    "body": "It would be great if AEM Forms supported direct export of form data to Excel format. Currently, we can only export to CSV or PDF. Excel export with formatting would be very useful for reporting.",
+    "author": "product_manager",
+    "created_at": "2024-01-20T10:00:00Z",
+    "tags": ["feature-request", "excel", "export"],
+    "view_count": 67,
+    "like_count": 15,
+    "replies": [
+      {
+        "id": "reply_008",
+        "body": "+1 for this feature. Our clients are constantly asking for Excel exports with charts and formatting.",
+        "author": "sales_engineer",
+        "created_at": "2024-01-20T11:00:00Z",
+        "is_accepted_answer": false
+      }
+    ]
+  },
+  {
+    "id": "forum_thread_006",
+    "title": "API Rate Limiting Best Practices",
+    "body": "We're integrating AEM Forms with external systems via REST APIs. What are the recommended rate limiting settings to prevent abuse while ensuring good performance for legitimate users?",
+    "author": "api_developer",
+    "created_at": "2024-01-22T09:00:00Z",
+    "tags": ["api", "rate-limiting", "integration"],
+    "view_count": 92,
+    "like_count": 6,
+    "replies": [
+      {
+        "id": "reply_009",
+        "body": "Adobe recommends 100 requests per minute for standard integrations. Use API keys for authentication and implement exponential backoff in your client code.",
+        "author": "integration_expert",
+        "created_at": "2024-01-22T10:00:00Z",
+        "is_accepted_answer": true
+      }
+    ]
+  }
+]

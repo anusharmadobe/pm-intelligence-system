@@ -10,7 +10,8 @@ import {
   Opportunity, 
   ScoredOpportunity, 
   getSignalsForOpportunity,
-  getOpportunitiesWithScores
+  getOpportunitiesWithScores,
+  OpportunityQueryOptions
 } from './opportunity_service';
 import { getThemePath } from '../config/theme_dictionary';
 import { logger } from '../utils/logger';
@@ -112,6 +113,7 @@ export async function generateJiraIssue(
   
   // Enhance with metadata
   const enhanced = enhanceWithMetadata(parsed, opportunity, signals, finalConfig, context);
+  await applySignalCategoryLabel(enhanced, signals);
   enhanced.rawLLMResponse = llmResponse;
   
   logger.info('JIRA issue generated', {
@@ -190,6 +192,33 @@ function prepareIssueContext(
     confidenceScore: scored.roadmapScore?.confidenceScore,
     totalSignals: signals.length
   };
+}
+
+async function applySignalCategoryLabel(issue: JiraIssueTemplate, signals: Signal[]): Promise<void> {
+  if (signals.length === 0) return;
+  const pool = getDbPool();
+  const signalIds = signals.map((signal) => signal.id);
+  const result = await pool.query(
+    `
+      SELECT extraction->>'signal_category' AS signal_category
+      FROM signal_extractions
+      WHERE signal_id = ANY($1)
+    `,
+    [signalIds]
+  );
+  const counts = new Map<string, number>();
+  result.rows.forEach((row) => {
+    const category = row.signal_category;
+    if (!category) return;
+    counts.set(category, (counts.get(category) || 0) + 1);
+  });
+  const community = counts.get('community_forum_ux') || 0;
+  const product = counts.get('product_issue') || 0;
+  if (community === 0 && product === 0) return;
+  issue.labels = issue.labels.filter(
+    (label) => label !== 'CommunityForumFixRequired' && label !== 'ProductFixRequired'
+  );
+  issue.labels.push(community >= product ? 'CommunityForumFixRequired' : 'ProductFixRequired');
 }
 
 /**
@@ -437,10 +466,11 @@ ${partial.technicalNotes || 'No specific technical notes.'}
  */
 export async function generateJiraIssuesForTopOpportunities(
   limit: number = 10,
-  config: Partial<JiraGenerationConfig> = {}
+  config: Partial<JiraGenerationConfig> = {},
+  queryOptions: OpportunityQueryOptions = {}
 ): Promise<JiraIssueTemplate[]> {
   const llmProvider = createLLMProviderFromEnv();
-  const opportunities = await getOpportunitiesWithScores();
+  const opportunities = await getOpportunitiesWithScores({}, queryOptions);
   
   // Sort by overall score and take top N
   const topOpportunities = opportunities
@@ -569,6 +599,14 @@ export async function storeJiraIssueTemplate(issue: JiraIssueTemplate): Promise<
       exported_at TIMESTAMP
     )
   `);
+
+  const existing = await pool.query(
+    `SELECT id FROM jira_issue_templates WHERE opportunity_id = $1 ORDER BY created_at DESC LIMIT 1`,
+    [issue.sourceOpportunityId]
+  );
+  if (existing.rows.length > 0) {
+    return existing.rows[0].id;
+  }
   
   const result = await pool.query(`
     INSERT INTO jira_issue_templates (

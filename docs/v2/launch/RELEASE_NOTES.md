@@ -8,7 +8,7 @@
 
 ## Highlights
 
-PM Intelligence V2 is a ground-up evolution from a Slack-only signal processing pipeline into a **multi-source knowledge graph** with entity resolution, natural language querying via MCP, and an AI agent ecosystem.
+PM Intelligence V2 is a ground-up evolution from a Slack-only signal processing pipeline into a **multi-source knowledge graph** with entity resolution, natural language querying via ChatGPT Actions/MCP, and an AI agent ecosystem.
 
 ---
 
@@ -112,7 +112,7 @@ PM Intelligence V2 is a ground-up evolution from a Slack-only signal processing 
 | Data sources | Slack only | Slack + transcripts + documents + web scrapes |
 | Storage | PostgreSQL + pgvector | PostgreSQL + pgvector + Neo4j + Redis |
 | Entity handling | Flat extraction | Knowledge graph with entity resolution |
-| Interface | Custom scripts, VS Code extension | MCP Server (35 tools) + A2A + Agent Gateway |
+| Interface | Custom scripts, VS Code extension | ChatGPT Actions + MCP Server (35 tools) + A2A + Agent Gateway + Web UI |
 | Pipeline | Linear (ingest → embed → cluster → score) | 7-plane architecture with event bus |
 | Feedback | None | Human-in-the-loop with persona hierarchy |
 | Agents | None | 7 built-in agents, extensible via API |
@@ -143,7 +143,7 @@ V2 is **additive** — it extends V1 without breaking it. V1 pipeline continues 
 ## Known Limitations
 
 - **Single PM deployment only** — multi-tenant support planned for V3
-- **No custom UI** — all interaction via Claude Code/Cowork MCP tools
+- **Built-in Web UI** — `/ui` for role-based exploration
 - **Manual ingestion for non-Slack sources** — transcripts, documents, and emails require manual upload
 - **JIRA/Wiki connectors TBD** — awaiting MCP configuration
 - **PII stored as-is** — acceptable for single-PM local deployment; V3 adds masking

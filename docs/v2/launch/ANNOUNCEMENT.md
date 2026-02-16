@@ -16,7 +16,7 @@ PMs spend **2-4 hours per day** just gathering and synthesizing information befo
 
 PM Intelligence ingests data from all the places product signals live — Slack channels, meeting transcripts, documents (PDF, PowerPoint, Word, Excel), web scrapes, and more — and unifies them into a single **knowledge graph** with high-quality entity resolution.
 
-Then it exposes that unified intelligence through **Claude Code** and **Claude Cowork** via 35 MCP tools. No new UI to learn. No dashboard to configure. Just ask a question in plain English and get an answer backed by real data with a traceable source chain.
+Then it exposes that unified intelligence through **ChatGPT Enterprise Actions**, the built-in **Web UI**, and **Claude Code/Cowork** via 35 MCP tools. Ask a question in plain English and get an answer backed by real data with a traceable source chain.
 
 ## What's New in V2
 
@@ -44,7 +44,7 @@ The core differentiator. The system automatically recognizes that "Acme Corp", "
 
 Target accuracy: >90% within 90 days of use.
 
-### 35 MCP Tools via Claude
+### 35 MCP Tools + ChatGPT Actions
 
 From morning briefings to artifact generation, everything happens through natural conversation:
 - *"What happened overnight?"* — instant briefing
@@ -78,6 +78,8 @@ Every insight traces back to its source signals. When PM Intelligence says "12 c
 ## By the Numbers
 
 - **35** MCP tools for human interaction
+- **ChatGPT Actions** via the Agent Gateway OpenAPI spec
+- **Web UI** at `/ui` for visual exploration
 - **8** A2A skills for agent interaction
 - **6** data sources supported
 - **4** human personas served
@@ -87,10 +89,10 @@ Every insight traces back to its source signals. When PM Intelligence says "12 c
 
 ## Getting Started
 
-If your team already uses Claude Code or Claude Cowork, getting started is straightforward:
+If your team already uses ChatGPT Enterprise or Claude Code/Cowork, getting started is straightforward:
 
 1. Deploy the PM Intelligence system (Docker Compose for infrastructure, Node.js + Python for services)
-2. Configure the MCP server in your Claude environment
+2. Configure ChatGPT Actions (or the MCP server for Claude)
 3. Start asking questions
 
 No training required. The interface is natural language.
@@ -98,7 +100,7 @@ No training required. The interface is natural language.
 ## What's Next
 
 V3 planning is underway. We're exploring:
-- Custom UI dashboards (if MCP proves insufficient for any workflows)
+- Custom UI dashboards and role-specific views
 - Multi-PM / multi-tenant support
 - Real-time streaming ingestion
 - Direct JIRA and Confluence connectors

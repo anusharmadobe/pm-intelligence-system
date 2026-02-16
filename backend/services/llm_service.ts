@@ -1,6 +1,6 @@
 /**
  * LLM Service - Only used in Judgment and Artifact layers.
- * Uses Cursor's built-in LLMs via extension layer.
+ * Supports Azure OpenAI, OpenAI, ChatGPT Enterprise (via OpenAI-compatible endpoint), or mock.
  * 
  * Constraints:
  * - Do NOT recommend decisions
@@ -9,6 +9,8 @@
  */
 
 import { logger } from '../utils/logger';
+import { fetchWithRetry } from '../utils/network_retry';
+import { getRunMetrics } from '../utils/run_metrics';
 
 export interface LLMResponse {
   content: string;
@@ -22,7 +24,7 @@ export type LLMProvider = (prompt: string) => Promise<string>;
  * LLM Provider configuration
  */
 export interface LLMProviderConfig {
-  provider: 'openai' | 'azure_openai' | 'anthropic' | 'cursor' | 'mock';
+  provider: 'openai' | 'azure_openai' | 'chatgpt_enterprise' | 'anthropic' | 'cursor' | 'mock';
   model?: string;
   apiKey?: string;
   endpoint?: string;
@@ -60,9 +62,11 @@ export function createAzureOpenAIProvider(
 
   return async (prompt: string): Promise<string> => {
     const startTime = Date.now();
+    const metrics = getRunMetrics();
+    metrics.increment('llm_calls');
     
     try {
-      const response = await fetch(url, {
+      const response = await fetchWithRetry(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,15 +79,22 @@ export function createAzureOpenAIProvider(
           temperature,
           max_tokens: maxTokens
         })
+      }, {
+        operationName: `azure_chat_${deployment}`
       });
 
       if (!response.ok) {
+        if (response.status === 429) {
+          metrics.increment('llm_429s');
+        }
+        metrics.increment('llm_errors');
         const error = await response.text();
         throw new Error(`Azure OpenAI API error: ${response.status} - ${error}`);
       }
 
       const data = await response.json() as { choices: Array<{ message?: { content?: string } }> };
       const content = data.choices[0]?.message?.content || '';
+      metrics.addTokenUsage(Math.ceil(prompt.length / 4), Math.ceil(content.length / 4));
       
       logger.debug('Azure OpenAI LLM response', {
         deployment,
@@ -94,6 +105,7 @@ export function createAzureOpenAIProvider(
 
       return content;
     } catch (error: any) {
+      metrics.increment('llm_errors');
       logger.error('Azure OpenAI LLM failed', { error: error.message, deployment });
       throw error;
     }
@@ -105,20 +117,25 @@ export function createAzureOpenAIProvider(
  */
 export function createOpenAIProvider(
   apiKey: string,
-  model: string = 'gpt-4-turbo-preview',
-  options: { temperature?: number; maxTokens?: number } = {}
+  model: string = 'gpt-4o',
+  options: { temperature?: number; maxTokens?: number } = {},
+  baseUrl?: string
 ): LLMProvider {
   if (!apiKey) {
     throw new Error('OpenAI API key is required');
   }
 
   const { temperature = 0.7, maxTokens = 4096 } = options;
+  const apiBase = (baseUrl || 'https://api.openai.com').replace(/\/$/, '');
+  const url = `${apiBase}/v1/chat/completions`;
 
   return async (prompt: string): Promise<string> => {
     const startTime = Date.now();
+    const metrics = getRunMetrics();
+    metrics.increment('llm_calls');
     
     try {
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetchWithRetry(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -132,15 +149,22 @@ export function createOpenAIProvider(
           temperature,
           max_tokens: maxTokens
         })
+      }, {
+        operationName: `openai_chat_${model}`
       });
 
       if (!response.ok) {
+        if (response.status === 429) {
+          metrics.increment('llm_429s');
+        }
+        metrics.increment('llm_errors');
         const error = await response.text();
         throw new Error(`OpenAI API error: ${response.status} - ${error}`);
       }
 
       const data = await response.json() as { choices: Array<{ message?: { content?: string } }> };
       const content = data.choices[0]?.message?.content || '';
+      metrics.addTokenUsage(Math.ceil(prompt.length / 4), Math.ceil(content.length / 4));
       
       logger.debug('OpenAI LLM response', {
         model,
@@ -151,6 +175,7 @@ export function createOpenAIProvider(
 
       return content;
     } catch (error: any) {
+      metrics.increment('llm_errors');
       logger.error('OpenAI LLM failed', { error: error.message, model });
       throw error;
     }
@@ -185,10 +210,53 @@ export function createMockLLMProvider(mockResponse?: string): LLMProvider {
 /**
  * Creates an LLM provider from environment variables
  */
+export function validateLLMProviderEnv(): void {
+  const provider = process.env.LLM_PROVIDER || 'mock';
+  if (provider === 'mock') return;
+
+  switch (provider) {
+    case 'chatgpt_enterprise': {
+      const apiKey = process.env.CHATGPT_ENTERPRISE_API_KEY || process.env.OPENAI_API_KEY;
+      if (!apiKey) {
+        throw new Error('CHATGPT_ENTERPRISE_API_KEY (or OPENAI_API_KEY) is required for chatgpt_enterprise');
+      }
+      return;
+    }
+    case 'azure_openai': {
+      if (!process.env.AZURE_OPENAI_ENDPOINT || !process.env.AZURE_OPENAI_KEY) {
+        throw new Error('AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_KEY are required for azure_openai');
+      }
+      return;
+    }
+    case 'openai': {
+      if (!process.env.OPENAI_API_KEY) {
+        throw new Error('OPENAI_API_KEY is required for openai');
+      }
+      return;
+    }
+    default:
+      return;
+  }
+}
+
 export function createLLMProviderFromEnv(): LLMProvider {
   const provider = process.env.LLM_PROVIDER || 'mock';
+
+  if (process.env.NODE_ENV === 'production') {
+    validateLLMProviderEnv();
+  }
   
   switch (provider) {
+    case 'chatgpt_enterprise':
+      return createOpenAIProvider(
+        process.env.CHATGPT_ENTERPRISE_API_KEY || process.env.OPENAI_API_KEY || '',
+        process.env.CHATGPT_ENTERPRISE_MODEL || process.env.OPENAI_MODEL || 'gpt-4o',
+        {
+          temperature: process.env.LLM_TEMPERATURE ? parseFloat(process.env.LLM_TEMPERATURE) : undefined,
+          maxTokens: process.env.LLM_MAX_TOKENS ? parseInt(process.env.LLM_MAX_TOKENS) : undefined
+        },
+        process.env.CHATGPT_ENTERPRISE_BASE_URL || process.env.OPENAI_BASE_URL
+      );
     case 'azure_openai':
       return createAzureOpenAIProvider(
         process.env.AZURE_OPENAI_ENDPOINT || '',
@@ -204,11 +272,12 @@ export function createLLMProviderFromEnv(): LLMProvider {
     case 'openai':
       return createOpenAIProvider(
         process.env.OPENAI_API_KEY || '',
-        process.env.OPENAI_MODEL || 'gpt-4-turbo-preview',
+        process.env.OPENAI_MODEL || 'gpt-4o',
         {
           temperature: process.env.LLM_TEMPERATURE ? parseFloat(process.env.LLM_TEMPERATURE) : undefined,
           maxTokens: process.env.LLM_MAX_TOKENS ? parseInt(process.env.LLM_MAX_TOKENS) : undefined
-        }
+        },
+        process.env.OPENAI_BASE_URL
       );
     
     case 'mock':

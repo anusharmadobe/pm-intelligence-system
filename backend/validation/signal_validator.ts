@@ -1,4 +1,5 @@
 import { RawSignal } from '../processing/signal_extractor';
+import { logger } from '../utils/logger';
 
 export interface ValidationError {
   field: string;
@@ -70,7 +71,9 @@ export function validateSignal(signal: RawSignal): ValidationError[] {
     if (summaryKeywords.some(keyword => lowerText.includes(keyword))) {
       // This is a warning, not an error - signals might legitimately contain these words
       // But we log it for review
-      console.warn(`Signal may contain summary/insight language: ${signal.text.substring(0, 100)}`);
+      logger.warn('Signal may contain summary/insight language', {
+        excerpt: signal.text.substring(0, 100)
+      });
     }
   }
 

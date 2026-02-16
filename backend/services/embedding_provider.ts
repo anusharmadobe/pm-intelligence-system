@@ -1,4 +1,6 @@
 import { logger } from '../utils/logger';
+import { fetchWithRetry } from '../utils/network_retry';
+import { getRunMetrics } from '../utils/run_metrics';
 
 /**
  * Embedding provider type - simple function signature following LLM provider pattern
@@ -19,6 +21,7 @@ export interface EmbeddingProviderConfig {
   dimensions?: number;
   apiKey?: string;
   endpoint?: string;
+  baseUrl?: string;
   deployment?: string;
   apiVersion?: string;
   timeout?: number;
@@ -67,7 +70,8 @@ export function createEmbeddingProvider(config: EmbeddingProviderConfig): Embedd
       return createOpenAIEmbeddingProvider(
         fullConfig.apiKey || process.env.OPENAI_API_KEY || '',
         fullConfig.model,
-        fullConfig.dimensions
+        fullConfig.dimensions,
+        fullConfig.baseUrl || process.env.OPENAI_BASE_URL
       );
     case 'azure_openai':
       return createAzureOpenAIEmbeddingProvider(
@@ -96,14 +100,20 @@ export function createEmbeddingProvider(config: EmbeddingProviderConfig): Embedd
 export function createOpenAIEmbeddingProvider(
   apiKey: string,
   model: string = 'text-embedding-3-large',
-  dimensions?: number
+  dimensions?: number,
+  baseUrl?: string
 ): EmbeddingProvider {
   if (!apiKey) {
     throw new Error('OpenAI API key is required');
   }
 
+  const apiBase = (baseUrl || 'https://api.openai.com').replace(/\/$/, '');
+  const url = `${apiBase}/v1/embeddings`;
+
   return async (text: string): Promise<number[]> => {
     const startTime = Date.now();
+    const metrics = getRunMetrics();
+    metrics.increment('embedding_calls');
     
     try {
       const body: any = {
@@ -116,16 +126,19 @@ export function createOpenAIEmbeddingProvider(
         body.dimensions = dimensions;
       }
 
-      const response = await fetch('https://api.openai.com/v1/embeddings', {
+      const response = await fetchWithRetry(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify(body)
+      }, {
+        operationName: `openai_embedding_${model}`
       });
 
       if (!response.ok) {
+        metrics.increment('embedding_errors');
         const error = await response.text();
         throw new Error(`OpenAI API error: ${response.status} - ${error}`);
       }
@@ -141,6 +154,7 @@ export function createOpenAIEmbeddingProvider(
 
       return embedding;
     } catch (error: any) {
+      metrics.increment('embedding_errors');
       logger.error('OpenAI embedding failed', { error: error.message, model });
       throw error;
     }
@@ -153,16 +167,22 @@ export function createOpenAIEmbeddingProvider(
 export function createOpenAIBatchEmbeddingProvider(
   apiKey: string,
   model: string = 'text-embedding-3-large',
-  dimensions?: number
+  dimensions?: number,
+  baseUrl?: string
 ): BatchEmbeddingProvider {
   if (!apiKey) {
     throw new Error('OpenAI API key is required');
   }
 
+  const apiBase = (baseUrl || 'https://api.openai.com').replace(/\/$/, '');
+  const url = `${apiBase}/v1/embeddings`;
+
   return async (texts: string[]): Promise<number[][]> => {
     if (texts.length === 0) return [];
     
     const startTime = Date.now();
+    const metrics = getRunMetrics();
+    metrics.increment('embedding_calls');
     
     try {
       const body: any = {
@@ -174,16 +194,19 @@ export function createOpenAIBatchEmbeddingProvider(
         body.dimensions = dimensions;
       }
 
-      const response = await fetch('https://api.openai.com/v1/embeddings', {
+      const response = await fetchWithRetry(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify(body)
+      }, {
+        operationName: `openai_embedding_batch_${model}`
       });
 
       if (!response.ok) {
+        metrics.increment('embedding_errors');
         const error = await response.text();
         throw new Error(`OpenAI API error: ${response.status} - ${error}`);
       }
@@ -203,6 +226,7 @@ export function createOpenAIBatchEmbeddingProvider(
 
       return embeddings;
     } catch (error: any) {
+      metrics.increment('embedding_errors');
       logger.error('OpenAI batch embedding failed', { error: error.message, model, count: texts.length });
       throw error;
     }
@@ -234,9 +258,11 @@ export function createAzureOpenAIEmbeddingProvider(
 
   return async (text: string): Promise<number[]> => {
     const startTime = Date.now();
+    const metrics = getRunMetrics();
+    metrics.increment('embedding_calls');
     
     try {
-      const response = await fetch(url, {
+      const response = await fetchWithRetry(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -245,9 +271,12 @@ export function createAzureOpenAIEmbeddingProvider(
         body: JSON.stringify({
           input: text
         })
+      }, {
+        operationName: `azure_embedding_${deployment}`
       });
 
       if (!response.ok) {
+        metrics.increment('embedding_errors');
         const error = await response.text();
         throw new Error(`Azure OpenAI API error: ${response.status} - ${error}`);
       }
@@ -263,6 +292,7 @@ export function createAzureOpenAIEmbeddingProvider(
 
       return embedding;
     } catch (error: any) {
+      metrics.increment('embedding_errors');
       logger.error('Azure OpenAI embedding failed', { error: error.message, deployment, endpoint });
       throw error;
     }
@@ -291,9 +321,11 @@ export function createAzureOpenAIBatchEmbeddingProvider(
     if (texts.length === 0) return [];
     
     const startTime = Date.now();
+    const metrics = getRunMetrics();
+    metrics.increment('embedding_calls');
     
     try {
-      const response = await fetch(url, {
+      const response = await fetchWithRetry(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -302,9 +334,12 @@ export function createAzureOpenAIBatchEmbeddingProvider(
         body: JSON.stringify({
           input: texts
         })
+      }, {
+        operationName: `azure_embedding_batch_${deployment}`
       });
 
       if (!response.ok) {
+        metrics.increment('embedding_errors');
         const error = await response.text();
         throw new Error(`Azure OpenAI API error: ${response.status} - ${error}`);
       }
@@ -324,6 +359,7 @@ export function createAzureOpenAIBatchEmbeddingProvider(
 
       return embeddings;
     } catch (error: any) {
+      metrics.increment('embedding_errors');
       logger.error('Azure OpenAI batch embedding failed', { error: error.message, deployment, count: texts.length });
       throw error;
     }

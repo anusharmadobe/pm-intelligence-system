@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0",
+  "name": "PM Intelligence A2A Server",
+  "description": "PM Intelligence Context Layer A2A interface for external agents",
+  "version": "2.0.0",
+  "protocols": ["a2a"],
+  "defaultInputModes": ["application/json", "text/plain"],
+  "defaultOutputModes": ["application/json"],
+  "securitySchemes": {
+    "apiKey": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key"
+    }
+  },
+  "security": [{ "apiKey": [] }],
+  "skills": [
+    {
+      "id": "query-customer-profile",
+      "name": "Customer Profile Query",
+      "description": "Returns comprehensive customer profile: health score, features used, active issues, recent signals, stakeholders, and trends.",
+      "tags": ["customer", "profile", "health", "query"]
+    },
+    {
+      "id": "query-heatmap",
+      "name": "Issue Heatmap",
+      "description": "Returns severity-weighted heatmap of issues by customer, feature area, or product. Supports time-window filtering.",
+      "tags": ["analytics", "heatmap", "issues", "severity"]
+    },
+    {
+      "id": "query-trends",
+      "name": "Trend Analysis",
+      "description": "Returns emerging, growing, stable, and declining trends for issues, features, or customers over a configurable time window.",
+      "tags": ["analytics", "trends", "temporal"]
+    },
+    {
+      "id": "query-opportunities",
+      "name": "Opportunity Priorities",
+      "description": "Returns prioritized opportunities with scoring, customer impact, and provenance chains.",
+      "tags": ["roadmap", "priorities", "opportunities"]
+    },
+    {
+      "id": "generate-report",
+      "name": "Report Generation",
+      "description": "Generates shareable reports: customer health summary, weekly digest, roadmap summary, competitive intel.",
+      "tags": ["reports", "executive", "digest"]
+    },
+    {
+      "id": "ingest-signal",
+      "name": "Signal Ingestion",
+      "description": "Ingest a new signal through the full pipeline: normalization, extraction, entity resolution, graph sync.",
+      "tags": ["ingestion", "signals"]
+    },
+    {
+      "id": "propose-entity-change",
+      "name": "Entity Change Proposal",
+      "description": "Propose an entity merge, split, or cleanup for human approval.",
+      "tags": ["entities", "proposal", "quality"]
+    },
+    {
+      "id": "query-provenance",
+      "name": "Provenance Chain",
+      "description": "Trace an insight back to its source signals and extractions.",
+      "tags": ["provenance", "evidence", "audit"]
+    },
+    {
+      "id": "query-knowledge",
+      "name": "Knowledge Query",
+      "description": "Answer a natural language question with supporting signals and confidence.",
+      "tags": ["query", "rag", "analysis"]
+    }
+  ],
+  "supportsAuthenticatedExtendedCard": false
+}

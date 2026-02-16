@@ -1,0 +1,420 @@
+#!/usr/bin/env ts-node
+/**
+ * Ingest community forum threads into the V2 pipeline.
+ * Supports:
+ * - content-hash dedup
+ * - boilerplate filtering
+ * - checkpoint/resume cursor
+ * - replay of failed signals
+ */
+import 'dotenv/config';
+
+import { readFileSync, readdirSync, writeFileSync, existsSync, mkdirSync, unlinkSync } from 'fs';
+import { join, basename } from 'path';
+import { mapForumThreadToRawSignals, ForumThread } from '../backend/processing/community_forum_mapper';
+import { AdapterOutput, NormalizerService, RawSignal } from '../backend/ingestion/normalizer_service';
+import { IngestionPipelineService } from '../backend/services/ingestion_pipeline_service';
+import { closeDbPool, getDbPool } from '../backend/db/connection';
+import { logger } from '../backend/utils/logger';
+import { isBoilerplateMessage } from '../backend/utils/boilerplate_filter';
+import {
+  recordFailedSignalAttempt,
+  markFailedSignalRecovered
+} from '../backend/services/failed_signal_service';
+import { getRunMetrics } from '../backend/utils/run_metrics';
+
+type IngestConfig = {
+  limitThreads?: number;
+  batchSize: number;
+  delayMs: number;
+  skipShort: boolean;
+  minLength: number;
+  skipBoilerplate: boolean;
+  resume: boolean;
+  resetCursor: boolean;
+  replayFailures: boolean;
+  replayLimit: number;
+};
+
+type IngestCursor = {
+  fileIndex: number;
+  threadIndex: number;
+  batchIndex: number;
+  updatedAt: string;
+};
+
+type IngestStats = {
+  files: number;
+  threads: number;
+  signals: number;
+  ingested: number;
+  skippedShort: number;
+  skippedInvalid: number;
+  skippedBoilerplate: number;
+  skippedDuplicate: number;
+  errors: number;
+  batches: number;
+  replayAttempted: number;
+  replayRecovered: number;
+  runId: string;
+  startedAt: string;
+  completedAt?: string;
+};
+
+const DATA_DIR = join(process.cwd(), 'data', 'raw', 'community_forums');
+const OUTPUT_FILE = join(process.cwd(), 'output', 'forum_ingestion_summary.json');
+const CURSOR_FILE = join(process.cwd(), 'output', 'ingestion_cursor.json');
+
+function parseArgs(): IngestConfig {
+  const args = process.argv.slice(2);
+  const config: IngestConfig = {
+    batchSize: 50,
+    delayMs: 0,
+    skipShort: false,
+    minLength: 50,
+    skipBoilerplate: false,
+    resume: false,
+    resetCursor: false,
+    replayFailures: false,
+    replayLimit: 0
+  };
+
+  for (const arg of args) {
+    if (arg.startsWith('--limit=')) {
+      config.limitThreads = parseInt(arg.split('=')[1], 10);
+    } else if (arg.startsWith('--batch-size=')) {
+      config.batchSize = parseInt(arg.split('=')[1], 10);
+    } else if (arg.startsWith('--delay-ms=')) {
+      config.delayMs = parseInt(arg.split('=')[1], 10);
+    } else if (arg === '--skip-short') {
+      config.skipShort = true;
+    } else if (arg.startsWith('--min-length=')) {
+      config.minLength = parseInt(arg.split('=')[1], 10);
+    } else if (arg === '--skip-boilerplate') {
+      config.skipBoilerplate = true;
+    } else if (arg === '--resume') {
+      config.resume = true;
+    } else if (arg === '--reset') {
+      config.resetCursor = true;
+    } else if (arg === '--replay-failures') {
+      config.replayFailures = true;
+    } else if (arg.startsWith('--replay-limit=')) {
+      config.replayLimit = parseInt(arg.split('=')[1], 10);
+    }
+  }
+
+  return config;
+}
+
+function pickTimestamp(metadata: Record<string, unknown> | undefined): string | undefined {
+  if (!metadata) return undefined;
+  const commentDate = metadata.comment_date as string | undefined;
+  const answerDate = metadata.answer_date as string | undefined;
+  const postedDate = metadata.date_posted as string | undefined;
+  return commentDate || answerDate || postedDate;
+}
+
+function sleep(ms: number): Promise<void> {
+  if (!ms) return Promise.resolve();
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function saveCursor(cursor: IngestCursor): void {
+  if (!existsSync(join(process.cwd(), 'output'))) {
+    mkdirSync(join(process.cwd(), 'output'), { recursive: true });
+  }
+  writeFileSync(CURSOR_FILE, JSON.stringify(cursor, null, 2));
+}
+
+function loadCursor(): IngestCursor | null {
+  if (!existsSync(CURSOR_FILE)) {
+    return null;
+  }
+  try {
+    return JSON.parse(readFileSync(CURSOR_FILE, 'utf-8')) as IngestCursor;
+  } catch {
+    return null;
+  }
+}
+
+function shouldSkipByCursor(cursor: IngestCursor | null, fileIndex: number, threadIndex: number): boolean {
+  if (!cursor) return false;
+  if (fileIndex < cursor.fileIndex) return true;
+  if (fileIndex > cursor.fileIndex) return false;
+  return threadIndex < cursor.threadIndex;
+}
+
+async function processBatch(params: {
+  pipeline: IngestionPipelineService;
+  batch: RawSignal[];
+  stats: IngestStats;
+  runId: string;
+  signalSourceRefs: Map<string, string>;
+}): Promise<void> {
+  const { pipeline, batch, stats, runId, signalSourceRefs } = params;
+  if (batch.length === 0) return;
+  try {
+    await pipeline.ingest(batch);
+    stats.ingested += batch.length;
+  } catch (error: any) {
+    logger.warn('Batch ingestion failed, retrying per signal', { error: error.message });
+    for (const signal of batch) {
+      try {
+        await pipeline.ingest([signal]);
+        stats.ingested += 1;
+      } catch (innerError: any) {
+        stats.errors += 1;
+        logger.error('Signal ingestion failed', {
+          error: innerError.message,
+          signalId: signal.id
+        });
+        try {
+          await recordFailedSignalAttempt({
+            signalId: signal.id,
+            sourceRef: signalSourceRefs.get(signal.id) || null,
+            runId,
+            errorType: 'ingestion_signal_failure',
+            errorMessage: innerError.message || 'unknown error',
+            status: 'pending'
+          });
+        } catch (ledgerError: any) {
+          logger.warn('Failed to write failed-signal ledger entry; continuing ingestion', {
+            signalId: signal.id,
+            error: ledgerError.message
+          });
+        }
+      }
+    }
+  }
+}
+
+async function replayFailedSignals(config: IngestConfig, runId: string): Promise<{ attempted: number; recovered: number }> {
+  const pool = getDbPool();
+  const pipeline = new IngestionPipelineService();
+  const replayRows = await pool.query(
+    `
+      SELECT f.signal_id, s.source, s.content, s.normalized_content, s.metadata, s.created_at
+      FROM failed_signal_attempts f
+      JOIN signals s ON s.id = f.signal_id
+      LEFT JOIN signal_extractions se ON se.signal_id = s.id
+      WHERE f.status = 'pending' AND se.signal_id IS NULL
+      ORDER BY f.failed_at ASC
+      ${config.replayLimit > 0 ? 'LIMIT $1' : ''}
+    `,
+    config.replayLimit > 0 ? [config.replayLimit] : []
+  );
+
+  let attempted = 0;
+  let recovered = 0;
+  for (const row of replayRows.rows) {
+    attempted += 1;
+    const rawSignal: RawSignal = {
+      id: row.signal_id,
+      source: row.source,
+      content: row.content,
+      normalized_content: row.normalized_content,
+      metadata: row.metadata || {},
+      content_hash: (row.metadata?.content_hash as string) || '',
+      created_at: new Date(row.created_at).toISOString()
+    };
+    try {
+      await pipeline.ingest([rawSignal]);
+      await markFailedSignalRecovered(rawSignal.id);
+      recovered += 1;
+    } catch (error: any) {
+      try {
+        await recordFailedSignalAttempt({
+          signalId: rawSignal.id,
+          sourceRef: (row.metadata?.source_ref as string) || null,
+          runId,
+          errorType: 'replay_failure',
+          errorMessage: error.message || 'unknown replay error',
+          status: 'pending'
+        });
+      } catch (ledgerError: any) {
+        logger.warn('Failed to write replay failure ledger entry', {
+          signalId: rawSignal.id,
+          error: ledgerError.message
+        });
+      }
+    }
+  }
+
+  return { attempted, recovered };
+}
+
+async function ingestCommunityForumsV2() {
+  const config = parseArgs();
+  const runId = `forum_ingest_${Date.now()}`;
+  const files = readdirSync(DATA_DIR).filter((file) => file.endsWith('.json'));
+
+  if (config.resetCursor && existsSync(CURSOR_FILE)) {
+    unlinkSync(CURSOR_FILE);
+  }
+
+  if (files.length === 0) {
+    throw new Error(`No JSON files found in ${DATA_DIR}`);
+  }
+
+  const normalizer = new NormalizerService();
+  const pipeline = new IngestionPipelineService();
+  const metrics = getRunMetrics();
+  const seenHashes = new Set<string>();
+  const cursor = config.resume ? loadCursor() : null;
+  const signalSourceRefs = new Map<string, string>();
+
+  const stats: IngestStats = {
+    files: files.length,
+    threads: 0,
+    signals: 0,
+    ingested: 0,
+    skippedShort: 0,
+    skippedInvalid: 0,
+    skippedBoilerplate: 0,
+    skippedDuplicate: 0,
+    errors: 0,
+    batches: 0,
+    replayAttempted: 0,
+    replayRecovered: 0,
+    runId,
+    startedAt: new Date().toISOString()
+  };
+
+  console.log('\n📥 Ingesting community forums via V2 pipeline');
+  console.log('='.repeat(70));
+  console.log(
+    `Files: ${files.length} | Batch size: ${config.batchSize} | Delay: ${config.delayMs}ms | Limit threads: ${
+      config.limitThreads ?? 'none'
+    } | Skip short: ${config.skipShort ? `yes (min ${config.minLength})` : 'no'} | Skip boilerplate: ${
+      config.skipBoilerplate ? 'yes' : 'no'
+    } | Resume: ${config.resume ? 'yes' : 'no'}\n`
+  );
+
+  let batch: RawSignal[] = [];
+  let batchIndex = cursor?.batchIndex || 0;
+
+  for (let fileIndex = 0; fileIndex < files.length; fileIndex += 1) {
+    const file = files[fileIndex];
+    const filePath = join(DATA_DIR, file);
+    const raw = readFileSync(filePath, 'utf-8');
+    const threads: ForumThread[] = JSON.parse(raw);
+
+    for (let threadIndex = 0; threadIndex < threads.length; threadIndex += 1) {
+      if (config.limitThreads && stats.threads >= config.limitThreads) break;
+      if (shouldSkipByCursor(cursor, fileIndex, threadIndex)) continue;
+
+      const thread = threads[threadIndex];
+      stats.threads += 1;
+      const v1Signals = mapForumThreadToRawSignals(thread, basename(file));
+
+      for (const v1Signal of v1Signals) {
+        const text = v1Signal.text || '';
+        if (config.skipShort && text.trim().length < config.minLength) {
+          stats.skippedShort += 1;
+          continue;
+        }
+        if (config.skipBoilerplate && isBoilerplateMessage(text)) {
+          stats.skippedBoilerplate += 1;
+          continue;
+        }
+
+        const adapterOutput: AdapterOutput = {
+          source: 'manual',
+          content: text,
+          metadata: {
+            ...(v1Signal.metadata || {}),
+            signal_type: v1Signal.type,
+            source_ref: v1Signal.id
+          },
+          timestamp: pickTimestamp(v1Signal.metadata)
+        };
+
+        try {
+          const v2Signal = normalizer.normalize(adapterOutput);
+          if (seenHashes.has(v2Signal.content_hash)) {
+            stats.skippedDuplicate += 1;
+            continue;
+          }
+          seenHashes.add(v2Signal.content_hash);
+          signalSourceRefs.set(v2Signal.id, v1Signal.id);
+          batch.push(v2Signal);
+          stats.signals += 1;
+        } catch (error: any) {
+          stats.skippedInvalid += 1;
+          logger.warn('Skipping invalid forum signal', {
+            error: error.message,
+            sourceRef: v1Signal.id,
+            file
+          });
+        }
+
+        if (batch.length >= config.batchSize) {
+          batchIndex += 1;
+          stats.batches = batchIndex;
+          console.log(`Processing batch ${batchIndex} (signals processed: ${stats.ingested}/${stats.signals})`);
+          await processBatch({ pipeline, batch, stats, runId, signalSourceRefs });
+          metrics.increment('signals_processed', batch.length);
+          batch = [];
+          saveCursor({
+            fileIndex,
+            threadIndex: threadIndex + 1,
+            batchIndex,
+            updatedAt: new Date().toISOString()
+          });
+          await sleep(config.delayMs);
+        }
+      }
+
+      if (stats.threads % 25 === 0) {
+        console.log(
+          `Progress: threads=${stats.threads}, signals=${stats.signals}, ingested=${stats.ingested}, errors=${stats.errors}`
+        );
+      }
+    }
+    if (config.limitThreads && stats.threads >= config.limitThreads) break;
+  }
+
+  if (batch.length > 0) {
+    batchIndex += 1;
+    stats.batches = batchIndex;
+    console.log(`Processing batch ${batchIndex} (signals processed: ${stats.ingested}/${stats.signals})`);
+    await processBatch({ pipeline, batch, stats, runId, signalSourceRefs });
+    metrics.increment('signals_processed', batch.length);
+  }
+
+  if (config.replayFailures) {
+    const replayResult = await replayFailedSignals(config, runId);
+    stats.replayAttempted = replayResult.attempted;
+    stats.replayRecovered = replayResult.recovered;
+  }
+
+  stats.completedAt = new Date().toISOString();
+  writeFileSync(OUTPUT_FILE, JSON.stringify(stats, null, 2));
+  getRunMetrics().exportToFile(join(process.cwd(), 'output', 'run_metrics.json'));
+
+  console.log('\n✅ Community forums V2 ingestion complete');
+  console.log(`Threads processed: ${stats.threads}`);
+  console.log(`Signals normalized: ${stats.signals}`);
+  console.log(`Signals ingested: ${stats.ingested}`);
+  console.log(`Skipped (short): ${stats.skippedShort}`);
+  console.log(`Skipped (boilerplate): ${stats.skippedBoilerplate}`);
+  console.log(`Skipped (duplicate): ${stats.skippedDuplicate}`);
+  console.log(`Skipped (invalid): ${stats.skippedInvalid}`);
+  console.log(`Errors: ${stats.errors}`);
+  console.log(`Replay attempted/recovered: ${stats.replayAttempted}/${stats.replayRecovered}`);
+  console.log(`Summary written to: ${OUTPUT_FILE}`);
+  console.log(`Cursor written to: ${CURSOR_FILE}\n`);
+}
+
+if (require.main === module) {
+  ingestCommunityForumsV2()
+    .catch((error) => {
+      console.error('❌ Community forums ingestion failed:', error.message);
+      process.exitCode = 1;
+    })
+    .finally(async () => {
+      await closeDbPool();
+    });
+}
+
+export { ingestCommunityForumsV2 };
