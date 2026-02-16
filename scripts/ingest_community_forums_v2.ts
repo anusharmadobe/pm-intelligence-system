@@ -336,7 +336,9 @@ async function ingestCommunityForumsV2() {
             continue;
           }
           seenHashes.add(v2Signal.content_hash);
-          signalSourceRefs.set(v2Signal.id, v1Signal.id);
+          if (v1Signal.id) {
+            signalSourceRefs.set(v2Signal.id, v1Signal.id);
+          }
           batch.push(v2Signal);
           stats.signals += 1;
         } catch (error: any) {

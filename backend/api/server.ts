@@ -153,8 +153,7 @@ app.get('/api/health', async (req, res) => {
     const criticalStatuses = [
       health.postgresql,
       health.redis,
-      health.neo4j,
-      health.python_doc_parser
+      health.neo4j
     ];
     const degraded = criticalStatuses.some((status) => status !== 'healthy');
     res.status(degraded ? 503 : 200).json({

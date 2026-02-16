@@ -290,7 +290,7 @@ Return ONLY valid JSON (no markdown, no code blocks):
       }
 
       // Filter out duplicates and the canonical name itself
-      const uniqueAliases = [...new Set(parsed.aliases)]
+      const uniqueAliases = ([...new Set(parsed.aliases)] as string[])
         .filter((alias: string) => alias && alias.toLowerCase() !== canonicalName.toLowerCase())
         .slice(0, 5); // Limit to 5 aliases
 

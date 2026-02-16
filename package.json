@@ -44,6 +44,7 @@
     "get-latest-message-c04d195jvgs": "ts-node scripts/get_latest_message_c04d195jvgs.ts",
     "ingest-llm": "ts-node --transpile-only scripts/ingest_raw_slack_to_signals.ts",
     "ingest-community-forums": "ts-node scripts/ingest_community_forums.ts",
+    "ingest-forums": "ts-node scripts/ingest_community_forums_v2.ts",
     "merge-customers": "ts-node scripts/merge_duplicate_customers.ts",
     "process-embeddings": "ts-node --transpile-only scripts/process_embeddings.ts",
     "generate-jira": "ts-node --transpile-only -e \"const {generateJiraIssuesForTopOpportunities}=require('./backend/services/jira_issue_service');generateJiraIssuesForTopOpportunities(10).then(r=>console.log(JSON.stringify(r,null,2))).catch(console.error)\"",

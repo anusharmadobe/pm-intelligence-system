@@ -161,7 +161,8 @@ export class IngestionPipelineService {
         const resolved = await this.entityResolutionService.resolveEntityMention({
           mention: mention.name,
           entityType: mention.type,
-          signalId: signal.id
+          signalId: signal.id,
+          signalText: signal.content
         });
 
         await this.neo4jSyncService.syncEntity({
@@ -173,6 +174,7 @@ export class IngestionPipelineService {
 
       const relationships = await this.relationshipExtractionService.extractRelationships({
         signalId: signal.id,
+        signalText: signal.content,
         extraction
       });
       for (const rel of relationships) {

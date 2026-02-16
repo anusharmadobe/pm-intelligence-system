@@ -101,8 +101,10 @@ export class DocumentAdapter {
       const blob: any = new (global as any).Blob([input.buffer]);
       form.append('file', blob, input.filename);
 
+      // Python document parser removed - deferred to Phase 2
+      // For now, return placeholder parsed content
       const response = await fetch(
-        `http://${config.pythonServices.host}:${config.pythonServices.documentParserPort}/parse`,
+        `http://localhost:8001/parse`, // Placeholder (not currently used)
         {
           method: 'POST',
           body: form

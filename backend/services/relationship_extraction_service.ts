@@ -2,6 +2,7 @@ import { EntityResolutionService } from './entity_resolution_service';
 
 export interface RelationshipExtractionInput {
   signalId: string;
+  signalText: string;
   extraction: {
     entities: {
       customers: string[];
@@ -26,7 +27,7 @@ export class RelationshipExtractionService {
   private resolver = new EntityResolutionService();
 
   async extractRelationships(input: RelationshipExtractionInput): Promise<ResolvedRelationship[]> {
-    const { signalId, extraction } = input;
+    const { signalId, signalText, extraction } = input;
     const output: ResolvedRelationship[] = [];
     const seen = new Set<string>();
 
@@ -41,12 +42,14 @@ export class RelationshipExtractionService {
       const fromResolved = await this.resolver.resolveEntityMention({
         mention: fromName,
         entityType: fromType,
-        signalId
+        signalId,
+        signalText
       });
       const toResolved = await this.resolver.resolveEntityMention({
         mention: toName,
         entityType: toType,
-        signalId
+        signalId,
+        signalText
       });
       if (fromResolved.entity_id === toResolved.entity_id) return;
       const key = `${fromResolved.entity_id}:${relationship}:${toResolved.entity_id}`;

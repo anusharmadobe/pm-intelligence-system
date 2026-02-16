@@ -92,13 +92,12 @@ export class InfrastructureError extends BaseError {
  * Database Errors (500/503)
  * Retryable for transient issues
  */
-export class DatabaseError extends InfrastructureError {
+export class DatabaseError extends BaseError {
+  public readonly service: string = 'database';
   public readonly query?: string;
 
   constructor(message: string, isRetryable: boolean = true, query?: string, correlationId?: string) {
-    super(message, 'database', correlationId);
-    this.statusCode = isRetryable ? 503 : 500;
-    this.isRetryable = isRetryable;
+    super(message, isRetryable ? 503 : 500, isRetryable, correlationId);
     this.query = query;
   }
 }
@@ -120,18 +119,18 @@ export class Neo4jSyncError extends InfrastructureError {
  * LLM Provider Errors (502/503/429)
  * Retryable based on error type
  */
-export class LLMProviderError extends InfrastructureError {
+export class LLMProviderError extends BaseError {
+  public readonly service: string;
   public readonly provider: string;
   public readonly errorCode?: string;
 
   constructor(message: string, provider: string, statusCode: number = 503, errorCode?: string, correlationId?: string) {
-    super(message, provider, correlationId);
-    this.statusCode = statusCode;
+    // Rate limit errors are retryable with exponential backoff
+    const isRetryable = statusCode === 429 || statusCode === 503;
+    super(message, statusCode, isRetryable, correlationId);
+    this.service = provider;
     this.provider = provider;
     this.errorCode = errorCode;
-
-    // Rate limit errors are retryable with exponential backoff
-    this.isRetryable = statusCode === 429 || statusCode === 503;
   }
 }
 

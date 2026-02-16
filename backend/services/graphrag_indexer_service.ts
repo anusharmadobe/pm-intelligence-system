@@ -87,7 +87,8 @@ export class GraphRAGIndexerService {
       };
     }
 
-    const url = `http://${config.pythonServices.host}:${config.pythonServices.graphragIndexerPort}/index`;
+    // GraphRAG Python service removed - deferred to Phase 2
+    const url = `http://localhost:8002/index`; // Placeholder (feature flag prevents this from being called)
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
