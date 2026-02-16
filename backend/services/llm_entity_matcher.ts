@@ -113,14 +113,40 @@ Instructions:
       // Find matched entity ID if provided
       let matchedEntityId: string | null = null;
       if (parsed.matched_entity_id && parsed.matched_entity_id !== 'null') {
-        // Check if it's a number (1, 2, 3) or actual ID
+        // Check if it's a number (1, 2, 3) to select from candidates
         if (typeof parsed.matched_entity_id === 'number' || /^\d+$/.test(parsed.matched_entity_id)) {
           const index = parseInt(parsed.matched_entity_id.toString(), 10) - 1;
           if (index >= 0 && index < candidates.length) {
             matchedEntityId = candidates[index].id;
           }
-        } else {
+        } else if (this.isValidUUID(parsed.matched_entity_id)) {
+          // Valid UUID format
           matchedEntityId = parsed.matched_entity_id;
+        } else {
+          // LLM returned entity name instead of ID - try to find it in candidates
+          logger.warn('LLM returned entity name instead of ID, attempting to match', {
+            mention,
+            returnedValue: parsed.matched_entity_id
+          });
+          const matchedCandidate = candidates.find(
+            c => c.canonical_name.toLowerCase() === parsed.matched_entity_id.toLowerCase() ||
+                 c.aliases.some(a => a.toLowerCase() === parsed.matched_entity_id.toLowerCase())
+          );
+          if (matchedCandidate) {
+            matchedEntityId = matchedCandidate.id;
+            logger.info('Successfully matched entity name to candidate', {
+              returnedName: parsed.matched_entity_id,
+              matchedId: matchedEntityId,
+              canonicalName: matchedCandidate.canonical_name
+            });
+          } else {
+            // Not found - treat as null (new entity)
+            logger.warn('LLM returned unrecognized entity name, treating as null', {
+              mention,
+              returnedValue: parsed.matched_entity_id
+            });
+            matchedEntityId = null;
+          }
         }
       }
 
@@ -320,18 +346,62 @@ Return ONLY valid JSON (no markdown, no code blocks):
         cleaned = cleaned.replace(/^```\s*/, '').replace(/```\s*$/, '');
       }
 
-      // Try to find JSON object in response
-      const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        return JSON.parse(jsonMatch[0]);
+      // Try to find JSON object in response using non-greedy match and limiting scope
+      // First, try to find the first complete JSON object
+      const firstBrace = cleaned.indexOf('{');
+      if (firstBrace !== -1) {
+        // Find matching closing brace by counting braces
+        let braceCount = 0;
+        let inString = false;
+        let escapeNext = false;
+
+        for (let i = firstBrace; i < cleaned.length; i++) {
+          const char = cleaned[i];
+
+          if (escapeNext) {
+            escapeNext = false;
+            continue;
+          }
+
+          if (char === '\\') {
+            escapeNext = true;
+            continue;
+          }
+
+          if (char === '"') {
+            inString = !inString;
+            continue;
+          }
+
+          if (!inString) {
+            if (char === '{') braceCount++;
+            if (char === '}') {
+              braceCount--;
+              if (braceCount === 0) {
+                // Found complete JSON object
+                const jsonStr = cleaned.substring(firstBrace, i + 1);
+                return JSON.parse(jsonStr);
+              }
+            }
+          }
+        }
       }
 
+      // Fallback to direct parse
       return JSON.parse(cleaned);
     } catch (error) {
       logger.warn('JSON parsing failed, trying fallback', { response: response.slice(0, 100) });
       // Try one more time with just the response
       return JSON.parse(response);
     }
+  }
+
+  /**
+   * Check if string is valid UUID format
+   */
+  private isValidUUID(value: string): boolean {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(value);
   }
 
   /**

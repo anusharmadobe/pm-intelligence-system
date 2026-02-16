@@ -97,14 +97,18 @@ export class DocumentAdapter {
 
   private async parseWithPython(input: DocumentInput): Promise<ParsedSegment[]> {
     try {
+      const parserUrl = process.env.DOCUMENT_PARSER_URL;
+      if (!parserUrl) {
+        throw new Error(
+          'Document parser is not configured. Set DOCUMENT_PARSER_URL to enable document ingestion.'
+        );
+      }
       const form: any = new (global as any).FormData();
       const blob: any = new (global as any).Blob([input.buffer]);
       form.append('file', blob, input.filename);
 
-      // Python document parser removed - deferred to Phase 2
-      // For now, return placeholder parsed content
       const response = await fetch(
-        `http://localhost:8001/parse`, // Placeholder (not currently used)
+        `${parserUrl.replace(/\/$/, '')}/parse`,
         {
           method: 'POST',
           body: form

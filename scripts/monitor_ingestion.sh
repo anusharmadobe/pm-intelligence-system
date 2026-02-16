@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
 # Monitor ingestion progress every 5 minutes.
 # Writes to output/ingestion_monitor.log and prints to stdout.
-# Usage: bash scripts/monitor_ingestion.sh
+# Usage:
+#   bash scripts/monitor_ingestion.sh <ingestion_pid> <pipeline_pid> [total_signals]
+# Or set env vars:
+#   INGESTION_PID, PIPELINE_PID, TOTAL_SIGNALS, INTERVAL_SECONDS, LOG_FILE
 #
 # Stops automatically when both PIDs are gone.
 
-INGESTION_PID=41854
-PIPELINE_PID=45614
-TOTAL_SIGNALS=15054
-LOG_FILE="output/ingestion_monitor.log"
-INTERVAL_SECONDS=300  # 5 minutes
+INGESTION_PID=${INGESTION_PID:-${1:-}}
+PIPELINE_PID=${PIPELINE_PID:-${2:-}}
+TOTAL_SIGNALS=${TOTAL_SIGNALS:-${3:-0}}
+LOG_FILE=${LOG_FILE:-"output/ingestion_monitor.log"}
+INTERVAL_SECONDS=${INTERVAL_SECONDS:-300}  # 5 minutes
+
+if [ -z "$INGESTION_PID" ] && [ -z "$PIPELINE_PID" ]; then
+  echo "Error: Provide ingestion and/or pipeline PID."
+  echo "Usage: bash scripts/monitor_ingestion.sh <ingestion_pid> <pipeline_pid> [total_signals]"
+  exit 1
+fi
 
 mkdir -p output
 
@@ -66,10 +75,17 @@ while true; do
   entities=${entities:-0}
   failed=${failed:-0}
 
-  pct_signals=$((signals * 100 / TOTAL_SIGNALS))
-  pct_extracted=$((extractions * 100 / TOTAL_SIGNALS))
+  total_signals="$TOTAL_SIGNALS"
+  if [ "$total_signals" -le 0 ]; then
+    total_signals="$signals"
+  fi
+  if [ "$total_signals" -le 0 ]; then
+    total_signals=1
+  fi
+  pct_signals=$((signals * 100 / total_signals))
+  pct_extracted=$((extractions * 100 / total_signals))
 
-  line="[$ts] Check #$check_count | Ingestion: $ingestion_alive | Pipeline: $pipeline_alive | Signals: $signals/$TOTAL_SIGNALS ($pct_signals%) | Extractions: $extractions ($pct_extracted%) | Failed: $failed | Entities: $entities"
+  line="[$ts] Check #$check_count | Ingestion: $ingestion_alive | Pipeline: $pipeline_alive | Signals: $signals/$total_signals ($pct_signals%) | Extractions: $extractions ($pct_extracted%) | Failed: $failed | Entities: $entities"
   echo "$line" | tee -a "$LOG_FILE"
 
   # Stop conditions

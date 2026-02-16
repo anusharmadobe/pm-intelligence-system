@@ -20,7 +20,8 @@ describe('EntityResolutionService', () => {
   it('creates a new entity when no match exists', async () => {
     const result = await service.resolveEntityMention({
       mention: 'Acme Corporation',
-      entityType: 'customer'
+      entityType: 'customer',
+      signalText: 'Acme Corporation is a newly onboarded customer.'
     });
 
     expect(result.status).toBe('new_entity');

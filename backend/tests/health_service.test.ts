@@ -34,6 +34,12 @@ describe('HealthService', () => {
       ping: jest.fn().mockResolvedValue('PONG')
     };
     (getSharedRedis as jest.Mock).mockReturnValue(mockRedis);
+
+    const { Queue } = require('bullmq');
+    Queue.mockImplementation(() => ({
+      getWaitingCount: jest.fn().mockResolvedValue(0),
+      getFailedCount: jest.fn().mockResolvedValue(0)
+    }));
   });
 
   afterEach(() => {

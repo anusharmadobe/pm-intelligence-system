@@ -9,7 +9,7 @@ import { initializeNeo4jSchema } from '../neo4j/schema';
 import { startCleanupJobs } from '../jobs/cleanup_jobs';
 import { startEventDispatcher } from '../agents/event_dispatcher';
 import { startIngestionScheduler } from '../services/ingestion_scheduler_service';
-import { getNeo4jDriver } from '../neo4j/client';
+import { closeNeo4jDriver } from '../neo4j/client';
 import { closeSharedRedis } from '../config/redis';
 import { validateLLMProviderEnv } from '../services/llm_service';
 
@@ -115,7 +115,7 @@ async function shutdown(signal: string) {
   }
 
   try {
-    await getNeo4jDriver().close();
+    await closeNeo4jDriver();
   } catch (error: any) {
     logger.warn('Failed to close Neo4j driver', { error: error?.message || error });
   }

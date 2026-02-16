@@ -186,6 +186,9 @@ export class SlackBatchIngestionService {
         });
 
         for (const message of response.messages) {
+          if (totalMessages >= maxMessages) {
+            break;
+          }
           stats.total++;
           totalMessages++;
 
@@ -235,7 +238,7 @@ export class SlackBatchIngestionService {
 
         // Check if there are more messages
         cursor = response.response_metadata?.next_cursor;
-        if (!cursor || !response.has_more) {
+        if (!cursor || !response.has_more || totalMessages >= maxMessages) {
           logger.info('All messages fetched', { channelId });
           break;
         }

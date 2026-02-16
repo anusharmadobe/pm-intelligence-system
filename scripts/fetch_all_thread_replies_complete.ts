@@ -150,9 +150,23 @@ function readCursorMCPConfig(): MCPServerConfig | null {
     }
   }
 
-  // Try global Cursor settings
-  const globalSettingsFile = join(homedir(), 'Library', 'Application Support', 'Cursor', 'User', 'settings.json');
-  if (existsSync(globalSettingsFile)) {
+  // Try global Cursor settings (platform-specific)
+  const candidatePaths: string[] = [];
+  if (process.env.CURSOR_SETTINGS_PATH) {
+    candidatePaths.push(process.env.CURSOR_SETTINGS_PATH);
+  }
+  if (process.platform === 'darwin') {
+    candidatePaths.push(join(homedir(), 'Library', 'Application Support', 'Cursor', 'User', 'settings.json'));
+  } else if (process.platform === 'win32') {
+    const appData = process.env.APPDATA || join(homedir(), 'AppData', 'Roaming');
+    candidatePaths.push(join(appData, 'Cursor', 'User', 'settings.json'));
+  } else {
+    candidatePaths.push(join(homedir(), '.config', 'Cursor', 'User', 'settings.json'));
+    candidatePaths.push(join(homedir(), '.config', 'cursor', 'User', 'settings.json'));
+  }
+
+  for (const globalSettingsFile of candidatePaths) {
+    if (!existsSync(globalSettingsFile)) continue;
     try {
       const settings: any = JSON.parse(readFileSync(globalSettingsFile, 'utf-8'));
       const slackConfig = settings.mcpServers?.Slack || settings.mcpServers?.slack;

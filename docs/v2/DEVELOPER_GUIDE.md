@@ -153,7 +153,7 @@ METRICS_RETENTION_DAYS=30
 UPLOAD_RETENTION_HOURS=24
 
 # Azure OpenAI (existing keys)
-AZURE_OPENAI_API_KEY=your_key
+AZURE_OPENAI_KEY=your_key
 AZURE_OPENAI_ENDPOINT=https://your-instance.openai.azure.com
 AZURE_OPENAI_DEPLOYMENT=gpt-4o
 AZURE_OPENAI_FAST_DEPLOYMENT=gpt-4o-mini
@@ -162,6 +162,10 @@ AZURE_REQUEST_TIMEOUT_MS=30000
 AZURE_RETRY_MAX_ATTEMPTS=4
 AZURE_RETRY_BASE_DELAY_MS=500
 AZURE_RETRY_MAX_DELAY_MS=10000
+
+# Optional Python services (if enabled)
+# DOCUMENT_PARSER_URL=http://localhost:8001
+# GRAPHRAG_INDEXER_URL=http://localhost:8002
 
 # ChatGPT Enterprise (OpenAI-compatible, optional)
 LLM_PROVIDER=chatgpt_enterprise

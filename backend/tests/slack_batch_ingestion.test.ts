@@ -1,5 +1,6 @@
 import { SlackBatchIngestionService } from '../services/slack_batch_ingestion_service';
 import { WebClient } from '@slack/web-api';
+import { config } from '../config/env';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -11,7 +12,13 @@ jest.mock('../processing/signal_extractor', () => ({
 
 describe('SlackBatchIngestionService', () => {
   let service: SlackBatchIngestionService;
-  let mockWebClient: jest.Mocked<WebClient>;
+  let mockWebClient: {
+    conversations: {
+      info: jest.Mock;
+      history: jest.Mock;
+      replies: jest.Mock;
+    };
+  };
   const checkpointDir = path.join(process.cwd(), 'data', 'checkpoints');
 
   beforeEach(() => {
@@ -21,6 +28,11 @@ describe('SlackBatchIngestionService', () => {
     process.env.SLACK_BATCH_SIZE = '100';
     process.env.SLACK_MAX_MESSAGES_PER_CHANNEL = '500';
     process.env.SLACK_INCLUDE_THREADS = 'true';
+    config.slack.botToken = process.env.SLACK_BOT_TOKEN;
+    config.slack.channelIds = ['C123', 'C456'];
+    config.slack.batchSize = 100;
+    config.slack.maxMessagesPerChannel = 500;
+    config.slack.includeThreads = true;
 
     // Mock WebClient
     mockWebClient = {
@@ -31,7 +43,7 @@ describe('SlackBatchIngestionService', () => {
       }
     } as any;
 
-    (WebClient as jest.MockedClass<typeof WebClient>).mockImplementation(() => mockWebClient);
+    (WebClient as unknown as jest.Mock).mockImplementation(() => mockWebClient as any);
 
     service = new SlackBatchIngestionService();
 
@@ -61,6 +73,7 @@ describe('SlackBatchIngestionService', () => {
   describe('constructor', () => {
     it('should throw error if SLACK_BOT_TOKEN not set', () => {
       delete process.env.SLACK_BOT_TOKEN;
+      config.slack.botToken = '';
       expect(() => new SlackBatchIngestionService()).toThrow('SLACK_BOT_TOKEN is required');
     });
 
@@ -225,6 +238,7 @@ describe('SlackBatchIngestionService', () => {
 
     it('should fetch thread replies when includeThreads is true', async () => {
       process.env.SLACK_INCLUDE_THREADS = 'true';
+      config.slack.includeThreads = true;
       const channelId = 'C123';
 
       mockWebClient.conversations.info.mockResolvedValue({
@@ -348,6 +362,7 @@ describe('SlackBatchIngestionService', () => {
   describe('ingestAllChannels', () => {
     it('should ingest from all configured channels', async () => {
       process.env.SLACK_CHANNEL_IDS = 'C123,C456';
+      config.slack.channelIds = ['C123', 'C456'];
 
       mockWebClient.conversations.info
         .mockResolvedValueOnce({
@@ -376,6 +391,7 @@ describe('SlackBatchIngestionService', () => {
 
     it('should throw error if no channels configured', async () => {
       process.env.SLACK_CHANNEL_IDS = '';
+      config.slack.channelIds = [];
       const newService = new SlackBatchIngestionService();
 
       await expect(newService.ingestAllChannels()).rejects.toThrow('No Slack channel IDs configured');
@@ -383,6 +399,7 @@ describe('SlackBatchIngestionService', () => {
 
     it('should skip channels in skipChannels list', async () => {
       process.env.SLACK_CHANNEL_IDS = 'C123,C456,C789';
+      config.slack.channelIds = ['C123', 'C456', 'C789'];
 
       mockWebClient.conversations.info.mockResolvedValue({
         ok: true,
@@ -409,6 +426,7 @@ describe('SlackBatchIngestionService', () => {
 
     it('should handle channel ingestion failures', async () => {
       process.env.SLACK_CHANNEL_IDS = 'C123,C456';
+      config.slack.channelIds = ['C123', 'C456'];
 
       mockWebClient.conversations.info
         .mockResolvedValueOnce({
@@ -417,13 +435,15 @@ describe('SlackBatchIngestionService', () => {
         } as any)
         .mockRejectedValueOnce(new Error('Channel not found'));
 
-      mockWebClient.conversations.history.mockResolvedValue({
-        ok: true,
-        messages: [
-          { ts: '1234.5678', text: 'Test message', user: 'U123' }
-        ],
-        has_more: false
-      } as any);
+      mockWebClient.conversations.history
+        .mockResolvedValueOnce({
+          ok: true,
+          messages: [
+            { ts: '1234.5678', text: 'Test message', user: 'U123' }
+          ],
+          has_more: false
+        } as any)
+        .mockRejectedValueOnce(new Error('History fetch failed'));
 
       const allStats = await service.ingestAllChannels();
 

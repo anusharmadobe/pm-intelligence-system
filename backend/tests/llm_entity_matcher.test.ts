@@ -1,6 +1,14 @@
 import { LLMEntityMatcher, CanonicalEntity, EntityMatchResult } from '../services/llm_entity_matcher';
 import { LLMProvider } from '../services/llm_service';
 
+jest.mock('../services/llm_service', () => {
+  const actual = jest.requireActual('../services/llm_service');
+  return {
+    ...actual,
+    createLLMProviderFromEnv: jest.fn(() => async () => '{"matched_entity_id":null,"confidence":0,"reasoning":"","suggested_aliases":[]}')
+  };
+});
+
 // Mock LLM provider
 const createMockLLMProvider = (responses: string[]): LLMProvider => {
   let callCount = 0;

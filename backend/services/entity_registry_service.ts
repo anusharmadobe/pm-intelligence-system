@@ -178,24 +178,16 @@ export class EntityRegistryService {
     const pool = getDbPool();
     const aliasNormalized = this.normalizeAlias(alias);
 
-    // Check if alias already exists
-    const existing = await pool.query(
-      `SELECT id FROM entity_aliases
-       WHERE canonical_entity_id = $1 AND alias_normalized = $2 AND is_active = true`,
-      [entityId, aliasNormalized]
-    );
-
-    if (existing.rows.length > 0) {
-      // Alias already exists, skip
-      return;
-    }
-
-    // Insert new alias
+    // Use INSERT ... ON CONFLICT to avoid race condition
+    // Assumes there's a unique constraint on (canonical_entity_id, alias_normalized, is_active)
     await pool.query(
       `INSERT INTO entity_aliases (
         id, canonical_entity_id, alias, alias_normalized, alias_source,
         confidence, signal_id, confirmed_by_human, is_active, created_at
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, false, true, NOW())`,
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, false, true, NOW())
+      ON CONFLICT (canonical_entity_id, alias_normalized)
+        WHERE is_active = true
+        DO NOTHING`,
       [
         uuidv4(),
         entityId,

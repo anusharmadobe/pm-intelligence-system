@@ -244,7 +244,7 @@ PM Intelligence System V2
 NEO4J_URI=bolt://localhost:7687
 NEO4J_USER=neo4j
 NEO4J_PASSWORD=your_neo4j_password_here
-NEO4J_DATABASE=pmknowledge
+NEO4J_DATABASE=neo4j
 
 # ============================================================================
 # REDIS CONFIGURATION (NEW)
@@ -317,19 +317,22 @@ All environment variables organized by subsystem, with required/optional status 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | **PostgreSQL** ||||
-| `DATABASE_URL` | Yes | — | Full PostgreSQL connection string |
-| `POSTGRES_USER` | Yes | — | PostgreSQL username |
-| `POSTGRES_PASSWORD` | Yes | — | PostgreSQL password |
+| `DB_HOST` | No | `localhost` | PostgreSQL host |
+| `DB_PORT` | No | `5432` | PostgreSQL port |
+| `DB_NAME` | No | `pm_intelligence` | PostgreSQL database name |
+| `DB_USER` | No | `postgres` | PostgreSQL username |
+| `DB_PASSWORD` | No | (empty) | PostgreSQL password |
+| `DATABASE_URL` | No | (computed) | Full PostgreSQL connection string (overrides DB_* if set) |
 | **Neo4j** ||||
 | `NEO4J_URI` | Yes | `bolt://localhost:7687` | Neo4j Bolt connection URI |
 | `NEO4J_USER` | Yes | `neo4j` | Neo4j username |
 | `NEO4J_PASSWORD` | Yes | — | Neo4j password |
-| `NEO4J_DATABASE` | No | `pmknowledge` | Neo4j database name |
+| `NEO4J_DATABASE` | No | `neo4j` | Neo4j database name |
 | **Redis** ||||
 | `REDIS_URL` | Yes | `redis://localhost:6379` | Redis connection URL |
 | `REDIS_PASSWORD` | No | (none) | Redis password (if AUTH enabled) |
 | **Azure OpenAI** ||||
-| `AZURE_OPENAI_API_KEY` | Yes | — | Azure OpenAI API key |
+| `AZURE_OPENAI_KEY` | Yes | — | Azure OpenAI API key |
 | `AZURE_OPENAI_ENDPOINT` | Yes | — | Azure OpenAI endpoint URL |
 | `AZURE_OPENAI_DEPLOYMENT` | Yes | — | GPT-4o deployment name |
 | `AZURE_OPENAI_FAST_DEPLOYMENT` | Yes | `gpt-4o-mini` | GPT-4o-mini deployment name (fast pass) |
@@ -341,9 +344,8 @@ All environment variables organized by subsystem, with required/optional status 
 | `ER_HUMAN_REVIEW_THRESHOLD` | No | `0.6` | Score range requiring human review |
 | `ER_REJECT_THRESHOLD` | No | `0.3` | Score below which entities are rejected |
 | **Python Services** ||||
-| `PYTHON_SERVICES_HOST` | No | `localhost` | Python microservice host |
-| `DOCUMENT_PARSER_PORT` | No | `5002` | Document parser service port |
-| `GRAPHRAG_INDEXER_PORT` | No | `5003` | GraphRAG indexer service port |
+| `DOCUMENT_PARSER_URL` | No | (none) | Full URL for document parser service (enables document ingestion) |
+| `GRAPHRAG_INDEXER_URL` | No | (none) | Full URL for GraphRAG indexer service (used when FF_GRAPHRAG_INDEXER=true) |
 | **MCP Server** ||||
 | `MCP_SERVER_PORT` | No | `3001` | MCP server port |
 | `MCP_SERVER_NAME` | No | `pm-intelligence` | MCP server name identifier |
@@ -420,10 +422,10 @@ On boot, the main process validates that all required variables are present and 
 ```typescript
 // backend/config/validate_env.ts
 const REQUIRED = [
-  'DATABASE_URL',
+  'DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER',
   'NEO4J_URI', 'NEO4J_USER', 'NEO4J_PASSWORD',
   'REDIS_URL',
-  'AZURE_OPENAI_API_KEY', 'AZURE_OPENAI_ENDPOINT',
+  'AZURE_OPENAI_KEY', 'AZURE_OPENAI_ENDPOINT',
   'AZURE_OPENAI_DEPLOYMENT', 'AZURE_OPENAI_EMBEDDING_DEPLOYMENT',
   'SLACK_BOT_TOKEN', 'SLACK_CHANNEL_IDS',
 ];
@@ -431,7 +433,7 @@ const REQUIRED = [
 const VALIDATIONS = {
   'NEO4J_URI':     (v: string) => v.startsWith('bolt://') || v.startsWith('neo4j://'),
   'REDIS_URL':     (v: string) => v.startsWith('redis://'),
-  'DATABASE_URL':  (v: string) => v.startsWith('postgresql://') || v.startsWith('postgres://'),
+  'DB_HOST':       (v: string) => v.length > 0,
   'MAX_FILE_SIZE_MB': (v: string) => Number(v) > 0 && Number(v) <= 200,
   'ER_AUTO_MERGE_THRESHOLD': (v: string) => Number(v) > 0 && Number(v) <= 1,
 };

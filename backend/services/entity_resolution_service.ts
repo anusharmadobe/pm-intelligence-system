@@ -270,13 +270,18 @@ Respond with strict JSON:
         const candidates = await this.registryService.search(mention, 10); // Increased from 5 to 10 for better LLM matching
 
         if (candidates.length > 0) {
-          // Convert to LLM matcher format
-          const llmCandidates: CanonicalEntity[] = candidates.map(c => ({
-            id: c.id,
-            canonical_name: c.canonical_name,
-            entity_type: c.entity_type,
-            aliases: [] // TODO: Fetch aliases from entity_aliases table
-          }));
+          // Convert to LLM matcher format - fetch aliases for each candidate
+          const llmCandidates: CanonicalEntity[] = await Promise.all(
+            candidates.map(async (c) => {
+              const { aliases } = await this.registryService.getWithAliases(c.id);
+              return {
+                id: c.id,
+                canonical_name: c.canonical_name,
+                entity_type: c.entity_type,
+                aliases: aliases.map(a => a.alias)
+              };
+            })
+          );
 
           // Use LLM to match
           const llmMatch = await this.llmMatcher.matchEntity(mention, llmCandidates, signalText);
@@ -368,107 +373,27 @@ Respond with strict JSON:
           }
         }
       } catch (error: any) {
-        logger.error('LLM entity matching failed, falling back to embedding-based matching', {
+        logger.error('LLM entity matching failed, falling back to new entity creation', {
           error: error.message,
-          mention
+          stack: error.stack,
+          mention,
+          entityType
         });
-        // Fall through to embedding-based matching
+        // Fall through to create new entity as a safe fallback
+        // This ensures the ingestion pipeline doesn't fail completely
       }
     }
 
-    // Step 4: Fallback to embedding-based matching (if LLM failed or not available)
-    const candidates = await this.registryService.search(mention, 5);
-    if (candidates.length > 0) {
-      const mentionEmbedding = await this.getMentionEmbedding(mention);
-      let bestCandidate = null as typeof candidates[number] | null;
-      let bestScore = 0;
-      let bestDetails: Record<string, unknown> | undefined;
-
-      for (const candidate of candidates) {
-        const candidateEmbedding = await this.getOrCreateEntityEmbedding(
-          candidate.id,
-          candidate.canonical_name
-        );
-        const embeddingSimilarity =
-          mentionEmbedding && candidateEmbedding ? cosineSimilarity(mentionEmbedding, candidateEmbedding) : null;
-        const score = this.matchingService.score({
-          nameA: mention,
-          nameB: candidate.canonical_name,
-          embeddingSimilarity,
-          typeMatch: candidate.entity_type === entityType
-        });
-        if (score.composite_score > bestScore) {
-          bestScore = score.composite_score;
-          bestCandidate = candidate;
-          bestDetails = score as unknown as Record<string, unknown>;
-        }
-      }
-
-      // Apply thresholds (using config thresholds)
-      if (bestCandidate && bestScore >= config.entityResolution.autoMergeThreshold) {
-        await this.logResolution({
-          mention,
-          entityType,
-          signalId,
-          resolutionResult: 'auto_merged',
-          resolvedToEntityId: bestCandidate.id,
-          confidence: bestScore,
-          matchDetails: { ...bestDetails, method: 'embedding' }
-        });
-        return {
-          status: 'auto_merged',
-          entity_id: bestCandidate.id,
-          confidence: bestScore,
-          match_details: { ...bestDetails, method: 'embedding' }
-        };
-      }
-
-      if (bestCandidate && bestScore >= config.entityResolution.humanReviewThreshold) {
-        const pool = getDbPool();
-        await pool.query(
-          `INSERT INTO feedback_log
-            (id, feedback_type, system_output, system_confidence, status, signals_affected, entities_affected)
-           VALUES (gen_random_uuid(), 'entity_merge', $1, $2, 'pending', 1, 1)`,
-          [
-            JSON.stringify({
-              entity_a: mention,
-              entity_b: bestCandidate.canonical_name,
-              entity_type: entityType,
-              candidate_entity_id: bestCandidate.id,
-              match_details: { ...bestDetails, method: 'embedding' }
-            }),
-            bestScore
-          ]
-        );
-
-        await this.logResolution({
-          mention,
-          entityType,
-          signalId,
-          resolutionResult: 'human_review',
-          resolvedToEntityId: bestCandidate.id,
-          confidence: bestScore,
-          matchDetails: { ...bestDetails, method: 'embedding' }
-        });
-
-        return {
-          status: 'human_review',
-          entity_id: bestCandidate.id,
-          confidence: bestScore,
-          match_details: { ...bestDetails, method: 'embedding' }
-        };
-      }
-    }
-
-    // Step 5: Create new entity (use LLM to extract canonical form)
+    // Step 4: Create new entity (use LLM to extract canonical form)
     let canonicalName = mention;
     if (this.llmMatcher) {
       try {
         canonicalName = await this.llmMatcher.extractCanonicalForm(mention, signalText);
         logger.debug('LLM extracted canonical form', { mention, canonicalName });
       } catch (error: any) {
-        logger.warn('LLM canonical form extraction failed, using raw mention', {
+        logger.warn('LLM canonical form extraction failed, using raw mention as fallback', {
           error: error.message,
+          stack: error.stack,
           mention
         });
         canonicalName = mention;

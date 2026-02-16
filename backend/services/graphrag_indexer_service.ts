@@ -87,8 +87,16 @@ export class GraphRAGIndexerService {
       };
     }
 
-    // GraphRAG Python service removed - deferred to Phase 2
-    const url = `http://localhost:8002/index`; // Placeholder (feature flag prevents this from being called)
+    const indexerUrl = process.env.GRAPHRAG_INDEXER_URL;
+    if (!indexerUrl) {
+      logger.warn('GraphRAG indexer enabled but GRAPHRAG_INDEXER_URL is not set; skipping indexing');
+      return {
+        run_id: randomUUID(),
+        communities: [],
+        stats: { signal_count: payload.signals.length, community_count: 0 }
+      };
+    }
+    const url = `${indexerUrl.replace(/\/$/, '')}/index`;
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

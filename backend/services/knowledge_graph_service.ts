@@ -1,7 +1,26 @@
 import { getNeo4jDriver } from '../neo4j/client';
 import { config } from '../config/env';
 
+// Timeout for Neo4j operations (15 seconds for graph queries)
+const NEO4J_TIMEOUT_MS = 15000;
+
 export class KnowledgeGraphService {
+  /**
+   * Executes a Neo4j query with timeout protection
+   */
+  private async runWithTimeout<T>(
+    operation: () => Promise<T>,
+    timeoutMs: number = NEO4J_TIMEOUT_MS
+  ): Promise<T> {
+    return Promise.race([
+      operation(),
+      new Promise<T>((_, reject) =>
+        setTimeout(() => reject(new Error('Neo4j operation timeout')), timeoutMs)
+      )
+    ]);
+  }
+
+
   private mapEntityLabel(entityType: string): string {
     switch (entityType) {
       case 'customer':
@@ -27,15 +46,18 @@ export class KnowledgeGraphService {
   }) {
     const session = getNeo4jDriver().session({ database: config.neo4j.database });
     const label = this.mapEntityLabel(params.entity_type);
-    const maxHops = params.max_hops || 2;
-    const limit = params.limit || 50;
+    // Validate maxHops to prevent DoS attacks via expensive graph traversals
+    const maxHops = Math.min(Math.max(1, params.max_hops || 2), 5);
+    const limit = Math.min(params.limit || 50, 1000);
     try {
-      const result = await session.run(
-        `MATCH (root:${label} {canonical_name: $name})
-         MATCH path = (root)-[*1..${maxHops}]-(related)
-         RETURN DISTINCT related, labels(related) AS labels
-         LIMIT $limit`,
-        { name: params.entity_name, limit }
+      const result = await this.runWithTimeout(() =>
+        session.run(
+          `MATCH (root:${label} {canonical_name: $name})
+           MATCH path = (root)-[*1..${maxHops}]-(related)
+           RETURN DISTINCT related, labels(related) AS labels
+           LIMIT $limit`,
+          { name: params.entity_name, limit }
+        )
       );
       return result.records.map((record) => {
         const node = record.get('related');
@@ -58,15 +80,18 @@ export class KnowledgeGraphService {
   }) {
     const session = getNeo4jDriver().session({ database: config.neo4j.database });
     const label = this.mapEntityLabel(params.root_entity_type);
-    const maxHops = params.max_hops || 2;
-    const limit = params.limit || 100;
+    // Validate maxHops to prevent DoS attacks via expensive graph traversals
+    const maxHops = Math.min(Math.max(0, params.max_hops || 2), 5);
+    const limit = Math.min(params.limit || 100, 1000);
     try {
-      const result = await session.run(
-        `MATCH (root:${label} {canonical_name: $name})
-         MATCH path = (root)-[*0..${maxHops}]-(node)
-         RETURN DISTINCT node, labels(node) AS labels
-         LIMIT $limit`,
-        { name: params.root_entity_name, limit }
+      const result = await this.runWithTimeout(() =>
+        session.run(
+          `MATCH (root:${label} {canonical_name: $name})
+           MATCH path = (root)-[*0..${maxHops}]-(node)
+           RETURN DISTINCT node, labels(node) AS labels
+           LIMIT $limit`,
+          { name: params.root_entity_name, limit }
+        )
       );
       return result.records.map((record) => {
         const node = record.get('node');

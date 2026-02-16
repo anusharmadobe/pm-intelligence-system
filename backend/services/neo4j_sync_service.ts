@@ -5,7 +5,25 @@ import { getNeo4jDriver } from '../neo4j/client';
 
 type Neo4jOperation = 'signal_sync' | 'entity_merge' | 'entity_split' | 'relationship_add';
 
+// Timeout for Neo4j operations (10 seconds)
+const NEO4J_TIMEOUT_MS = 10000;
+
 export class Neo4jSyncService {
+  /**
+   * Executes a Neo4j query with timeout protection
+   */
+  private async runWithTimeout<T>(
+    operation: () => Promise<T>,
+    timeoutMs: number = NEO4J_TIMEOUT_MS
+  ): Promise<T> {
+    return Promise.race([
+      operation(),
+      new Promise<T>((_, reject) =>
+        setTimeout(() => reject(new Error('Neo4j operation timeout')), timeoutMs)
+      )
+    ]);
+  }
+
   private static readonly allowedRelationships = new Set([
     'USES',
     'HAS_ISSUE',
@@ -18,18 +36,60 @@ export class Neo4jSyncService {
     'ASSOCIATED_WITH'
   ]);
   private static readonly relationshipCanonMap: Record<string, string> = {
+    // Causality
     CAUSES: 'RELATES_TO',
     CAUSED_BY: 'RELATES_TO',
     RESULTS_IN: 'RELATES_TO',
     RESULTED_IN: 'RELATES_TO',
     THROWS: 'RELATES_TO',
+    TRIGGER: 'RELATES_TO',
+    TRIGGERS: 'RELATES_TO',
+
+    // Integration & Usage
     INTEGRATION: 'RELATES_TO',
     INTEGRATES_WITH: 'RELATES_TO',
+    'USED BY': 'USES',
+    USED: 'USES',
+    USING: 'USES',
+    'SWITCHED TO': 'USES',
+    AUTHORING: 'USES',
+    DISABLING: 'USES',
+
+    // Communication & Interaction
     COMMUNICATION: 'MENTIONS',
     RESPONSE: 'MENTIONS',
     INQUIRY: 'MENTIONS',
+    INTERACTION: 'MENTIONS',
+    'SPOKE TO': 'MENTIONS',
+    'INFORMED ABOUT': 'MENTIONS',
+    CONTACT: 'MENTIONS',
+    QUESTION: 'MENTIONS',
+    SUGGESTION: 'MENTIONS',
+    INSTRUCTION: 'MENTIONS',
+
+    // Dependencies
     SUPPORTS: 'DEPENDS_ON',
-    REQUIRED_FOR: 'DEPENDS_ON'
+    REQUIRED_FOR: 'DEPENDS_ON',
+    REQUIRES: 'DEPENDS_ON',
+    DEPENDENCY: 'DEPENDS_ON',
+    'PART OF': 'DEPENDS_ON',
+    NEEDS: 'DEPENDS_ON',
+
+    // Issues & Problems
+    ISSUE: 'HAS_ISSUE',
+    'HAS_ISSUE_WITH': 'HAS_ISSUE',
+    FEATURE_ISSUE: 'HAS_ISSUE',
+    IDENTIFIES_ISSUE: 'HAS_ISSUE',
+    'NOT LOADING': 'HAS_ISSUE',
+    'NOT SHOWING': 'HAS_ISSUE',
+
+    // Relationships & Associations
+    'RELATED TO': 'RELATES_TO',
+    'APPLIES TO': 'RELATES_TO',
+    SIMILARITY: 'RELATES_TO',
+    ALTERNATIVE: 'RELATES_TO',
+    'SEEKING_SUPPORT': 'RELATES_TO',
+    REQUEST_FOR_CONFIRMATION: 'RELATES_TO'
   };
 
   private mapEntityLabel(entityType: string): string {
@@ -69,13 +129,20 @@ export class Neo4jSyncService {
     const label = this.mapEntityLabel(entity.entity_type);
 
     try {
-      await session.run(
-        `MERGE (e:${label} {id: $id})
-         SET e.canonical_name = $name, e.updated_at = datetime()`,
-        { id: entity.id, name: entity.canonical_name }
+      await this.runWithTimeout(() =>
+        session.run(
+          `MERGE (e:${label} {id: $id})
+           SET e.canonical_name = $name, e.updated_at = datetime()`,
+          { id: entity.id, name: entity.canonical_name }
+        )
       );
     } catch (error) {
-      logger.warn('Neo4j sync failed, enqueueing backlog', { error });
+      logger.warn('Neo4j entity sync failed, enqueueing to backlog', {
+        error: error instanceof Error ? error.message : String(error),
+        entityId: entity.id,
+        entityType: entity.entity_type,
+        operation: 'syncEntity'
+      });
       await this.enqueue('signal_sync', { entity });
     } finally {
       await session.close();
@@ -111,15 +178,23 @@ export class Neo4jSyncService {
     const toLabel = this.mapEntityLabel(params.toType);
 
     try {
-      await session.run(
-        `MATCH (a:${fromLabel} {id: $fromId})
-         MATCH (b:${toLabel} {id: $toId})
-         MERGE (a)-[r:${relationship}]->(b)
-         SET r.updated_at = datetime()`,
-        { fromId: params.fromId, toId: params.toId }
+      await this.runWithTimeout(() =>
+        session.run(
+          `MATCH (a:${fromLabel} {id: $fromId})
+           MATCH (b:${toLabel} {id: $toId})
+           MERGE (a)-[r:${relationship}]->(b)
+           SET r.updated_at = datetime()`,
+          { fromId: params.fromId, toId: params.toId }
+        )
       );
     } catch (error) {
-      logger.warn('Neo4j relationship sync failed, enqueueing backlog', { error });
+      logger.warn('Neo4j relationship sync failed, enqueueing to backlog', {
+        error: error instanceof Error ? error.message : String(error),
+        fromId: params.fromId,
+        toId: params.toId,
+        relationship,
+        operation: 'syncRelationship'
+      });
       await this.enqueue('relationship_add', params as unknown as Record<string, unknown>);
     } finally {
       await session.close();
@@ -131,9 +206,8 @@ export class Neo4jSyncService {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
-      const result = await pool.query(
-        `SELECT id, entity_type, entity_id, operation, payload, status,
-                attempt_count, last_error, created_at, updated_at, processed_at
+      const result = await client.query(
+        `SELECT id, operation, payload, status, retry_count, created_at, processed_at
          FROM neo4j_sync_backlog
          WHERE status = 'pending'
          ORDER BY created_at ASC
@@ -163,7 +237,12 @@ export class Neo4jSyncService {
              WHERE id = $1`,
             [row.id]
           );
-          logger.warn('Neo4j backlog processing failed', { error, id: row.id });
+          logger.warn('Neo4j backlog item processing failed', {
+            error: error instanceof Error ? error.message : String(error),
+            id: row.id,
+            operation: row.operation,
+            retryCount: row.retry_count
+          });
         }
       }
       await client.query('COMMIT');

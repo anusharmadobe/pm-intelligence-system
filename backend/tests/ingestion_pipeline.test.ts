@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { IngestionPipelineService } from '../services/ingestion_pipeline_service';
 import { LLMExtractionService } from '../services/llm_extraction_service';
 import { RelationshipExtractionService } from '../services/relationship_extraction_service';
@@ -19,6 +20,7 @@ describe('IngestionPipelineService', () => {
   });
 
   it('ingests a signal and stores extraction', async () => {
+    const signalId = randomUUID();
     jest.spyOn(LLMExtractionService.prototype, 'extract').mockResolvedValue({
       entities: { customers: [], features: [], issues: [], themes: [], stakeholders: [] },
       relationships: [],
@@ -26,7 +28,7 @@ describe('IngestionPipelineService', () => {
     });
     jest.spyOn(RelationshipExtractionService.prototype, 'extractRelationships').mockResolvedValue([]);
     jest.spyOn(embeddingService, 'generateContextualEmbedding').mockResolvedValue({
-      signalId: 'test-signal',
+      signalId,
       embedding: [0.1, 0.2, 0.3],
       contextualSummary: 'summary',
       model: 'mock'
@@ -36,7 +38,7 @@ describe('IngestionPipelineService', () => {
     const pipeline = new IngestionPipelineService();
     await pipeline.ingest([
       {
-        id: 'test-signal',
+        id: signalId,
         source: 'manual',
         content: 'Acme Corp reports an issue with FeatureX.',
         normalized_content: 'Acme Corp reports an issue with FeatureX.',
@@ -47,10 +49,10 @@ describe('IngestionPipelineService', () => {
     ]);
 
     const pool = getDbPool();
-    const signals = await pool.query(`SELECT id FROM signals WHERE id = $1`, ['test-signal']);
+    const signals = await pool.query(`SELECT id FROM signals WHERE id = $1`, [signalId]);
     const extractions = await pool.query(
       `SELECT signal_id FROM signal_extractions WHERE signal_id = $1`,
-      ['test-signal']
+      [signalId]
     );
     expect(signals.rows.length).toBe(1);
     expect(extractions.rows.length).toBe(1);

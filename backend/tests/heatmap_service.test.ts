@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { HeatmapService } from '../services/heatmap_service';
 import { getDbPool } from '../db/connection';
 import { runMigrations, resetDatabase, shutdownDatabase } from './test_db';
@@ -19,7 +20,7 @@ describe('HeatmapService', () => {
 
   it('returns heatmap rows for issues by customer', async () => {
     const pool = getDbPool();
-    const signalId = 'sig-heatmap-1';
+    const signalId = randomUUID();
     await pool.query(
       `INSERT INTO signals (id, source, source_ref, signal_type, content, normalized_content, metadata, created_at)
        VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,

@@ -209,15 +209,11 @@ export interface Issue {
 
 export interface Neo4jSyncBacklog {
   id: string;
-  entity_type: string;
-  entity_id: string;
-  operation: 'create' | 'update' | 'delete';
+  operation: 'signal_sync' | 'entity_merge' | 'entity_split' | 'relationship_add';
   payload: Record<string, any>;
-  status: 'pending' | 'processing' | 'completed' | 'failed';
-  attempt_count: number;
-  last_error: string | null;
+  status: 'pending' | 'processed';
+  retry_count: number;
   created_at: Date;
-  updated_at: Date;
   processed_at: Date | null;
 }
 
@@ -410,15 +406,11 @@ export const OpportunityColumns: ColumnNames<Opportunity>[] = [
 
 export const Neo4jSyncBacklogColumns: ColumnNames<Neo4jSyncBacklog>[] = [
   'id',
-  'entity_type',
-  'entity_id',
   'operation',
   'payload',
   'status',
-  'attempt_count',
-  'last_error',
+  'retry_count',
   'created_at',
-  'updated_at',
   'processed_at'
 ];
 
