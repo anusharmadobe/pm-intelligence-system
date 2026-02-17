@@ -5,10 +5,12 @@ import { getNeo4jDriver } from '../neo4j/client';
 
 type Neo4jOperation = 'signal_sync' | 'entity_merge' | 'entity_split' | 'relationship_add';
 
-// Timeout for Neo4j operations (10 seconds)
-const NEO4J_TIMEOUT_MS = 10000;
+// Timeout for Neo4j operations (10 seconds default)
+const NEO4J_TIMEOUT_MS = parseInt(process.env.NEO4J_TIMEOUT_MS || '10000', 10);
 
 export class Neo4jSyncService {
+  private unsupportedRelationshipCounts = new Map<string, number>();
+  private backlogFailureCount = 0;
   /**
    * Executes a Neo4j query with timeout protection
    */
@@ -16,12 +18,19 @@ export class Neo4jSyncService {
     operation: () => Promise<T>,
     timeoutMs: number = NEO4J_TIMEOUT_MS
   ): Promise<T> {
-    return Promise.race([
-      operation(),
-      new Promise<T>((_, reject) =>
-        setTimeout(() => reject(new Error('Neo4j operation timeout')), timeoutMs)
-      )
-    ]);
+    let timeoutHandle: NodeJS.Timeout | null = null;
+    try {
+      const timeoutPromise = new Promise<T>((_, reject) => {
+        timeoutHandle = setTimeout(() => {
+          reject(new Error('Neo4j operation timeout'));
+        }, timeoutMs);
+      });
+      return await Promise.race([operation(), timeoutPromise]);
+    } finally {
+      if (timeoutHandle) {
+        clearTimeout(timeoutHandle);
+      }
+    }
   }
 
   private static readonly allowedRelationships = new Set([
@@ -111,11 +120,25 @@ export class Neo4jSyncService {
 
   private async enqueue(operation: Neo4jOperation, payload: Record<string, unknown>): Promise<void> {
     const pool = getDbPool();
-    await pool.query(
-      `INSERT INTO neo4j_sync_backlog (id, operation, payload, status)
-       VALUES (gen_random_uuid(), $1, $2, 'pending')`,
-      [operation, JSON.stringify(payload)]
-    );
+    try {
+      await pool.query(
+        `INSERT INTO neo4j_sync_backlog (id, operation, payload, status)
+         VALUES (gen_random_uuid(), $1, $2, 'pending')`,
+        [operation, JSON.stringify(payload)]
+      );
+    } catch (error) {
+      this.backlogFailureCount += 1;
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      logger.warn('Failed to enqueue Neo4j backlog item', {
+        stage: 'neo4j_backlog',
+        status: 'error',
+        operation,
+        errorClass: error instanceof Error ? error.name : 'Error',
+        errorMessage,
+        backlogFailureCount: this.backlogFailureCount
+      });
+      throw error;
+    }
   }
 
   async syncEntity(entity: { id: string; entity_type: string; canonical_name: string }): Promise<void> {
@@ -137,13 +160,36 @@ export class Neo4jSyncService {
         )
       );
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorClass = error instanceof Error ? error.name : 'Error';
+      const isTimeout = errorMessage.toLowerCase().includes('timeout');
       logger.warn('Neo4j entity sync failed, enqueueing to backlog', {
-        error: error instanceof Error ? error.message : String(error),
+        stage: 'neo4j_entity_sync',
+        status: 'error',
+        errorClass,
+        errorMessage,
+        isTimeout,
+        timeoutMs: NEO4J_TIMEOUT_MS,
         entityId: entity.id,
         entityType: entity.entity_type,
-        operation: 'syncEntity'
+        operation: 'syncEntity',
+        nextAction: 'enqueue_backlog'
       });
-      await this.enqueue('signal_sync', { entity });
+      try {
+        await this.enqueue('signal_sync', { entity });
+      } catch (enqueueError) {
+        const enqueueErrorMessage =
+          enqueueError instanceof Error ? enqueueError.message : String(enqueueError);
+        logger.error('Neo4j entity sync failed and backlog enqueue failed', {
+          stage: 'neo4j_entity_sync',
+          status: 'error',
+          entityId: entity.id,
+          entityType: entity.entity_type,
+          errorClass: enqueueError instanceof Error ? enqueueError.name : 'Error',
+          errorMessage: enqueueErrorMessage,
+          nextAction: 'skip_entity'
+        });
+      }
     } finally {
       await session.close();
     }
@@ -165,7 +211,17 @@ export class Neo4jSyncService {
     const relationship =
       Neo4jSyncService.relationshipCanonMap[rawRelationship] || rawRelationship;
     if (!relationship || !Neo4jSyncService.allowedRelationships.has(relationship)) {
-      logger.warn('Unsupported relationship type for Neo4j sync', { relationship });
+      const count = (this.unsupportedRelationshipCounts.get(relationship || 'unknown') || 0) + 1;
+      this.unsupportedRelationshipCounts.set(relationship || 'unknown', count);
+      if (count === 1 || count % 50 === 0) {
+        logger.warn('Unsupported relationship type for Neo4j sync', {
+          stage: 'neo4j_relationship_sync',
+          status: 'skipped',
+          relationship,
+          count,
+          nextAction: 'skip_relationship'
+        });
+      }
       return;
     }
     if (rawRelationship !== relationship) {
@@ -188,14 +244,38 @@ export class Neo4jSyncService {
         )
       );
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorClass = error instanceof Error ? error.name : 'Error';
+      const isTimeout = errorMessage.toLowerCase().includes('timeout');
       logger.warn('Neo4j relationship sync failed, enqueueing to backlog', {
-        error: error instanceof Error ? error.message : String(error),
+        stage: 'neo4j_relationship_sync',
+        status: 'error',
+        errorClass,
+        errorMessage,
+        isTimeout,
+        timeoutMs: NEO4J_TIMEOUT_MS,
         fromId: params.fromId,
         toId: params.toId,
         relationship,
-        operation: 'syncRelationship'
+        operation: 'syncRelationship',
+        nextAction: 'enqueue_backlog'
       });
-      await this.enqueue('relationship_add', params as unknown as Record<string, unknown>);
+      try {
+        await this.enqueue('relationship_add', params as unknown as Record<string, unknown>);
+      } catch (enqueueError) {
+        const enqueueErrorMessage =
+          enqueueError instanceof Error ? enqueueError.message : String(enqueueError);
+        logger.error('Neo4j relationship sync failed and backlog enqueue failed', {
+          stage: 'neo4j_relationship_sync',
+          status: 'error',
+          fromId: params.fromId,
+          toId: params.toId,
+          relationship,
+          errorClass: enqueueError instanceof Error ? enqueueError.name : 'Error',
+          errorMessage: enqueueErrorMessage,
+          nextAction: 'skip_relationship'
+        });
+      }
     } finally {
       await session.close();
     }
@@ -231,6 +311,7 @@ export class Neo4jSyncService {
             [row.id]
           );
         } catch (error) {
+          const errorMessage = error instanceof Error ? error.message : String(error);
           await client.query(
             `UPDATE neo4j_sync_backlog
              SET retry_count = retry_count + 1
@@ -238,10 +319,14 @@ export class Neo4jSyncService {
             [row.id]
           );
           logger.warn('Neo4j backlog item processing failed', {
-            error: error instanceof Error ? error.message : String(error),
+            stage: 'neo4j_backlog',
+            status: 'error',
+            errorClass: error instanceof Error ? error.name : 'Error',
+            errorMessage,
             id: row.id,
             operation: row.operation,
-            retryCount: row.retry_count
+            retryCount: row.retry_count,
+            nextAction: 'retry_backlog'
           });
         }
       }

@@ -1,4 +1,5 @@
 import { EntityResolutionService } from './entity_resolution_service';
+import { logger } from '../utils/logger';
 
 export interface RelationshipExtractionInput {
   signalId: string;
@@ -28,8 +29,25 @@ export class RelationshipExtractionService {
 
   async extractRelationships(input: RelationshipExtractionInput): Promise<ResolvedRelationship[]> {
     const { signalId, signalText, extraction } = input;
+    const startTime = Date.now();
     const output: ResolvedRelationship[] = [];
     const seen = new Set<string>();
+    let skippedSelfRefs = 0;
+    let skippedDuplicates = 0;
+
+    logger.debug('Relationship extraction start', {
+      stage: 'relationship_extraction',
+      status: 'start',
+      signalId,
+      entityCounts: {
+        customers: extraction.entities.customers?.length || 0,
+        features: extraction.entities.features?.length || 0,
+        issues: extraction.entities.issues?.length || 0,
+        themes: extraction.entities.themes?.length || 0,
+        stakeholders: extraction.entities.stakeholders?.length || 0
+      },
+      explicitRelationships: extraction.relationships?.length || 0
+    });
 
     const addRelationship = async (
       fromName: string,
@@ -51,15 +69,34 @@ export class RelationshipExtractionService {
         signalId,
         signalText
       });
-      if (fromResolved.entity_id === toResolved.entity_id) return;
+      if (fromResolved.entity_id === toResolved.entity_id) {
+        skippedSelfRefs++;
+        return;
+      }
       const key = `${fromResolved.entity_id}:${relationship}:${toResolved.entity_id}`;
-      if (seen.has(key)) return;
+      if (seen.has(key)) {
+        skippedDuplicates++;
+        return;
+      }
       seen.add(key);
       output.push({
         fromId: fromResolved.entity_id,
         fromType,
         toId: toResolved.entity_id,
         toType,
+        relationship
+      });
+
+      logger.debug('Relationship added', {
+        stage: 'relationship_extraction',
+        status: 'relationship_added',
+        signalId,
+        fromName,
+        fromType,
+        fromId: fromResolved.entity_id,
+        toName,
+        toType,
+        toId: toResolved.entity_id,
         relationship
       });
     };
@@ -103,6 +140,20 @@ export class RelationshipExtractionService {
         await addRelationship(stakeholder, 'stakeholder', customer, 'customer', 'ASSOCIATED_WITH');
       }
     }
+
+    logger.info('Relationship extraction complete', {
+      stage: 'relationship_extraction',
+      status: 'success',
+      signalId,
+      totalRelationships: output.length,
+      skippedSelfReferences: skippedSelfRefs,
+      skippedDuplicates: skippedDuplicates,
+      relationshipTypes: {
+        explicit: extraction.relationships?.length || 0,
+        inferred: output.length - (extraction.relationships?.length || 0)
+      },
+      elapsedMs: Date.now() - startTime
+    });
 
     return output;
   }

@@ -59,11 +59,32 @@ export class LLMEntityMatcher {
     candidates: CanonicalEntity[],
     context: string
   ): Promise<EntityMatchResult> {
+    const startTime = Date.now();
+
+    logger.debug('LLM entity matcher start', {
+      stage: 'llm_entity_matcher',
+      status: 'start',
+      mention,
+      candidateCount: candidates.length,
+      contextLength: context.length
+    });
+
     if (!this.llmProvider) {
+      logger.error('LLM entity matcher failed - provider not available', {
+        stage: 'llm_entity_matcher',
+        status: 'error',
+        mention,
+        error: 'LLM provider not available'
+      });
       throw new Error('LLM provider not available');
     }
 
     if (candidates.length === 0) {
+      logger.warn('LLM entity matcher - no candidates', {
+        stage: 'llm_entity_matcher',
+        status: 'no_candidates',
+        mention
+      });
       return {
         matchedEntityId: null,
         confidence: 0,
@@ -75,6 +96,14 @@ export class LLMEntityMatcher {
     const candidatesText = candidates.map((c, i) =>
       `${i + 1}. ${c.canonical_name} (type: ${c.entity_type}, aliases: ${c.aliases.join(', ') || 'none'})`
     ).join('\n');
+
+    logger.debug('LLM entity matcher prompt built', {
+      stage: 'llm_entity_matcher',
+      status: 'prompt_built',
+      mention,
+      candidateCount: candidates.length,
+      promptLength: candidatesText.length + context.length
+    });
 
     const prompt = `You are an entity resolution expert for a PM intelligence system.
 
@@ -99,8 +128,18 @@ Instructions:
 }`;
 
     try {
+      const llmStartTime = Date.now();
       const response = await this.llmProvider(prompt);
-      logger.debug('LLM entity match response', { mention, response: response.slice(0, 200) });
+      const llmDuration = Date.now() - llmStartTime;
+
+      logger.debug('LLM entity match response received', {
+        stage: 'llm_entity_matcher',
+        status: 'llm_response_received',
+        mention,
+        responseLength: response.length,
+        responsePreview: response.slice(0, 200),
+        llmDurationMs: llmDuration
+      });
 
       // Parse JSON response
       const parsed = this.parseJsonResponse(response);
@@ -150,14 +189,37 @@ Instructions:
         }
       }
 
-      return {
+      const result = {
         matchedEntityId,
         confidence: parsed.confidence || 0,
         reasoning: parsed.reasoning || 'No reasoning provided',
         suggestedAliases: Array.isArray(parsed.suggested_aliases) ? parsed.suggested_aliases : []
       };
+
+      logger.info('LLM entity matcher complete', {
+        stage: 'llm_entity_matcher',
+        status: 'success',
+        mention,
+        matchedEntityId,
+        matchedEntityName: matchedEntityId ? candidates.find(c => c.id === matchedEntityId)?.canonical_name : null,
+        confidence: result.confidence,
+        reasoning: result.reasoning,
+        suggestedAliasCount: result.suggestedAliases.length,
+        candidatesEvaluated: candidates.length,
+        elapsedMs: Date.now() - startTime
+      });
+
+      return result;
     } catch (error: any) {
-      logger.error('LLM entity matching failed', { error: error.message, mention, candidatesCount: candidates.length });
+      logger.error('LLM entity matching failed', {
+        stage: 'llm_entity_matcher',
+        status: 'error',
+        error: error.message,
+        stack: error.stack,
+        mention,
+        candidatesCount: candidates.length,
+        elapsedMs: Date.now() - startTime
+      });
       return {
         matchedEntityId: null,
         confidence: 0,
@@ -175,9 +237,25 @@ Instructions:
    * @returns Canonical name
    */
   async extractCanonicalForm(mention: string, context: string): Promise<string> {
+    const startTime = Date.now();
+
+    logger.debug('LLM canonical form extraction start', {
+      stage: 'llm_canonical_form',
+      status: 'start',
+      mention,
+      contextLength: context.length
+    });
+
     if (!this.llmProvider) {
-      // Fallback: simple title case
-      return this.fallbackCanonicalForm(mention);
+      const fallback = this.fallbackCanonicalForm(mention);
+      logger.debug('LLM canonical form extraction - using fallback', {
+        stage: 'llm_canonical_form',
+        status: 'fallback',
+        mention,
+        canonicalForm: fallback,
+        reason: 'llm_provider_unavailable'
+      });
+      return fallback;
     }
 
     const prompt = `You are normalizing entity names for a knowledge graph.
@@ -197,19 +275,46 @@ Rules:
 Return ONLY the canonical name, no explanation, no quotes, no JSON.`;
 
     try {
+      const llmStartTime = Date.now();
       const response = await this.llmProvider(prompt);
+      const llmDuration = Date.now() - llmStartTime;
       const canonicalName = response.trim().replace(/^["']|["']$/g, ''); // Remove quotes if present
 
       if (!canonicalName || canonicalName.length < 2 || canonicalName.length > 100) {
-        logger.warn('LLM canonical form invalid, using fallback', { mention, response });
-        return this.fallbackCanonicalForm(mention);
+        const fallback = this.fallbackCanonicalForm(mention);
+        logger.warn('LLM canonical form invalid, using fallback', {
+          stage: 'llm_canonical_form',
+          status: 'fallback',
+          mention,
+          invalidResponse: response,
+          canonicalForm: fallback,
+          reason: 'invalid_length',
+          llmDurationMs: llmDuration
+        });
+        return fallback;
       }
 
-      logger.debug('LLM canonical form extracted', { mention, canonicalName });
+      logger.info('LLM canonical form extracted', {
+        stage: 'llm_canonical_form',
+        status: 'success',
+        mention,
+        canonicalName,
+        elapsedMs: Date.now() - startTime,
+        llmDurationMs: llmDuration
+      });
       return canonicalName;
     } catch (error: any) {
-      logger.error('LLM canonical form extraction failed', { error: error.message, mention });
-      return this.fallbackCanonicalForm(mention);
+      const fallback = this.fallbackCanonicalForm(mention);
+      logger.error('LLM canonical form extraction failed', {
+        stage: 'llm_canonical_form',
+        status: 'error',
+        error: error.message,
+        stack: error.stack,
+        mention,
+        canonicalForm: fallback,
+        elapsedMs: Date.now() - startTime
+      });
+      return fallback;
     }
   }
 

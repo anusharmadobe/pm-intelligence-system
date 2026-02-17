@@ -149,15 +149,45 @@ async function processBatch(params: {
   batch: RawSignal[];
   stats: IngestStats;
   runId: string;
+  batchIndex: number;
   signalSourceRefs: Map<string, string>;
 }): Promise<void> {
-  const { pipeline, batch, stats, runId, signalSourceRefs } = params;
+  const { pipeline, batch, stats, runId, batchIndex, signalSourceRefs } = params;
   if (batch.length === 0) return;
+  const batchStartedAt = Date.now();
+  logger.info('Ingestion batch start', {
+    runId,
+    batchIndex,
+    stage: 'batch',
+    status: 'start',
+    batchSize: batch.length,
+    totalSignals: stats.signals,
+    ingested: stats.ingested,
+    errors: stats.errors
+  });
   try {
     await pipeline.ingest(batch);
     stats.ingested += batch.length;
+    logger.info('Ingestion batch complete', {
+      runId,
+      batchIndex,
+      stage: 'batch',
+      status: 'success',
+      batchSize: batch.length,
+      ingested: stats.ingested,
+      errors: stats.errors,
+      elapsedMs: Date.now() - batchStartedAt
+    });
   } catch (error: any) {
-    logger.warn('Batch ingestion failed, retrying per signal', { error: error.message });
+    logger.warn('Batch ingestion failed, retrying per signal', {
+      runId,
+      batchIndex,
+      stage: 'batch',
+      status: 'error',
+      errorClass: error?.name || 'Error',
+      errorMessage: error.message,
+      nextAction: 'retry_per_signal'
+    });
     for (const signal of batch) {
       try {
         await pipeline.ingest([signal]);
@@ -165,8 +195,14 @@ async function processBatch(params: {
       } catch (innerError: any) {
         stats.errors += 1;
         logger.error('Signal ingestion failed', {
+          runId,
+          batchIndex,
+          stage: 'signal',
+          status: 'error',
+          errorClass: innerError?.name || 'Error',
           error: innerError.message,
-          signalId: signal.id
+          signalId: signal.id,
+          nextAction: 'record_failed_signal'
         });
         try {
           await recordFailedSignalAttempt({
@@ -179,12 +215,27 @@ async function processBatch(params: {
           });
         } catch (ledgerError: any) {
           logger.warn('Failed to write failed-signal ledger entry; continuing ingestion', {
+            runId,
+            batchIndex,
+            stage: 'failed_signal_ledger',
+            status: 'error',
             signalId: signal.id,
-            error: ledgerError.message
+            error: ledgerError.message,
+            nextAction: 'continue_batch'
           });
         }
       }
     }
+    logger.info('Ingestion batch complete after per-signal retries', {
+      runId,
+      batchIndex,
+      stage: 'batch',
+      status: 'success_with_retries',
+      batchSize: batch.length,
+      ingested: stats.ingested,
+      errors: stats.errors,
+      elapsedMs: Date.now() - batchStartedAt
+    });
   }
 }
 
@@ -292,6 +343,7 @@ async function ingestCommunityForumsV2() {
 
   let batch: RawSignal[] = [];
   let batchIndex = cursor?.batchIndex || 0;
+  let nextBatchIndex = batchIndex + 1;
 
   for (let fileIndex = 0; fileIndex < files.length; fileIndex += 1) {
     const file = files[fileIndex];
@@ -324,7 +376,11 @@ async function ingestCommunityForumsV2() {
           metadata: {
             ...(v1Signal.metadata || {}),
             signal_type: v1Signal.type,
-            source_ref: v1Signal.id
+            source_ref: v1Signal.id,
+            run_id: runId,
+            batch_index: nextBatchIndex,
+            file_index: fileIndex,
+            thread_index: threadIndex
           },
           timestamp: pickTimestamp(v1Signal.metadata)
         };
@@ -344,17 +400,22 @@ async function ingestCommunityForumsV2() {
         } catch (error: any) {
           stats.skippedInvalid += 1;
           logger.warn('Skipping invalid forum signal', {
+            runId,
+            batchIndex: nextBatchIndex,
+            stage: 'normalize',
+            status: 'skipped',
             error: error.message,
             sourceRef: v1Signal.id,
-            file
+            file,
+            nextAction: 'skip_signal'
           });
         }
 
         if (batch.length >= config.batchSize) {
-          batchIndex += 1;
+          batchIndex = nextBatchIndex;
           stats.batches = batchIndex;
           console.log(`Processing batch ${batchIndex} (signals processed: ${stats.ingested}/${stats.signals})`);
-          await processBatch({ pipeline, batch, stats, runId, signalSourceRefs });
+          await processBatch({ pipeline, batch, stats, runId, batchIndex, signalSourceRefs });
           metrics.increment('signals_processed', batch.length);
           batch = [];
           saveCursor({
@@ -364,6 +425,7 @@ async function ingestCommunityForumsV2() {
             updatedAt: new Date().toISOString()
           });
           await sleep(config.delayMs);
+          nextBatchIndex = batchIndex + 1;
         }
       }
 
@@ -377,10 +439,10 @@ async function ingestCommunityForumsV2() {
   }
 
   if (batch.length > 0) {
-    batchIndex += 1;
+    batchIndex = nextBatchIndex;
     stats.batches = batchIndex;
     console.log(`Processing batch ${batchIndex} (signals processed: ${stats.ingested}/${stats.signals})`);
-    await processBatch({ pipeline, batch, stats, runId, signalSourceRefs });
+    await processBatch({ pipeline, batch, stats, runId, batchIndex, signalSourceRefs });
     metrics.increment('signals_processed', batch.length);
   }
 

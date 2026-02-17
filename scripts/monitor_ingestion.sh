@@ -13,6 +13,7 @@ PIPELINE_PID=${PIPELINE_PID:-${2:-}}
 TOTAL_SIGNALS=${TOTAL_SIGNALS:-${3:-0}}
 LOG_FILE=${LOG_FILE:-"output/ingestion_monitor.log"}
 INTERVAL_SECONDS=${INTERVAL_SECONDS:-300}  # 5 minutes
+STALL_THRESHOLD=${STALL_THRESHOLD:-3}
 
 if [ -z "$INGESTION_PID" ] && [ -z "$PIPELINE_PID" ]; then
   echo "Error: Provide ingestion and/or pipeline PID."
@@ -30,6 +31,10 @@ echo "Check interval: ${INTERVAL_SECONDS}s (5 min)" | tee -a "$LOG_FILE"
 echo "========================================" | tee -a "$LOG_FILE"
 
 check_count=0
+stall_count=0
+prev_signals=
+prev_extractions=
+prev_entities=
 
 while true; do
   check_count=$((check_count + 1))
@@ -85,8 +90,36 @@ while true; do
   pct_signals=$((signals * 100 / total_signals))
   pct_extracted=$((extractions * 100 / total_signals))
 
-  line="[$ts] Check #$check_count | Ingestion: $ingestion_alive | Pipeline: $pipeline_alive | Signals: $signals/$total_signals ($pct_signals%) | Extractions: $extractions ($pct_extracted%) | Failed: $failed | Entities: $entities"
+  delta_signals=0
+  delta_extractions=0
+  delta_entities=0
+  if [ -n "$prev_signals" ]; then
+    delta_signals=$((signals - prev_signals))
+    delta_extractions=$((extractions - prev_extractions))
+    delta_entities=$((entities - prev_entities))
+  fi
+  prev_signals=$signals
+  prev_extractions=$extractions
+  prev_entities=$entities
+
+  line="[$ts] Check #$check_count | Ingestion: $ingestion_alive | Pipeline: $pipeline_alive | Signals: $signals/$total_signals ($pct_signals%) | Extractions: $extractions ($pct_extracted%) | Failed: $failed | Entities: $entities | ΔSignals: $delta_signals | ΔExtractions: $delta_extractions | ΔEntities: $delta_entities"
   echo "$line" | tee -a "$LOG_FILE"
+
+  # Stall detection: no progress for N intervals
+  if [ "$delta_signals" -eq 0 ] && [ "$delta_extractions" -eq 0 ] && [ "$delta_entities" -eq 0 ]; then
+    stall_count=$((stall_count + 1))
+  else
+    stall_count=0
+  fi
+
+  if [ "$stall_count" -ge "$STALL_THRESHOLD" ]; then
+    cursor_info=$(cat output/ingestion_cursor.json 2>/dev/null | tr -d '\n' | cut -c1-200)
+    echo "[$ts] STALLED: No progress for $stall_count intervals (threshold=$STALL_THRESHOLD)." | tee -a "$LOG_FILE"
+    if [ -n "$cursor_info" ]; then
+      echo "[$ts] Cursor: $cursor_info" | tee -a "$LOG_FILE"
+    fi
+    echo "[$ts] Recommendation: stop ingestion and run pipeline separately (npm run pipeline:skip-ingestion)." | tee -a "$LOG_FILE"
+  fi
 
   # Stop conditions
   if [ "$ingestion_alive" = "no" ] && [ "$pipeline_alive" = "no" ]; then

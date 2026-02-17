@@ -152,6 +152,16 @@ export class LLMExtractionService {
   }
 
   async extract(content: string): Promise<ExtractionOutput> {
+    const startTime = Date.now();
+    const contentPreview = content.slice(0, 100);
+
+    logger.debug('LLM extraction start', {
+      stage: 'llm_extraction',
+      status: 'start',
+      contentLength: content.length,
+      contentPreview
+    });
+
     const prompt = this.buildPrompt(content);
     const fastResponse = await this.fastProvider(prompt);
     let extraction = this.parseJson(fastResponse);
@@ -165,6 +175,15 @@ export class LLMExtractionService {
             extraction.entities.issues.length) > 3));
 
     if (needsSecondPass) {
+      logger.debug('LLM extraction second pass triggered', {
+        stage: 'llm_extraction',
+        status: 'second_pass',
+        reason: content.length > 800 ? 'long_content' : 'high_entity_count',
+        contentLength: content.length,
+        firstPassEntityCount: extraction ?
+          extraction.entities.customers.length + extraction.entities.features.length + extraction.entities.issues.length : 0
+      });
+
       const slowResponse = await this.slowProvider(prompt);
       extraction = this.parseJson(slowResponse) || extraction;
     }
@@ -173,29 +192,95 @@ export class LLMExtractionService {
       extraction ||
       ExtractionSchema.parse(this.heuristicExtract(content));
 
-    return this.hallucinationFilter(content, safeOutput);
+    const filtered = this.hallucinationFilter(content, safeOutput);
+
+    const entitiesRemoved = config.featureFlags.hallucinationGuard ? {
+      customers: (safeOutput.entities.customers?.length || 0) - (filtered.entities.customers?.length || 0),
+      features: (safeOutput.entities.features?.length || 0) - (filtered.entities.features?.length || 0),
+      issues: (safeOutput.entities.issues?.length || 0) - (filtered.entities.issues?.length || 0),
+      themes: (safeOutput.entities.themes?.length || 0) - (filtered.entities.themes?.length || 0),
+      stakeholders: (safeOutput.entities.stakeholders?.length || 0) - (filtered.entities.stakeholders?.length || 0)
+    } : null;
+
+    logger.info('LLM extraction complete', {
+      stage: 'llm_extraction',
+      status: 'success',
+      elapsedMs: Date.now() - startTime,
+      extractionMethod: extraction ? 'llm' : 'heuristic',
+      usedSecondPass: needsSecondPass,
+      entities: {
+        customers: filtered.entities.customers?.length || 0,
+        features: filtered.entities.features?.length || 0,
+        issues: filtered.entities.issues?.length || 0,
+        themes: filtered.entities.themes?.length || 0,
+        stakeholders: filtered.entities.stakeholders?.length || 0
+      },
+      relationships: filtered.relationships?.length || 0,
+      sentiment: filtered.sentiment,
+      urgency: filtered.urgency,
+      signalCategory: filtered.signal_category,
+      hallucinationFilterApplied: config.featureFlags.hallucinationGuard,
+      entitiesRemovedByFilter: entitiesRemoved
+    });
+
+    return filtered;
   }
 
   async extractBatch(contents: string[]): Promise<ExtractionOutput[]> {
     if (contents.length === 0) {
       return [];
     }
+
+    const startTime = Date.now();
     const concurrency = Math.max(
       1,
       parseInt(process.env.LLM_EXTRACTION_BATCH_CONCURRENCY || '5', 10)
     );
+
+    logger.info('LLM batch extraction start', {
+      stage: 'llm_batch_extraction',
+      status: 'start',
+      batchSize: contents.length,
+      concurrency
+    });
+
     const results: ExtractionOutput[] = new Array(contents.length);
     let index = 0;
+    let successCount = 0;
+    let failureCount = 0;
 
     const workers = Array.from({ length: Math.min(concurrency, contents.length) }).map(async () => {
       while (index < contents.length) {
         const current = index;
         index += 1;
-        results[current] = await this.extract(contents[current]);
+        try {
+          results[current] = await this.extract(contents[current]);
+          successCount++;
+        } catch (error) {
+          failureCount++;
+          logger.error('Batch extraction item failed', {
+            stage: 'llm_batch_extraction',
+            status: 'error',
+            itemIndex: current,
+            error: error instanceof Error ? error.message : String(error)
+          });
+          throw error;
+        }
       }
     });
 
     await Promise.all(workers);
+
+    logger.info('LLM batch extraction complete', {
+      stage: 'llm_batch_extraction',
+      status: 'success',
+      elapsedMs: Date.now() - startTime,
+      batchSize: contents.length,
+      successCount,
+      failureCount,
+      concurrency
+    });
+
     return results;
   }
 }
