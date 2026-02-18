@@ -34,6 +34,7 @@ import { tool as rollbackAgent } from './tools/rollback_agent';
 import { tool as listRegisteredAgents } from './tools/list_registered_agents';
 import { tool as deactivateAgent } from './tools/deactivate_agent';
 import { tool as configureStakeholderAccess } from './tools/configure_stakeholder_access';
+import { tool as saveSessionState, loadTool as loadSessionState } from './tools/session_state';
 
 const allTools = [
   searchSignals,
@@ -70,7 +71,9 @@ const allTools = [
   rollbackAgent,
   listRegisteredAgents,
   deactivateAgent,
-  configureStakeholderAccess
+  configureStakeholderAccess,
+  saveSessionState,
+  loadSessionState
 ];
 
 export function registerTools(server: McpServer): void {
