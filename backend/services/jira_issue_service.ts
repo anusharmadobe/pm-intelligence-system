@@ -14,7 +14,10 @@ import {
   OpportunityQueryOptions
 } from './opportunity_service';
 import { getThemePath } from '../config/theme_dictionary';
-import { logger } from '../utils/logger';
+import { logger as globalLogger, createModuleLogger } from '../utils/logger';
+
+// Create module-specific logger for JIRA operations
+const logger = createModuleLogger('jira', 'LOG_LEVEL_JIRA');
 
 /**
  * JIRA issue template structure
@@ -98,31 +101,111 @@ export async function generateJiraIssue(
   config: Partial<JiraGenerationConfig> = {},
   llmProvider?: LLMProvider
 ): Promise<JiraIssueTemplate> {
+  const startTime = Date.now();
   const finalConfig = { ...DEFAULT_CONFIG, ...config };
   const provider = llmProvider || createLLMProviderFromEnv();
-  
+
+  logger.info('Starting JIRA issue generation', {
+    stage: 'jira_generation',
+    status: 'start',
+    opportunity_id: opportunity.id,
+    opportunity_title: opportunity.title,
+    signal_count: signals.length,
+    config: finalConfig
+  });
+
   // Prepare context for LLM
   const context = prepareIssueContext(opportunity, signals, finalConfig);
-  
+
+  logger.debug('JIRA context prepared', {
+    stage: 'jira_generation',
+    status: 'context_prepared',
+    opportunity_id: opportunity.id,
+    customers: context.customers,
+    customer_count: context.customers.length,
+    themes: context.themes,
+    theme_count: context.themes.length,
+    signal_types: context.signalTypes,
+    signal_types_count: context.signalTypes.length,
+    sample_signals_count: context.signalSummaries.length,
+    total_signals: context.totalSignals,
+    impact_score: context.impactScore,
+    confidence_score: context.confidenceScore
+  });
+
   // Generate issue using LLM
   const prompt = buildJiraPrompt(context);
-  const llmResponse = await provider(prompt);
-  
+
+  logger.debug('Sending prompt to LLM for JIRA generation', {
+    stage: 'jira_generation',
+    status: 'llm_request',
+    opportunity_id: opportunity.id,
+    prompt_length: prompt.length,
+    prompt_preview: prompt.substring(0, 200)
+  });
+
+  let llmResponse: string;
+  let llmDuration: number;
+
+  try {
+    const llmStartTime = Date.now();
+    llmResponse = await provider(prompt);
+    llmDuration = Date.now() - llmStartTime;
+
+    logger.info('LLM response received', {
+      stage: 'jira_generation',
+      status: 'llm_response',
+      opportunity_id: opportunity.id,
+      response_length: llmResponse.length,
+      duration_ms: llmDuration,
+      response_preview: llmResponse.substring(0, 200)
+    });
+  } catch (error: any) {
+    logger.error('LLM request failed for JIRA generation', {
+      stage: 'jira_generation',
+      status: 'llm_error',
+      opportunity_id: opportunity.id,
+      error: error.message,
+      stack: error.stack,
+      duration_ms: Date.now() - startTime
+    });
+    throw new Error(`JIRA generation LLM request failed: ${error.message}`);
+  }
+
   // Parse and validate response
   const parsed = parseJiraResponse(llmResponse, context);
-  
+
+  logger.debug('JIRA response parsed', {
+    stage: 'jira_generation',
+    status: 'parsed',
+    opportunity_id: opportunity.id,
+    summary: parsed.summary,
+    issue_type: parsed.issueType,
+    estimated_complexity: parsed.estimatedComplexity,
+    customer_impact: parsed.customerImpact,
+    acceptance_criteria_count: parsed.acceptanceCriteria?.length
+  });
+
   // Enhance with metadata
   const enhanced = enhanceWithMetadata(parsed, opportunity, signals, finalConfig, context);
   await applySignalCategoryLabel(enhanced, signals);
   enhanced.rawLLMResponse = llmResponse;
-  
-  logger.info('JIRA issue generated', {
-    opportunityId: opportunity.id,
+
+  const totalDuration = Date.now() - startTime;
+
+  logger.info('JIRA issue generated successfully', {
+    stage: 'jira_generation',
+    status: 'success',
+    opportunity_id: opportunity.id,
     summary: enhanced.summary,
-    issueType: enhanced.issueType,
-    priority: enhanced.priority
+    issue_type: enhanced.issueType,
+    priority: enhanced.priority,
+    labels: enhanced.labels,
+    components: enhanced.components,
+    duration_ms: totalDuration,
+    llm_duration_ms: llmDuration
   });
-  
+
   return enhanced;
 }
 
@@ -225,7 +308,18 @@ async function applySignalCategoryLabel(issue: JiraIssueTemplate, signals: Signa
  * Builds the LLM prompt for JIRA issue generation
  */
 function buildJiraPrompt(context: IssueContext): string {
-  return `You are a Product Manager generating a JIRA issue from customer signals.
+  logger.trace('Building JIRA prompt', {
+    stage: 'jira_generation',
+    context_summary: {
+      opportunity_title: context.opportunityTitle,
+      customer_count: context.customers.length,
+      theme_count: context.themes.length,
+      signal_count: context.totalSignals,
+      sample_signals_count: context.signalSummaries.length
+    }
+  });
+
+  const prompt = `You are a Product Manager generating a JIRA issue from customer signals.
 Create a well-structured issue that captures the customer need clearly.
 
 OPPORTUNITY:
@@ -265,6 +359,14 @@ Guidelines:
 - Estimate complexity based on scope indicated by signals
 
 JSON response:`;
+
+  logger.trace('JIRA prompt constructed', {
+    stage: 'jira_generation',
+    prompt_length: prompt.length,
+    full_prompt: prompt
+  });
+
+  return prompt;
 }
 
 /**
@@ -280,23 +382,38 @@ function parseJiraResponse(
     if (!jsonMatch) {
       throw new Error('No JSON found in response');
     }
-    
+
     const parsed = JSON.parse(jsonMatch[0]);
-    
+
+    logger.debug('JIRA response parsed successfully', {
+      stage: 'jira_generation',
+      summary: parsed.summary,
+      issue_type: parsed.issueType,
+      customer_impact: parsed.customerImpact
+    });
+
     return {
       summary: sanitizeSummary(parsed.summary || context.opportunityTitle),
       issueType: validateIssueType(parsed.issueType),
       description: parsed.description || context.opportunityDescription,
-      acceptanceCriteria: Array.isArray(parsed.acceptanceCriteria) 
-        ? parsed.acceptanceCriteria 
+      acceptanceCriteria: Array.isArray(parsed.acceptanceCriteria)
+        ? parsed.acceptanceCriteria
         : ['Define acceptance criteria'],
       technicalNotes: parsed.technicalNotes || '',
       estimatedComplexity: validateComplexity(parsed.estimatedComplexity),
       customerImpact: validateCustomerImpact(parsed.customerImpact)
     };
   } catch (error: any) {
-    logger.warn('Failed to parse JIRA LLM response, using fallback', { error: error.message });
-    
+    logger.warn('Failed to parse JIRA LLM response, using fallback template', {
+      stage: 'jira_generation',
+      status: 'parse_failure',
+      error: error.message,
+      response_preview: response.substring(0, 200),
+      response_length: response.length,
+      fallback_used: true,
+      opportunity_title: context.opportunityTitle
+    });
+
     // Fallback to basic template
     return {
       summary: sanitizeSummary(context.opportunityTitle),

@@ -1,3 +1,5 @@
+import { logger } from '../utils/logger';
+
 export interface MatchingScore {
   string_similarity: number;
   embedding_similarity: number | null;
@@ -114,11 +116,26 @@ export class EntityMatchingService {
       embeddingScore * 0.5 +
       typeMatch * 0.15;
 
-    return {
+    const result = {
       string_similarity: Number(stringSimilarity.toFixed(4)),
       embedding_similarity: embeddingSimilarity,
       type_match: typeMatch,
       composite_score: Number(composite.toFixed(4))
     };
+
+    logger.trace('Entity matching score calculated', {
+      stage: 'entity_matching',
+      name_a: params.nameA,
+      name_b: params.nameB,
+      normalized_a: normalizedA,
+      normalized_b: normalizedB,
+      string_similarity: result.string_similarity,
+      embedding_similarity: result.embedding_similarity,
+      type_match: result.type_match,
+      composite_score: result.composite_score,
+      weights: { string: 0.35, embedding: 0.5, type: 0.15 }
+    });
+
+    return result;
   }
 }

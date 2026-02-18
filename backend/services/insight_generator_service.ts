@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import { IntelligenceService } from './intelligence_service';
 
 export class InsightGeneratorService {

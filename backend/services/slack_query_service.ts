@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import { getDbPool } from '../db/connection';
 import { getFeatureDefinitions } from '../config/feature_dictionary';
 

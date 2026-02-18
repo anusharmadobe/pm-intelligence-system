@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import { getNeo4jDriver } from '../neo4j/client';
 import { config } from '../config/env';
 
@@ -44,11 +45,23 @@ export class KnowledgeGraphService {
     max_hops?: number;
     limit?: number;
   }) {
+    const startTime = Date.now();
     const session = getNeo4jDriver().session({ database: config.neo4j.database });
     const label = this.mapEntityLabel(params.entity_type);
     // Validate maxHops to prevent DoS attacks via expensive graph traversals
     const maxHops = Math.min(Math.max(1, params.max_hops || 2), 5);
     const limit = Math.min(params.limit || 50, 1000);
+
+    logger.debug('Finding related entities in Neo4j', {
+      stage: 'knowledge_graph',
+      operation: 'findRelatedEntities',
+      entity_name: params.entity_name,
+      entity_type: params.entity_type,
+      label,
+      max_hops: maxHops,
+      limit
+    });
+
     try {
       const result = await this.runWithTimeout(() =>
         session.run(
@@ -59,7 +72,8 @@ export class KnowledgeGraphService {
           { name: params.entity_name, limit }
         )
       );
-      return result.records.map((record) => {
+
+      const entities = result.records.map((record) => {
         const node = record.get('related');
         return {
           id: node.properties.id,
@@ -67,6 +81,27 @@ export class KnowledgeGraphService {
           labels: record.get('labels')
         };
       });
+
+      logger.info('Related entities found', {
+        stage: 'knowledge_graph',
+        operation: 'findRelatedEntities',
+        entity_name: params.entity_name,
+        related_count: entities.length,
+        duration_ms: Date.now() - startTime
+      });
+
+      return entities;
+    } catch (error: any) {
+      logger.error('Neo4j query failed: findRelatedEntities', {
+        stage: 'knowledge_graph',
+        operation: 'findRelatedEntities',
+        entity_name: params.entity_name,
+        entity_type: params.entity_type,
+        error: error.message,
+        stack: error.stack,
+        duration_ms: Date.now() - startTime
+      });
+      throw error;
     } finally {
       await session.close();
     }
@@ -78,11 +113,23 @@ export class KnowledgeGraphService {
     max_hops?: number;
     limit?: number;
   }) {
+    const startTime = Date.now();
     const session = getNeo4jDriver().session({ database: config.neo4j.database });
     const label = this.mapEntityLabel(params.root_entity_type);
     // Validate maxHops to prevent DoS attacks via expensive graph traversals
     const maxHops = Math.min(Math.max(0, params.max_hops || 2), 5);
     const limit = Math.min(params.limit || 100, 1000);
+
+    logger.debug('Browsing knowledge graph from root entity', {
+      stage: 'knowledge_graph',
+      operation: 'browseGraph',
+      root_entity_name: params.root_entity_name,
+      root_entity_type: params.root_entity_type,
+      label,
+      max_hops: maxHops,
+      limit
+    });
+
     try {
       const result = await this.runWithTimeout(() =>
         session.run(
@@ -93,7 +140,8 @@ export class KnowledgeGraphService {
           { name: params.root_entity_name, limit }
         )
       );
-      return result.records.map((record) => {
+
+      const nodes = result.records.map((record) => {
         const node = record.get('node');
         return {
           id: node.properties.id,
@@ -101,6 +149,27 @@ export class KnowledgeGraphService {
           labels: record.get('labels')
         };
       });
+
+      logger.info('Graph browsing complete', {
+        stage: 'knowledge_graph',
+        operation: 'browseGraph',
+        root_entity_name: params.root_entity_name,
+        node_count: nodes.length,
+        duration_ms: Date.now() - startTime
+      });
+
+      return nodes;
+    } catch (error: any) {
+      logger.error('Neo4j query failed: browseGraph', {
+        stage: 'knowledge_graph',
+        operation: 'browseGraph',
+        root_entity_name: params.root_entity_name,
+        root_entity_type: params.root_entity_type,
+        error: error.message,
+        stack: error.stack,
+        duration_ms: Date.now() - startTime
+      });
+      throw error;
     } finally {
       await session.close();
     }

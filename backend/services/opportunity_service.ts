@@ -8,9 +8,12 @@ import {
   extractMeaningfulWords,
   fuzzyCustomerMatch
 } from '../utils/text_processing';
-import { logger } from '../utils/logger';
+import { logger as globalLogger, createModuleLogger } from '../utils/logger';
 import { computeSignalTrends, TrendResult } from './trend_analysis_service';
 import { getChannelConfig } from './channel_registry_service';
+
+// Create module-specific logger for opportunity operations
+const logger = createModuleLogger('opportunity', 'LOG_LEVEL_OPPORTUNITY');
 
 export interface Opportunity {
   id: string;
@@ -109,13 +112,44 @@ function areSignalsRelated(
   signal2: Signal,
   config: OpportunityDetectionConfig
 ): boolean {
+  logger.trace('Checking signal relationship', {
+    stage: 'opportunity_clustering',
+    signal1_id: signal1.id,
+    signal2_id: signal2.id,
+    signal1_source: signal1.source,
+    signal2_source: signal2.source,
+    signal1_type: signal1.signal_type,
+    signal2_type: signal2.signal_type,
+    config: {
+      requireSameSource: config.requireSameSource,
+      requireSameType: config.requireSameType,
+      similarityThreshold: config.similarityThreshold
+    }
+  });
+
   // Early termination: Check source requirement first (cheapest check)
   if (config.requireSameSource && signal1.source !== signal2.source) {
+    logger.trace('Signals not related: different sources', {
+      stage: 'opportunity_clustering',
+      signal1_id: signal1.id,
+      signal2_id: signal2.id,
+      source1: signal1.source,
+      source2: signal2.source,
+      reason: 'source_mismatch'
+    });
     return false;
   }
 
   // Early termination: Check signal type requirement
   if (config.requireSameType && signal1.signal_type !== signal2.signal_type) {
+    logger.trace('Signals not related: different types', {
+      stage: 'opportunity_clustering',
+      signal1_id: signal1.id,
+      signal2_id: signal2.id,
+      type1: signal1.signal_type,
+      type2: signal2.signal_type,
+      reason: 'type_mismatch'
+    });
     return false;
   }
 
@@ -124,8 +158,8 @@ function areSignalsRelated(
   const customers1 = signal1.metadata?.customers || [];
   const customers2 = signal2.metadata?.customers || [];
   if (customers1.length > 0 && customers2.length > 0) {
-    const hasMatchingCustomer = customers1.some((c1: string) => 
-      customers2.some((c2: string) => 
+    const hasMatchingCustomer = customers1.some((c1: string) =>
+      customers2.some((c2: string) =>
         fuzzyCustomerMatch(c1, c2)
       )
     );
@@ -146,7 +180,24 @@ function areSignalsRelated(
     }
   );
 
-  return similarity >= config.similarityThreshold;
+  const related = similarity >= config.similarityThreshold;
+
+  logger.trace('Signal similarity calculated', {
+    stage: 'opportunity_clustering',
+    signal1_id: signal1.id,
+    signal2_id: signal2.id,
+    similarity: similarity.toFixed(3),
+    threshold: config.similarityThreshold,
+    related,
+    weights: {
+      word: 0.4,
+      customer: 0.35,
+      topic: 0.2,
+      time: 0.05
+    }
+  });
+
+  return related;
 }
 
 /**
@@ -155,10 +206,17 @@ function areSignalsRelated(
  * NO INFERENCE - uses simple aggregation of signal data.
  */
 async function createOpportunityFromCluster(cluster: Signal[]): Promise<Opportunity> {
+  logger.debug('Creating opportunity from cluster', {
+    stage: 'opportunity_clustering',
+    status: 'start',
+    cluster_size: cluster.length,
+    signal_ids: cluster.map(s => s.id)
+  });
+
   const pool = getDbPool();
   const sources = [...new Set(cluster.map(s => s.source))];
   const types = [...new Set(cluster.map(s => s.signal_type))];
-  
+
   // Extract customer names from all signals
   const allCustomers = new Set<string>();
   cluster.forEach(signal => {
@@ -167,6 +225,12 @@ async function createOpportunityFromCluster(cluster: Signal[]): Promise<Opportun
       ? metaCustomers
       : extractCustomerNames(signal.content, signal.metadata || null);
     customers.forEach(c => allCustomers.add(c));
+  });
+
+  logger.debug('Extracted customers for opportunity', {
+    stage: 'opportunity_clustering',
+    customers: Array.from(allCustomers),
+    customer_count: allCustomers.size
   });
 
   // Extract topics from all signals
@@ -246,7 +310,16 @@ async function createOpportunityFromCluster(cluster: Signal[]): Promise<Opportun
   const title = titleParts.length > 0
     ? `${titleParts.join(' - ')} (${cluster.length} signals)`
     : `Cluster of ${cluster.length} related signals`;
-  
+
+  logger.debug('Generated opportunity title', {
+    stage: 'opportunity_clustering',
+    title,
+    title_parts: titleParts,
+    customers: Array.from(allCustomers),
+    topics: Array.from(allTopics),
+    top_words: [...wordCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([word, count]) => ({ word, count }))
+  });
+
   // Build description with more context
   const descriptionParts: string[] = [];
   descriptionParts.push(`Cluster of ${cluster.length} related signals`);
@@ -262,13 +335,27 @@ async function createOpportunityFromCluster(cluster: Signal[]): Promise<Opportun
   descriptionParts.push(`Sources: ${sources.join(', ')}`);
   descriptionParts.push(`Types: ${types.join(', ')}`);
 
-  return {
+  const opportunity = {
     id: randomUUID(),
     title: title.substring(0, 150), // Increased from 100 to 150
     description: descriptionParts.join('. ') + '.',
     status: 'new',
     created_at: new Date()
   };
+
+  logger.info('Opportunity created from cluster', {
+    stage: 'opportunity_clustering',
+    status: 'success',
+    opportunity_id: opportunity.id,
+    title: opportunity.title,
+    signal_count: cluster.length,
+    customer_count: allCustomers.size,
+    topic_count: allTopics.size,
+    sources,
+    types
+  });
+
+  return opportunity;
 }
 
 /**
@@ -478,7 +565,16 @@ function clusterSignals(
   signals: Signal[],
   config: Partial<OpportunityDetectionConfig> = {}
 ): Signal[][] {
+  const startTime = Date.now();
   const finalConfig = { ...DEFAULT_CONFIG, ...config };
+
+  logger.debug('Starting signal clustering', {
+    stage: 'opportunity_clustering',
+    status: 'start',
+    signal_count: signals.length,
+    config: finalConfig
+  });
+
   const clusters: Signal[][] = [];
   const processed = new Set<string>();
 
@@ -497,7 +593,28 @@ function clusterSignals(
     }
 
     clusters.push(cluster);
+
+    // Log at trace level to avoid spam when there are many clusters
+    logger.trace('Cluster formed', {
+      stage: 'opportunity_clustering',
+      seed_signal_id: signal.id,
+      cluster_size: cluster.length,
+      signal_ids: cluster.map(s => s.id)
+    });
   }
+
+  const duration = Date.now() - startTime;
+  const avgClusterSize = clusters.length > 0 ? (signals.length / clusters.length).toFixed(2) : '0';
+
+  logger.info('Signal clustering complete', {
+    stage: 'opportunity_clustering',
+    status: 'success',
+    signal_count: signals.length,
+    cluster_count: clusters.length,
+    avg_cluster_size: avgClusterSize,
+    clusters_breakdown: clusters.map(c => c.length),
+    duration_ms: duration
+  });
 
   return clusters;
 }
@@ -628,50 +745,123 @@ export async function mergeOpportunities(
   primaryOpportunityId: string,
   secondaryOpportunityId: string
 ): Promise<Opportunity> {
-  const pool = getDbPool();
-  
-  // Get signals from both opportunities
-  const primarySignals = await getSignalsForOpportunity(primaryOpportunityId);
-  const secondarySignals = await getSignalsForOpportunity(secondaryOpportunityId);
-  const allSignals = [...primarySignals, ...secondarySignals];
-  
+  logger.info('Starting opportunity merge', {
+    stage: 'opportunity_merge',
+    status: 'start',
+    primary_id: primaryOpportunityId,
+    secondary_id: secondaryOpportunityId
+  });
+
+  try {
+    const pool = getDbPool();
+
+    // Get signals from both opportunities
+    logger.debug('Fetching signals for merge', {
+      stage: 'opportunity_merge',
+      primary_id: primaryOpportunityId,
+      secondary_id: secondaryOpportunityId
+    });
+
+    const primarySignals = await getSignalsForOpportunity(primaryOpportunityId);
+    const secondarySignals = await getSignalsForOpportunity(secondaryOpportunityId);
+
+    // Validate that both opportunities exist
+    if (primarySignals.length === 0) {
+      logger.error('Primary opportunity not found or has no signals', {
+        stage: 'opportunity_merge',
+        status: 'validation_error',
+        primary_id: primaryOpportunityId
+      });
+      throw new Error(`Primary opportunity ${primaryOpportunityId} not found or has no signals`);
+    }
+
+    if (secondarySignals.length === 0) {
+      logger.warn('Secondary opportunity has no signals, proceeding with merge', {
+        stage: 'opportunity_merge',
+        status: 'validation_warning',
+        secondary_id: secondaryOpportunityId
+      });
+    }
+
+    const allSignals = [...primarySignals, ...secondarySignals];
+
+  logger.debug('Signals fetched for merge', {
+    stage: 'opportunity_merge',
+    primary_signal_count: primarySignals.length,
+    secondary_signal_count: secondarySignals.length,
+    total_signals: allSignals.length
+  });
+
   // Create merged opportunity
   const merged = await createOpportunityFromCluster(allSignals);
-  
+
   // Update primary opportunity
+  logger.debug('Updating primary opportunity', {
+    stage: 'opportunity_merge',
+    primary_id: primaryOpportunityId,
+    new_title: merged.title,
+    new_description: merged.description?.substring(0, 100)
+  });
+
   await pool.query(
-    `UPDATE opportunities 
+    `UPDATE opportunities
      SET title = $1, description = $2
      WHERE id = $3`,
     [merged.title, merged.description, primaryOpportunityId]
   );
-  
+
   // Move all signals from secondary to primary
+  logger.debug('Migrating signals to primary opportunity', {
+    stage: 'opportunity_merge',
+    from: secondaryOpportunityId,
+    to: primaryOpportunityId,
+    signal_count: secondarySignals.length
+  });
+
   await pool.query(
-    `UPDATE opportunity_signals 
+    `UPDATE opportunity_signals
      SET opportunity_id = $1
      WHERE opportunity_id = $2`,
     [primaryOpportunityId, secondaryOpportunityId]
   );
-  
+
   // Delete secondary opportunity
+  logger.debug('Deleting secondary opportunity', {
+    stage: 'opportunity_merge',
+    secondary_id: secondaryOpportunityId
+  });
+
   await pool.query(
     `DELETE FROM opportunities WHERE id = $1`,
     [secondaryOpportunityId]
   );
-  
-  logger.info('Opportunities merged', {
-    primaryId: primaryOpportunityId,
-    secondaryId: secondaryOpportunityId,
-    totalSignals: allSignals.length
-  });
-  
-  // Return updated primary opportunity
-  const result = await pool.query('SELECT * FROM opportunities WHERE id = $1', [primaryOpportunityId]);
-  return {
-    ...result.rows[0],
-    created_at: new Date(result.rows[0].created_at)
-  };
+
+    logger.info('Opportunities merged successfully', {
+      stage: 'opportunity_merge',
+      status: 'success',
+      primary_id: primaryOpportunityId,
+      secondary_id: secondaryOpportunityId,
+      total_signals: allSignals.length,
+      merged_title: merged.title
+    });
+
+    // Return updated primary opportunity
+    const result = await pool.query('SELECT * FROM opportunities WHERE id = $1', [primaryOpportunityId]);
+    return {
+      ...result.rows[0],
+      created_at: new Date(result.rows[0].created_at)
+    };
+  } catch (error: any) {
+    logger.error('Opportunity merge failed', {
+      stage: 'opportunity_merge',
+      status: 'error',
+      primary_id: primaryOpportunityId,
+      secondary_id: secondaryOpportunityId,
+      error: error.message,
+      stack: error.stack
+    });
+    throw error;
+  }
 }
 
 /**

@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import { getDbPool } from '../db/connection';
 import { FeedbackService } from './feedback_service';
 

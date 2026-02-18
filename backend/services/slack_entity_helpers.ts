@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { logger } from '../utils/logger';
 import { getDbPool } from '../db/connection';
 import { getFeatureDefinitions } from '../config/feature_dictionary';
 import { fuzzyCustomerMatch, resolveToCanonicalName } from '../utils/text_processing';

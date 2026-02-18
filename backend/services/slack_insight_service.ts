@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import { getDbPool } from '../db/connection';
 import { extractMeaningfulWords } from '../utils/text_processing';
 import { matchFeatures } from '../config/feature_dictionary';

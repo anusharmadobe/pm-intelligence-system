@@ -1,3 +1,5 @@
+import { logger } from '../utils/logger';
+
 export interface ChunkedSegment {
   text: string;
   index: number;

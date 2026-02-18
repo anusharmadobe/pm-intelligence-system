@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { logger } from '../utils/logger';
 import { getDbPool } from '../db/connection';
 import { EntityRegistryService } from './entity_registry_service';
 

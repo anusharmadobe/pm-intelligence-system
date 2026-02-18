@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import { getDbPool } from '../db/connection';
 import {
   normalizeCustomerName,
@@ -29,17 +30,32 @@ export async function ingestSlackExtraction(
   source: string = 'llm',
   model?: string | null
 ): Promise<void> {
-  const pool = getDbPool();
+  logger.debug('Starting LLM extraction ingestion', {
+    stage: 'llm_extraction',
+    status: 'start',
+    signal_id: signalId,
+    source,
+    model,
+    entity_counts: {
+      customers: extraction.customers?.length || 0,
+      features: extraction.features?.length || 0,
+      themes: extraction.themes?.length || 0,
+      issues: extraction.issues?.length || 0
+    }
+  });
 
-  await pool.query(
-    `INSERT INTO signal_extractions (signal_id, extraction, source, model)
-     VALUES ($1, $2, $3, $4)
-     ON CONFLICT (signal_id) DO UPDATE SET
-       extraction = EXCLUDED.extraction,
-       source = EXCLUDED.source,
-       model = EXCLUDED.model`,
-    [signalId, JSON.stringify(extraction), source, model || null]
-  );
+  try {
+    const pool = getDbPool();
+
+    await pool.query(
+      `INSERT INTO signal_extractions (signal_id, extraction, source, model)
+       VALUES ($1, $2, $3, $4)
+       ON CONFLICT (signal_id) DO UPDATE SET
+         extraction = EXCLUDED.extraction,
+         source = EXCLUDED.source,
+         model = EXCLUDED.model`,
+      [signalId, JSON.stringify(extraction), source, model || null]
+    );
 
   const customerIds: string[] = [];
   for (const customer of extraction.customers || []) {
@@ -84,11 +100,40 @@ export async function ingestSlackExtraction(
     }
   }
 
-  if (customerIds.length > 0 && issueIds.length > 0) {
-    for (const customerId of customerIds) {
-      for (const issueId of issueIds) {
-        await insertCustomerIssueReport(customerId, issueId, signalId);
+    if (customerIds.length > 0 && issueIds.length > 0) {
+      for (const customerId of customerIds) {
+        for (const issueId of issueIds) {
+          await insertCustomerIssueReport(customerId, issueId, signalId);
+        }
       }
     }
+
+    logger.info('LLM extraction ingestion complete', {
+      stage: 'llm_extraction',
+      status: 'success',
+      signal_id: signalId,
+      source,
+      model,
+      entities_created: {
+        customers: customerIds.length,
+        features: featureIds.length,
+        issues: issueIds.length
+      },
+      relationships_created: {
+        customer_feature_usage: customerIds.length * featureIds.length,
+        customer_issue_reports: customerIds.length * issueIds.length
+      }
+    });
+  } catch (error: any) {
+    logger.error('LLM extraction ingestion failed', {
+      stage: 'llm_extraction',
+      status: 'error',
+      signal_id: signalId,
+      source,
+      model,
+      error: error.message,
+      stack: error.stack
+    });
+    throw error;
   }
 }

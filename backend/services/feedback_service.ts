@@ -1,9 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import { getDbPool } from '../db/connection';
-import { logger } from '../utils/logger';
+import { logger as globalLogger, createModuleLogger } from '../utils/logger';
 import { EntityRegistryService } from './entity_registry_service';
 import { eventBus } from '../agents/event_bus';
 import { config } from '../config/env';
+
+// Create module-specific logger for entity resolution operations
+const logger = createModuleLogger('entity_resolution', 'LOG_LEVEL_ENTITY_RESOLUTION');
 
 export class FeedbackService {
   private registryService = new EntityRegistryService();
@@ -50,6 +53,14 @@ export class FeedbackService {
   }
 
   async confirmMerge(feedbackId: string, resolvedBy: string, notes?: string): Promise<void> {
+    logger.info('Processing merge confirmation', {
+      stage: 'entity_merge',
+      status: 'start',
+      feedback_id: feedbackId,
+      resolved_by: resolvedBy,
+      has_notes: !!notes
+    });
+
     const pool = getDbPool();
     const feedbackResult = await pool.query(
       `SELECT * FROM feedback_log WHERE id = $1`,
@@ -57,6 +68,10 @@ export class FeedbackService {
     );
     const feedback = feedbackResult.rows[0];
     if (!feedback) {
+      logger.error('Feedback not found for merge confirmation', {
+        stage: 'entity_merge',
+        feedback_id: feedbackId
+      });
       throw new Error('Feedback not found');
     }
 
@@ -64,7 +79,24 @@ export class FeedbackService {
     const alias = systemOutput.entity_a || systemOutput.alias || null;
     const candidateEntityId = systemOutput.candidate_entity_id || systemOutput.entity_id;
 
+    logger.debug('Feedback details retrieved', {
+      stage: 'entity_merge',
+      feedback_id: feedbackId,
+      feedback_type: feedback.feedback_type,
+      alias,
+      candidate_entity_id: candidateEntityId,
+      confidence: feedback.system_confidence
+    });
+
     if (alias && candidateEntityId) {
+      logger.debug('Preparing entity merge', {
+        stage: 'entity_merge',
+        alias,
+        canonical_entity_id: candidateEntityId,
+        alias_normalized: this.normalizeAlias(alias),
+        feedback_id: feedbackId
+      });
+
       await pool.query(
         `INSERT INTO entity_aliases
           (id, canonical_entity_id, alias, alias_normalized, alias_source, confidence, confirmed_by_human)
@@ -81,7 +113,24 @@ export class FeedbackService {
         ]
       );
 
+      logger.info('Entity merged via feedback', {
+        stage: 'entity_merge',
+        status: 'alias_added',
+        canonical_entity_id: candidateEntityId,
+        alias,
+        feedback_id: feedbackId,
+        resolved_by: resolvedBy,
+        method: 'human_confirmation'
+      });
+
       if (config.featureFlags.eventBus) {
+        logger.debug('Publishing entity.merged event', {
+          stage: 'entity_merge',
+          canonical_entity_id: candidateEntityId,
+          alias,
+          feedback_id: feedbackId
+        });
+
         await eventBus.publish({
           event_type: 'entity.merged',
           source_service: 'feedback_service',
@@ -96,6 +145,13 @@ export class FeedbackService {
           }
         });
       }
+    } else {
+      logger.warn('Cannot merge entity: missing alias or candidate entity ID', {
+        stage: 'entity_merge',
+        feedback_id: feedbackId,
+        has_alias: !!alias,
+        has_candidate_entity_id: !!candidateEntityId
+      });
     }
 
     await pool.query(
@@ -104,6 +160,13 @@ export class FeedbackService {
        WHERE id = $1`,
       [feedbackId, resolvedBy, notes || null]
     );
+
+    logger.info('Merge confirmation complete', {
+      stage: 'entity_merge',
+      status: 'success',
+      feedback_id: feedbackId,
+      resolved_by: resolvedBy
+    });
 
     await this.logAudit({
       eventType: 'feedback.accepted',
@@ -119,6 +182,15 @@ export class FeedbackService {
   }
 
   async rejectMerge(feedbackId: string, resolvedBy: string, notes?: string): Promise<void> {
+    logger.info('Processing merge rejection', {
+      stage: 'entity_merge',
+      status: 'rejected',
+      feedback_id: feedbackId,
+      resolved_by: resolvedBy,
+      notes: notes || null,
+      method: 'human_rejection'
+    });
+
     const pool = getDbPool();
     await pool.query(
       `UPDATE feedback_log
@@ -126,6 +198,13 @@ export class FeedbackService {
        WHERE id = $1`,
       [feedbackId, resolvedBy, notes || null]
     );
+
+    logger.info('Merge rejection complete', {
+      stage: 'entity_merge',
+      status: 'rejection_complete',
+      feedback_id: feedbackId,
+      resolved_by: resolvedBy
+    });
 
     await this.logAudit({
       eventType: 'feedback.rejected',

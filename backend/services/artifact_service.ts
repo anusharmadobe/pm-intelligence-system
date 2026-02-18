@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { logger } from '../utils/logger';
 import { getDbPool } from '../db/connection';
 import { getJudgmentById } from './judgment_service';
 import { draftArtifact, LLMProvider } from './llm_service';
