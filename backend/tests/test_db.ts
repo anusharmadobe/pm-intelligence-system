@@ -2,18 +2,23 @@ import { execSync } from 'child_process';
 import { getDbPool, closeDbPool } from '../db/connection';
 import { clearCustomerCache } from '../services/slack_entity_helpers';
 
+// Always use test database for migrations in test environment
 const MIGRATE_ENV = {
-  DB_HOST: process.env.DB_HOST,
-  DB_PORT: process.env.DB_PORT,
-  DB_NAME: process.env.DB_NAME,
-  DB_USER: process.env.DB_USER,
-  DB_PASSWORD: process.env.DB_PASSWORD
+  DB_HOST: process.env.DB_HOST || 'localhost',
+  DB_PORT: process.env.DB_PORT || '5433',
+  DB_NAME: process.env.DB_NAME || 'pm_intelligence_test',
+  DB_USER: process.env.DB_USER || 'anusharm',
+  DB_PASSWORD: process.env.DB_PASSWORD || ''
 };
 
 let migrationsApplied = false;
 
-export function runMigrations(): void {
+export async function runMigrations(): Promise<void> {
   if (migrationsApplied) return;
+
+  // Close any existing database pool to ensure fresh connection with test DB settings
+  await closeDbPool();
+
   const env = { ...process.env, ...MIGRATE_ENV };
   try {
     execSync('npm run migrate', { env, stdio: 'pipe' });
@@ -24,6 +29,9 @@ export function runMigrations(): void {
     }
   }
   migrationsApplied = true;
+
+  // Close pool again after migrations to ensure tests create fresh connections
+  await closeDbPool();
 }
 
 export async function resetDatabase(): Promise<void> {

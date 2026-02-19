@@ -4,8 +4,8 @@ import { runMigrations, resetDatabase, shutdownDatabase } from './test_db';
 describe('EntityRegistryService', () => {
   const service = new EntityRegistryService();
 
-  beforeAll(() => {
-    runMigrations();
+  beforeAll(async () => {
+    await runMigrations();
   });
 
   beforeEach(async () => {

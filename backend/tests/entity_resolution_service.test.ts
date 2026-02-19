@@ -5,8 +5,8 @@ import { runMigrations, resetDatabase, shutdownDatabase } from './test_db';
 describe('EntityResolutionService', () => {
   const service = new EntityResolutionService();
 
-  beforeAll(() => {
-    runMigrations();
+  beforeAll(async () => {
+    await runMigrations();
   });
 
   beforeEach(async () => {

@@ -13,8 +13,8 @@ import {
 import { runMigrations, resetDatabase, shutdownDatabase } from './test_db';
 
 describe('Channel Registry Service', () => {
-  beforeAll(() => {
-    runMigrations();
+  beforeAll(async () => {
+    await runMigrations();
   });
 
   beforeEach(async () => {

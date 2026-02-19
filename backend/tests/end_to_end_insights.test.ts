@@ -4,8 +4,8 @@ import { getStrategicInsights } from '../services/slack_insight_service';
 import { runMigrations, resetDatabase, shutdownDatabase } from './test_db';
 
 describe('End-to-end Slack insights', () => {
-  beforeAll(() => {
-    runMigrations();
+  beforeAll(async () => {
+    await runMigrations();
   });
 
   beforeEach(async () => {

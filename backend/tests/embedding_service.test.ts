@@ -17,8 +17,8 @@ import { ingestSignal, RawSignal, Signal } from '../processing/signal_extractor'
 import { runMigrations, resetDatabase, shutdownDatabase } from './test_db';
 
 describe('Embedding Service', () => {
-  beforeAll(() => {
-    runMigrations();
+  beforeAll(async () => {
+    await runMigrations();
   });
 
   beforeEach(async () => {
