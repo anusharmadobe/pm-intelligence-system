@@ -8,11 +8,19 @@ let dbCircuitBreaker: CircuitBreaker | null = null;
 
 export function getDbPool(): Pool {
   if (!pool) {
+    // Read database config from process.env at runtime to support test overrides
+    // This allows tests to set DB_NAME=pm_intelligence_test before creating the pool
+    const host = process.env.DB_HOST || config.db.host;
+    const port = process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : config.db.port;
+    const database = process.env.DB_NAME || config.db.database;
+    const user = process.env.DB_USER || config.db.user;
+    const password = process.env.DB_PASSWORD !== undefined ? process.env.DB_PASSWORD : config.db.password;
+
     const poolConfig: any = {
-      host: config.db.host,
-      port: config.db.port,
-      database: config.db.database,
-      user: config.db.user,
+      host,
+      port,
+      database,
+      user,
       // Connection pool settings for reliability
       max: 20, // Maximum number of clients in the pool
       idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
@@ -20,8 +28,8 @@ export function getDbPool(): Pool {
     };
 
     // Only add password if it's not empty and is a valid string
-    if (config.db.password && typeof config.db.password === 'string' && config.db.password.trim() !== '') {
-      poolConfig.password = config.db.password.trim();
+    if (password && typeof password === 'string' && password.trim() !== '') {
+      poolConfig.password = password.trim();
     }
 
     pool = new Pool(poolConfig);

@@ -12,7 +12,7 @@ CREATE INDEX IF NOT EXISTS idx_neo4j_backlog_status_created
 
 -- Index for processing backlog items
 CREATE INDEX IF NOT EXISTS idx_neo4j_backlog_processing
-  ON neo4j_sync_backlog(status, updated_at)
+  ON neo4j_sync_backlog(status, created_at)
   WHERE status = 'processing';
 
 -- Enforce valid status values
@@ -55,7 +55,7 @@ CREATE INDEX IF NOT EXISTS idx_signal_corrections_field_path
 
 -- Index for reviewed corrections
 CREATE INDEX IF NOT EXISTS idx_signal_corrections_reviewed
-  ON signal_corrections(reviewed_at DESC NULLS LAST);
+  ON signal_corrections(corrected_at DESC NULLS LAST);
 
 -- GIN index for pattern data JSONB queries (if table exists)
 DO $$
@@ -76,8 +76,8 @@ CREATE INDEX IF NOT EXISTS idx_signals_source_created
 
 -- Index for quality score filtering
 CREATE INDEX IF NOT EXISTS idx_signals_quality_score
-  ON signals(quality_score DESC NULLS LAST)
-  WHERE quality_score IS NOT NULL;
+  ON signals(((metadata->>'quality_score')::INT) DESC NULLS LAST)
+  WHERE metadata->>'quality_score' ~ '^-?[0-9]+$';
 
 -- Index for confidence filtering
 CREATE INDEX IF NOT EXISTS idx_signals_confidence
@@ -124,7 +124,7 @@ CREATE INDEX IF NOT EXISTS idx_signal_embeddings_model
 
 -- Index for embeddings with recent updates
 CREATE INDEX IF NOT EXISTS idx_signal_embeddings_updated
-  ON signal_embeddings(updated_at DESC NULLS LAST);
+  ON signal_embeddings(created_at DESC NULLS LAST);
 
 -- ============================================================
 -- Entity Resolution Indexes

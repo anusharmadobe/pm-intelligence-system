@@ -24,6 +24,11 @@ export interface ForumThread {
   scraped_at?: string;
 }
 
+export interface ForumMappingOptions {
+  includeComments?: boolean;
+  maxCommentsPerThread?: number;
+}
+
 export function buildCommentKey(comment?: ForumComment | null): string | null {
   if (!comment) return null;
   const text = (comment.text || '').trim();
@@ -44,8 +49,11 @@ export function buildThreadText(thread: ForumThread): string {
 
 export function mapForumThreadToRawSignals(
   thread: ForumThread,
-  sourceFile: string
+  sourceFile: string,
+  options: ForumMappingOptions = {}
 ): RawSignal[] {
+  const includeComments = options.includeComments !== false;
+  const maxCommentsPerThread = options.maxCommentsPerThread;
   const text = buildThreadText(thread);
   if (!text || text.trim().length < 10) return [];
 
@@ -96,29 +104,37 @@ export function mapForumThreadToRawSignals(
     });
   }
 
-  const commentList = thread.comments || [];
-  for (let i = 0; i < commentList.length; i++) {
-    const comment = commentList[i];
-    const commentText = (comment.text || '').trim();
-    if (!commentText || commentText.length < 10) continue;
-    const key = buildCommentKey(comment);
-    if (key && seen.has(key)) continue;
-    if (key) seen.add(key);
-
-    signals.push({
-      source: 'manual',
-      id: `${thread.url}#comment-${i + 1}`,
-      type: comment.is_accepted ? 'community_answer' : 'community_comment',
-      text: commentText,
-      metadata: {
-        ...baseMetadata,
-        record_type: comment.is_accepted ? 'accepted_comment' : 'comment',
-        comment_author: comment.author,
-        comment_date: comment.date,
-        comment_likes: comment.likes ?? null,
-        is_accepted: comment.is_accepted ?? false
+  if (includeComments) {
+    const commentList = thread.comments || [];
+    let mappedComments = 0;
+    for (let i = 0; i < commentList.length; i++) {
+      if (maxCommentsPerThread !== undefined && mappedComments >= maxCommentsPerThread) {
+        break;
       }
-    });
+
+      const comment = commentList[i];
+      const commentText = (comment.text || '').trim();
+      if (!commentText || commentText.length < 10) continue;
+      const key = buildCommentKey(comment);
+      if (key && seen.has(key)) continue;
+      if (key) seen.add(key);
+
+      signals.push({
+        source: 'manual',
+        id: `${thread.url}#comment-${i + 1}`,
+        type: comment.is_accepted ? 'community_answer' : 'community_comment',
+        text: commentText,
+        metadata: {
+          ...baseMetadata,
+          record_type: comment.is_accepted ? 'accepted_comment' : 'comment',
+          comment_author: comment.author,
+          comment_date: comment.date,
+          comment_likes: comment.likes ?? null,
+          is_accepted: comment.is_accepted ?? false
+        }
+      });
+      mappedComments += 1;
+    }
   }
 
   return signals;

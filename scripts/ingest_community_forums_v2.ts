@@ -25,11 +25,14 @@ import { getRunMetrics } from '../backend/utils/run_metrics';
 
 type IngestConfig = {
   limitThreads?: number;
+  limitSignals?: number;
   batchSize: number;
   delayMs: number;
   skipShort: boolean;
   minLength: number;
   skipBoilerplate: boolean;
+  includeComments: boolean;
+  maxCommentsPerThread?: number;
   resume: boolean;
   resetCursor: boolean;
   replayFailures: boolean;
@@ -73,6 +76,7 @@ function parseArgs(): IngestConfig {
     skipShort: false,
     minLength: 50,
     skipBoilerplate: false,
+    includeComments: true,
     resume: false,
     resetCursor: false,
     replayFailures: false,
@@ -82,6 +86,8 @@ function parseArgs(): IngestConfig {
   for (const arg of args) {
     if (arg.startsWith('--limit=')) {
       config.limitThreads = parseInt(arg.split('=')[1], 10);
+    } else if (arg.startsWith('--limit-signals=')) {
+      config.limitSignals = parseInt(arg.split('=')[1], 10);
     } else if (arg.startsWith('--batch-size=')) {
       config.batchSize = parseInt(arg.split('=')[1], 10);
     } else if (arg.startsWith('--delay-ms=')) {
@@ -92,6 +98,10 @@ function parseArgs(): IngestConfig {
       config.minLength = parseInt(arg.split('=')[1], 10);
     } else if (arg === '--skip-boilerplate') {
       config.skipBoilerplate = true;
+    } else if (arg === '--no-comments') {
+      config.includeComments = false;
+    } else if (arg.startsWith('--max-comments-per-thread=')) {
+      config.maxCommentsPerThread = parseInt(arg.split('=')[1], 10);
     } else if (arg === '--resume') {
       config.resume = true;
     } else if (arg === '--reset') {
@@ -333,17 +343,33 @@ async function ingestCommunityForumsV2() {
 
   console.log('\n📥 Ingesting community forums via V2 pipeline');
   console.log('='.repeat(70));
+  const commentMode = config.includeComments
+    ? config.maxCommentsPerThread !== undefined
+      ? `yes (max ${config.maxCommentsPerThread}/thread)`
+      : 'yes (all)'
+    : 'no';
   console.log(
     `Files: ${files.length} | Batch size: ${config.batchSize} | Delay: ${config.delayMs}ms | Limit threads: ${
       config.limitThreads ?? 'none'
-    } | Skip short: ${config.skipShort ? `yes (min ${config.minLength})` : 'no'} | Skip boilerplate: ${
+    } | Limit signals: ${config.limitSignals ?? 'none'} | Include comments: ${commentMode} | Skip short: ${
+      config.skipShort ? `yes (min ${config.minLength})` : 'no'
+    } | Skip boilerplate: ${
       config.skipBoilerplate ? 'yes' : 'no'
     } | Resume: ${config.resume ? 'yes' : 'no'}\n`
   );
 
+  const threadCapLabel = config.limitThreads ?? '∞';
+  const signalCapLabel = config.limitSignals ?? '∞';
+  const commentCapLabel = config.includeComments ? config.maxCommentsPerThread ?? 'all' : 0;
+  const batchProgressLabel = () =>
+    `threads=${stats.threads}/${threadCapLabel}, signals=${stats.signals}/${signalCapLabel}, ingested=${stats.ingested}, errors=${stats.errors}`;
+
+  console.log(`Caps: threads=${threadCapLabel}, signals=${signalCapLabel}, comments=${commentCapLabel}`);
+
   let batch: RawSignal[] = [];
   let batchIndex = cursor?.batchIndex || 0;
   let nextBatchIndex = batchIndex + 1;
+  let stopRequested = false;
 
   for (let fileIndex = 0; fileIndex < files.length; fileIndex += 1) {
     const file = files[fileIndex];
@@ -352,14 +378,29 @@ async function ingestCommunityForumsV2() {
     const threads: ForumThread[] = JSON.parse(raw);
 
     for (let threadIndex = 0; threadIndex < threads.length; threadIndex += 1) {
-      if (config.limitThreads && stats.threads >= config.limitThreads) break;
+      if (config.limitThreads && stats.threads >= config.limitThreads) {
+        stopRequested = true;
+        break;
+      }
+      if (config.limitSignals && stats.signals >= config.limitSignals) {
+        stopRequested = true;
+        break;
+      }
       if (shouldSkipByCursor(cursor, fileIndex, threadIndex)) continue;
 
       const thread = threads[threadIndex];
       stats.threads += 1;
-      const v1Signals = mapForumThreadToRawSignals(thread, basename(file));
+      const v1Signals = mapForumThreadToRawSignals(thread, basename(file), {
+        includeComments: config.includeComments,
+        maxCommentsPerThread: config.maxCommentsPerThread
+      });
 
       for (const v1Signal of v1Signals) {
+        if (config.limitSignals && stats.signals >= config.limitSignals) {
+          stopRequested = true;
+          break;
+        }
+
         const text = v1Signal.text || '';
         if (config.skipShort && text.trim().length < config.minLength) {
           stats.skippedShort += 1;
@@ -414,7 +455,7 @@ async function ingestCommunityForumsV2() {
         if (batch.length >= config.batchSize) {
           batchIndex = nextBatchIndex;
           stats.batches = batchIndex;
-          console.log(`Processing batch ${batchIndex} (signals processed: ${stats.ingested}/${stats.signals})`);
+          console.log(`Processing batch ${batchIndex} (${batchProgressLabel()})`);
           await processBatch({ pipeline, batch, stats, runId, batchIndex, signalSourceRefs });
           metrics.increment('signals_processed', batch.length);
           batch = [];
@@ -427,21 +468,26 @@ async function ingestCommunityForumsV2() {
           await sleep(config.delayMs);
           nextBatchIndex = batchIndex + 1;
         }
+
+        if (config.limitSignals && stats.signals >= config.limitSignals) {
+          stopRequested = true;
+          break;
+        }
       }
 
       if (stats.threads % 25 === 0) {
-        console.log(
-          `Progress: threads=${stats.threads}, signals=${stats.signals}, ingested=${stats.ingested}, errors=${stats.errors}`
-        );
+        console.log(`Progress: ${batchProgressLabel()}`);
       }
+
+      if (stopRequested) break;
     }
-    if (config.limitThreads && stats.threads >= config.limitThreads) break;
+    if (stopRequested) break;
   }
 
   if (batch.length > 0) {
     batchIndex = nextBatchIndex;
     stats.batches = batchIndex;
-    console.log(`Processing batch ${batchIndex} (signals processed: ${stats.ingested}/${stats.signals})`);
+    console.log(`Processing batch ${batchIndex} (${batchProgressLabel()})`);
     await processBatch({ pipeline, batch, stats, runId, batchIndex, signalSourceRefs });
     metrics.increment('signals_processed', batch.length);
   }
