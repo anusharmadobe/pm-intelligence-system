@@ -77,7 +77,7 @@ CREATE INDEX IF NOT EXISTS idx_signals_source_created
 -- Index for quality score filtering
 CREATE INDEX IF NOT EXISTS idx_signals_quality_score
   ON signals(((metadata->>'quality_score')::INT) DESC NULLS LAST)
-  WHERE metadata->>'quality_score' ~ '^-?[0-9]+$';
+  WHERE metadata->>'quality_score' IS NOT NULL;
 
 -- Index for confidence filtering
 CREATE INDEX IF NOT EXISTS idx_signals_confidence
@@ -96,23 +96,53 @@ CREATE INDEX IF NOT EXISTS idx_signals_normalized_content_fts
 -- Opportunities Table Performance Indexes
 -- ============================================================
 
--- Composite index for severity and creation time
-CREATE INDEX IF NOT EXISTS idx_opportunities_severity_created
-  ON opportunities(severity, created_at DESC);
+-- Composite index for severity and creation time (only when column exists)
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM information_schema.columns
+    WHERE table_name = 'opportunities'
+      AND column_name = 'severity'
+  ) THEN
+    CREATE INDEX IF NOT EXISTS idx_opportunities_severity_created
+      ON opportunities(severity, created_at DESC);
+  END IF;
+END $$;
 
 -- Index for status filtering
 CREATE INDEX IF NOT EXISTS idx_opportunities_status
   ON opportunities(status)
   WHERE status IN ('open', 'in_progress');
 
--- Index for confidence filtering
-CREATE INDEX IF NOT EXISTS idx_opportunities_confidence
-  ON opportunities(confidence DESC)
-  WHERE confidence > 0.7;
+-- Index for confidence filtering (only when column exists)
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM information_schema.columns
+    WHERE table_name = 'opportunities'
+      AND column_name = 'confidence'
+  ) THEN
+    CREATE INDEX IF NOT EXISTS idx_opportunities_confidence
+      ON opportunities(confidence DESC)
+      WHERE confidence > 0.7;
+  END IF;
+END $$;
 
--- GIN index for impact areas JSONB
-CREATE INDEX IF NOT EXISTS idx_opportunities_impact_areas_gin
-  ON opportunities USING GIN (impact_areas);
+-- GIN index for impact areas JSONB (only when column exists)
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM information_schema.columns
+    WHERE table_name = 'opportunities'
+      AND column_name = 'impact_areas'
+  ) THEN
+    CREATE INDEX IF NOT EXISTS idx_opportunities_impact_areas_gin
+      ON opportunities USING GIN (impact_areas);
+  END IF;
+END $$;
 
 -- ============================================================
 -- Signal Embeddings Performance Indexes
@@ -130,31 +160,49 @@ CREATE INDEX IF NOT EXISTS idx_signal_embeddings_updated
 -- Entity Resolution Indexes
 -- ============================================================
 
--- Index for canonical entities lookup
-CREATE INDEX IF NOT EXISTS idx_entities_is_canonical
-  ON entities(is_canonical)
-  WHERE is_canonical = true;
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM information_schema.tables
+    WHERE table_name = 'entities'
+  ) THEN
+    -- Index for canonical entities lookup
+    CREATE INDEX IF NOT EXISTS idx_entities_is_canonical
+      ON entities(is_canonical)
+      WHERE is_canonical = true;
 
--- Index for entity type filtering
-CREATE INDEX IF NOT EXISTS idx_entities_type
-  ON entities(entity_type);
+    -- Index for entity type filtering
+    CREATE INDEX IF NOT EXISTS idx_entities_type
+      ON entities(entity_type);
 
--- Composite index for name and type lookups
-CREATE INDEX IF NOT EXISTS idx_entities_name_type
-  ON entities(LOWER(name), entity_type);
+    -- Composite index for name and type lookups
+    CREATE INDEX IF NOT EXISTS idx_entities_name_type
+      ON entities(LOWER(name), entity_type);
+  END IF;
+END $$;
 
 -- ============================================================
 -- Channel Registry Indexes
 -- ============================================================
 
--- Index for active channels
-CREATE INDEX IF NOT EXISTS idx_channels_active
-  ON channels(is_active, last_activity_at DESC NULLS LAST)
-  WHERE is_active = true;
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM information_schema.tables
+    WHERE table_name = 'channels'
+  ) THEN
+    -- Index for active channels
+    CREATE INDEX IF NOT EXISTS idx_channels_active
+      ON channels(is_active, last_activity_at DESC NULLS LAST)
+      WHERE is_active = true;
 
--- Index for channel category
-CREATE INDEX IF NOT EXISTS idx_channels_category
-  ON channels(category);
+    -- Index for channel category
+    CREATE INDEX IF NOT EXISTS idx_channels_category
+      ON channels(category);
+  END IF;
+END $$;
 
 -- ============================================================
 -- System Metrics Indexes
@@ -176,7 +224,7 @@ CREATE INDEX IF NOT EXISTS idx_system_metrics_raw
 -- Index for cleanup of expired keys
 CREATE INDEX IF NOT EXISTS idx_idempotency_keys_expires
   ON idempotency_keys(expires_at)
-  WHERE expires_at < NOW();
+  WHERE expires_at IS NOT NULL;
 
 -- ============================================================
 -- Dead Letter Queue Indexes (from V3_002)
@@ -200,14 +248,23 @@ CREATE INDEX IF NOT EXISTS idx_dlq_moved_at
 -- Theme Classifications Indexes
 -- ============================================================
 
--- Composite index for theme lookups
-CREATE INDEX IF NOT EXISTS idx_theme_classifications_theme_signal
-  ON signal_theme_classifications(theme_slug, signal_id);
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM information_schema.tables
+    WHERE table_name = 'signal_theme_classifications'
+  ) THEN
+    -- Composite index for theme lookups
+    CREATE INDEX IF NOT EXISTS idx_theme_classifications_theme_signal
+      ON signal_theme_classifications(theme_slug, signal_id);
 
--- Index for confidence-based filtering
-CREATE INDEX IF NOT EXISTS idx_theme_classifications_confidence
-  ON signal_theme_classifications(confidence DESC)
-  WHERE confidence > 0.7;
+    -- Index for confidence-based filtering
+    CREATE INDEX IF NOT EXISTS idx_theme_classifications_confidence
+      ON signal_theme_classifications(confidence DESC)
+      WHERE confidence > 0.7;
+  END IF;
+END $$;
 
 -- ============================================================
 -- API Keys Indexes (from V3_001 auth migration)
@@ -231,10 +288,30 @@ END $$;
 -- ============================================================
 
 COMMENT ON INDEX idx_signals_source_created IS 'Optimizes queries filtering by source and sorting by creation time';
-COMMENT ON INDEX idx_opportunities_severity_created IS 'Optimizes priority queries for opportunities dashboard';
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM pg_indexes
+    WHERE schemaname = 'public'
+      AND indexname = 'idx_opportunities_severity_created'
+  ) THEN
+    COMMENT ON INDEX idx_opportunities_severity_created IS 'Optimizes priority queries for opportunities dashboard';
+  END IF;
+END $$;
 COMMENT ON INDEX idx_failed_signals_status_next_retry IS 'Optimizes retry job queries for pending failed signals';
 COMMENT ON INDEX idx_signal_embeddings_updated IS 'Optimizes queries for recently updated embeddings';
-COMMENT ON INDEX idx_entities_is_canonical IS 'Speeds up canonical entity resolution lookups';
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM pg_indexes
+    WHERE schemaname = 'public'
+      AND indexname = 'idx_entities_is_canonical'
+  ) THEN
+    COMMENT ON INDEX idx_entities_is_canonical IS 'Speeds up canonical entity resolution lookups';
+  END IF;
+END $$;
 
 -- ============================================================
 -- Verification Query

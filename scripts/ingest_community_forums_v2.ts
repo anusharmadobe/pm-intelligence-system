@@ -358,8 +358,8 @@ async function ingestCommunityForumsV2() {
     } | Resume: ${config.resume ? 'yes' : 'no'}\n`
   );
 
-  const threadCapLabel = config.limitThreads ?? '∞';
-  const signalCapLabel = config.limitSignals ?? '∞';
+  const threadCapLabel = config.limitThreads ?? 'unbounded';
+  const signalCapLabel = config.limitSignals ?? 'unbounded';
   const commentCapLabel = config.includeComments ? config.maxCommentsPerThread ?? 'all' : 0;
   const batchProgressLabel = () =>
     `threads=${stats.threads}/${threadCapLabel}, signals=${stats.signals}/${signalCapLabel}, ingested=${stats.ingested}, errors=${stats.errors}`;
