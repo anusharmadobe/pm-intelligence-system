@@ -1,0 +1,135 @@
+{
+  "_comment": "Website Crawler Configuration - Update URLs and enable sources for production use",
+  "sources": [
+    {
+      "name": "Example Competitor Blog",
+      "url": "https://example-competitor.com/blog",
+      "type": "blog",
+      "competitor": "Example Corp",
+      "crawl_frequency": "12h",
+      "enabled": false,
+      "selectors": {
+        "content": "article.post-content, .blog-post-content, main article",
+        "title": "h1.post-title, .blog-post-title, article h1",
+        "date": "time.published, .publish-date, time[datetime]",
+        "author": ".author-name, .post-author, [rel='author']"
+      },
+      "tags": ["competitor", "product-updates"],
+      "maxPages": 10,
+      "pagination": {
+        "type": "next-link",
+        "selector": "a.next-page, .pagination .next, a[rel='next']"
+      }
+    },
+    {
+      "name": "Example Competitor Changelog",
+      "url": "https://example-competitor.com/changelog",
+      "type": "changelog",
+      "competitor": "Example Corp",
+      "crawl_frequency": "6h",
+      "enabled": false,
+      "selectors": {
+        "content": ".changelog-entry, .release-notes",
+        "title": ".changelog-title, h2.release-title",
+        "date": ".changelog-date, time.release-date"
+      },
+      "tags": ["competitor", "releases", "changelog"],
+      "maxPages": 5,
+      "pagination": {
+        "type": "load-more",
+        "selector": "button.load-more, .load-more-button"
+      }
+    },
+    {
+      "name": "Example Pricing Page",
+      "url": "https://example-competitor.com/pricing",
+      "type": "pricing",
+      "competitor": "Example Corp",
+      "crawl_frequency": "24h",
+      "enabled": false,
+      "selectors": {
+        "content": ".pricing-container, main, .pricing-section"
+      },
+      "tags": ["competitor", "pricing"],
+      "maxPages": 1
+    },
+    {
+      "name": "Industry News - TechCrunch PM Tools",
+      "url": "https://techcrunch.com/tag/product-management/",
+      "type": "news",
+      "crawl_frequency": "24h",
+      "enabled": false,
+      "selectors": {
+        "content": "article.post-block, .article-content",
+        "title": "h2.post-block__title, .article-title",
+        "date": "time.post-block__time, .article-date"
+      },
+      "tags": ["industry-news", "product-management"],
+      "maxPages": 3
+    },
+    {
+      "name": "Product Hunt - PM Tools",
+      "url": "https://www.producthunt.com/topics/product-management",
+      "type": "forum",
+      "crawl_frequency": "24h",
+      "enabled": false,
+      "selectors": {
+        "content": ".styles_htmlText__eYPgj, [data-test='post-description']",
+        "title": "h1, [data-test='post-name']"
+      },
+      "tags": ["community", "product-launches"],
+      "maxPages": 2
+    }
+  ],
+  "_instructions": [
+    "=== HOW TO USE THIS FILE ===",
+    "",
+    "1. ENABLE A SOURCE:",
+    "   - Update 'url' to actual competitor/source URL",
+    "   - Set 'enabled: true'",
+    "   - Verify 'competitor' name is correct",
+    "",
+    "2. CUSTOMIZE SELECTORS (optional):",
+    "   - Open the target website in your browser",
+    "   - Right-click element → Inspect",
+    "   - Find CSS selectors for content, title, date, author",
+    "   - Test in browser console: document.querySelector('your-selector')",
+    "   - Update 'selectors' object with comma-separated fallbacks",
+    "",
+    "3. CONFIGURE CRAWL FREQUENCY:",
+    "   - '6h'  = every 6 hours (changelogs, fast-moving competitors)",
+    "   - '12h' = every 12 hours (blogs, moderate updates)",
+    "   - '24h' = daily (pricing pages, news, slower sources)",
+    "   - 'manual' = only crawl when triggered via MCP tool",
+    "",
+    "4. SET MAX PAGES:",
+    "   - maxPages: limits how deep to crawl",
+    "   - Use 1 for single pages (pricing)",
+    "   - Use 5-10 for blogs/changelogs",
+    "   - Use 2-3 for news aggregators",
+    "",
+    "5. ADD NEW SOURCES:",
+    "   - Copy an existing entry",
+    "   - Update all fields",
+    "   - Choose appropriate 'type': blog | changelog | pricing | docs | news | forum",
+    "",
+    "=== FIELD REFERENCE ===",
+    "name:             Unique identifier for this source",
+    "url:              Starting URL to crawl",
+    "type:             Content type (blog, changelog, pricing, docs, news, forum)",
+    "competitor:       (optional) Competitor name for filtering in queries",
+    "crawl_frequency:  How often to re-crawl (6h, 12h, 24h, manual)",
+    "enabled:          Set to true to start crawling",
+    "selectors:        (optional) CSS selectors - use commas for fallbacks",
+    "tags:             Array of tags for categorization",
+    "maxPages:         Maximum pages to crawl",
+    "pagination:       (optional) How to follow to next page",
+    "",
+    "=== TIPS ===",
+    "- Start with enabled: false and test one source at a time",
+    "- Use multiple selectors (comma-separated) for better compatibility",
+    "- Monitor logs for crawl errors: grep 'website_crawler' logs/app.log",
+    "- Check deduplication: same content won't create duplicate signals"
+  ]
+}
+

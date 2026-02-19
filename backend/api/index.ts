@@ -96,37 +96,112 @@ async function startServer() {
 }
 
 async function shutdown(signal: string) {
-  if (shuttingDown) return;
+  if (shuttingDown) {
+    logger.warn('Shutdown already in progress');
+    return;
+  }
+
   shuttingDown = true;
-  logger.info('Shutting down server', { signal });
+  const shutdownStart = Date.now();
+
+  logger.info('Graceful shutdown initiated', {
+    signal,
+    pid: process.pid
+  });
+
+  // Force shutdown after 30 seconds
+  const forceShutdownTimer = setTimeout(() => {
+    logger.error('Forced shutdown after timeout', {
+      elapsedMs: Date.now() - shutdownStart
+    });
+    process.exit(1);
+  }, 30000);
 
   try {
+    // Step 1: Stop accepting new requests
     if (server) {
-      await new Promise((resolve) => server?.close(() => resolve(true)));
+      logger.info('Stopping HTTP server from accepting new connections');
+      await new Promise((resolve, reject) => {
+        server?.close((err) => {
+          if (err) reject(err);
+          else resolve(true);
+        });
+      });
+      logger.info('HTTP server stopped accepting connections');
     }
-  } catch (error: any) {
-    logger.warn('Failed to close HTTP server', { error: error?.message || error });
-  }
 
-  try {
-    await closeDbPool();
-  } catch (error: any) {
-    logger.warn('Failed to close database pool', { error: error?.message || error });
-  }
+    // Step 2: Stop background workers and queues
+    try {
+      const { IngestionPipelineService } = await import('../services/ingestion_pipeline_service');
+      const pipeline = new IngestionPipelineService();
+      await pipeline.cleanup();
+      logger.info('Ingestion pipeline cleaned up');
+    } catch (error: any) {
+      logger.warn('Failed to cleanup ingestion pipeline', {
+        error: error?.message || error
+      });
+    }
 
-  try {
-    await closeNeo4jDriver();
-  } catch (error: any) {
-    logger.warn('Failed to close Neo4j driver', { error: error?.message || error });
-  }
+    // Step 3: Close browser instances
+    try {
+      const { WebsiteCrawlerService } = await import('../services/website_crawler_service');
+      const crawler = new WebsiteCrawlerService();
+      await crawler.close();
+      logger.info('Website crawler cleaned up');
+    } catch (error: any) {
+      logger.warn('Failed to cleanup website crawler', {
+        error: error?.message || error
+      });
+    }
 
-  try {
-    await closeSharedRedis();
-  } catch (error: any) {
-    logger.warn('Failed to close Redis connection', { error: error?.message || error });
-  }
+    // Step 4: Close Redis connection
+    try {
+      await closeSharedRedis();
+      logger.info('Redis connection closed');
+    } catch (error: any) {
+      logger.warn('Failed to close Redis connection', {
+        error: error?.message || error
+      });
+    }
 
-  process.exit(0);
+    // Step 5: Close database pool
+    try {
+      await closeDbPool();
+      logger.info('Database pool closed');
+    } catch (error: any) {
+      logger.warn('Failed to close database pool', {
+        error: error?.message || error
+      });
+    }
+
+    // Step 6: Close Neo4j driver
+    try {
+      await closeNeo4jDriver();
+      logger.info('Neo4j driver closed');
+    } catch (error: any) {
+      logger.warn('Failed to close Neo4j driver', {
+        error: error?.message || error
+      });
+    }
+
+    clearTimeout(forceShutdownTimer);
+
+    logger.info('Graceful shutdown complete', {
+      elapsedMs: Date.now() - shutdownStart
+    });
+
+    process.exit(0);
+  } catch (error: any) {
+    clearTimeout(forceShutdownTimer);
+
+    logger.error('Error during shutdown', {
+      error: error?.message || error,
+      stack: error?.stack,
+      elapsedMs: Date.now() - shutdownStart
+    });
+
+    process.exit(1);
+  }
 }
 
 process.on('unhandledRejection', (reason: any) => {

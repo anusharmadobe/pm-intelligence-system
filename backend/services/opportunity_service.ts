@@ -241,33 +241,42 @@ async function createOpportunityFromCluster(cluster: Signal[]): Promise<Opportun
   });
 
   // Enrich with LLM extraction entities (customers, features, issues, themes)
-  const signalIds = cluster.map(signal => signal.id);
+  const signalIds = cluster.map((signal) => signal.id);
   if (signalIds.length > 0) {
-    const extractionsResult = await pool.query(
-      `SELECT extraction FROM signal_extractions WHERE signal_id = ANY($1)`,
-      [signalIds]
-    );
-    for (const row of extractionsResult.rows) {
-      try {
-        const extraction = typeof row.extraction === 'string'
-          ? JSON.parse(row.extraction)
-          : row.extraction;
-        const entities = extraction?.entities || {};
-        (entities.customers || []).forEach((c: string) => {
-          if (c) allCustomers.add(c);
-        });
-        (entities.features || []).forEach((f: string) => {
-          if (f) allTopics.add(f);
-        });
-        (entities.issues || []).forEach((i: string) => {
-          if (i) allTopics.add(i);
-        });
-        (entities.themes || []).forEach((t: string) => {
-          if (t) allTopics.add(t);
-        });
-      } catch (error) {
-        logger.debug('Failed to parse signal extraction for title enrichment', { error });
+    try {
+      const extractionsResult = await pool.query(
+        `SELECT extraction FROM signal_extractions WHERE signal_id = ANY($1)`,
+        [signalIds]
+      );
+      for (const row of extractionsResult.rows) {
+        try {
+          const extraction =
+            typeof row.extraction === 'string' ? JSON.parse(row.extraction) : row.extraction;
+          const entities = extraction?.entities || {};
+          (entities.customers || []).forEach((c: string) => {
+            if (c) allCustomers.add(c);
+          });
+          (entities.features || []).forEach((f: string) => {
+            if (f) allTopics.add(f);
+          });
+          (entities.issues || []).forEach((i: string) => {
+            if (i) allTopics.add(i);
+          });
+          (entities.themes || []).forEach((t: string) => {
+            if (t) allTopics.add(t);
+          });
+        } catch (error) {
+          logger.debug('Failed to parse signal extraction for title enrichment', { error });
+        }
       }
+    } catch (error: any) {
+      logger.error('Failed to fetch extractions for opportunity clustering', {
+        error: error.message,
+        errorClass: error.constructor.name,
+        stack: error.stack,
+        signalIds: signalIds.slice(0, 5) // Log first 5 signal IDs for context
+      });
+      // Continue with opportunity creation using basic extracted data
     }
   }
   
@@ -363,29 +372,72 @@ async function createOpportunityFromCluster(cluster: Signal[]): Promise<Opportun
  * Uses batch insert for signal links for better performance.
  */
 export async function storeOpportunity(opportunity: Opportunity, signalIds: string[]): Promise<void> {
+  const startTime = Date.now();
   const pool = getDbPool();
-  
-  // Insert opportunity
-  await pool.query(
-    `INSERT INTO opportunities (id, title, description, status, created_at)
-     VALUES ($1, $2, $3, $4, $5)`,
-    [opportunity.id, opportunity.title, opportunity.description, opportunity.status, opportunity.created_at]
-  );
 
-  // Batch insert signal links
-  if (signalIds.length > 0) {
-    const values = signalIds.map((_, index) => 
-      `($${index * 2 + 1}, $${index * 2 + 2})`
-    ).join(', ');
-    
-    const params = signalIds.flatMap(signalId => [opportunity.id, signalId]);
-    
+  logger.debug('Storing opportunity', {
+    stage: 'opportunity_storage',
+    status: 'start',
+    opportunity_id: opportunity.id,
+    title: opportunity.title,
+    signal_count: signalIds.length
+  });
+
+  try {
+    // Insert opportunity
     await pool.query(
-      `INSERT INTO opportunity_signals (opportunity_id, signal_id)
-       VALUES ${values}
-       ON CONFLICT DO NOTHING`,
-      params
+      `INSERT INTO opportunities (id, title, description, status, created_at)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [opportunity.id, opportunity.title, opportunity.description, opportunity.status, opportunity.created_at]
     );
+
+    logger.debug('Opportunity record inserted', {
+      stage: 'opportunity_storage',
+      status: 'record_inserted',
+      opportunity_id: opportunity.id
+    });
+
+    // Batch insert signal links
+    if (signalIds.length > 0) {
+      const values = signalIds.map((_, index) =>
+        `($${index * 2 + 1}, $${index * 2 + 2})`
+      ).join(', ');
+
+      const params = signalIds.flatMap(signalId => [opportunity.id, signalId]);
+
+      await pool.query(
+        `INSERT INTO opportunity_signals (opportunity_id, signal_id)
+         VALUES ${values}
+         ON CONFLICT DO NOTHING`,
+        params
+      );
+
+      logger.debug('Signal links created', {
+        stage: 'opportunity_storage',
+        status: 'links_created',
+        opportunity_id: opportunity.id,
+        link_count: signalIds.length
+      });
+    }
+
+    logger.info('Opportunity stored successfully', {
+      stage: 'opportunity_storage',
+      status: 'success',
+      opportunity_id: opportunity.id,
+      title: opportunity.title,
+      signal_count: signalIds.length,
+      duration_ms: Date.now() - startTime
+    });
+  } catch (error: any) {
+    logger.error('Failed to store opportunity', {
+      stage: 'opportunity_storage',
+      status: 'error',
+      opportunity_id: opportunity.id,
+      error: error.message,
+      stack: error.stack,
+      duration_ms: Date.now() - startTime
+    });
+    throw error;
   }
 }
 
@@ -483,11 +535,23 @@ export async function detectAndStoreOpportunitiesIncremental(
   const newOpportunities: Opportunity[] = [];
   const updatedOpportunities: Opportunity[] = [];
   const matchedSignals = new Set<string>();
-  
+
   // Try to match new signals to existing opportunities
-  for (const newSignal of newSignals) {
+  const matchingStartTime = Date.now();
+  let lastMatchLog = Date.now();
+  const matchProgressInterval = 5000; // Log every 5 seconds
+
+  logger.debug('Starting signal matching to existing opportunities', {
+    stage: 'incremental_detection',
+    status: 'matching_start',
+    new_signals: newSignals.length,
+    existing_opportunities: existingOpportunities.length
+  });
+
+  for (let sigIdx = 0; sigIdx < newSignals.length; sigIdx++) {
+    const newSignal = newSignals[sigIdx];
     let matched = false;
-    
+
     for (const { opportunity, signals } of existingOpportunities) {
       // Check if signal matches any signal in this opportunity
       for (const existingSignal of signals) {
@@ -496,18 +560,60 @@ export async function detectAndStoreOpportunitiesIncremental(
           await addSignalToOpportunity(opportunity.id, newSignal.id);
           matchedSignals.add(newSignal.id);
           matched = true;
-          
+
+          logger.trace('Signal matched to existing opportunity', {
+            stage: 'incremental_detection',
+            signal_id: newSignal.id,
+            opportunity_id: opportunity.id,
+            opportunity_title: opportunity.title
+          });
+
           if (!updatedOpportunities.find(o => o.id === opportunity.id)) {
             updatedOpportunities.push(opportunity);
           }
-          
+
           break;
         }
       }
-      
+
       if (matched) break;
     }
+
+    // Periodic progress logging
+    const now = Date.now();
+    if (now - lastMatchLog >= matchProgressInterval) {
+      const progress = ((sigIdx / newSignals.length) * 100).toFixed(1);
+      const elapsed = now - matchingStartTime;
+      const rate = sigIdx / (elapsed / 1000);
+      const remaining = newSignals.length - sigIdx;
+      const etaSeconds = remaining > 0 && rate > 0 ? (remaining / rate).toFixed(0) : 'N/A';
+
+      logger.info('Signal matching progress', {
+        stage: 'incremental_detection',
+        status: 'matching_in_progress',
+        processed: sigIdx,
+        total: newSignals.length,
+        progress_pct: progress,
+        matched_so_far: matchedSignals.size,
+        updated_opportunities: updatedOpportunities.length,
+        rate_per_sec: rate.toFixed(2),
+        eta_seconds: etaSeconds,
+        elapsed_ms: elapsed
+      });
+
+      lastMatchLog = now;
+    }
   }
+
+  logger.info('Signal matching complete', {
+    stage: 'incremental_detection',
+    status: 'matching_complete',
+    total_signals: newSignals.length,
+    matched: matchedSignals.size,
+    unmatched: newSignals.length - matchedSignals.size,
+    opportunities_updated: updatedOpportunities.length,
+    duration_ms: Date.now() - matchingStartTime
+  });
   
   // Cluster remaining unmatched signals
   const unmatchedSignals = newSignals.filter(s => !matchedSignals.has(s.id));
@@ -567,6 +673,10 @@ function clusterSignals(
 ): Signal[][] {
   const startTime = Date.now();
   const finalConfig = { ...DEFAULT_CONFIG, ...config };
+  const progressEvery = Math.max(
+    0,
+    parseInt(process.env.OPPORTUNITY_CLUSTER_PROGRESS_EVERY || '500', 10)
+  );
 
   logger.debug('Starting signal clustering', {
     stage: 'opportunity_clustering',
@@ -577,8 +687,12 @@ function clusterSignals(
 
   const clusters: Signal[][] = [];
   const processed = new Set<string>();
+  let processedCount = 0;
+  let lastProgressLog = Date.now();
+  const progressInterval = 5000; // Log progress every 5 seconds
 
-  for (const signal of signals) {
+  for (let idx = 0; idx < signals.length; idx++) {
+    const signal = signals[idx];
     if (processed.has(signal.id)) continue;
 
     const cluster = [signal];
@@ -593,6 +707,18 @@ function clusterSignals(
     }
 
     clusters.push(cluster);
+    processedCount += 1;
+
+    if (progressEvery > 0 && processedCount % progressEvery === 0) {
+      logger.info('Signal clustering progress', {
+        stage: 'opportunity_clustering',
+        status: 'progress',
+        processedCount,
+        totalSignals: signals.length,
+        progressPercent: Math.round((processedCount / signals.length) * 100),
+        elapsedMs: Date.now() - startTime
+      });
+    }
 
     // Log at trace level to avoid spam when there are many clusters
     logger.trace('Cluster formed', {
@@ -601,6 +727,30 @@ function clusterSignals(
       cluster_size: cluster.length,
       signal_ids: cluster.map(s => s.id)
     });
+
+    // Periodic progress logging based on time (every 5 seconds)
+    const now = Date.now();
+    if (now - lastProgressLog >= progressInterval) {
+      const progress = ((idx / signals.length) * 100).toFixed(1);
+      const elapsed = now - startTime;
+      const rate = idx / (elapsed / 1000);
+      const remainingSignals = signals.length - idx;
+      const etaSeconds = remainingSignals > 0 && rate > 0 ? (remainingSignals / rate).toFixed(0) : 'N/A';
+
+      logger.info('Clustering progress', {
+        stage: 'opportunity_clustering',
+        status: 'in_progress',
+        processed: idx,
+        total: signals.length,
+        progress_pct: progress,
+        clusters_formed: clusters.length,
+        rate_per_sec: rate.toFixed(2),
+        eta_seconds: etaSeconds,
+        elapsed_ms: elapsed
+      });
+
+      lastProgressLog = now;
+    }
   }
 
   const duration = Date.now() - startTime;
@@ -871,12 +1021,43 @@ export async function mergeOpportunities(
 export async function mergeRelatedOpportunities(
   similarityThreshold: number = 0.3
 ): Promise<number> {
+  const startTime = Date.now();
+  const progressEveryBase = Math.max(
+    1,
+    parseInt(process.env.OPPORTUNITY_CLUSTER_PROGRESS_EVERY || '500', 10)
+  );
+  const progressEveryPairs = Math.max(25, Math.floor(progressEveryBase / 2));
+  const progressIntervalMs = 5000;
+  const longCycleWarnMs = 60000;
   let mergeCount = 0;
   let hasMore = true;
+  let cycleCount = 0;
+  let restartCount = 0;
+  let pairsChecked = 0;
+  let lastProgressLog = startTime;
+
+  logger.info('Starting related opportunity merge', {
+    stage: 'opportunity_merge',
+    status: 'start',
+    similarityThreshold,
+    progressEveryPairs
+  });
   
   // Keep merging until no more merges are found
   while (hasMore) {
+    cycleCount += 1;
+    const cycleStart = Date.now();
+    let longCycleWarned = false;
     const opportunities = await getAllOpportunities();
+    logger.info('Opportunity merge cycle started', {
+      stage: 'opportunity_merge',
+      status: 'in_progress',
+      cycle: cycleCount,
+      opportunitiesCount: opportunities.length,
+      mergeCount,
+      pairsChecked
+    });
+
     hasMore = false;
     const processed = new Set<string>();
     
@@ -890,6 +1071,8 @@ export async function mergeRelatedOpportunities(
         
         // Skip if same opportunity
         if (opp1.id === opp2.id) continue;
+
+        pairsChecked += 1;
         
         const signals1 = await getSignalsForOpportunity(opp1.id);
         const signals2 = await getSignalsForOpportunity(opp2.id);
@@ -916,10 +1099,58 @@ export async function mergeRelatedOpportunities(
         if (shouldMerge) {
           await mergeOpportunities(opp1.id, opp2.id);
           mergeCount++;
+          restartCount++;
           processed.add(opp1.id);
           processed.add(opp2.id);
           hasMore = true;
+
+          logger.info('Opportunity merge match found; restarting cycle', {
+            stage: 'opportunity_merge',
+            status: 'in_progress',
+            cycle: cycleCount,
+            primaryOpportunityId: opp1.id,
+            secondaryOpportunityId: opp2.id,
+            mergeCount,
+            restartCount,
+            pairsChecked,
+            elapsed_ms: Date.now() - startTime
+          });
           break; // Restart from beginning after merge
+        }
+
+        const now = Date.now();
+        const shouldLogProgress =
+          (pairsChecked > 0 && pairsChecked % progressEveryPairs === 0) ||
+          now - lastProgressLog >= progressIntervalMs;
+        if (shouldLogProgress) {
+          const elapsedMs = now - startTime;
+          const ratePerSec = elapsedMs > 0 ? pairsChecked / (elapsedMs / 1000) : 0;
+          logger.info('Opportunity merge progress', {
+            stage: 'opportunity_merge',
+            status: 'in_progress',
+            cycle: cycleCount,
+            pairs_checked: pairsChecked,
+            merge_count: mergeCount,
+            restart_count: restartCount,
+            elapsed_ms: elapsedMs,
+            rate_per_sec: ratePerSec.toFixed(2),
+            opportunitiesCount: opportunities.length
+          });
+          lastProgressLog = now;
+        }
+
+        if (!longCycleWarned && now - cycleStart >= longCycleWarnMs) {
+          longCycleWarned = true;
+          logger.warn('Opportunity merge cycle running longer than expected', {
+            stage: 'opportunity_merge',
+            status: 'slow_cycle',
+            cycle: cycleCount,
+            cycle_elapsed_ms: now - cycleStart,
+            pairs_checked: pairsChecked,
+            merge_count: mergeCount,
+            restart_count: restartCount,
+            nextAction: 'review opportunity_merge progress logs and pair-comparison throughput'
+          });
         }
       }
       
@@ -927,7 +1158,18 @@ export async function mergeRelatedOpportunities(
     }
   }
   
-  logger.info('Related opportunities merged', { mergeCount });
+  const elapsedMs = Date.now() - startTime;
+  const ratePerSec = elapsedMs > 0 ? pairsChecked / (elapsedMs / 1000) : 0;
+  logger.info('Related opportunities merged', {
+    stage: 'opportunity_merge',
+    status: 'success',
+    mergeCount,
+    cycleCount,
+    restartCount,
+    pairs_checked: pairsChecked,
+    elapsed_ms: elapsedMs,
+    rate_per_sec: ratePerSec.toFixed(2)
+  });
   return mergeCount;
 }
 
@@ -1745,14 +1987,26 @@ export async function clusterSignalsWithEmbeddings(
   signals: SignalWithEmbedding[],
   config: Partial<EmbeddingClusterConfig> = {}
 ): Promise<SignalWithEmbedding[][]> {
+  const startTime = Date.now();
+  const progressEvery = Math.max(
+    1,
+    parseInt(process.env.OPPORTUNITY_CLUSTER_PROGRESS_EVERY || '500', 10)
+  );
+  const progressInterval = 5000;
   const finalConfig = { ...DEFAULT_EMBEDDING_CLUSTER_CONFIG, ...config };
   const clusters: SignalWithEmbedding[][] = [];
   const processed = new Set<string>();
+  let seedsProcessed = 0;
+  let lastProgressLog = startTime;
   
   logger.info('Starting embedding-based clustering', {
+    stage: 'opportunity_clustering',
+    status: 'start',
+    clustering_mode: 'embedding',
     signalCount: signals.length,
     withEmbeddings: signals.filter(s => s.embedding).length,
-    config: finalConfig
+    config: finalConfig,
+    progressEvery
   });
   
   // Sort by embedding availability (prioritize signals with embeddings)
@@ -1762,7 +2016,8 @@ export async function clusterSignalsWithEmbeddings(
     return bHas - aHas;
   });
   
-  for (const signal of sortedSignals) {
+  for (let idx = 0; idx < sortedSignals.length; idx++) {
+    const signal = sortedSignals[idx];
     if (processed.has(signal.id)) continue;
     
     const cluster: SignalWithEmbedding[] = [signal];
@@ -1785,11 +2040,50 @@ export async function clusterSignalsWithEmbeddings(
     }
     
     clusters.push(cluster);
+    seedsProcessed += 1;
+
+    const now = Date.now();
+    const shouldLogProgress =
+      (seedsProcessed > 0 && seedsProcessed % progressEvery === 0) ||
+      now - lastProgressLog >= progressInterval;
+    if (shouldLogProgress) {
+      const processedItems = idx + 1;
+      const elapsedMs = now - startTime;
+      const ratePerSec = elapsedMs > 0 ? processedItems / (elapsedMs / 1000) : 0;
+      const remaining = Math.max(0, sortedSignals.length - processedItems);
+      const etaSeconds = ratePerSec > 0 ? Math.round(remaining / ratePerSec) : null;
+      const progressPct = sortedSignals.length > 0
+        ? ((processedItems / sortedSignals.length) * 100).toFixed(1)
+        : '100.0';
+
+      logger.info('Embedding clustering progress', {
+        stage: 'opportunity_clustering',
+        status: 'in_progress',
+        clustering_mode: 'embedding',
+        processed: processedItems,
+        total: sortedSignals.length,
+        progress_pct: progressPct,
+        processed_seeds: seedsProcessed,
+        clusters_formed: clusters.length,
+        rate_per_sec: ratePerSec.toFixed(2),
+        eta_seconds: etaSeconds === null ? 'N/A' : String(etaSeconds),
+        elapsed_ms: elapsedMs
+      });
+      lastProgressLog = now;
+    }
   }
   
+  const durationMs = Date.now() - startTime;
+  const ratePerSec = durationMs > 0 ? sortedSignals.length / (durationMs / 1000) : 0;
   logger.info('Embedding-based clustering complete', {
+    stage: 'opportunity_clustering',
+    status: 'success',
+    clustering_mode: 'embedding',
     totalClusters: clusters.length,
-    validClusters: clusters.filter(c => c.length >= finalConfig.minClusterSize).length
+    validClusters: clusters.filter(c => c.length >= finalConfig.minClusterSize).length,
+    processed_seeds: seedsProcessed,
+    elapsed_ms: durationMs,
+    rate_per_sec: ratePerSec.toFixed(2)
   });
   
   return clusters;

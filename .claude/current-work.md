@@ -65,30 +65,47 @@ Comprehensive end-to-end logging implementation with configurable log levels
 - ✅ Added MCP tools: `save_session_state`, `load_session_state`
 - ✅ Created `.claude/current-work.md` for session continuity
 
+### Phase 7: Periodic Progress Logging (NEW!)
+- ✅ Added time-based periodic logging to clustering loop (every 5 seconds)
+- ✅ Added periodic logging to incremental detection triple-nested loop
+- ✅ Added periodic logging to LLM extraction nested loops
+- ✅ Added built-in periodic logging to batch embedding generation
+- ✅ Added pipeline-level progress logging to ingestion service
+- ✅ Added detailed logging to opportunity storage function
+
+### Phase 8: Pipeline Monitoring Tools (NEW!)
+- ✅ Created real-time pipeline monitor script ([scripts/monitor_pipeline_status.ts](../scripts/monitor_pipeline_status.ts))
+- ✅ Created simple log watcher script ([scripts/watch-pipeline.sh](../scripts/watch-pipeline.sh))
+- ✅ Added npm scripts: `pipeline:monitor`, `pipeline:monitor-once`, `logs:pipeline`
+- ✅ Created comprehensive documentation ([docs/LOGGING_AND_MONITORING.md](../docs/LOGGING_AND_MONITORING.md))
+- ✅ Created implementation summary ([docs/LOGGING_IMPLEMENTATION_SUMMARY.md](../docs/LOGGING_IMPLEMENTATION_SUMMARY.md))
+
 ---
 
 ## 🔄 Next Steps
 
-1. **Test the logging system:**
-   - Run post-ingestion pipeline with configured log levels
-   - Verify opportunity clustering logs show decision details
-   - Check that module-specific log levels work correctly
-   - Verify log files rotate properly (5MB limit)
+1. **Test the periodic progress logging:**
+   - Run post-ingestion pipeline with 1000+ signals
+   - Verify clustering progress logs appear every 5 seconds
+   - Check embedding batch progress logs
+   - Test the monitoring scripts (npm run pipeline:monitor)
+   - Verify ETA calculations are accurate
 
-2. **Run pipeline and monitor:**
-   - Execute ingestion pipeline
-   - Monitor logs for any errors or missing coverage
-   - Verify performance (logging shouldn't impact throughput significantly)
+2. **Test monitoring tools:**
+   - Start pipeline in one terminal
+   - Run `npm run pipeline:monitor` in another terminal
+   - Test `./scripts/watch-pipeline.sh` with different filters
+   - Verify database stats are accurate
 
-3. **Verify session state tools:**
-   - Test `save_session_state` MCP tool before closing Cursor
-   - Test `load_session_state` MCP tool after restarting Cursor
-   - Ensure continuity works as expected
+3. **Performance validation:**
+   - Compare pipeline throughput with/without debug logging
+   - Verify periodic logging has <1% overhead
+   - Check that trace level doesn't crash on large datasets
 
-4. **Documentation cleanup:**
-   - Document logging patterns in project README
-   - Create logging best practices guide
-   - Add examples of how to use module-specific loggers
+4. **Documentation review:**
+   - Read through docs/LOGGING_AND_MONITORING.md
+   - Try all example commands
+   - Verify all npm scripts work
 
 ---
 

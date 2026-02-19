@@ -35,6 +35,12 @@ import { tool as listRegisteredAgents } from './tools/list_registered_agents';
 import { tool as deactivateAgent } from './tools/deactivate_agent';
 import { tool as configureStakeholderAccess } from './tools/configure_stakeholder_access';
 import { tool as saveSessionState, loadTool as loadSessionState } from './tools/session_state';
+import { tool as correctSignalExtraction } from './tools/correct_signal_extraction';
+import { tool as crawlWebsite } from './tools/crawl_website';
+import { tool as searchSlack } from './tools/search_slack';
+import { tool as searchDocuments } from './tools/search_documents';
+import { tool as searchTranscripts } from './tools/search_transcripts';
+import { tool as searchWebContent } from './tools/search_web_content';
 
 const allTools = [
   searchSignals,
@@ -73,7 +79,13 @@ const allTools = [
   deactivateAgent,
   configureStakeholderAccess,
   saveSessionState,
-  loadSessionState
+  loadSessionState,
+  correctSignalExtraction,
+  crawlWebsite,
+  searchSlack,
+  searchDocuments,
+  searchTranscripts,
+  searchWebContent
 ];
 
 export function registerTools(server: McpServer): void {

@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import multer from 'multer';
 import path from 'path';
 import { ingestSignal, RawSignal, getSignals, countSignals, SignalQueryOptions } from '../processing/signal_extractor';
@@ -17,6 +18,7 @@ import { getStrategicInsights } from '../services/slack_insight_service';
 import { ingestSlackExtraction } from '../services/slack_llm_extraction_service';
 import { logger } from '../utils/logger';
 import { rateLimiters, createRateLimitMiddleware } from '../utils/rate_limiter';
+import { requireAuth, requireAdmin, requirePermissions, logApiKeyUsage, AuthenticatedRequest } from '../middleware/auth_middleware';
 
 // New service imports for enhanced PM Intelligence
 import { registerChannel, getActiveChannels, getAllChannels, getChannelConfig, updateChannelConfig, deactivateChannel, activateChannel, getChannelsByCategory, autoRegisterChannel } from '../services/channel_registry_service';
@@ -29,38 +31,174 @@ import { createEmbeddingProviderFromEnv } from '../services/embedding_provider';
 import { createAgentGatewayRouter } from '../agents/gateway';
 import { createA2AServerRouter } from '../agents/a2a_server';
 import { getSystemHealth } from '../services/health_service';
+import healthRouter from './health';
+import { correlationMiddleware } from '../utils/correlation';
 import { config } from '../config/env';
 import { NormalizerService } from '../ingestion/normalizer_service';
 import { TranscriptAdapter } from '../ingestion/transcript_adapter';
 import { DocumentAdapter } from '../ingestion/document_adapter';
 import { WebScrapeAdapter } from '../ingestion/web_scrape_adapter';
 import { IngestionPipelineService } from '../services/ingestion_pipeline_service';
+import { validateFileUpload, sanitizeFilename, ALLOWED_MIME_TYPES, ALLOWED_EXTENSIONS } from '../services/file_validation_service';
 
 const app = express();
+
+// Security headers with Helmet.js
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"], // Allow inline scripts for compatibility
+      styleSrc: ["'self'", "'unsafe-inline'"], // Allow inline styles
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      mediaSrc: ["'self'"],
+      frameSrc: ["'none'"]
+    }
+  },
+  hsts: {
+    maxAge: 31536000, // 1 year in seconds
+    includeSubDomains: true,
+    preload: true
+  },
+  noSniff: true, // X-Content-Type-Options: nosniff
+  xssFilter: true, // X-XSS-Protection (legacy browsers)
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
+}));
+
+// Enhanced multer configuration with file type validation
 const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      const uploadDir = process.env.UPLOAD_DIR || '/tmp/uploads';
+      cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+      // Sanitize filename and add timestamp
+      const sanitized = sanitizeFilename(file.originalname);
+      const timestamp = Date.now();
+      const random = Math.random().toString(36).substring(7);
+      const unique = `${timestamp}-${random}-${sanitized}`;
+      cb(null, unique);
+    }
+  }),
+  fileFilter: (req, file, cb) => {
+    // Quick validation before upload
+    const ext = path.extname(file.originalname).toLowerCase();
+    const mimeType = file.mimetype.toLowerCase();
+
+    if (!ALLOWED_EXTENSIONS.includes(ext)) {
+      return cb(new Error(`File extension ${ext} not allowed. Allowed: ${ALLOWED_EXTENSIONS.join(', ')}`));
+    }
+
+    if (!ALLOWED_MIME_TYPES.includes(mimeType)) {
+      return cb(new Error(`MIME type ${mimeType} not allowed`));
+    }
+
+    cb(null, true);
+  },
   limits: {
     fileSize: config.ingestion.maxFileSizeMb * 1024 * 1024,
-    files: config.ingestion.maxBatchFiles
+    files: 1 // Only allow single file uploads for security
   }
 });
 
-// Request logging middleware
+// Request and response logging middleware
 app.use((req, res, next) => {
+  const startTime = Date.now();
+
+  // Log request
   logger.info('API request', {
     method: req.method,
     path: req.path,
-    ip: req.ip
+    ip: req.ip,
+    user_agent: req.get('user-agent'),
+    correlation_id: req.headers['x-correlation-id']
   });
+
+  // Log response when finished
+  res.on('finish', () => {
+    const duration = Date.now() - startTime;
+    const authReq = req as AuthenticatedRequest;
+
+    logger.info('API response', {
+      method: req.method,
+      path: req.path,
+      status: res.statusCode,
+      duration_ms: duration,
+      authenticated: !!authReq.apiKey,
+      api_key_name: authReq.apiKey?.name,
+      success: res.statusCode < 400
+    });
+  });
+
   next();
 });
 
 app.use(express.json({ limit: '10mb' }));
+
+// Correlation ID middleware - must be early in the chain for request tracing
+app.use(correlationMiddleware);
+
+// CORS configuration - support multiple origins including Chat UI
+const allowedOrigins = [
+  'http://localhost:3001', // Chat UI development
+  'http://localhost:3000', // Backend development
+  ...(process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : [])
+];
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || '*',
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      // In development, allow all origins
+      if (process.env.NODE_ENV === 'development') {
+        return callback(null, true);
+      }
+
+      // In production, check against allowlist
+      if (allowedOrigins.indexOf(origin) !== -1 || process.env.CORS_ORIGIN === '*') {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true
   })
 );
+
+// Authentication middleware
+// Apply to all /api/* routes except health endpoints
+app.use('/api', (req: AuthenticatedRequest, res, next) => {
+  // Skip authentication for health endpoints
+  if (req.path === '/health' || req.path.startsWith('/health/')) {
+    return next();
+  }
+
+  // Skip authentication in development if explicitly disabled
+  if (process.env.DISABLE_AUTH === 'true' && process.env.NODE_ENV === 'development') {
+    logger.warn('SECURITY: Authentication disabled for request', {
+      security_event: 'auth_bypass',
+      audit: true,
+      environment: 'development',
+      path: req.path,
+      method: req.method,
+      ip: req.ip,
+      warning: 'This should NEVER appear in production logs'
+    });
+    return next();
+  }
+
+  // Apply authentication
+  return requireAuth(req, res, next);
+});
+
+// API key usage logging (after auth, for authenticated requests only)
+app.use('/api', logApiKeyUsage);
 
 // Rate limiting middleware (disabled in dev when explicitly opted out)
 const disableRateLimiting =
@@ -95,58 +233,28 @@ app.use('/ui', express.static(path.join(__dirname, '../../frontend')));
 app.use('/openapi', express.static(path.join(__dirname, '../../docs/v2/openapi')));
 
 // Health check
-app.get('/health', async (req, res) => {
-  const health: any = {
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    database: {
-      connected: false,
-      responseTime: null as number | null
-    },
-    uptime: process.uptime(),
-    version: process.env.npm_package_version || '1.0.0',
-    environment: process.env.NODE_ENV || 'development'
-  };
-  
-  // Check database connection
-  try {
-    const { getDbPool } = require('../db/connection');
-    const pool = getDbPool();
-    const startTime = Date.now();
-    await pool.query('SELECT 1');
-    const responseTime = Date.now() - startTime;
-    health.database.connected = true;
-    health.database.responseTime = responseTime;
-  } catch (error: any) {
-    health.database.error = error.message;
-    health.status = 'degraded';
-  }
-  
-  // Check disk space (basic check)
-  try {
-    const { statfsSync } = require('fs');
-    const stats = statfsSync('/');
-    health.disk = {
-      available: Math.round(stats.bavail * stats.bsize / 1024 / 1024), // MB
-      total: Math.round(stats.blocks * stats.bsize / 1024 / 1024) // MB
-    };
-  } catch (error) {
-    // Disk check not critical
-  }
-  
-  // Check memory
-  const memUsage = process.memoryUsage();
-  health.memory = {
-    used: Math.round(memUsage.heapUsed / 1024 / 1024), // MB
-    total: Math.round(memUsage.heapTotal / 1024 / 1024), // MB
-    rss: Math.round(memUsage.rss / 1024 / 1024) // MB
-  };
-  
-  const statusCode = health.status === 'ok' ? 200 : 503;
-  res.status(statusCode).json(health);
+// Health check endpoints (comprehensive monitoring)
+// Mounted before authentication middleware for load balancer access
+app.use('/health', healthRouter);
+
+// Backward compatibility aliases
+app.get('/ready', async (req, res) => {
+  // Redirect to new readiness endpoint
+  return req.app.handle(
+    { ...req, url: '/health/readiness', method: 'GET' } as any,
+    res
+  );
 });
 
-// Aggregated system health (V2)
+app.get('/live', (req, res) => {
+  // Redirect to new liveness endpoint
+  return req.app.handle(
+    { ...req, url: '/health/liveness', method: 'GET' } as any,
+    res
+  );
+});
+
+// Aggregated system health (V2) - Keep for backward compatibility
 app.get('/api/health', async (req, res) => {
   try {
     const health = await getSystemHealth();
@@ -167,33 +275,17 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
-// Readiness check (for Kubernetes)
-app.get('/ready', async (req, res) => {
-  try {
-    const { getDbPool } = require('../db/connection');
-    const pool = getDbPool();
-    await pool.query('SELECT 1');
-    res.status(200).json({ status: 'ready' });
-  } catch (error: any) {
-    res.status(503).json({ status: 'not ready', error: error.message });
-  }
-});
-
-// Liveness check (for Kubernetes)
-app.get('/live', (req, res) => {
-  res.status(200).json({ status: 'alive' });
-});
-
 /**
  * POST /api/signals
  * Ingest a signal from external source
  * Rate limiting: Enforced for all requests
+ * Authentication: Requires write:signals permission or admin role
  */
 app.post('/api/signals', (req, res, next) => {
   // Apply rate limiting middleware (5000 requests/minute)
   const middleware = createRateLimitMiddleware(rateLimiters.signalIngestion);
   return middleware(req, res, next);
-}, async (req, res) => {
+}, requirePermissions('write:signals'), async (req, res) => {
   try {
     logger.info('Signal ingestion request', { source: req.body.source });
     
@@ -227,8 +319,9 @@ app.post('/api/signals', (req, res, next) => {
 /**
  * POST /api/ingest/transcript
  * Ingest a transcript (manual upload)
+ * Authentication: Requires admin role
  */
-app.post('/api/ingest/transcript', async (req, res) => {
+app.post('/api/ingest/transcript', requireAdmin, async (req, res) => {
   try {
     const { title, content, meeting_type, customer, date, metadata } = req.body || {};
     if (!title || !content) {
@@ -239,6 +332,18 @@ app.post('/api/ingest/transcript', async (req, res) => {
     const pipeline = new IngestionPipelineService();
     const signals = adapter.ingest({ title, content, meeting_type, customer, date, metadata });
     await pipeline.ingest(signals);
+
+    logger.info('Admin ingestion operation completed', {
+      security_event: 'admin_operation',
+      audit: true,
+      operation: 'ingest_transcript',
+      performed_by: (req as AuthenticatedRequest).apiKey?.name,
+      performed_by_id: (req as AuthenticatedRequest).apiKey?.id,
+      source_ref: title,
+      signals_created: signals.length,
+      ip: req.ip
+    });
+
     return res.status(201).json({ status: 'ok', signal_count: signals.length });
   } catch (error: any) {
     logger.error('Transcript ingestion failed', { error: error.message });
@@ -249,12 +354,73 @@ app.post('/api/ingest/transcript', async (req, res) => {
 /**
  * POST /api/ingest/document
  * Ingest a document file (multipart/form-data)
+ * Authentication: Requires admin role
  */
-app.post('/api/ingest/document', upload.single('file'), async (req, res) => {
+app.post('/api/ingest/document', requireAdmin, upload.single('file'), async (req, res) => {
+  let uploadedFilePath: string | undefined;
+
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'file is required' });
     }
+
+    uploadedFilePath = req.file.path;
+
+    // Additional security validation after upload
+    logger.info('Validating uploaded file', {
+      filename: req.file.originalname,
+      mimetype: req.file.mimetype,
+      size: req.file.size
+    });
+
+    const validationResult = await validateFileUpload(
+      req.file.path,
+      req.file.originalname,
+      req.file.mimetype,
+      config.ingestion.maxFileSizeMb
+    );
+
+    if (!validationResult.valid) {
+      logger.warn('File upload validation failed', {
+        filename: req.file.originalname,
+        reason: validationResult.reason,
+        details: validationResult
+      });
+
+      // Delete the uploaded file
+      try {
+        await require('fs').promises.unlink(req.file.path);
+        logger.warn('File deleted after validation failure', {
+          security_event: 'file_deleted',
+          reason: validationResult.reason,
+          filename: req.file.originalname,
+          file_path: req.file.path,
+          deleted_by: 'system'
+        });
+      } catch (unlinkError) {
+        logger.error('Failed to delete invalid uploaded file', {
+          path: req.file.path,
+          error: unlinkError
+        });
+      }
+
+      return res.status(400).json({
+        error: 'File validation failed',
+        reason: validationResult.reason
+      });
+    }
+
+    logger.info('File upload validated successfully', {
+      security_event: 'file_upload',
+      audit: true,
+      filename: req.file.originalname,
+      detected_mime: validationResult.detectedMimeType,
+      file_size_bytes: validationResult.fileSize,
+      uploaded_by: (req as AuthenticatedRequest).apiKey?.name,
+      uploaded_by_id: (req as AuthenticatedRequest).apiKey?.id,
+      ip: req.ip
+    });
+
     let metadata: Record<string, unknown> | undefined;
     if (req.body?.metadata) {
       try {
@@ -263,6 +429,7 @@ app.post('/api/ingest/document', upload.single('file'), async (req, res) => {
         return res.status(400).json({ error: 'metadata must be valid JSON' });
       }
     }
+
     const normalizer = new NormalizerService();
     const adapter = new DocumentAdapter(normalizer);
     const pipeline = new IngestionPipelineService();
@@ -272,9 +439,59 @@ app.post('/api/ingest/document', upload.single('file'), async (req, res) => {
       metadata
     });
     await pipeline.ingest(signals);
-    return res.status(201).json({ status: 'ok', signal_count: signals.length });
+
+    logger.info('Admin ingestion operation completed', {
+      security_event: 'admin_operation',
+      audit: true,
+      operation: 'ingest_document',
+      performed_by: (req as AuthenticatedRequest).apiKey?.name,
+      performed_by_id: (req as AuthenticatedRequest).apiKey?.id,
+      source_ref: req.file.originalname,
+      signals_created: signals.length,
+      ip: req.ip
+    });
+
+    // Clean up uploaded file after successful processing
+    try {
+      await require('fs').promises.unlink(req.file.path);
+    } catch (unlinkError) {
+      logger.warn('Failed to delete processed file', {
+        path: req.file.path,
+        error: unlinkError
+      });
+    }
+
+    return res.status(201).json({
+      status: 'ok',
+      signal_count: signals.length,
+      file_size: validationResult.fileSize,
+      file_type: validationResult.detectedMimeType
+    });
   } catch (error: any) {
-    logger.error('Document ingestion failed', { error: error.message });
+    logger.error('Document ingestion failed', {
+      error: error.message,
+      stack: error.stack
+    });
+
+    // Clean up uploaded file on error
+    if (uploadedFilePath) {
+      try {
+        await require('fs').promises.unlink(uploadedFilePath);
+        logger.warn('File deleted after processing error', {
+          security_event: 'file_deleted',
+          reason: error.message,
+          filename: req.file?.originalname,
+          file_path: uploadedFilePath,
+          deleted_by: 'system'
+        });
+      } catch (unlinkError) {
+        logger.warn('Failed to delete file after error', {
+          path: uploadedFilePath,
+          error: unlinkError
+        });
+      }
+    }
+
     return res.status(400).json({ error: error.message });
   }
 });
@@ -282,8 +499,9 @@ app.post('/api/ingest/document', upload.single('file'), async (req, res) => {
 /**
  * POST /api/ingest/crawled
  * Ingest crawled web content
+ * Authentication: Requires admin role
  */
-app.post('/api/ingest/crawled', async (req, res) => {
+app.post('/api/ingest/crawled', requireAdmin, async (req, res) => {
   try {
     const { url, content, captured_at, metadata } = req.body || {};
     if (!url || !content) {
@@ -294,6 +512,18 @@ app.post('/api/ingest/crawled', async (req, res) => {
     const pipeline = new IngestionPipelineService();
     const signal = adapter.ingest({ url, content, captured_at, metadata });
     await pipeline.ingest([signal]);
+
+    logger.info('Admin ingestion operation completed', {
+      security_event: 'admin_operation',
+      audit: true,
+      operation: 'ingest_crawled_content',
+      performed_by: (req as AuthenticatedRequest).apiKey?.name,
+      performed_by_id: (req as AuthenticatedRequest).apiKey?.id,
+      source_ref: url,
+      signals_created: 1,
+      ip: req.ip
+    });
+
     return res.status(201).json({ status: 'ok', signal_count: 1 });
   } catch (error: any) {
     logger.error('Web crawl ingestion failed', { error: error.message });

@@ -1,7 +1,9 @@
 import { getDbPool } from '../db/connection';
 import { Signal } from '../processing/signal_extractor';
 import { EmbeddingProvider } from './embedding_provider';
-import { logger } from '../utils/logger';
+import { createModuleLogger } from '../utils/logger';
+
+const logger = createModuleLogger('hybrid_search', 'LOG_LEVEL_HYBRID_SEARCH');
 
 /**
  * Hybrid search options combining vector and full-text search
@@ -54,6 +56,14 @@ export async function hybridSearch(
   const safeMinScore = Number.isFinite(minScore) ? minScore : 0.3;
 
   const startTime = Date.now();
+  logger.info('Hybrid search started', {
+    query: query.substring(0, 50),
+    vector_weight: safeVectorWeight,
+    text_weight: safeTextWeight,
+    min_score: safeMinScore,
+    filters: Object.keys(filters).length > 0 ? filters : 'none'
+  });
+
   const pool = getDbPool();
 
   try {
@@ -101,8 +111,22 @@ export async function hybridSearch(
       filterParams.push(`%${filters.theme.toLowerCase()}%`);
     }
 
-    const filterClause = filterConditions.length > 0 
-      ? `AND ${filterConditions.join(' AND ')}` 
+    if (filterConditions.length > 0) {
+      logger.debug('Search filters applied', {
+        filter_count: filterConditions.length,
+        filters: {
+          source: !!filters.source,
+          customer: !!filters.customer,
+          feature: !!filters.feature,
+          theme: !!filters.theme,
+          date_range: !!(filters.startDate || filters.endDate),
+          channel: !!filters.channelId
+        }
+      });
+    }
+
+    const filterClause = filterConditions.length > 0
+      ? `AND ${filterConditions.join(' AND ')}`
       : '';
 
     // Hybrid search query combining vector similarity and full-text search
@@ -186,7 +210,17 @@ export async function hybridSearch(
 
     return results;
   } catch (error: any) {
-    logger.error('Hybrid search failed', { error: error.message, query: query.substring(0, 50) });
+    logger.error('Hybrid search failed', {
+      operation: 'hybridSearch',
+      query: query.substring(0, 50),
+      error: error.message,
+      errorClass: error.constructor.name,
+      stack: error.stack,
+      filters,
+      vectorWeight: safeVectorWeight,
+      textWeight: safeTextWeight,
+      durationMs: Date.now() - startTime
+    });
     throw error;
   }
 }
@@ -278,7 +312,16 @@ export async function vectorSearch(
 
     return results;
   } catch (error: any) {
-    logger.error('Vector search failed', { error: error.message });
+    logger.error('Vector search failed', {
+      operation: 'vectorSearch',
+      query: query.substring(0, 50),
+      error: error.message,
+      errorClass: error.constructor.name,
+      stack: error.stack,
+      filters,
+      minSimilarity,
+      durationMs: Date.now() - startTime
+    });
     throw error;
   }
 }
@@ -363,7 +406,15 @@ export async function textSearch(
 
     return results;
   } catch (error: any) {
-    logger.error('Text search failed', { error: error.message });
+    logger.error('Text search failed', {
+      operation: 'textSearch',
+      query: query.substring(0, 50),
+      error: error.message,
+      errorClass: error.constructor.name,
+      stack: error.stack,
+      filters,
+      durationMs: Date.now() - startTime
+    });
     throw error;
   }
 }
@@ -437,7 +488,15 @@ export async function findSimilarSignals(
       contextualSummary: row.contextual_summary || undefined
     })).sort((a, b) => b.combinedScore - a.combinedScore);
   } catch (error: any) {
-    logger.error('Find similar signals failed', { error: error.message, signalId });
+    logger.error('Find similar signals failed', {
+      operation: 'findSimilarSignals',
+      signalId,
+      error: error.message,
+      errorClass: error.constructor.name,
+      stack: error.stack,
+      limit,
+      minSimilarity
+    });
     throw error;
   }
 }
@@ -495,4 +554,92 @@ export async function searchByCustomer(
     // Direct filter by customer name
     return textSearch(`${customerName}`, { limit, filters: { customer: customerName } });
   }
+}
+
+/**
+ * Search only in Slack messages and threads
+ */
+export async function searchSlack(
+  query: string,
+  embeddingProvider: EmbeddingProvider,
+  options?: { channelId?: string; limit?: number }
+): Promise<HybridSearchResult[]> {
+  return hybridSearch(
+    {
+      query,
+      filters: {
+        source: 'slack',
+        channelId: options?.channelId
+      },
+      limit: options?.limit || 20
+    },
+    embeddingProvider
+  );
+}
+
+/**
+ * Search only in documents (PDFs, specs, etc.)
+ */
+export async function searchDocuments(
+  query: string,
+  embeddingProvider: EmbeddingProvider,
+  options?: { limit?: number }
+): Promise<HybridSearchResult[]> {
+  return hybridSearch(
+    {
+      query,
+      filters: { source: 'document' },
+      limit: options?.limit || 20
+    },
+    embeddingProvider
+  );
+}
+
+/**
+ * Search only in meeting transcripts
+ */
+export async function searchTranscripts(
+  query: string,
+  embeddingProvider: EmbeddingProvider,
+  options?: { limit?: number; customer?: string }
+): Promise<HybridSearchResult[]> {
+  return hybridSearch(
+    {
+      query,
+      filters: {
+        source: 'transcript',
+        customer: options?.customer
+      },
+      limit: options?.limit || 20
+    },
+    embeddingProvider
+  );
+}
+
+/**
+ * Search only in web content (blogs, changelogs, etc.)
+ */
+export async function searchWebContent(
+  query: string,
+  embeddingProvider: EmbeddingProvider,
+  options?: { limit?: number; competitor?: string }
+): Promise<HybridSearchResult[]> {
+  // Search in web_scrape source
+  const results = await hybridSearch(
+    {
+      query,
+      filters: { source: 'web_scrape' },
+      limit: options?.limit || 20
+    },
+    embeddingProvider
+  );
+
+  // Post-filter by competitor if specified
+  if (options?.competitor) {
+    return results.filter(r =>
+      r.signal.metadata?.competitor === options.competitor
+    );
+  }
+
+  return results;
 }

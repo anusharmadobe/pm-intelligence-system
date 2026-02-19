@@ -15,6 +15,7 @@ import { Signal } from '../processing/signal_extractor';
 import { eventBus } from '../agents/event_bus';
 import { getSharedRedis } from '../config/redis';
 import { getRunMetrics } from '../utils/run_metrics';
+import { AutoCorrectionService } from './auto_correction_service';
 
 export class IngestionPipelineService {
   private static readonly SIGNAL_TIMEOUT_MS = parseInt(
@@ -26,6 +27,7 @@ export class IngestionPipelineService {
   private neo4jSyncService = new Neo4jSyncService();
   private relationshipExtractionService = new RelationshipExtractionService();
   private graphragIndexerService = new GraphRAGIndexerService();
+  private correctionService = new AutoCorrectionService();
   private queue: Queue | null = null;
   private worker: Worker | null = null;
 
@@ -144,6 +146,15 @@ export class IngestionPipelineService {
   }
 
   async ingest(rawSignals: RawSignal[]): Promise<void> {
+    const pipelineStartTime = Date.now();
+    logger.info('Starting ingestion pipeline', {
+      stage: 'ingestion_pipeline',
+      status: 'start',
+      total_signals: rawSignals.length,
+      concurrency: Math.max(1, config.ingestion.concurrency || 1),
+      batch_extraction: process.env.INGESTION_BATCH_EXTRACTION !== 'false'
+    });
+
     try {
       const useBatchExtraction = process.env.INGESTION_BATCH_EXTRACTION !== 'false';
       const precomputedExtractions = useBatchExtraction
@@ -151,6 +162,10 @@ export class IngestionPipelineService {
         : [];
       const concurrency = Math.max(1, config.ingestion.concurrency || 1);
       let index = 0;
+      let completed = 0;
+      let lastProgressLog = Date.now();
+      const progressInterval = 10000; // Log every 10 seconds
+
       const workers = Array.from({ length: Math.min(concurrency, rawSignals.length) }).map(async () => {
         while (index < rawSignals.length) {
           const current = index;
@@ -159,11 +174,49 @@ export class IngestionPipelineService {
             rawSignals[current],
             useBatchExtraction ? precomputedExtractions[current] : undefined
           );
+          completed += 1;
+
+          // Periodic progress logging (thread-safe check)
+          const now = Date.now();
+          if (now - lastProgressLog >= progressInterval) {
+            const progress = ((completed / rawSignals.length) * 100).toFixed(1);
+            const elapsed = now - pipelineStartTime;
+            const rate = completed / (elapsed / 1000);
+            const remaining = rawSignals.length - completed;
+            const etaSeconds = remaining > 0 && rate > 0 ? (remaining / rate).toFixed(0) : 'N/A';
+
+            logger.info('Ingestion pipeline progress', {
+              stage: 'ingestion_pipeline',
+              status: 'in_progress',
+              completed,
+              total: rawSignals.length,
+              progress_pct: progress,
+              rate_per_sec: rate.toFixed(2),
+              eta_seconds: etaSeconds,
+              elapsed_ms: elapsed,
+              active_workers: concurrency
+            });
+
+            lastProgressLog = now;
+          }
         }
       });
       await Promise.all(workers);
+
+      logger.info('Ingestion pipeline complete', {
+        stage: 'ingestion_pipeline',
+        status: 'success',
+        total_signals: rawSignals.length,
+        duration_ms: Date.now() - pipelineStartTime,
+        rate_per_sec: (rawSignals.length / ((Date.now() - pipelineStartTime) / 1000)).toFixed(2)
+      });
     } catch (error) {
-      logger.error('Ingestion pipeline failed', { error });
+      logger.error('Ingestion pipeline failed', {
+        stage: 'ingestion_pipeline',
+        status: 'error',
+        error: error instanceof Error ? error.message : String(error),
+        duration_ms: Date.now() - pipelineStartTime
+      });
       throw error;
     }
   }
@@ -206,27 +259,41 @@ export class IngestionPipelineService {
             created_at: new Date(rawSignal.created_at)
           };
 
-          currentStage = 'insert_signal';
-          await this.runStage('insert_signal', context, async () => {
-            await pool.query(
-              `INSERT INTO signals
-                (id, source, source_ref, signal_type, content, normalized_content, severity, confidence, metadata, created_at)
-               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-               ON CONFLICT (id) DO NOTHING`,
-              [
-                signal.id,
-                signal.source,
-                signal.source_ref,
-                signal.signal_type,
-                signal.content,
-                signal.normalized_content,
-                signal.severity,
-                signal.confidence,
-                JSON.stringify(signal.metadata || {}),
-                signal.created_at
-              ]
-            );
-          });
+          // TRANSACTION BOUNDARY: Wrap critical signal processing in a transaction
+          const client = await pool.connect();
+          try {
+            currentStage = 'begin_transaction';
+            await client.query('BEGIN');
+            // Set transaction timeout (2 minutes)
+            await client.query('SET LOCAL statement_timeout = 120000');
+
+            logger.debug('Transaction started for signal processing', {
+              ...context,
+              stage: 'transaction',
+              status: 'begin'
+            });
+
+            currentStage = 'insert_signal';
+            await this.runStage('insert_signal', context, async () => {
+              await client.query(
+                `INSERT INTO signals
+                  (id, source, source_ref, signal_type, content, normalized_content, severity, confidence, metadata, created_at)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                 ON CONFLICT (id) DO NOTHING`,
+                [
+                  signal.id,
+                  signal.source,
+                  signal.source_ref,
+                  signal.signal_type,
+                  signal.content,
+                  signal.normalized_content,
+                  signal.severity,
+                  signal.confidence,
+                  JSON.stringify(signal.metadata || {}),
+                  signal.created_at
+                ]
+              );
+            });
 
           currentStage = 'publish_events';
           await this.runStage(
@@ -252,14 +319,47 @@ export class IngestionPipelineService {
           );
 
           currentStage = 'extract';
-          const extraction = await this.runStage('extract', context, async () => {
+          let extraction = await this.runStage('extract', context, async () => {
             return precomputedExtraction || (await this.extractionService.extract(signal.content));
           });
 
           if (extraction) {
+            // Apply learned correction patterns
+            currentStage = 'apply_corrections';
+            const correctionResult = await this.runStage(
+              'apply_corrections',
+              context,
+              async () => {
+                const patterns = await this.correctionService.getApplicablePatterns(signal.id);
+                let patternsApplied = 0;
+
+                if (patterns.length > 0) {
+                  logger.debug('Applying correction patterns to extraction', {
+                    ...context,
+                    pattern_count: patterns.length
+                  });
+
+                  for (const pattern of patterns) {
+                    extraction = await this.correctionService.applyPattern(extraction, pattern);
+                    patternsApplied++;
+                  }
+                }
+
+                return patternsApplied;
+              },
+              { allowFailure: true, nextAction: 'skip_corrections' }
+            );
+
+            if (correctionResult && correctionResult > 0) {
+              logger.info('Applied correction patterns during ingestion', {
+                ...context,
+                patterns_applied: correctionResult
+              });
+            }
+
             currentStage = 'store_extraction';
             await this.runStage('store_extraction', context, async () => {
-              await pool.query(
+              await client.query(
                 `INSERT INTO signal_extractions (signal_id, extraction, source, model, created_at)
                  VALUES ($1, $2, $3, $4, NOW())
                  ON CONFLICT (signal_id) DO UPDATE SET extraction = EXCLUDED.extraction, created_at = NOW()`,
@@ -280,12 +380,16 @@ export class IngestionPipelineService {
               (await this.runStage('resolve_entities', context, async () => {
                 const resolved: Array<{ id: string; type: string; name: string }> = [];
                 for (const mention of entityMentions) {
-                  const resolvedEntity = await this.entityResolutionService.resolveEntityMention({
-                    mention: mention.name,
-                    entityType: mention.type,
-                    signalId: signal.id,
-                    signalText: signal.content
-                  });
+                  // Use transaction-aware entity resolution
+                  const resolvedEntity = await this.entityResolutionService.resolveEntityMentionWithClient(
+                    client,
+                    {
+                      mention: mention.name,
+                      entityType: mention.type,
+                      signalId: signal.id,
+                      signalText: signal.content
+                    }
+                  );
                   resolved.push({
                     id: resolvedEntity.entity_id,
                     type: mention.type,
@@ -295,6 +399,21 @@ export class IngestionPipelineService {
                 return resolved;
               })) || [];
 
+            // COMMIT TRANSACTION before external operations (Neo4j, embeddings)
+            currentStage = 'commit_transaction';
+            await client.query('COMMIT');
+
+            logger.info('Transaction committed successfully', {
+              ...context,
+              stage: 'transaction',
+              status: 'commit',
+              elapsedMs: Date.now() - signalStartedAt
+            });
+
+            // Release client back to pool
+            client.release();
+
+            // Non-transactional operations (Neo4j sync, embeddings) happen outside transaction
             currentStage = 'sync_neo4j_entities';
             await this.runStage('sync_neo4j_entities', context, async () => {
               if (!resolvedEntities.length) return;
@@ -318,7 +437,22 @@ export class IngestionPipelineService {
                 await this.neo4jSyncService.syncRelationship(rel);
               }
             });
+          } catch (transactionError: any) {
+            // ROLLBACK on any error
+            await client.query('ROLLBACK');
+            logger.error('Transaction rolled back', {
+              ...context,
+              stage: currentStage,
+              status: 'rollback',
+              error: transactionError.message,
+              errorClass: transactionError.constructor.name,
+              stack: transactionError.stack,
+              elapsedMs: Date.now() - signalStartedAt
+            });
+            client.release();
+            throw transactionError;
           }
+        }
 
           currentStage = 'graphrag_index';
           await this.runStage(
@@ -412,5 +546,86 @@ export class IngestionPipelineService {
       });
       throw error;
     }
+  }
+
+  /**
+   * Cleanup resources - stop workers and close queues
+   * Should be called during graceful shutdown
+   */
+  async cleanup(): Promise<void> {
+    logger.info('Starting IngestionPipelineService cleanup', {
+      stage: 'ingestion_pipeline',
+      hasWorker: !!this.worker,
+      hasQueue: !!this.queue
+    });
+
+    // Close worker
+    if (this.worker) {
+      logger.info('Closing ingestion worker', {
+        stage: 'ingestion_pipeline'
+      });
+
+      try {
+        // Remove event listeners to prevent memory leaks
+        this.worker.removeAllListeners('completed');
+        this.worker.removeAllListeners('failed');
+        this.worker.removeAllListeners('error');
+        this.worker.removeAllListeners('ready');
+
+        // Close worker with timeout
+        await Promise.race([
+          this.worker.close(),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Worker close timeout')), 10000)
+          )
+        ]);
+
+        logger.info('Ingestion worker closed successfully', {
+          stage: 'ingestion_pipeline'
+        });
+      } catch (error: any) {
+        logger.error('Error closing ingestion worker', {
+          stage: 'ingestion_pipeline',
+          error: error.message
+        });
+      } finally {
+        this.worker = null;
+      }
+    }
+
+    // Close queue
+    if (this.queue) {
+      logger.info('Closing ingestion queue', {
+        stage: 'ingestion_pipeline'
+      });
+
+      try {
+        // Remove event listeners
+        this.queue.removeAllListeners();
+
+        // Close queue with timeout
+        await Promise.race([
+          this.queue.close(),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Queue close timeout')), 5000)
+          )
+        ]);
+
+        logger.info('Ingestion queue closed successfully', {
+          stage: 'ingestion_pipeline'
+        });
+      } catch (error: any) {
+        logger.error('Error closing ingestion queue', {
+          stage: 'ingestion_pipeline',
+          error: error.message
+        });
+      } finally {
+        this.queue = null;
+      }
+    }
+
+    logger.info('IngestionPipelineService cleanup complete', {
+      stage: 'ingestion_pipeline'
+    });
   }
 }

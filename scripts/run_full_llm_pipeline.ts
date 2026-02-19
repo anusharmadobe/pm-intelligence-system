@@ -6,7 +6,7 @@
 
 import 'dotenv/config';
 import { spawn } from 'child_process';
-import { writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from 'fs';
+import { writeFileSync, mkdirSync, existsSync, readdirSync, statSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { getDbPool, closeDbPool } from '../backend/db/connection';
 import { createLLMProviderFromEnv, LLMProvider } from '../backend/services/llm_service';
@@ -32,6 +32,8 @@ import { getRunMetrics } from '../backend/utils/run_metrics';
 const OUTPUT_DIR = join(process.cwd(), 'output');
 const TIMESTAMP = new Date().toISOString().replace(/[:.]/g, '-');
 const PIPELINE_SIGNAL_SOURCE = process.env.PIPELINE_SIGNAL_SOURCE;
+const RUN_STATE_PREFIX = 'pipeline_run_';
+const RUN_STATE_EXT = '.json';
 
 interface PipelineStage {
   name: string;
@@ -50,6 +52,28 @@ interface PipelineConfig {
   embeddingBatchSize?: number;
   maxJiraIssues?: number;
   outputDir?: string;
+  resume?: boolean;
+  resumeFrom?: string;
+  runId?: string;
+  help?: boolean;
+}
+
+interface PipelineRunSignature {
+  signalsCount: number;
+  maxSignalCreatedAt: string | null;
+  extractionCount: number;
+  signalSource?: string | null;
+}
+
+interface PipelineRunState {
+  runId: string;
+  startedAt: string;
+  updatedAt: string;
+  signature: PipelineRunSignature | null;
+  stages: Record<string, PipelineStage>;
+  config: PipelineConfig;
+  outputDir: string;
+  resumeFrom?: string | null;
 }
 
 const DEFAULT_CONFIG: PipelineConfig = {
@@ -63,31 +87,52 @@ const DEFAULT_CONFIG: PipelineConfig = {
 };
 
 class LLMPipeline {
+  private static readonly stageOrder = [
+    'initialization',
+    'ingestion',
+    'embeddings',
+    'deduplication',
+    'clustering',
+    'opportunity_merge',
+    'jira_generation',
+    'export'
+  ];
   private stages: Map<string, PipelineStage> = new Map();
   private config: PipelineConfig;
   private llmProvider: LLMProvider | null = null;
   private embeddingProvider: EmbeddingProvider | null = null;
   private startTime: Date = new Date();
   private enableDeduplication: boolean = process.env.ENABLE_DEDUPLICATION !== 'false';
+  private runId: string;
+  private runStatePath: string;
+  private runState: PipelineRunState | null = null;
+  private runSignature: PipelineRunSignature | null = null;
+  private resumeEnabled: boolean;
+  private resumeFromStage: string | null;
+  private signatureMatches: boolean = false;
 
   constructor(config: Partial<PipelineConfig> = {}) {
     this.config = { ...DEFAULT_CONFIG, ...config };
-    
-    // Initialize stages
-    const stageNames = [
-      'initialization',
-      'ingestion',
-      'embeddings',
-      'deduplication',
-      'clustering',
-      'opportunity_merge',
-      'jira_generation',
-      'export'
-    ];
-    
-    stageNames.forEach(name => {
+    this.resumeEnabled = Boolean(this.config.resume || this.config.resumeFrom || this.config.runId);
+    this.resumeFromStage = this.config.resumeFrom || null;
+    if (this.resumeFromStage && !LLMPipeline.stageOrder.includes(this.resumeFromStage)) {
+      logger.warn('Unknown resume-from stage; ignoring', {
+        stage: 'pipeline_resume',
+        status: 'invalid_stage',
+        resumeFrom: this.resumeFromStage
+      });
+      this.resumeFromStage = null;
+    }
+    this.runId = this.config.runId || `run_${TIMESTAMP}`;
+    this.runStatePath = join(this.config.outputDir!, `${RUN_STATE_PREFIX}${this.runId}${RUN_STATE_EXT}`);
+
+    LLMPipeline.stageOrder.forEach(name => {
       this.stages.set(name, { name, status: 'pending' });
     });
+
+    if (this.resumeEnabled) {
+      this.loadRunState();
+    }
   }
 
   private updateStage(name: string, updates: Partial<PipelineStage>) {
@@ -95,6 +140,143 @@ class LLMPipeline {
     if (stage) {
       Object.assign(stage, updates);
     }
+    this.persistRunState();
+  }
+
+  private findLatestRunStateFile(): string | null {
+    if (!this.config.outputDir || !existsSync(this.config.outputDir)) return null;
+    const files = readdirSync(this.config.outputDir)
+      .filter((file) => file.startsWith(RUN_STATE_PREFIX) && file.endsWith(RUN_STATE_EXT))
+      .map((file) => ({
+        file,
+        mtime: statSync(join(this.config.outputDir!, file)).mtimeMs
+      }))
+      .sort((a, b) => b.mtime - a.mtime);
+    if (files.length === 0) return null;
+    return join(this.config.outputDir!, files[0].file);
+  }
+
+  private loadRunState(): void {
+    const stateFile = this.config.runId
+      ? this.runStatePath
+      : this.findLatestRunStateFile();
+    if (!stateFile || !existsSync(stateFile)) return;
+    const content = readFileSync(stateFile, 'utf-8');
+    const state = JSON.parse(content) as PipelineRunState;
+    this.runState = state;
+    this.runId = state.runId;
+    this.runStatePath = stateFile;
+    this.startTime = new Date(state.startedAt);
+    if (state.outputDir) {
+      this.config.outputDir = state.outputDir;
+    }
+    Object.entries(state.stages).forEach(([name, stage]) => {
+      if (this.stages.has(name)) {
+        Object.assign(this.stages.get(name)!, stage);
+      } else {
+        this.stages.set(name, stage);
+      }
+    });
+  }
+
+  private ensureRunStateInitialized(): void {
+    if (!this.runState) {
+      this.runState = {
+        runId: this.runId,
+        startedAt: this.startTime.toISOString(),
+        updatedAt: new Date().toISOString(),
+        signature: this.runSignature,
+        stages: Object.fromEntries(this.stages),
+        config: this.config,
+        outputDir: this.config.outputDir || OUTPUT_DIR,
+        resumeFrom: this.resumeFromStage
+      };
+    }
+  }
+
+  private persistRunState(): void {
+    this.ensureRunStateInitialized();
+    if (!this.runState) return;
+    if (!this.config.outputDir) return;
+    if (!existsSync(this.config.outputDir)) {
+      mkdirSync(this.config.outputDir, { recursive: true });
+    }
+    this.runState.updatedAt = new Date().toISOString();
+    this.runState.signature = this.runSignature;
+    this.runState.config = this.config;
+    this.runState.stages = Object.fromEntries(this.stages);
+    writeFileSync(this.runStatePath, JSON.stringify(this.runState, null, 2));
+  }
+
+  private async computeRunSignature(): Promise<PipelineRunSignature> {
+    const pool = getDbPool();
+    const signalStats = await pool.query(
+      'SELECT COUNT(*)::int AS count, MAX(created_at) AS max_created_at FROM signals'
+    );
+    const extractionStats = await pool.query(
+      'SELECT COUNT(*)::int AS count FROM signal_extractions'
+    );
+    return {
+      signalsCount: signalStats.rows[0]?.count || 0,
+      maxSignalCreatedAt: signalStats.rows[0]?.max_created_at
+        ? new Date(signalStats.rows[0].max_created_at).toISOString()
+        : null,
+      extractionCount: extractionStats.rows[0]?.count || 0,
+      signalSource: PIPELINE_SIGNAL_SOURCE || null
+    };
+  }
+
+  private signaturesMatch(current: PipelineRunSignature | null, previous: PipelineRunSignature | null): boolean {
+    if (!current || !previous) return false;
+    return (
+      current.signalsCount === previous.signalsCount &&
+      current.maxSignalCreatedAt === previous.maxSignalCreatedAt &&
+      current.extractionCount === previous.extractionCount &&
+      current.signalSource === previous.signalSource
+    );
+  }
+
+  private shouldSkipStage(stageName: string): { skip: boolean; reason?: string } {
+    if (stageName === 'initialization') return { skip: false };
+    const stageIndex = LLMPipeline.stageOrder.indexOf(stageName);
+    if (this.resumeFromStage) {
+      const resumeIndex = LLMPipeline.stageOrder.indexOf(this.resumeFromStage);
+      if (resumeIndex >= 0 && stageIndex >= 0 && stageIndex < resumeIndex) {
+        return { skip: true, reason: 'resume_from' };
+      }
+    }
+    if (!this.resumeEnabled || !this.signatureMatches || !this.runState) {
+      return { skip: false };
+    }
+    const stageState = this.runState.stages?.[stageName];
+    if (stageState?.status === 'completed') {
+      return { skip: true, reason: 'checkpoint' };
+    }
+    return { skip: false };
+  }
+
+  private skipStage(stageName: string, reason: string) {
+    const stage = this.stages.get(stageName);
+    if (reason === 'checkpoint') {
+      console.log(`   ⊘ Skipping ${stageName} stage (already completed)`);
+      logger.info('Pipeline stage skipped', {
+        runId: this.runId,
+        stage: stageName,
+        status: 'skipped',
+        reason
+      });
+      return;
+    }
+    if (stage && stage.status !== 'completed') {
+      this.updateStage(stageName, { status: 'skipped', endTime: new Date() });
+    }
+    console.log(`   ⊘ Skipping ${stageName} stage (${reason})`);
+    logger.info('Pipeline stage skipped', {
+      runId: this.runId,
+      stage: stageName,
+      status: 'skipped',
+      reason
+    });
   }
 
   private printBanner() {
@@ -103,6 +285,10 @@ class LLMPipeline {
     console.log('='.repeat(70));
     console.log(`Started at: ${this.startTime.toISOString()}`);
     console.log(`Output directory: ${this.config.outputDir}`);
+    console.log(`Run ID: ${this.runId}`);
+    if (this.resumeEnabled) {
+      console.log(`Resume: ${this.config.resume ? 'on' : 'off'}${this.resumeFromStage ? ` (from ${this.resumeFromStage})` : ''}`);
+    }
     console.log('='.repeat(70) + '\n');
   }
 
@@ -166,6 +352,25 @@ class LLMPipeline {
       const pool = getDbPool();
       await pool.query('SELECT 1');
       console.log('   ✓ Database connection OK');
+
+      this.runSignature = await this.computeRunSignature();
+      if (this.resumeEnabled && this.runState?.signature) {
+        this.signatureMatches = this.signaturesMatch(this.runSignature, this.runState.signature);
+        if (!this.signatureMatches) {
+          logger.warn('Pipeline resume signature mismatch; will recompute stages', {
+            stage: 'pipeline_resume',
+            status: 'mismatch',
+            current: this.runSignature,
+            previous: this.runState.signature
+          });
+        }
+      } else if (this.resumeEnabled && !this.runState?.signature) {
+        logger.warn('Pipeline resume requested but no checkpoint signature found', {
+          stage: 'pipeline_resume',
+          status: 'missing_signature'
+        });
+      }
+      this.ensureRunStateInitialized();
       
       this.updateStage('initialization', { status: 'completed', endTime: new Date() });
     } catch (error: any) {
@@ -179,9 +384,9 @@ class LLMPipeline {
   }
 
   async runIngestion(): Promise<void> {
-    if (this.config.skipIngestion) {
-      this.updateStage('ingestion', { status: 'skipped' });
-      console.log('\n   ⊘ Skipping ingestion stage');
+    const skipInfo = this.shouldSkipStage('ingestion');
+    if (this.config.skipIngestion || skipInfo.skip) {
+      this.skipStage('ingestion', this.config.skipIngestion ? 'config' : skipInfo.reason || 'checkpoint');
       return;
     }
     
@@ -226,9 +431,14 @@ class LLMPipeline {
   }
 
   async runEmbeddings(): Promise<void> {
-    if (this.config.skipEmbeddings || !this.embeddingProvider) {
-      this.updateStage('embeddings', { status: 'skipped' });
-      console.log('\n   ⊘ Skipping embeddings stage');
+    const skipInfo = this.shouldSkipStage('embeddings');
+    if (this.config.skipEmbeddings || !this.embeddingProvider || skipInfo.skip) {
+      const reason = this.config.skipEmbeddings
+        ? 'config'
+        : !this.embeddingProvider
+          ? 'provider_missing'
+          : skipInfo.reason || 'checkpoint';
+      this.skipStage('embeddings', reason);
       return;
     }
     
@@ -293,9 +503,10 @@ class LLMPipeline {
   }
 
   async runDeduplication(): Promise<void> {
-    if (!this.enableDeduplication) {
-      this.updateStage('deduplication', { status: 'skipped' });
-      console.log('\n   ⊘ Skipping deduplication stage');
+    const skipInfo = this.shouldSkipStage('deduplication');
+    if (!this.enableDeduplication || skipInfo.skip) {
+      const reason = !this.enableDeduplication ? 'disabled' : skipInfo.reason || 'checkpoint';
+      this.skipStage('deduplication', reason);
       return;
     }
 
@@ -322,9 +533,9 @@ class LLMPipeline {
   }
 
   async runClustering(): Promise<void> {
-    if (this.config.skipClustering) {
-      this.updateStage('clustering', { status: 'skipped' });
-      console.log('\n   ⊘ Skipping clustering stage');
+    const skipInfo = this.shouldSkipStage('clustering');
+    if (this.config.skipClustering || skipInfo.skip) {
+      this.skipStage('clustering', this.config.skipClustering ? 'config' : skipInfo.reason || 'checkpoint');
       return;
     }
     
@@ -428,8 +639,28 @@ class LLMPipeline {
   }
 
   async runOpportunityMerge(): Promise<void> {
+    const skipInfo = this.shouldSkipStage('opportunity_merge');
+    if (skipInfo.skip) {
+      this.skipStage('opportunity_merge', skipInfo.reason || 'checkpoint');
+      return;
+    }
     this.updateStage('opportunity_merge', { status: 'running', startTime: new Date() });
     this.printStageHeader('Opportunity Merge');
+    const stageStart = Date.now();
+    logger.info('Pipeline stage started', {
+      runId: this.runId,
+      stage: 'opportunity_merge',
+      status: 'start'
+    });
+    const heartbeat = setInterval(() => {
+      logger.info('Pipeline stage heartbeat', {
+        runId: this.runId,
+        stage: 'opportunity_merge',
+        status: 'in_progress',
+        elapsedMs: Date.now() - stageStart
+      });
+    }, 30000);
+
     try {
       const merged = await mergeRelatedOpportunities(0.5);
       console.log(`   ✓ Merged ${merged} overlapping opportunities`);
@@ -438,6 +669,13 @@ class LLMPipeline {
         endTime: new Date(),
         result: { merged }
       });
+      logger.info('Pipeline stage completed', {
+        runId: this.runId,
+        stage: 'opportunity_merge',
+        status: 'success',
+        merged,
+        elapsedMs: Date.now() - stageStart
+      });
     } catch (error: any) {
       this.updateStage('opportunity_merge', {
         status: 'failed',
@@ -445,18 +683,43 @@ class LLMPipeline {
         error: error.message
       });
       console.log(`   ⚠ Opportunity merge failed: ${error.message}`);
+      logger.error('Pipeline stage failed', {
+        runId: this.runId,
+        stage: 'opportunity_merge',
+        status: 'failed',
+        errorClass: error?.constructor?.name,
+        errorMessage: error.message,
+        elapsedMs: Date.now() - stageStart
+      });
+    } finally {
+      clearInterval(heartbeat);
     }
   }
 
   async runJiraGeneration(): Promise<JiraIssueTemplate[]> {
-    if (this.config.skipJiraGeneration) {
-      this.updateStage('jira_generation', { status: 'skipped' });
-      console.log('\n   ⊘ Skipping JIRA generation stage');
+    const skipInfo = this.shouldSkipStage('jira_generation');
+    if (this.config.skipJiraGeneration || skipInfo.skip) {
+      this.skipStage('jira_generation', this.config.skipJiraGeneration ? 'config' : skipInfo.reason || 'checkpoint');
       return [];
     }
     
     this.updateStage('jira_generation', { status: 'running', startTime: new Date() });
     this.printStageHeader('JIRA Issue Generation');
+    const stageStart = Date.now();
+    logger.info('Pipeline stage started', {
+      runId: this.runId,
+      stage: 'jira_generation',
+      status: 'start',
+      maxJiraIssues: this.config.maxJiraIssues
+    });
+    const heartbeat = setInterval(() => {
+      logger.info('Pipeline stage heartbeat', {
+        runId: this.runId,
+        stage: 'jira_generation',
+        status: 'in_progress',
+        elapsedMs: Date.now() - stageStart
+      });
+    }, 30000);
     
     try {
       console.log(`   Generating JIRA issues for top ${this.config.maxJiraIssues} opportunities...`);
@@ -494,6 +757,13 @@ class LLMPipeline {
         endTime: new Date(),
         result: { count: issues.length }
       });
+      logger.info('Pipeline stage completed', {
+        runId: this.runId,
+        stage: 'jira_generation',
+        status: 'success',
+        generatedIssues: issues.length,
+        elapsedMs: Date.now() - stageStart
+      });
       
       return issues;
     } catch (error: any) {
@@ -503,25 +773,68 @@ class LLMPipeline {
         error: error.message 
       });
       console.log(`   ⚠ JIRA generation failed: ${error.message}`);
+      logger.error('Pipeline stage failed', {
+        runId: this.runId,
+        stage: 'jira_generation',
+        status: 'failed',
+        errorClass: error?.constructor?.name,
+        errorMessage: error.message,
+        elapsedMs: Date.now() - stageStart
+      });
       return [];
+    } finally {
+      clearInterval(heartbeat);
     }
   }
 
   async runExport(jiraIssues: JiraIssueTemplate[]): Promise<void> {
+    const skipInfo = this.shouldSkipStage('export');
+    if (skipInfo.skip) {
+      this.skipStage('export', skipInfo.reason || 'checkpoint');
+      return;
+    }
     this.updateStage('export', { status: 'running', startTime: new Date() });
     this.printStageHeader('Export Results');
+    const stageStart = Date.now();
+    logger.info('Pipeline stage started', {
+      runId: this.runId,
+      stage: 'export',
+      status: 'start',
+      jiraIssues: jiraIssues.length
+    });
+    const heartbeat = setInterval(() => {
+      logger.info('Pipeline stage heartbeat', {
+        runId: this.runId,
+        stage: 'export',
+        status: 'in_progress',
+        elapsedMs: Date.now() - stageStart
+      });
+    }, 30000);
     
     try {
       const pool = getDbPool();
       
       // Export JIRA issues
       if (jiraIssues.length > 0) {
+        logger.info('Pipeline export substep', {
+          runId: this.runId,
+          stage: 'export',
+          status: 'in_progress',
+          substep: 'jira_issues',
+          count: jiraIssues.length
+        });
         const jiraPath = join(this.config.outputDir!, `jira_issues_${TIMESTAMP}.json`);
         writeFileSync(jiraPath, exportJiraTemplatesToJson(jiraIssues));
         console.log(`   ✓ Exported JIRA issues to: ${jiraPath}`);
       }
       
       // Export roadmap summary
+      logger.info('Pipeline export substep', {
+        runId: this.runId,
+        stage: 'export',
+        status: 'in_progress',
+        substep: 'roadmap_summary'
+      });
       const summary = await getRoadmapSummary({}, {
         signalSource: PIPELINE_SIGNAL_SOURCE,
         requireExclusiveSource: Boolean(PIPELINE_SIGNAL_SOURCE)
@@ -531,6 +844,12 @@ class LLMPipeline {
       console.log(`   ✓ Exported roadmap summary to: ${summaryPath}`);
       
       // Export opportunities
+      logger.info('Pipeline export substep', {
+        runId: this.runId,
+        stage: 'export',
+        status: 'in_progress',
+        substep: 'opportunities'
+      });
       const oppsResult = PIPELINE_SIGNAL_SOURCE
         ? await pool.query(
             `
@@ -556,6 +875,12 @@ class LLMPipeline {
       console.log(`   ✓ Exported ${oppsResult.rows.length} opportunities to: ${oppsPath}`);
       
       // Export signal extractions sample
+      logger.info('Pipeline export substep', {
+        runId: this.runId,
+        stage: 'export',
+        status: 'in_progress',
+        substep: 'llm_extractions_sample'
+      });
       const extractionsResult = PIPELINE_SIGNAL_SOURCE
         ? await pool.query(
             `
@@ -580,6 +905,12 @@ class LLMPipeline {
       console.log(`   ✓ Exported ${extractionsResult.rows.length} LLM extraction samples`);
       
       // Generate pipeline report
+      logger.info('Pipeline export substep', {
+        runId: this.runId,
+        stage: 'export',
+        status: 'in_progress',
+        substep: 'pipeline_report'
+      });
       const report = this.generatePipelineReport(jiraIssues, summary);
       const reportPath = join(this.config.outputDir!, `pipeline_report_${TIMESTAMP}.md`);
       writeFileSync(reportPath, report);
@@ -594,13 +925,31 @@ class LLMPipeline {
           opportunities: oppsResult.rows.length 
         }
       });
+      logger.info('Pipeline stage completed', {
+        runId: this.runId,
+        stage: 'export',
+        status: 'success',
+        jiraIssues: jiraIssues.length,
+        opportunities: oppsResult.rows.length,
+        elapsedMs: Date.now() - stageStart
+      });
     } catch (error: any) {
       this.updateStage('export', { 
         status: 'failed', 
         endTime: new Date(),
         error: error.message 
       });
+      logger.error('Pipeline stage failed', {
+        runId: this.runId,
+        stage: 'export',
+        status: 'failed',
+        errorClass: error?.constructor?.name,
+        errorMessage: error.message,
+        elapsedMs: Date.now() - stageStart
+      });
       throw error;
+    } finally {
+      clearInterval(heartbeat);
     }
   }
 
@@ -827,10 +1176,18 @@ function parseArgs(): Partial<PipelineConfig> {
   const config: Partial<PipelineConfig> = {};
   
   args.forEach(arg => {
+    if (arg === '--help' || arg === '-h') config.help = true;
     if (arg === '--skip-ingestion') config.skipIngestion = true;
     if (arg === '--skip-embeddings') config.skipEmbeddings = true;
     if (arg === '--skip-clustering') config.skipClustering = true;
     if (arg === '--skip-jira') config.skipJiraGeneration = true;
+    if (arg === '--resume') config.resume = true;
+    if (arg.startsWith('--resume-from=')) {
+      config.resumeFrom = arg.split('=')[1];
+    }
+    if (arg.startsWith('--run-id=')) {
+      config.runId = arg.split('=')[1];
+    }
     if (arg.startsWith('--max-jira=')) {
       config.maxJiraIssues = parseInt(arg.split('=')[1], 10);
     }
@@ -842,9 +1199,35 @@ function parseArgs(): Partial<PipelineConfig> {
   return config;
 }
 
+function printUsage() {
+  console.log('\nPM Intelligence Pipeline');
+  console.log('Usage: npm run pipeline:skip-ingestion -- [options]\n');
+  console.log('Options:');
+  console.log('  --skip-ingestion           Skip ingestion stage');
+  console.log('  --skip-embeddings          Skip embedding generation stage');
+  console.log('  --skip-clustering          Skip opportunity clustering stage');
+  console.log('  --skip-jira                Skip JIRA generation stage');
+  console.log('  --max-jira=<n>             Max JIRA issues to generate');
+  console.log('  --output=<dir>             Output directory');
+  console.log('  --resume                   Resume using last checkpoint');
+  console.log('  --resume-from=<stage>      Start from a specific stage');
+  console.log('  --run-id=<id>              Resume a specific run ID');
+  console.log('  -h, --help                 Show help');
+  console.log('\nStages: initialization, ingestion, embeddings, deduplication, clustering, opportunity_merge, jira_generation, export');
+  console.log('\nExamples:');
+  console.log('  npm run pipeline:skip-ingestion -- --resume');
+  console.log('  npm run pipeline:skip-ingestion -- --resume-from=opportunity_merge --skip-jira');
+  console.log('  npm run pipeline:skip-ingestion -- --skip-clustering --skip-jira');
+  console.log('');
+}
+
 // Main execution
 async function main() {
   const config = parseArgs();
+  if (config.help) {
+    printUsage();
+    return;
+  }
   const pipeline = new LLMPipeline(config);
   await pipeline.run();
 }

@@ -1,5 +1,6 @@
 import winston from 'winston';
 import path from 'path';
+import { getLoggingContext } from './correlation';
 
 // Define custom log levels with trace added for ultra-detailed debugging
 const customLevels = {
@@ -22,10 +23,20 @@ const customLevels = {
 // Add colors to Winston
 winston.addColors(customLevels.colors);
 
+// Format that adds correlation context to all logs
+const correlationFormat = winston.format((info) => {
+  const correlationContext = getLoggingContext();
+  return {
+    ...info,
+    ...correlationContext
+  };
+})();
+
 const logFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
   winston.format.errors({ stack: true }),
   winston.format.splat(),
+  correlationFormat,
   winston.format.json()
 );
 

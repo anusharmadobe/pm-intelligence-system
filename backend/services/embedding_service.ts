@@ -61,26 +61,37 @@ export async function generateContextualEmbedding(
   model: string = 'text-embedding-3-large'
 ): Promise<ContextualEmbeddingResult> {
   const startTime = Date.now();
-  
-  // Step 1: Generate contextual summary using LLM
-  const contextualSummary = await generateContextualSummary(signal, llmProvider);
-  
-  // Step 2: Generate embedding from the contextual summary (not raw text)
-  const embedding = await embeddingProvider(contextualSummary);
-  
-  logger.debug('Contextual embedding generated', {
-    signalId: signal.id,
-    summaryLength: contextualSummary.length,
-    embeddingDimensions: embedding.length,
-    durationMs: Date.now() - startTime
-  });
-  
-  return {
-    signalId: signal.id,
-    embedding,
-    contextualSummary,
-    model
-  };
+
+  try {
+    // Step 1: Generate contextual summary using LLM
+    const contextualSummary = await generateContextualSummary(signal, llmProvider);
+
+    // Step 2: Generate embedding from the contextual summary (not raw text)
+    const embedding = await embeddingProvider(contextualSummary);
+
+    logger.debug('Contextual embedding generated', {
+      signalId: signal.id,
+      summaryLength: contextualSummary.length,
+      embeddingDimensions: embedding.length,
+      durationMs: Date.now() - startTime
+    });
+
+    return {
+      signalId: signal.id,
+      embedding,
+      contextualSummary,
+      model
+    };
+  } catch (error: any) {
+    logger.error('Failed to generate contextual embedding', {
+      signalId: signal.id,
+      error: error.message,
+      errorClass: error.constructor.name,
+      stack: error.stack,
+      durationMs: Date.now() - startTime
+    });
+    throw error;
+  }
 }
 
 /**
@@ -126,8 +137,19 @@ export async function embedSignal(
   embeddingProvider: EmbeddingProvider,
   model: string = 'text-embedding-3-large'
 ): Promise<void> {
-  const result = await generateContextualEmbedding(signal, llmProvider, embeddingProvider, model);
-  await storeSignalEmbedding(result.signalId, result.embedding, result.contextualSummary, result.model);
+  try {
+    const result = await generateContextualEmbedding(signal, llmProvider, embeddingProvider, model);
+    await storeSignalEmbedding(result.signalId, result.embedding, result.contextualSummary, result.model);
+    logger.debug('Signal embedding completed', { signalId: signal.id, model });
+  } catch (error: any) {
+    logger.error('Failed to embed signal', {
+      signalId: signal.id,
+      error: error.message,
+      errorClass: error.constructor.name,
+      stack: error.stack
+    });
+    throw error;
+  }
 }
 
 /**
@@ -149,21 +171,36 @@ export async function batchGenerateEmbeddings(
   let successful = 0;
   let failed = 0;
   const errors: string[] = [];
-  
-  logger.info('Starting batch embedding generation', { 
-    signalCount: signals.length, 
-    batchSize 
+  const batchStartTime = Date.now();
+
+  logger.info('Starting batch embedding generation', {
+    signalCount: signals.length,
+    batchSize,
+    total_batches: Math.ceil(signals.length / batchSize)
   });
-  
+
   // Process in batches
   for (let i = 0; i < signals.length; i += batchSize) {
+    const batchNum = Math.floor(i / batchSize) + 1;
+    const totalBatches = Math.ceil(signals.length / batchSize);
+    const batchIterStartTime = Date.now();
+
     const batch = signals.slice(i, i + batchSize);
-    
+
+    logger.debug('Processing embedding batch', {
+      stage: 'embedding_generation',
+      status: 'batch_start',
+      batch_number: batchNum,
+      total_batches: totalBatches,
+      batch_size: batch.length,
+      progress_pct: ((i / signals.length) * 100).toFixed(1)
+    });
+
     // Generate contextual summaries in parallel
     const summaryResults = await Promise.allSettled(
       batch.map(signal => generateContextualSummary(signal, llmProvider))
     );
-    
+
     // Collect successful summaries
     const validSummaries: { signal: Signal; summary: string }[] = [];
     for (let j = 0; j < batch.length; j++) {
@@ -175,7 +212,7 @@ export async function batchGenerateEmbeddings(
         errors.push(`Signal ${batch[j].id}: ${result.reason?.message || 'Summary generation failed'}`);
       }
     }
-    
+
     // Generate embeddings for valid summaries
     const embeddingResults = await Promise.allSettled(
       validSummaries.map(async ({ signal, summary }) => {
@@ -183,7 +220,7 @@ export async function batchGenerateEmbeddings(
         return { signalId: signal.id, embedding, summary };
       })
     );
-    
+
     // Store embeddings
     for (let j = 0; j < embeddingResults.length; j++) {
       const result = embeddingResults[j];
@@ -205,7 +242,30 @@ export async function batchGenerateEmbeddings(
         errors.push(`Embedding failed: ${result.reason?.message || 'Unknown error'}`);
       }
     }
-    
+
+    const batchDuration = Date.now() - batchIterStartTime;
+    const totalElapsed = Date.now() - batchStartTime;
+    const processed = i + batch.length;
+    const rate = processed / (totalElapsed / 1000);
+    const remaining = signals.length - processed;
+    const etaSeconds = remaining > 0 && rate > 0 ? (remaining / rate).toFixed(0) : 'N/A';
+
+    logger.info('Embedding batch complete', {
+      stage: 'embedding_generation',
+      status: 'batch_complete',
+      batch_number: batchNum,
+      total_batches: totalBatches,
+      batch_duration_ms: batchDuration,
+      successful_so_far: successful,
+      failed_so_far: failed,
+      total_processed: processed,
+      total_signals: signals.length,
+      progress_pct: ((processed / signals.length) * 100).toFixed(1),
+      rate_per_sec: rate.toFixed(2),
+      eta_seconds: etaSeconds,
+      total_elapsed_ms: totalElapsed
+    });
+
     if (onProgress) {
       onProgress(i + batch.length, signals.length);
     }
@@ -221,21 +281,35 @@ export async function batchGenerateEmbeddings(
  */
 export async function getSignalsWithoutEmbeddings(limit: number = 100): Promise<Signal[]> {
   const pool = getDbPool();
-  
-  const result = await pool.query(
-    `SELECT s.* FROM signals s
-     LEFT JOIN signal_embeddings se ON s.id = se.signal_id
-     WHERE se.signal_id IS NULL
-     ORDER BY s.created_at DESC
-     LIMIT $1`,
-    [limit]
-  );
-  
-  return result.rows.map(row => ({
-    ...row,
-    metadata: row.metadata ? (typeof row.metadata === 'string' ? JSON.parse(row.metadata) : row.metadata) : null,
-    created_at: new Date(row.created_at)
-  }));
+
+  try {
+    const result = await pool.query(
+      `SELECT s.* FROM signals s
+       LEFT JOIN signal_embeddings se ON s.id = se.signal_id
+       WHERE se.signal_id IS NULL
+       ORDER BY s.created_at DESC
+       LIMIT $1`,
+      [limit]
+    );
+
+    return result.rows.map((row) => ({
+      ...row,
+      metadata: row.metadata
+        ? typeof row.metadata === 'string'
+          ? JSON.parse(row.metadata)
+          : row.metadata
+        : null,
+      created_at: new Date(row.created_at)
+    }));
+  } catch (error: any) {
+    logger.error('Failed to get signals without embeddings', {
+      error: error.message,
+      errorClass: error.constructor.name,
+      stack: error.stack,
+      limit
+    });
+    throw error;
+  }
 }
 
 /**
@@ -247,29 +321,39 @@ export async function getSignalEmbedding(signalId: string): Promise<{
   model: string;
 } | null> {
   const pool = getDbPool();
-  
-  const result = await pool.query(
-    `SELECT embedding::text, contextual_summary, model 
-     FROM signal_embeddings 
-     WHERE signal_id = $1`,
-    [signalId]
-  );
-  
-  if (result.rows.length === 0) {
-    return null;
+
+  try {
+    const result = await pool.query(
+      `SELECT embedding::text, contextual_summary, model
+       FROM signal_embeddings
+       WHERE signal_id = $1`,
+      [signalId]
+    );
+
+    if (result.rows.length === 0) {
+      return null;
+    }
+
+    const row = result.rows[0];
+
+    // Parse embedding from PostgreSQL vector format
+    const embeddingStr = row.embedding.replace('[', '').replace(']', '');
+    const embedding = embeddingStr.split(',').map((v: string) => parseFloat(v.trim()));
+
+    return {
+      embedding,
+      contextualSummary: row.contextual_summary,
+      model: row.model
+    };
+  } catch (error: any) {
+    logger.error('Failed to get signal embedding', {
+      signalId,
+      error: error.message,
+      errorClass: error.constructor.name,
+      stack: error.stack
+    });
+    throw error;
   }
-  
-  const row = result.rows[0];
-  
-  // Parse embedding from PostgreSQL vector format
-  const embeddingStr = row.embedding.replace('[', '').replace(']', '');
-  const embedding = embeddingStr.split(',').map((v: string) => parseFloat(v.trim()));
-  
-  return {
-    embedding,
-    contextualSummary: row.contextual_summary,
-    model: row.model
-  };
 }
 
 /**
@@ -280,15 +364,27 @@ export async function queueSignalForEmbedding(
   priority: number = 5
 ): Promise<void> {
   const pool = getDbPool();
-  
-  await pool.query(
-    `INSERT INTO embedding_queue (entity_type, entity_id, priority, status)
-     VALUES ('signal', $1, $2, 'pending')
-     ON CONFLICT (entity_type, entity_id) DO UPDATE SET
-       priority = LEAST(embedding_queue.priority, EXCLUDED.priority),
-       status = CASE WHEN embedding_queue.status = 'failed' THEN 'pending' ELSE embedding_queue.status END`,
-    [signalId, priority]
-  );
+
+  try {
+    await pool.query(
+      `INSERT INTO embedding_queue (entity_type, entity_id, priority, status)
+       VALUES ('signal', $1, $2, 'pending')
+       ON CONFLICT (entity_type, entity_id) DO UPDATE SET
+         priority = LEAST(embedding_queue.priority, EXCLUDED.priority),
+         status = CASE WHEN embedding_queue.status = 'failed' THEN 'pending' ELSE embedding_queue.status END`,
+      [signalId, priority]
+    );
+    logger.debug('Signal queued for embedding', { signalId, priority });
+  } catch (error: any) {
+    logger.error('Failed to queue signal for embedding', {
+      signalId,
+      priority,
+      error: error.message,
+      errorClass: error.constructor.name,
+      stack: error.stack
+    });
+    throw error;
+  }
 }
 
 /**
@@ -304,70 +400,87 @@ export async function processEmbeddingQueue(
 ): Promise<{ processed: number; failed: number }> {
   const pool = getDbPool();
   const { batchSize = 10, model = 'text-embedding-3-large' } = options || {};
-  
-  // Get pending items
-  const pendingResult = await pool.query(
-    `SELECT entity_id FROM embedding_queue
-     WHERE entity_type = 'signal' AND status = 'pending'
-     ORDER BY priority ASC, created_at ASC
-     LIMIT $1`,
-    [batchSize]
-  );
-  
-  if (pendingResult.rows.length === 0) {
-    return { processed: 0, failed: 0 };
-  }
-  
-  const signalIds = pendingResult.rows.map(r => r.entity_id);
-  
-  // Mark as processing
-  await pool.query(
-    `UPDATE embedding_queue SET status = 'processing'
-     WHERE entity_type = 'signal' AND entity_id = ANY($1)`,
-    [signalIds]
-  );
-  
-  // Get signal data
-  const signalsResult = await pool.query(
-    `SELECT * FROM signals WHERE id = ANY($1)`,
-    [signalIds]
-  );
-  
-  const signals: Signal[] = signalsResult.rows.map(row => ({
-    ...row,
-    metadata: row.metadata ? (typeof row.metadata === 'string' ? JSON.parse(row.metadata) : row.metadata) : null,
-    created_at: new Date(row.created_at)
-  }));
-  
-  let processed = 0;
-  let failed = 0;
-  
-  for (const signal of signals) {
-    try {
-      await embedSignal(signal, llmProvider, embeddingProvider, model);
-      
-      await pool.query(
-        `UPDATE embedding_queue SET status = 'completed', processed_at = NOW()
-         WHERE entity_type = 'signal' AND entity_id = $1`,
-        [signal.id]
-      );
-      
-      processed++;
-    } catch (error: any) {
-      failed++;
-      
-      await pool.query(
-        `UPDATE embedding_queue 
-         SET status = 'failed', attempts = attempts + 1, error_message = $2
-         WHERE entity_type = 'signal' AND entity_id = $1`,
-        [signal.id, error.message]
-      );
+
+  try {
+    // Get pending items
+    const pendingResult = await pool.query(
+      `SELECT entity_id FROM embedding_queue
+       WHERE entity_type = 'signal' AND status = 'pending'
+       ORDER BY priority ASC, created_at ASC
+       LIMIT $1`,
+      [batchSize]
+    );
+
+    if (pendingResult.rows.length === 0) {
+      return { processed: 0, failed: 0 };
     }
+
+    const signalIds = pendingResult.rows.map((r) => r.entity_id);
+
+    // Mark as processing
+    await pool.query(
+      `UPDATE embedding_queue SET status = 'processing'
+       WHERE entity_type = 'signal' AND entity_id = ANY($1)`,
+      [signalIds]
+    );
+
+    // Get signal data
+    const signalsResult = await pool.query(`SELECT * FROM signals WHERE id = ANY($1)`, [signalIds]);
+
+    const signals: Signal[] = signalsResult.rows.map((row) => ({
+      ...row,
+      metadata: row.metadata
+        ? typeof row.metadata === 'string'
+          ? JSON.parse(row.metadata)
+          : row.metadata
+        : null,
+      created_at: new Date(row.created_at)
+    }));
+
+    let processed = 0;
+    let failed = 0;
+
+    for (const signal of signals) {
+      try {
+        await embedSignal(signal, llmProvider, embeddingProvider, model);
+
+        await pool.query(
+          `UPDATE embedding_queue SET status = 'completed', processed_at = NOW()
+           WHERE entity_type = 'signal' AND entity_id = $1`,
+          [signal.id]
+        );
+
+        processed++;
+      } catch (error: any) {
+        failed++;
+
+        logger.error('Failed to embed signal from queue', {
+          signalId: signal.id,
+          error: error.message,
+          errorClass: error.constructor.name
+        });
+
+        await pool.query(
+          `UPDATE embedding_queue
+           SET status = 'failed', attempts = attempts + 1, error_message = $2
+           WHERE entity_type = 'signal' AND entity_id = $1`,
+          [signal.id, error.message]
+        );
+      }
+    }
+
+    logger.info('Embedding queue processed', { processed, failed });
+
+    return { processed, failed };
+  } catch (error: any) {
+    logger.error('Failed to process embedding queue', {
+      error: error.message,
+      errorClass: error.constructor.name,
+      stack: error.stack,
+      batchSize
+    });
+    throw error;
   }
-  
-  logger.info('Embedding queue processed', { processed, failed });
-  
-  return { processed, failed };
 }
 
 /**
@@ -381,29 +494,38 @@ export async function getEmbeddingStats(): Promise<{
   coveragePercent: number;
 }> {
   const pool = getDbPool();
-  
-  const [signalCount, embeddingCount, queueStats] = await Promise.all([
-    pool.query('SELECT COUNT(*) as count FROM signals'),
-    pool.query('SELECT COUNT(*) as count FROM signal_embeddings'),
-    pool.query(`
-      SELECT 
-        SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending,
-        SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed
-      FROM embedding_queue
-      WHERE entity_type = 'signal'
-    `)
-  ]);
-  
-  const totalSignals = parseInt(signalCount.rows[0].count);
-  const embeddedSignals = parseInt(embeddingCount.rows[0].count);
-  const pendingQueue = parseInt(queueStats.rows[0].pending || 0);
-  const failedQueue = parseInt(queueStats.rows[0].failed || 0);
-  
-  return {
-    totalSignals,
-    embeddedSignals,
-    pendingQueue,
-    failedQueue,
-    coveragePercent: totalSignals > 0 ? Math.round((embeddedSignals / totalSignals) * 100) : 0
-  };
+
+  try {
+    const [signalCount, embeddingCount, queueStats] = await Promise.all([
+      pool.query('SELECT COUNT(*) as count FROM signals'),
+      pool.query('SELECT COUNT(*) as count FROM signal_embeddings'),
+      pool.query(`
+        SELECT
+          SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending,
+          SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed
+        FROM embedding_queue
+        WHERE entity_type = 'signal'
+      `)
+    ]);
+
+    const totalSignals = parseInt(signalCount.rows[0].count);
+    const embeddedSignals = parseInt(embeddingCount.rows[0].count);
+    const pendingQueue = parseInt(queueStats.rows[0].pending || 0);
+    const failedQueue = parseInt(queueStats.rows[0].failed || 0);
+
+    return {
+      totalSignals,
+      embeddedSignals,
+      pendingQueue,
+      failedQueue,
+      coveragePercent: totalSignals > 0 ? Math.round((embeddedSignals / totalSignals) * 100) : 0
+    };
+  } catch (error: any) {
+    logger.error('Failed to get embedding stats', {
+      error: error.message,
+      errorClass: error.constructor.name,
+      stack: error.stack
+    });
+    throw error;
+  }
 }

@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { config } from '../config/env';
 import { getDbPool } from '../db/connection';
 import { IngestionPipelineService } from './ingestion_pipeline_service';
+import { WebsiteCrawlerService } from './website_crawler_service';
 import { logger } from '../utils/logger';
 import { getSharedRedis } from '../config/redis';
 
@@ -20,9 +21,34 @@ export function startIngestionScheduler(): void {
     }
   );
 
+  // Add website crawling job (runs every 6 hours)
+  if (process.env.ENABLE_WEBSITE_CRAWLING === 'true') {
+    queue.add(
+      'crawl_websites',
+      {},
+      {
+        repeat: { every: 6 * 60 * 60 * 1000 } // 6 hours
+      }
+    );
+    logger.info('Website crawling scheduled', { interval: '6 hours' });
+  }
+
   const worker = new Worker(
     'ingestion_scheduler',
-    async () => {
+    async (job) => {
+      // Handle website crawling jobs
+      if (job.name === 'crawl_websites') {
+        const crawler = new WebsiteCrawlerService();
+        try {
+          const results = await crawler.crawlAllConfigured();
+          logger.info('Scheduled website crawl complete', { results });
+        } finally {
+          await crawler.close();
+        }
+        return;
+      }
+
+      // Handle regular signal ingestion
       const pool = getDbPool();
       const result = await pool.query(
         `SELECT s.*

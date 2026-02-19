@@ -1,8 +1,11 @@
 import { config } from '../config/env';
 import { getDbPool } from '../db/connection';
-import { logger } from '../utils/logger';
+import { createModuleLogger } from '../utils/logger';
+import { LRUCache } from '../utils/lru_cache';
 import { EntityMatchingService } from './entity_matching_service';
 import { EntityRegistryService } from './entity_registry_service';
+
+const logger = createModuleLogger('entity_resolution', 'LOG_LEVEL_ENTITY_RESOLUTION');
 import {
   EmbeddingProvider,
   cosineSimilarity,
@@ -24,7 +27,9 @@ export class EntityResolutionService {
   private llmMatcher: LLMEntityMatcher | null = null;
   private embeddingProvider: EmbeddingProvider | null = null;
   private llmProvider: LLMProvider | null = null;
-  private mentionEmbeddingCache = new Map<string, number[]>();
+  // LRU cache with max 10,000 entries to prevent unbounded memory growth
+  private mentionEmbeddingCache = new LRUCache<string, number[]>(10000);
+  private cacheAccessCount = 0;
 
   constructor() {
     // Initialize LLM Entity Matcher (primary mechanism)
@@ -85,12 +90,35 @@ export class EntityResolutionService {
     if (!normalizedMention) {
       return null;
     }
+
+    // Periodic cache stats logging (every 1000 lookups)
+    this.cacheAccessCount++;
+    if (this.cacheAccessCount % 1000 === 0) {
+      const stats = this.mentionEmbeddingCache.getStats();
+      logger.debug('Mention embedding cache statistics', {
+        hit_rate: stats.hitRate.toFixed(3),
+        total_hits: stats.hits,
+        total_misses: stats.misses,
+        cache_size: stats.size,
+        utilization_percent: stats.utilizationPercent.toFixed(1)
+      });
+    }
+
     const cached = this.mentionEmbeddingCache.get(normalizedMention);
     if (cached) {
       return cached;
     }
+
     try {
+      const embeddingStartTime = Date.now();
       const embedding = await this.embeddingProvider(normalizedMention);
+
+      logger.debug('Mention embedding generated', {
+        mention_length: mention.length,
+        embedding_dimensions: embedding.length,
+        duration_ms: Date.now() - embeddingStartTime
+      });
+
       this.mentionEmbeddingCache.set(normalizedMention, embedding);
       return embedding;
     } catch (error) {
@@ -184,11 +212,21 @@ Candidate canonical entity: "${params.candidateName}"
 Respond with strict JSON:
 {"same_entity": true|false, "reasoning": "short reason"}`;
     try {
+      const llmStartTime = Date.now();
       const response = await this.llmProvider(prompt);
+
       const sameEntityMatch = response.match(/"same_entity"\s*:\s*(true|false)/i);
       const confirmed = sameEntityMatch
         ? sameEntityMatch[1].toLowerCase() === 'true'
         : /^yes\b/i.test(response.trim());
+
+      logger.debug('LLM confirmation completed', {
+        entity_mention: params.mention,
+        candidate_entity: params.candidateName,
+        confirmed,
+        duration_ms: Date.now() - llmStartTime
+      });
+
       return { confirmed, reasoning: response.slice(0, 1000) };
     } catch (error) {
       logger.warn('ER LLM confirmation failed', { error, params });
@@ -227,11 +265,331 @@ Respond with strict JSON:
     );
   }
 
+  /**
+   * Resolve entity mention within a transaction context
+   * @param client - PostgreSQL client for transaction context
+   * @param params - Resolution parameters
+   */
+  async resolveEntityMentionWithClient(
+    client: any,
+    params: {
+      mention: string;
+      entityType: string;
+      signalId?: string | null;
+      signalText: string;
+    }
+  ): Promise<ResolutionResult> {
+    const { mention, entityType, signalId, signalText } = params;
+    const startTime = Date.now();
+
+    logger.debug('Entity resolution start (transaction)', {
+      stage: 'entity_resolution',
+      status: 'start',
+      mention,
+      entityType,
+      signalId,
+      signalTextLength: signalText.length,
+      transactionMode: true
+    });
+
+    // Step 1: Exact alias match (fast path)
+    const aliasResult = await client.query(
+      `SELECT e.id, e.canonical_name, e.entity_type
+       FROM entity_registry e
+       JOIN entity_aliases a ON e.id = a.entity_id
+       WHERE LOWER(a.alias) = LOWER($1)
+       LIMIT 1`,
+      [mention]
+    );
+
+    if (aliasResult.rows.length > 0) {
+      const aliasMatch = aliasResult.rows[0];
+      logger.info('Entity resolved via alias match (transaction)', {
+        stage: 'entity_resolution',
+        status: 'success',
+        method: 'alias_match',
+        mention,
+        entityType,
+        resolvedEntityId: aliasMatch.id,
+        resolvedEntityName: aliasMatch.canonical_name,
+        confidence: 1.0,
+        elapsedMs: Date.now() - startTime,
+        signalId
+      });
+
+      await this.logResolutionWithClient(client, {
+        mention,
+        entityType,
+        signalId,
+        resolutionResult: 'alias_matched',
+        resolvedToEntityId: aliasMatch.id,
+        confidence: 1.0
+      });
+      return { status: 'alias_matched', entity_id: aliasMatch.id, confidence: 1.0 };
+    }
+
+    // Step 2: Exact name match
+    const nameResult = await client.query(
+      `SELECT id, canonical_name, entity_type
+       FROM entity_registry
+       WHERE LOWER(canonical_name) = LOWER($1)
+       LIMIT 1`,
+      [mention]
+    );
+
+    if (nameResult.rows.length > 0) {
+      const nameMatch = nameResult.rows[0];
+      logger.info('Entity resolved via name match (transaction)', {
+        stage: 'entity_resolution',
+        status: 'success',
+        method: 'name_match',
+        mention,
+        entityType,
+        resolvedEntityId: nameMatch.id,
+        resolvedEntityName: nameMatch.canonical_name,
+        confidence: 1.0,
+        elapsedMs: Date.now() - startTime,
+        signalId
+      });
+
+      await this.logResolutionWithClient(client, {
+        mention,
+        entityType,
+        signalId,
+        resolutionResult: 'alias_matched',
+        resolvedToEntityId: nameMatch.id,
+        confidence: 1.0
+      });
+      return { status: 'alias_matched', entity_id: nameMatch.id, confidence: 1.0 };
+    }
+
+    // Step 3: LLM-based matching (within transaction)
+    if (this.llmMatcher) {
+      try {
+        // Search for candidates using client
+        const candidatesResult = await client.query(
+          `SELECT id, canonical_name, entity_type
+           FROM entity_registry
+           ORDER BY created_at DESC
+           LIMIT 10`
+        );
+        const candidates = candidatesResult.rows;
+
+        logger.debug('Entity resolution candidates found (transaction)', {
+          stage: 'entity_resolution',
+          status: 'candidates_found',
+          mention,
+          entityType,
+          candidateCount: candidates.length,
+          signalId
+        });
+
+        if (candidates.length > 0) {
+          // Fetch aliases for each candidate
+          const llmCandidates: CanonicalEntity[] = await Promise.all(
+            candidates.map(async (c: any) => {
+              const aliasesResult = await client.query(
+                `SELECT alias FROM entity_aliases WHERE entity_id = $1`,
+                [c.id]
+              );
+              return {
+                id: c.id,
+                canonical_name: c.canonical_name,
+                entity_type: c.entity_type,
+                aliases: aliasesResult.rows.map((r: any) => r.alias)
+              };
+            })
+          );
+
+          // Use LLM to match
+          const llmMatch = await this.llmMatcher.matchEntity(mention, llmCandidates, signalText);
+
+          logger.info('LLM entity match result (transaction)', {
+            stage: 'entity_resolution',
+            status: 'llm_match_complete',
+            mention,
+            entityType,
+            matchedEntityId: llmMatch.matchedEntityId,
+            confidence: llmMatch.confidence,
+            signalId
+          });
+
+          // High confidence: auto-merge
+          if (llmMatch.matchedEntityId && llmMatch.confidence >= 0.85) {
+            // Add mention as alias within transaction
+            await client.query(
+              `INSERT INTO entity_aliases (entity_id, alias)
+               VALUES ($1, $2)
+               ON CONFLICT (entity_id, alias) DO NOTHING`,
+              [llmMatch.matchedEntityId, mention]
+            );
+
+            logger.info('Entity auto-merged (high confidence, transaction)', {
+              stage: 'entity_resolution',
+              status: 'success',
+              method: 'llm_auto_merge',
+              mention,
+              entityType,
+              resolvedEntityId: llmMatch.matchedEntityId,
+              confidence: llmMatch.confidence,
+              elapsedMs: Date.now() - startTime,
+              signalId
+            });
+
+            await this.logResolutionWithClient(client, {
+              mention,
+              entityType,
+              signalId,
+              resolutionResult: 'auto_merged',
+              resolvedToEntityId: llmMatch.matchedEntityId,
+              confidence: llmMatch.confidence,
+              matchDetails: {
+                method: 'llm',
+                reasoning: llmMatch.reasoning
+              },
+              llmReasoning: llmMatch.reasoning
+            });
+
+            return {
+              status: 'auto_merged',
+              entity_id: llmMatch.matchedEntityId,
+              confidence: llmMatch.confidence,
+              match_details: {
+                method: 'llm',
+                reasoning: llmMatch.reasoning
+              }
+            };
+          }
+
+          // Medium confidence: human review
+          if (llmMatch.matchedEntityId && llmMatch.confidence >= 0.65) {
+            const matchedCandidate = candidates.find((c: any) => c.id === llmMatch.matchedEntityId);
+
+            await client.query(
+              `INSERT INTO feedback_log
+                (id, feedback_type, system_output, system_confidence, status, signals_affected, entities_affected)
+               VALUES (gen_random_uuid(), 'entity_merge', $1, $2, 'pending', 1, 1)`,
+              [
+                JSON.stringify({
+                  entity_a: mention,
+                  entity_b: matchedCandidate?.canonical_name || '',
+                  entity_type: entityType,
+                  candidate_entity_id: llmMatch.matchedEntityId,
+                  llm_reasoning: llmMatch.reasoning,
+                  match_details: {
+                    method: 'llm',
+                    confidence: llmMatch.confidence
+                  }
+                }),
+                llmMatch.confidence
+              ]
+            );
+
+            logger.info('Entity flagged for human review (transaction)', {
+              stage: 'entity_resolution',
+              status: 'success',
+              method: 'llm_human_review',
+              mention,
+              entityType,
+              resolvedEntityId: llmMatch.matchedEntityId,
+              confidence: llmMatch.confidence,
+              elapsedMs: Date.now() - startTime,
+              signalId
+            });
+
+            await this.logResolutionWithClient(client, {
+              mention,
+              entityType,
+              signalId,
+              resolutionResult: 'human_review',
+              resolvedToEntityId: llmMatch.matchedEntityId,
+              confidence: llmMatch.confidence,
+              matchDetails: {
+                method: 'llm',
+                reasoning: llmMatch.reasoning
+              },
+              llmReasoning: llmMatch.reasoning
+            });
+
+            return {
+              status: 'human_review',
+              entity_id: llmMatch.matchedEntityId,
+              confidence: llmMatch.confidence,
+              match_details: {
+                method: 'llm',
+                reasoning: llmMatch.reasoning
+              }
+            };
+          }
+        }
+      } catch (error: any) {
+        logger.error('LLM entity matching failed (transaction), creating new entity', {
+          stage: 'entity_resolution',
+          status: 'error',
+          error: error.message,
+          mention,
+          entityType,
+          signalId
+        });
+      }
+    }
+
+    // Step 4: Create new entity within transaction
+    let canonicalName = mention;
+    if (this.llmMatcher) {
+      try {
+        canonicalName = await this.llmMatcher.extractCanonicalForm(mention, signalText);
+      } catch (error: any) {
+        logger.warn('LLM canonical form extraction failed, using raw mention', {
+          error: error.message,
+          mention,
+          signalId
+        });
+      }
+    }
+
+    const createResult = await client.query(
+      `INSERT INTO entity_registry (entity_type, canonical_name)
+       VALUES ($1, $2)
+       RETURNING id`,
+      [entityType, canonicalName]
+    );
+
+    const createdEntityId = createResult.rows[0].id;
+
+    logger.info('New entity created (transaction)', {
+      stage: 'entity_resolution',
+      status: 'success',
+      method: 'new_entity',
+      mention,
+      entityType,
+      canonicalName,
+      createdEntityId,
+      confidence: 1.0,
+      elapsedMs: Date.now() - startTime,
+      signalId
+    });
+
+    await this.logResolutionWithClient(client, {
+      mention,
+      entityType,
+      signalId,
+      resolutionResult: 'new_entity',
+      resolvedToEntityId: createdEntityId,
+      confidence: 1.0
+    });
+
+    return { status: 'new_entity', entity_id: createdEntityId, confidence: 1.0 };
+  }
+
+  /**
+   * Resolve entity mention (non-transaction wrapper for backward compatibility)
+   */
   async resolveEntityMention(params: {
     mention: string;
     entityType: string;
     signalId?: string | null;
-    signalText: string; // NEW: Added for LLM context
+    signalText: string;
   }): Promise<ResolutionResult> {
     const { mention, entityType, signalId, signalText } = params;
     const startTime = Date.now();
@@ -303,17 +661,7 @@ Respond with strict JSON:
     if (this.llmMatcher) {
       try {
         // Search for candidates
-        const candidates = await this.registryService.search(mention, 10); // Increased from 5 to 10 for better LLM matching
-
-        logger.debug('Entity resolution candidates found', {
-          stage: 'entity_resolution',
-          status: 'candidates_found',
-          mention,
-          entityType,
-          candidateCount: candidates.length,
-          candidates: candidates.map(c => ({ id: c.id, name: c.canonical_name, type: c.entity_type })),
-          signalId
-        });
+        const candidates = await this.registryService.search(mention, 10);
 
         if (candidates.length > 0) {
           // Convert to LLM matcher format - fetch aliases for each candidate
@@ -324,42 +672,16 @@ Respond with strict JSON:
                 id: c.id,
                 canonical_name: c.canonical_name,
                 entity_type: c.entity_type,
-                aliases: aliases.map(a => a.alias)
+                aliases: aliases.map((a) => a.alias)
               };
             })
           );
 
-          logger.debug('LLM entity matching start', {
-            stage: 'entity_resolution',
-            status: 'llm_matching_start',
-            mention,
-            entityType,
-            candidateCount: llmCandidates.length,
-            totalAliasesLoaded: llmCandidates.reduce((sum, c) => sum + c.aliases.length, 0),
-            signalId
-          });
-
           // Use LLM to match
           const llmMatch = await this.llmMatcher.matchEntity(mention, llmCandidates, signalText);
 
-          logger.info('LLM entity match result', {
-            stage: 'entity_resolution',
-            status: 'llm_match_complete',
-            mention,
-            entityType,
-            matchedEntityId: llmMatch.matchedEntityId,
-            matchedEntityName: llmMatch.matchedEntityId ?
-              llmCandidates.find(c => c.id === llmMatch.matchedEntityId)?.canonical_name : null,
-            confidence: llmMatch.confidence,
-            reasoning: llmMatch.reasoning,
-            suggestedAliases: llmMatch.suggestedAliases,
-            candidatesEvaluated: llmCandidates.length,
-            signalId
-          });
-
           // High confidence: auto-merge
           if (llmMatch.matchedEntityId && llmMatch.confidence >= 0.85) {
-            // Add mention as alias
             await this.registryService.addAlias(llmMatch.matchedEntityId, mention);
 
             logger.info('Entity auto-merged (high confidence)', {
@@ -369,11 +691,7 @@ Respond with strict JSON:
               mention,
               entityType,
               resolvedEntityId: llmMatch.matchedEntityId,
-              resolvedEntityName: llmCandidates.find(c => c.id === llmMatch.matchedEntityId)?.canonical_name,
               confidence: llmMatch.confidence,
-              confidenceThreshold: 0.85,
-              aliasAdded: mention,
-              reasoning: llmMatch.reasoning,
               elapsedMs: Date.now() - startTime,
               signalId
             });
@@ -387,8 +705,7 @@ Respond with strict JSON:
               confidence: llmMatch.confidence,
               matchDetails: {
                 method: 'llm',
-                reasoning: llmMatch.reasoning,
-                suggested_aliases: llmMatch.suggestedAliases
+                reasoning: llmMatch.reasoning
               },
               llmReasoning: llmMatch.reasoning
             });
@@ -407,7 +724,7 @@ Respond with strict JSON:
           // Medium confidence: human review
           if (llmMatch.matchedEntityId && llmMatch.confidence >= 0.65) {
             const pool = getDbPool();
-            const matchedCandidate = candidates.find(c => c.id === llmMatch.matchedEntityId);
+            const matchedCandidate = candidates.find((c) => c.id === llmMatch.matchedEntityId);
 
             await pool.query(
               `INSERT INTO feedback_log
@@ -428,22 +745,6 @@ Respond with strict JSON:
                 llmMatch.confidence
               ]
             );
-
-            logger.info('Entity flagged for human review (medium confidence)', {
-              stage: 'entity_resolution',
-              status: 'success',
-              method: 'llm_human_review',
-              mention,
-              entityType,
-              resolvedEntityId: llmMatch.matchedEntityId,
-              resolvedEntityName: matchedCandidate?.canonical_name,
-              confidence: llmMatch.confidence,
-              confidenceRange: '0.65-0.85',
-              reasoning: llmMatch.reasoning,
-              feedbackStatus: 'pending',
-              elapsedMs: Date.now() - startTime,
-              signalId
-            });
 
             await this.logResolution({
               mention,
@@ -469,81 +770,30 @@ Respond with strict JSON:
               }
             };
           }
-
-          // Low confidence: create new entity
-          logger.info('LLM match confidence too low, creating new entity', {
-            stage: 'entity_resolution',
-            status: 'low_confidence',
-            mention,
-            entityType,
-            matchedEntityId: llmMatch.matchedEntityId,
-            confidence: llmMatch.confidence,
-            confidenceThreshold: 0.65,
-            reasoning: llmMatch.reasoning,
-            signalId
-          });
-        } else {
-          logger.info('No candidates found for entity, creating new entity', {
-            stage: 'entity_resolution',
-            status: 'no_candidates',
-            mention,
-            entityType,
-            signalId
-          });
         }
       } catch (error: any) {
-        logger.error('LLM entity matching failed, falling back to new entity creation', {
+        logger.error('LLM entity matching failed, creating new entity', {
           stage: 'entity_resolution',
           status: 'error',
-          method: 'llm_match_failed',
           error: error.message,
-          stack: error.stack,
           mention,
           entityType,
-          signalId,
-          nextAction: 'create_new_entity'
+          signalId
         });
-        // Fall through to create new entity as a safe fallback
-        // This ensures the ingestion pipeline doesn't fail completely
       }
-    } else {
-      logger.debug('LLM matcher not available, creating new entity', {
-        stage: 'entity_resolution',
-        status: 'llm_unavailable',
-        mention,
-        entityType,
-        signalId
-      });
     }
 
-    // Step 4: Create new entity (use LLM to extract canonical form)
+    // Step 4: Create new entity
     let canonicalName = mention;
-    let canonicalFormMethod = 'raw_mention';
-
     if (this.llmMatcher) {
       try {
         canonicalName = await this.llmMatcher.extractCanonicalForm(mention, signalText);
-        canonicalFormMethod = 'llm_extracted';
-        logger.debug('LLM extracted canonical form', {
-          stage: 'entity_resolution',
-          status: 'canonical_form_extracted',
-          mention,
-          canonicalName,
-          method: canonicalFormMethod,
-          signalId
-        });
       } catch (error: any) {
-        logger.warn('LLM canonical form extraction failed, using raw mention as fallback', {
-          stage: 'entity_resolution',
-          status: 'warning',
+        logger.warn('LLM canonical form extraction failed', {
           error: error.message,
-          stack: error.stack,
           mention,
-          fallbackCanonicalName: mention,
           signalId
         });
-        canonicalName = mention;
-        canonicalFormMethod = 'fallback_raw_mention';
       }
     }
 
@@ -559,7 +809,6 @@ Respond with strict JSON:
       mention,
       entityType,
       canonicalName,
-      canonicalFormMethod,
       createdEntityId: created.id,
       confidence: 1.0,
       elapsedMs: Date.now() - startTime,
@@ -576,5 +825,41 @@ Respond with strict JSON:
     });
 
     return { status: 'new_entity', entity_id: created.id, confidence: 1.0 };
+  }
+
+  /**
+   * Log resolution within a transaction
+   */
+  private async logResolutionWithClient(
+    client: any,
+    params: {
+      mention: string;
+      entityType: string;
+      signalId?: string | null;
+      resolutionResult: string;
+      resolvedToEntityId: string;
+      confidence: number;
+      matchDetails?: Record<string, unknown>;
+      llmReasoning?: string | null;
+      resolvedBy?: string;
+    }
+  ): Promise<void> {
+    await client.query(
+      `INSERT INTO entity_resolution_log
+        (id, entity_mention, entity_type, signal_id, resolution_result, resolved_to_entity_id,
+         confidence, match_details, llm_reasoning, resolved_by)
+       VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+      [
+        params.mention,
+        params.entityType,
+        params.signalId || null,
+        params.resolutionResult,
+        params.resolvedToEntityId,
+        params.confidence,
+        params.matchDetails ? JSON.stringify(params.matchDetails) : null,
+        params.llmReasoning || null,
+        params.resolvedBy || 'system'
+      ]
+    );
   }
 }

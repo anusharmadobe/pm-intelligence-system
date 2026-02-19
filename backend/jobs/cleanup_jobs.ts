@@ -6,6 +6,7 @@ import { config } from '../config/env';
 import { logger } from '../utils/logger';
 import { eventBus } from '../agents/event_bus';
 import { getSharedRedis } from '../config/redis';
+import { retryFailedSignals } from '../services/failed_signal_retry_service';
 
 const uploadRetentionHours = parseInt(process.env.UPLOAD_RETENTION_HOURS || '24', 10);
 const metricsRetentionDays = parseInt(process.env.METRICS_RETENTION_DAYS || '30', 10);
@@ -134,6 +135,28 @@ async function cleanupIdempotencyKeys(): Promise<void> {
   }
 }
 
+async function retryFailedSignalsJob(): Promise<void> {
+  try {
+    const stats = await retryFailedSignals({
+      batchSize: 100,
+      concurrency: 5
+    });
+
+    logger.info('Failed signal retry job completed', {
+      total_pending: stats.total_pending,
+      retried: stats.retried,
+      succeeded: stats.succeeded,
+      failed: stats.failed,
+      moved_to_dlq: stats.moved_to_dlq
+    });
+  } catch (error: any) {
+    logger.error('Failed signal retry job failed', {
+      error: error.message,
+      errorClass: error.constructor.name
+    });
+  }
+}
+
 export function startCleanupJobs(): void {
   const connection = getSharedRedis();
   const cleanupQueue = new Queue('cleanup', { connection });
@@ -158,6 +181,11 @@ export function startCleanupJobs(): void {
     repeat: { pattern: '45 2 * * *' }
   });
 
+  // Retry failed signals every 15 minutes
+  cleanupQueue.add('retry_failed_signals', {}, {
+    repeat: { every: 15 * 60 * 1000 }
+  });
+
   const worker = new Worker(
     'cleanup',
     async (job) => {
@@ -176,6 +204,9 @@ export function startCleanupJobs(): void {
           break;
         case 'cleanup_idempotency_keys':
           await cleanupIdempotencyKeys();
+          break;
+        case 'retry_failed_signals':
+          await retryFailedSignalsJob();
           break;
         default:
           logger.warn('Unknown cleanup job', { job: job.name });

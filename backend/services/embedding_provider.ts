@@ -379,9 +379,11 @@ export function createCohereEmbeddingProvider(
 
   return async (text: string): Promise<number[]> => {
     const startTime = Date.now();
-    
+    const metrics = getRunMetrics();
+    metrics.increment('embedding_calls');
+
     try {
-      const response = await fetch('https://api.cohere.ai/v1/embed', {
+      const response = await fetchWithRetry('https://api.cohere.ai/v1/embed', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -392,16 +394,19 @@ export function createCohereEmbeddingProvider(
           model: model,
           input_type: 'search_document'
         })
+      }, {
+        operationName: `cohere_embedding_${model}`
       });
 
       if (!response.ok) {
+        metrics.increment('embedding_errors');
         const error = await response.text();
         throw new Error(`Cohere API error: ${response.status} - ${error}`);
       }
 
       const data = await response.json() as { embeddings: number[][] };
       const embedding = data.embeddings[0];
-      
+
       logger.debug('Cohere embedding generated', {
         model,
         dimensions: embedding.length,
@@ -410,6 +415,7 @@ export function createCohereEmbeddingProvider(
 
       return embedding;
     } catch (error: any) {
+      metrics.increment('embedding_errors');
       logger.error('Cohere embedding failed', { error: error.message, model });
       throw error;
     }
@@ -444,19 +450,21 @@ export function createCursorEmbeddingProvider(
       
       // Fallback to HTTP endpoint if available
       if (endpoint) {
-        const response = await fetch(endpoint, {
+        const response = await fetchWithRetry(endpoint, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             ...(token ? { 'Authorization': `Bearer ${token}` } : {})
           },
           body: JSON.stringify({ text })
+        }, {
+          operationName: 'cursor_embedding_http'
         });
-        
+
         if (!response.ok) {
           throw new Error(`Cursor embedding API error: ${response.status}`);
         }
-        
+
         const data = await response.json() as { embedding: number[] };
         return data.embedding;
       }

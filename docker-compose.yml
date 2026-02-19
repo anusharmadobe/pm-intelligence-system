@@ -68,6 +68,28 @@ services:
           memory: 512M
           cpus: '0.5'
 
+  forum-scraper:
+    build:
+      context: ./scripts/scrapers/forum_scraper
+      dockerfile: Dockerfile
+    container_name: pm_intel_forum_scraper
+    profiles: ["scraper"]
+    volumes:
+      - ./config/forum_sources.json:/app/config/forum_sources.json:ro
+      - ./data/raw/community_forums:/app/output
+    environment:
+      FORUM_KEY: ${FORUM_SCRAPER_FORUM:-aem-forms}
+      SCRAPER_MAX_PAGES: ${FORUM_SCRAPER_MAX_PAGES:-}
+      SCRAPER_DELAY: ${FORUM_SCRAPER_DELAY:-2}
+      SCRAPER_SINCE: ${FORUM_SCRAPER_SINCE:-}
+      SCRAPER_TEST_LIMIT: ${FORUM_SCRAPER_TEST_LIMIT:-}
+    command: >
+      python forum_dump.py
+      --forum ${FORUM_SCRAPER_FORUM:-aem-forms}
+      --config /app/config/forum_sources.json
+      --output /app/output/${FORUM_SCRAPER_FORUM:-aem-forms}_dump.json
+      --delay ${FORUM_SCRAPER_DELAY:-2}
+
 volumes:
   pgdata:
   neo4jdata:

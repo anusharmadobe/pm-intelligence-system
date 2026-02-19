@@ -586,6 +586,7 @@ export async function generateJiraIssuesForTopOpportunities(
   config: Partial<JiraGenerationConfig> = {},
   queryOptions: OpportunityQueryOptions = {}
 ): Promise<JiraIssueTemplate[]> {
+  const startTime = Date.now();
   const llmProvider = createLLMProviderFromEnv();
   const opportunities = await getOpportunitiesWithScores({}, queryOptions);
   
@@ -595,22 +596,67 @@ export async function generateJiraIssuesForTopOpportunities(
     .slice(0, limit);
   
   const issues: JiraIssueTemplate[] = [];
-  
-  for (const opp of topOpportunities) {
+  let successCount = 0;
+  let failureCount = 0;
+  const total = topOpportunities.length;
+
+  logger.info('Starting batch JIRA generation for top opportunities', {
+    stage: 'jira_generation',
+    status: 'start',
+    requested: limit,
+    selected: total,
+    queryOptions
+  });
+
+  for (let idx = 0; idx < topOpportunities.length; idx++) {
+    const opp = topOpportunities[idx];
     try {
       const issue = await generateJiraIssue(opp, opp.signals, config, llmProvider);
       issues.push(issue);
+      successCount += 1;
     } catch (error: any) {
+      failureCount += 1;
       logger.warn('Failed to generate JIRA issue for opportunity', { 
+        stage: 'jira_generation',
+        status: 'item_failed',
         opportunityId: opp.id, 
         error: error.message 
       });
     }
+
+    const processed = idx + 1;
+    const elapsedMs = Date.now() - startTime;
+    const ratePerSec = elapsedMs > 0 ? processed / (elapsedMs / 1000) : 0;
+    const remaining = Math.max(0, total - processed);
+    const etaSeconds = ratePerSec > 0 ? Math.round(remaining / ratePerSec) : null;
+    const progressPct = total > 0 ? ((processed / total) * 100).toFixed(1) : '100.0';
+
+    logger.info('JIRA batch generation progress', {
+      stage: 'jira_generation',
+      status: 'in_progress',
+      processed,
+      total,
+      progress_pct: progressPct,
+      success_count: successCount,
+      failure_count: failureCount,
+      elapsed_ms: elapsedMs,
+      rate_per_sec: ratePerSec.toFixed(2),
+      eta_seconds: etaSeconds === null ? 'N/A' : String(etaSeconds)
+    });
   }
   
+  const totalElapsedMs = Date.now() - startTime;
+  const throughputPerSec = totalElapsedMs > 0 ? total / (totalElapsedMs / 1000) : 0;
   logger.info('Generated JIRA issues for top opportunities', {
+    stage: 'jira_generation',
+    status: 'success',
     requested: limit,
-    generated: issues.length
+    selected: total,
+    generated: issues.length,
+    success_count: successCount,
+    failure_count: failureCount,
+    elapsed_ms: totalElapsedMs,
+    throughput_per_sec: throughputPerSec.toFixed(2)
   });
   
   return issues;

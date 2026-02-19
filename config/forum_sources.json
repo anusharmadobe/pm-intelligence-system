@@ -1,0 +1,108 @@
+{
+  "forums": {
+    "aem-forms": {
+      "name": "Adobe Experience Manager Forms",
+      "platform": "khoros",
+      "base_url": "https://experienceleaguecommunities.adobe.com/t5/adobe-experience-manager-forms/bd-p/experience-manager-forms-qanda",
+      "thread_base": "https://experienceleaguecommunities.adobe.com",
+      "forum_slug": "adobe-experience-manager-forms-10",
+      "enabled": true,
+      "schedule_cron": "0 6 * * 1",
+      "pagination_type": "load_more",
+      "selectors": {
+        "load_more_button": ".btn--load-more",
+        "thread_url_pattern": "/{forum_slug}/[^/]+-\\d+",
+        "title": [
+          ".qa-thread-title",
+          "h3.topic__title",
+          "h1"
+        ],
+        "author": ".topic-header__author-info .author-info",
+        "date": "time[datetime]",
+        "description": [
+          ".threaded-topic-body-wrapper",
+          ".qa-topic-post-box",
+          ".post__content--new-editor",
+          ".post__content"
+        ],
+        "tags": "a[href*=\"search_type=tag\"]",
+        "reply_container": ".threaded-reply-item",
+        "reply_body": ".threaded-reply-body-wrapper",
+        "reply_author": ".author-info",
+        "accepted_marker": [
+          ".best-answer",
+          ".label--success"
+        ],
+        "status_labels": ".label-component"
+      },
+      "status_indicators": {
+        "resolved": [
+          "solved",
+          "answered",
+          "accepted solution"
+        ],
+        "unresolved": [
+          "question",
+          "unanswered"
+        ]
+      }
+    },
+    "adobe-connect": {
+      "name": "Adobe Connect",
+      "platform": "gainsight",
+      "base_url": "https://community.adobe.com/connect-586",
+      "thread_base": "https://community.adobe.com",
+      "forum_slug": "connect-586",
+      "enabled": false,
+      "schedule_cron": "0 6 * * 1",
+      "pagination_type": "page_number",
+      "selectors": {
+        "load_more_button": ".btn--load-more, button.load-more, a.next-page",
+        "thread_url_pattern": "/connect-586/[^/]+-\\d+",
+        "title": [
+          "h1",
+          "h2 a",
+          ".question-title"
+        ],
+        "author": ".author, .username, .user-name",
+        "date": "time[datetime], .date, .timestamp",
+        "description": [
+          ".threaded-topic-body-wrapper",
+          ".post__content",
+          ".question-body",
+          "main"
+        ],
+        "tags": "a[href*=\"tag\"]",
+        "reply_container": ".threaded-reply-item, .reply-item, article.reply",
+        "reply_body": ".threaded-reply-body-wrapper, .reply-body, .post__content",
+        "reply_author": ".author-info, .author, .username",
+        "accepted_marker": [
+          ".best-answer",
+          ".label--success",
+          ".answered",
+          ".solved"
+        ],
+        "status_labels": ".label-component, .status, .answered, .solved"
+      },
+      "status_indicators": {
+        "resolved": [
+          "answered",
+          "solved",
+          "accepted"
+        ],
+        "unresolved": [
+          "unanswered",
+          "question",
+          "no replies"
+        ]
+      }
+    }
+  },
+  "defaults": {
+    "delay_seconds": 2,
+    "max_stale_rounds": 3,
+    "checkpoint_every": 50,
+    "headless": true,
+    "output_dir": "data/raw/community_forums"
+  }
+}

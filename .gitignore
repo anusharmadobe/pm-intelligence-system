@@ -16,6 +16,7 @@ output/
 
 # Backup / scratch
 backup/
+external/
 
 # Claude Code session state (session-specific, don't commit)
 .claude/session_state.json
