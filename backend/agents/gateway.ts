@@ -15,7 +15,7 @@ import { NormalizerService } from '../ingestion/normalizer_service';
 import { IngestionPipelineService } from '../services/ingestion_pipeline_service';
 import { getDbPool } from '../db/connection';
 import { ProvenanceService } from '../services/provenance_service';
-import { RateLimiter } from '../utils/rate_limiter';
+// RateLimiter replaced with in-memory implementation below
 import { logger } from '../utils/logger';
 import { config } from '../config/env';
 import { eventBus } from './event_bus';
@@ -135,6 +135,30 @@ function isPublicHttpsUrl(value: string): boolean {
   }
 }
 
+// Simple in-memory rate limiter for agent registration
+const registrationAttempts = new Map<string, { count: number; resetTime: number }>();
+const REGISTRATION_WINDOW_MS = 60 * 1000;
+const MAX_REGISTRATION_REQUESTS = 5;
+
+function checkRegistrationLimit(ip: string): { allowed: boolean; remaining: number; resetTime: number } {
+  const now = Date.now();
+  const entry = registrationAttempts.get(ip);
+
+  if (!entry || now > entry.resetTime) {
+    const resetTime = now + REGISTRATION_WINDOW_MS;
+    registrationAttempts.set(ip, { count: 1, resetTime });
+    return { allowed: true, remaining: MAX_REGISTRATION_REQUESTS - 1, resetTime };
+  }
+
+  entry.count++;
+  const remaining = Math.max(0, MAX_REGISTRATION_REQUESTS - entry.count);
+  return {
+    allowed: entry.count <= MAX_REGISTRATION_REQUESTS,
+    remaining,
+    resetTime: entry.resetTime
+  };
+}
+
 export function createAgentGatewayRouter(): express.Router {
   const router = express.Router();
   const registryService = new AgentRegistryService();
@@ -146,7 +170,6 @@ export function createAgentGatewayRouter(): express.Router {
   const queryEngine = new QueryEngineService();
   const normalizer = new NormalizerService();
   const pipeline = new IngestionPipelineService();
-  const registrationLimiter = new RateLimiter({ windowMs: 60 * 1000, maxRequests: 5 });
 
   router.use((req: AgentRequest, res, next) => {
     const correlationId = typeof req.headers['x-correlation-id'] === 'string'
@@ -179,7 +202,7 @@ export function createAgentGatewayRouter(): express.Router {
         }
       }
 
-      const limiterResult = registrationLimiter.check(req.ip || 'unknown');
+      const limiterResult = checkRegistrationLimit(req.ip || 'unknown');
       res.setHeader('X-RateLimit-Limit', 5);
       res.setHeader('X-RateLimit-Remaining', limiterResult.remaining);
       res.setHeader('X-RateLimit-Reset', new Date(limiterResult.resetTime).toISOString());

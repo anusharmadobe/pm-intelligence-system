@@ -1,9 +1,28 @@
 import { AsyncLocalStorage } from 'async_hooks';
 import { v4 as uuidv4 } from 'uuid';
 import { Request, Response, NextFunction } from 'express';
-import { createModuleLogger } from './logger';
 
-const logger = createModuleLogger('correlation', 'LOG_LEVEL_CORRELATION');
+const correlationLogLevel = (process.env.LOG_LEVEL_CORRELATION || process.env.LOG_LEVEL || 'info').toLowerCase();
+function shouldLog(level: 'trace' | 'debug'): boolean {
+  if (correlationLogLevel === 'trace') return true;
+  if (level === 'debug' && (correlationLogLevel === 'debug' || correlationLogLevel === 'trace')) return true;
+  return false;
+}
+function logCorrelation(level: 'trace' | 'debug', message: string, meta: Record<string, any>): void {
+  if (!shouldLog(level)) return;
+  const payload = {
+    ts: new Date().toISOString(),
+    level,
+    module: 'correlation',
+    msg: message,
+    ...meta
+  };
+  if (level === 'trace') {
+    console.debug(JSON.stringify(payload));
+  } else {
+    console.log(JSON.stringify(payload));
+  }
+}
 
 /**
  * Correlation context for distributed tracing
@@ -140,11 +159,12 @@ export function correlationMiddleware(req: Request, res: Response, next: NextFun
   }
 
   // Extract session ID if available
-  if (req.session?.id) {
-    context.sessionId = req.session.id;
+  const sessionId = (req as any).session?.id;
+  if (sessionId) {
+    context.sessionId = sessionId;
   }
 
-  logger.debug('Correlation context created', {
+  logCorrelation('debug', 'Correlation context created', {
     correlationId,
     requestId,
     method: req.method,
@@ -215,7 +235,7 @@ export async function measureOperationAsync<T>(operation: string, fn: () => Prom
       (context as any)[`${operation}_duration_ms`] = duration;
     }
 
-    logger.trace('Operation measured', {
+    logCorrelation('trace', 'Operation measured', {
       operation,
       duration_ms: duration,
       success: !error

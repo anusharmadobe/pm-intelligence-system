@@ -1,7 +1,7 @@
 import { getDbPool } from '../db/connection';
 import { createModuleLogger } from '../utils/logger';
 import { IngestionPipelineService } from './ingestion_pipeline_service';
-import { RawSignal } from '../ingestion/signal_types';
+import { RawSignal } from '../ingestion/normalizer_service';
 
 const logger = createModuleLogger('failed_signal_retry', 'LOG_LEVEL_FAILED_SIGNAL_RETRY');
 
@@ -125,7 +125,7 @@ async function retryFailedSignal(
 
     // Get the original signal
     const signalResult = await pool.query(
-      `SELECT id, source, content, metadata, created_at
+      `SELECT id, source, content, normalized_content, metadata, content_hash, created_at
        FROM signals
        WHERE id = $1`,
       [attempt.signal_id]
@@ -144,10 +144,13 @@ async function retryFailedSignal(
 
     // Create raw signal for reprocessing
     const rawSignal: RawSignal = {
+      id: signal.id,
       source: signal.source,
       content: signal.content,
+      normalized_content: signal.normalized_content,
       metadata: signal.metadata,
-      timestamp: signal.created_at
+      content_hash: signal.content_hash,
+      created_at: signal.created_at
     };
 
     // Retry processing

@@ -57,7 +57,12 @@ export class WebScrapeAdapter {
   /**
    * Parse HTML and extract metadata using selectors
    */
-  private extractMetadata($: cheerio.CheerioAPI, selectors?: WebScrapeInput['metadata']['selectors']): ParsedMetadata {
+  private extractMetadata($: cheerio.CheerioAPI, selectors?: {
+    content?: string;
+    title?: string;
+    date?: string;
+    author?: string;
+  }): ParsedMetadata {
     let title: string | null = null;
     let date: string | null = null;
     let author: string | null = null;

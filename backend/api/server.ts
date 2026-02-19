@@ -237,21 +237,13 @@ app.use('/openapi', express.static(path.join(__dirname, '../../docs/v2/openapi')
 // Mounted before authentication middleware for load balancer access
 app.use('/health', healthRouter);
 
-// Backward compatibility aliases
+// Backward compatibility aliases - use simple redirects
 app.get('/ready', async (req, res) => {
-  // Redirect to new readiness endpoint
-  return req.app.handle(
-    { ...req, url: '/health/readiness', method: 'GET' } as any,
-    res
-  );
+  return res.redirect(307, '/health/readiness');
 });
 
 app.get('/live', (req, res) => {
-  // Redirect to new liveness endpoint
-  return req.app.handle(
-    { ...req, url: '/health/liveness', method: 'GET' } as any,
-    res
-  );
+  return res.redirect(307, '/health/liveness');
 });
 
 // Aggregated system health (V2) - Keep for backward compatibility
@@ -510,8 +502,8 @@ app.post('/api/ingest/crawled', requireAdmin, async (req, res) => {
     const normalizer = new NormalizerService();
     const adapter = new WebScrapeAdapter(normalizer);
     const pipeline = new IngestionPipelineService();
-    const signal = adapter.ingest({ url, content, captured_at, metadata });
-    await pipeline.ingest([signal]);
+    const signals = adapter.ingest({ url, content, captured_at, metadata });
+    await pipeline.ingest(signals);
 
     logger.info('Admin ingestion operation completed', {
       security_event: 'admin_operation',

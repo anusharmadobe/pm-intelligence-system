@@ -437,22 +437,32 @@ export class IngestionPipelineService {
                 await this.neo4jSyncService.syncRelationship(rel);
               }
             });
+          }
           } catch (transactionError: any) {
-            // ROLLBACK on any error
-            await client.query('ROLLBACK');
-            logger.error('Transaction rolled back', {
-              ...context,
-              stage: currentStage,
-              status: 'rollback',
-              error: transactionError.message,
-              errorClass: transactionError.constructor.name,
-              stack: transactionError.stack,
-              elapsedMs: Date.now() - signalStartedAt
-            });
-            client.release();
+            // ROLLBACK on any error - ensure client is ALWAYS released, even if rollback fails
+            try {
+              await client.query('ROLLBACK');
+              logger.error('Transaction rolled back', {
+                ...context,
+                stage: currentStage,
+                status: 'rollback',
+                error: transactionError.message,
+                errorClass: transactionError.constructor.name,
+                stack: transactionError.stack,
+                elapsedMs: Date.now() - signalStartedAt
+              });
+            } catch (rollbackError: any) {
+              logger.error('Rollback failed - client still released', {
+                ...context,
+                rollbackError: rollbackError.message,
+                originalError: transactionError.message
+              });
+            } finally {
+              // CRITICAL: Always release, even if rollback throws
+              client.release();
+            }
             throw transactionError;
           }
-        }
 
           currentStage = 'graphrag_index';
           await this.runStage(

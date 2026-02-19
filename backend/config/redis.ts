@@ -1,4 +1,4 @@
-import IORedis from 'ioredis';
+import IORedis, { type RedisOptions } from 'ioredis';
 import { config } from './env';
 import { createModuleLogger } from '../utils/logger';
 
@@ -6,20 +6,35 @@ const logger = createModuleLogger('redis', 'LOG_LEVEL_REDIS');
 
 let sharedRedis: IORedis | null = null;
 let isShuttingDown = false;
+let connectionLock = false;
 let reconnectionAttempts = 0;
 const MAX_RECONNECTION_ATTEMPTS = 10;
 
 export function getSharedRedis(): IORedis {
+  // Check shutdown status first (atomic check)
   if (isShuttingDown) {
     throw new Error('Redis client is shutting down, cannot create new connections');
   }
 
-  if (!sharedRedis) {
+  // Return existing connection if available
+  if (sharedRedis) {
+    return sharedRedis;
+  }
+
+  // Prevent concurrent initialization
+  if (connectionLock) {
+    throw new Error('Redis connection initialization in progress');
+  }
+
+  connectionLock = true;
+  try {
+    // Double-check after acquiring lock
+    if (!sharedRedis) {
     logger.info('Initializing Redis connection', {
       url: config.redis.url.replace(/:[^:]*@/, ':***@') // Mask password in logs
     });
 
-    const options: IORedis.RedisOptions = {
+    const options: RedisOptions = {
       maxRetriesPerRequest: 3,
       enableReadyCheck: true,
       enableOfflineQueue: true,
@@ -110,6 +125,13 @@ export function getSharedRedis(): IORedis {
     sharedRedis.on('end', () => {
       logger.info('Redis connection ended');
     });
+    }
+  } finally {
+    connectionLock = false;
+  }
+
+  if (!sharedRedis) {
+    throw new Error('Failed to initialize Redis connection');
   }
 
   return sharedRedis;

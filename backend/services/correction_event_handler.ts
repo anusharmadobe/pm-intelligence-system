@@ -1,7 +1,7 @@
 import { EventBus, SystemEvent } from '../agents/event_bus';
 import { logger } from '../utils/logger';
 import { getDbPool } from '../db/connection';
-import { OpportunityService } from './opportunity_service';
+// Note: OpportunityService is not used; opportunity regeneration is TODO
 
 /**
  * Correction Event Handler
@@ -139,7 +139,6 @@ export class CorrectionEventHandler {
     signalIds: string[]
   ): Promise<void> {
     const pool = getDbPool();
-    const opportunityService = new OpportunityService();
 
     for (const oppId of opportunityIds) {
       try {

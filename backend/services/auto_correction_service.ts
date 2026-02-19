@@ -257,7 +257,7 @@ export class AutoCorrectionService {
       }
 
       // Replace old value with new value
-      jp.apply(updated, jsonPath, (value) => {
+      jp.apply(updated, jsonPath, (value: any) => {
         if (value === oldValue || JSON.stringify(value) === oldValue) {
           return newValue;
         }
@@ -463,7 +463,7 @@ export class AutoCorrectionService {
 
           const values = jp.query(extraction, jsonPath);
           const hasOldValue = values.some(
-            (v) => v === correction.old_value || JSON.stringify(v) === correction.old_value
+            (v: any) => v === correction.old_value || JSON.stringify(v) === correction.old_value
           );
 
           if (!hasOldValue) {

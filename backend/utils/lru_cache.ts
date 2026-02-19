@@ -60,6 +60,9 @@ export class LRUCache<K, V> {
     } else if (this.cache.size >= this.maxSize) {
       // Delete least recently used (first item)
       const firstKey = this.cache.keys().next().value;
+      if (firstKey === undefined) {
+        return;
+      }
 
       logger.debug('Cache eviction', {
         evicted_key: String(firstKey).substring(0, 50), // Truncate for safety

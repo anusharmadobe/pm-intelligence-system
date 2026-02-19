@@ -296,7 +296,7 @@ Respond with strict JSON:
     const aliasResult = await client.query(
       `SELECT e.id, e.canonical_name, e.entity_type
        FROM entity_registry e
-       JOIN entity_aliases a ON e.id = a.entity_id
+       JOIN entity_aliases a ON e.id = a.canonical_entity_id
        WHERE LOWER(a.alias) = LOWER($1)
        LIMIT 1`,
       [mention]
@@ -389,7 +389,7 @@ Respond with strict JSON:
           const llmCandidates: CanonicalEntity[] = await Promise.all(
             candidates.map(async (c: any) => {
               const aliasesResult = await client.query(
-                `SELECT alias FROM entity_aliases WHERE entity_id = $1`,
+                `SELECT alias FROM entity_aliases WHERE canonical_entity_id = $1`,
                 [c.id]
               );
               return {
@@ -418,10 +418,16 @@ Respond with strict JSON:
           if (llmMatch.matchedEntityId && llmMatch.confidence >= 0.85) {
             // Add mention as alias within transaction
             await client.query(
-              `INSERT INTO entity_aliases (entity_id, alias)
-               VALUES ($1, $2)
-               ON CONFLICT (entity_id, alias) DO NOTHING`,
-              [llmMatch.matchedEntityId, mention]
+              `INSERT INTO entity_aliases (
+                 canonical_entity_id,
+                 alias,
+                 alias_normalized,
+                 alias_source,
+                 signal_id
+               )
+               VALUES ($1, $2, LOWER($2), 'llm_auto_merge', $3)
+               ON CONFLICT (alias_normalized, canonical_entity_id) DO NOTHING`,
+              [llmMatch.matchedEntityId, mention, signalId || null]
             );
 
             logger.info('Entity auto-merged (high confidence, transaction)', {
