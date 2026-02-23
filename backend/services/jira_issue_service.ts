@@ -885,6 +885,69 @@ export async function storeJiraIssueTemplate(issue: JiraIssueTemplate): Promise<
   const contentFingerprint = buildContentFingerprint(issue);
   const evidenceCount = Math.max(1, issue.evidenceCount || issue.sourceSignalIds.length || 1);
   const uniqueCustomers = Math.max(0, issue.uniqueCustomers || 0);
+
+  const existingByOpportunity = await pool.query(
+    `
+      SELECT id
+      FROM jira_issue_templates
+      WHERE opportunity_id = $1
+      ORDER BY updated_at DESC NULLS LAST, created_at DESC
+      LIMIT 1
+    `,
+    [issue.sourceOpportunityId]
+  );
+
+  if (existingByOpportunity.rows.length > 0) {
+    const existingId = existingByOpportunity.rows[0].id as string;
+    await pool.query(
+      `
+        UPDATE jira_issue_templates
+        SET
+          summary = $2,
+          issue_type = $3,
+          priority = $4,
+          description = $5,
+          labels = $6,
+          components = $7,
+          acceptance_criteria = $8,
+          affected_customers = $9,
+          customer_impact = $10,
+          technical_notes = $11,
+          estimated_complexity = $12,
+          confidence_score = GREATEST(COALESCE(confidence_score, 0), COALESCE($13, 0)),
+          signal_ids = $14,
+          area = $15,
+          content_fingerprint = $16,
+          evidence_count = COALESCE(evidence_count, 0) + $17,
+          unique_customers = GREATEST(COALESCE(unique_customers, 0), $18),
+          raw_llm_response = $19,
+          updated_at = NOW()
+        WHERE id = $1
+      `,
+      [
+        existingId,
+        issue.summary,
+        issue.issueType,
+        issue.priority,
+        issue.description,
+        JSON.stringify(issue.labels),
+        JSON.stringify(issue.components),
+        JSON.stringify(issue.acceptanceCriteria),
+        JSON.stringify(issue.affectedCustomers),
+        issue.customerImpact,
+        issue.technicalNotes,
+        issue.estimatedComplexity,
+        issue.confidenceScore,
+        JSON.stringify(issue.sourceSignalIds),
+        issue.area || 'Unknown',
+        contentFingerprint,
+        evidenceCount,
+        uniqueCustomers,
+        issue.rawLLMResponse
+      ]
+    );
+    return existingId;
+  }
   
   const result = await pool.query(`
     INSERT INTO jira_issue_templates (

@@ -21,8 +21,10 @@ npx ts-node scripts/ingest_community_forums_v2.ts
 - `--max-comments-per-thread=<n>`: Cap mapped comments per thread (default: unlimited)
 - `--resume`: Resume from the last cursor checkpoint
 - `--reset`: Reset cursor checkpoint before ingesting
-- `--replay-failures`: Replay failed signals from `failed_signal_attempts`
+- `--replay-failures`: Replay failed signals only (does not run normal ingestion)
+- `--replay-after-ingest`: Run normal ingestion first, then replay failed signals
 - `--replay-limit=<n>`: Limit number of replayed failures
+- `--replay-batch-size=<n>`: Replay progress checkpoint cadence (default: 25)
 
 Notes:
 - Default behavior is unchanged: comments are included and uncapped unless you pass `--no-comments` or `--max-comments-per-thread=<n>`.
@@ -45,4 +47,7 @@ npx ts-node scripts/ingest_community_forums_v2.ts --resume
 
 # Replay only the first 50 failed signals
 npx ts-node scripts/ingest_community_forums_v2.ts --replay-failures --replay-limit=50
+
+# Ingest and then replay in one command
+npx ts-node scripts/ingest_community_forums_v2.ts --limit=100 --skip-boilerplate --replay-after-ingest
 ```

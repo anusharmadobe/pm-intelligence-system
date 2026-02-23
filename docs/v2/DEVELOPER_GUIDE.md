@@ -162,6 +162,8 @@ AZURE_REQUEST_TIMEOUT_MS=30000
 AZURE_RETRY_MAX_ATTEMPTS=4
 AZURE_RETRY_BASE_DELAY_MS=500
 AZURE_RETRY_MAX_DELAY_MS=10000
+READINESS_MAX_REMAINING_FAILED=0
+READINESS_MAX_REMAINING_FAILED_RATE=0
 
 # Optional Python services (if enabled)
 # DOCUMENT_PARSER_URL=http://localhost:8001
@@ -567,11 +569,14 @@ SELECT * FROM failed_signal_attempts WHERE signal_id = '<signal_id>';
 
 **"How do I recover failed forum signals after a long run?"**
 ```bash
-# Replay only failed signals that still have no extraction
+# Replay only failed signals (replay-only mode)
 npx ts-node --transpile-only scripts/ingest_community_forums_v2.ts --replay-failures
 
 # Optional bounded replay
 npx ts-node --transpile-only scripts/ingest_community_forums_v2.ts --replay-failures --replay-limit=200
+
+# If needed, run replay after a normal ingest pass
+npx ts-node --transpile-only scripts/ingest_community_forums_v2.ts --limit=100 --replay-after-ingest
 ```
 
 **"Why is Neo4j out of sync?"**

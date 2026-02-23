@@ -36,6 +36,14 @@ const PIPELINE_SIGNAL_SOURCE = process.env.PIPELINE_SIGNAL_SOURCE;
 const RUN_STATE_PREFIX = 'pipeline_run_';
 const RUN_STATE_EXT = '.json';
 const CHECKPOINT_RETENTION_DAYS = parseInt(process.env.PIPELINE_CHECKPOINT_RETENTION_DAYS || '30', 10);
+const READINESS_MAX_REMAINING_FAILED = parseInt(
+  process.env.READINESS_MAX_REMAINING_FAILED || '0',
+  10
+);
+const READINESS_MAX_REMAINING_FAILED_RATE = (() => {
+  const parsed = Number.parseFloat(process.env.READINESS_MAX_REMAINING_FAILED_RATE || '0');
+  return Number.isFinite(parsed) ? parsed : 0;
+})();
 
 interface PipelineStage {
   name: string;
@@ -1134,12 +1142,126 @@ class LLMPipeline {
         (SELECT COUNT(*)::int FROM signal_extractions) AS extractions,
         (SELECT COUNT(*)::int FROM entity_registry) AS entities,
         (SELECT COUNT(*)::int FROM opportunities) AS opportunities,
-        (SELECT COUNT(*)::int FROM jira_issue_templates) AS jira_templates,
-        (SELECT COUNT(*)::int FROM failed_signal_attempts WHERE status = 'pending') AS remaining_failed,
-        (SELECT COUNT(*)::int FROM failed_signal_attempts) AS total_failed,
-        (SELECT COUNT(*)::int FROM failed_signal_attempts WHERE status = 'recovered') AS replay_recovered
+        (SELECT COUNT(*)::int FROM jira_issue_templates) AS jira_templates
     `);
     const row = counts.rows[0];
+
+    let failureMetrics = {
+      initial_failed_count: 0,
+      replay_attempted: 0,
+      replay_recovered: 0,
+      permanent_fail_count: 0,
+      remaining_failed_count: 0,
+      remaining_failed_rate: 0,
+      remaining_failed_sample: [] as Array<{
+        signal_id: string;
+        source_ref: string | null;
+        error_type: string;
+        error_message: string;
+        attempt_count: number;
+        run_id: string;
+        failed_at: string;
+      }>
+    };
+
+    try {
+      const hasLedgerResult = await pool.query(
+        `SELECT to_regclass('public.failed_signal_attempts')::text AS table_name`
+      );
+      const hasLedger = Boolean(hasLedgerResult.rows[0]?.table_name);
+
+      if (hasLedger) {
+        const failureCounts = await pool.query(`
+          SELECT
+            COUNT(*)::int AS initial_failed_count,
+            COUNT(*) FILTER (WHERE status = 'pending')::int AS remaining_failed_count,
+            COUNT(*) FILTER (WHERE status = 'recovered')::int AS replay_recovered,
+            COUNT(*) FILTER (WHERE status = 'permanent_fail')::int AS permanent_fail_count
+          FROM failed_signal_attempts
+        `);
+        const failureCountRow = failureCounts.rows[0];
+
+        const remainingSampleResult = await pool.query(`
+          SELECT
+            signal_id::text AS signal_id,
+            source_ref,
+            error_type,
+            LEFT(error_message, 240) AS error_message,
+            attempt_count,
+            run_id,
+            failed_at
+          FROM failed_signal_attempts
+          WHERE status = 'pending'
+          ORDER BY failed_at DESC
+          LIMIT 5
+        `);
+
+        failureMetrics = {
+          ...failureMetrics,
+          initial_failed_count: Number(failureCountRow.initial_failed_count || 0),
+          replay_recovered: Number(failureCountRow.replay_recovered || 0),
+          permanent_fail_count: Number(failureCountRow.permanent_fail_count || 0),
+          remaining_failed_count: Number(failureCountRow.remaining_failed_count || 0),
+          remaining_failed_sample: remainingSampleResult.rows.map((sample) => ({
+            signal_id: sample.signal_id,
+            source_ref: sample.source_ref,
+            error_type: sample.error_type,
+            error_message: sample.error_message,
+            attempt_count: Number(sample.attempt_count || 0),
+            run_id: sample.run_id,
+            failed_at: sample.failed_at ? new Date(sample.failed_at).toISOString() : ''
+          }))
+        };
+      }
+    } catch (error: any) {
+      logger.warn('Readiness summary failure-ledger query failed; continuing with defaults', {
+        runId: this.runId,
+        stage: 'readiness_summary',
+        error: error?.message || String(error)
+      });
+    }
+
+    try {
+      const ingestionSummaryPath = join(process.cwd(), 'output', 'forum_ingestion_summary.json');
+      if (existsSync(ingestionSummaryPath)) {
+        const ingestionSummary = JSON.parse(readFileSync(ingestionSummaryPath, 'utf-8')) as {
+          replayAttempted?: number;
+          replayRecovered?: number;
+        };
+        failureMetrics.replay_attempted = Number(ingestionSummary.replayAttempted || 0);
+        if (!failureMetrics.replay_recovered) {
+          failureMetrics.replay_recovered = Number(ingestionSummary.replayRecovered || 0);
+        }
+      }
+    } catch (error: any) {
+      logger.warn('Failed reading forum ingestion summary for readiness metrics', {
+        runId: this.runId,
+        stage: 'readiness_summary',
+        error: error?.message || String(error)
+      });
+    }
+
+    if (failureMetrics.replay_attempted === 0) {
+      failureMetrics.replay_attempted =
+        failureMetrics.replay_recovered + failureMetrics.remaining_failed_count;
+    }
+    failureMetrics.remaining_failed_rate =
+      failureMetrics.initial_failed_count > 0
+        ? Number(
+            (
+              failureMetrics.remaining_failed_count /
+              Math.max(1, failureMetrics.initial_failed_count)
+            ).toFixed(4)
+          )
+        : 0;
+
+    const countsWithFailures = {
+      ...row,
+      total_failed: failureMetrics.initial_failed_count,
+      remaining_failed: failureMetrics.remaining_failed_count,
+      replay_recovered: failureMetrics.replay_recovered
+    };
+
     const providerSummary = {
       llm_provider: process.env.LLM_PROVIDER || 'mock',
       embedding_provider: process.env.EMBEDDING_PROVIDER || 'mock',
@@ -1154,13 +1276,18 @@ class LLMPipeline {
         })
       : [];
     const allStagesHealthy = failedStages.length === 0;
+    const failureCountGate = failureMetrics.remaining_failed_count <= READINESS_MAX_REMAINING_FAILED;
+    const failureRateGate =
+      failureMetrics.remaining_failed_rate <= READINESS_MAX_REMAINING_FAILED_RATE;
+    const failureGatePassed = failureCountGate && failureRateGate;
     const pass =
       allStagesHealthy &&
       row.signals > 0 &&
       row.extractions > 0 &&
       row.opportunities > 0 &&
       row.jira_templates > 0 &&
-      providerSummary.zero_mock;
+      providerSummary.zero_mock &&
+      failureGatePassed;
     const status = pass ? 'PASS' : allStagesHealthy ? 'PARTIAL' : 'FAIL';
 
     const readiness = {
@@ -1177,13 +1304,27 @@ class LLMPipeline {
         completed: completedStages,
         failed: failedStages
       },
-      counts: row,
+      counts: countsWithFailures,
       provider_summary: providerSummary,
+      readiness_thresholds: {
+        max_remaining_failed: READINESS_MAX_REMAINING_FAILED,
+        max_remaining_failed_rate: READINESS_MAX_REMAINING_FAILED_RATE,
+        remaining_failed_count_gate_passed: failureCountGate,
+        remaining_failed_rate_gate_passed: failureRateGate
+      },
+      failure_metrics: failureMetrics,
       run_metrics: getRunMetrics().snapshot(),
       artifacts: files
     };
 
     writeFileSync(join(outputDir, 'READINESS_SUMMARY.json'), JSON.stringify(readiness, null, 2));
+    const remainingSampleLines =
+      failureMetrics.remaining_failed_sample.length > 0
+        ? failureMetrics.remaining_failed_sample.map(
+            (sample) =>
+              `- ${sample.signal_id} | ${sample.error_type} | attempts=${sample.attempt_count} | ${sample.error_message}`
+          )
+        : ['- none'];
     const markdown = [
       `# Readiness Summary`,
       ``,
@@ -1198,14 +1339,23 @@ class LLMPipeline {
       `- Entities: ${row.entities}`,
       `- Opportunities: ${row.opportunities}`,
       `- JIRA templates: ${row.jira_templates}`,
-      `- Failed total: ${row.total_failed}`,
-      `- Failed remaining: ${row.remaining_failed}`,
-      `- Replay recovered: ${row.replay_recovered}`,
+      `- Failed total: ${failureMetrics.initial_failed_count}`,
+      `- Replay attempted: ${failureMetrics.replay_attempted}`,
+      `- Replay recovered: ${failureMetrics.replay_recovered}`,
+      `- Failed remaining: ${failureMetrics.remaining_failed_count}`,
+      `- Failed remaining rate: ${failureMetrics.remaining_failed_rate}`,
       ``,
       `## Provider Check`,
       `- LLM provider: ${providerSummary.llm_provider}`,
       `- Embedding provider: ${providerSummary.embedding_provider}`,
       `- Zero mock: ${providerSummary.zero_mock ? 'yes' : 'no'}`,
+      ``,
+      `## Failure Gates`,
+      `- max_remaining_failed: ${READINESS_MAX_REMAINING_FAILED} (pass=${failureCountGate ? 'yes' : 'no'})`,
+      `- max_remaining_failed_rate: ${READINESS_MAX_REMAINING_FAILED_RATE} (pass=${failureRateGate ? 'yes' : 'no'})`,
+      ``,
+      `## Remaining Failure Sample`,
+      ...remainingSampleLines,
       ``,
       `## Artifacts`,
       ...files.map((entry) => `- ${entry.file} (${entry.size_bytes} bytes)`)

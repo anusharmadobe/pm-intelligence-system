@@ -38,7 +38,9 @@ type IngestConfig = {
   resume: boolean;
   resetCursor: boolean;
   replayFailures: boolean;
+  replayOnly: boolean;
   replayLimit: number;
+  replayBatchSize: number;
 };
 
 type IngestCursor = {
@@ -61,6 +63,8 @@ type IngestStats = {
   batches: number;
   replayAttempted: number;
   replayRecovered: number;
+  replayStillFailed: number;
+  replaySkippedAlreadyExtracted: number;
   runId: string;
   startedAt: string;
   completedAt?: string;
@@ -69,6 +73,7 @@ type IngestStats = {
 const DATA_DIR = join(process.cwd(), 'data', 'raw', 'community_forums');
 const OUTPUT_FILE = join(process.cwd(), 'output', 'forum_ingestion_summary.json');
 const CURSOR_FILE = join(process.cwd(), 'output', 'ingestion_cursor.json');
+const REPLAY_CURSOR_FILE = join(process.cwd(), 'output', 'replay_failures_cursor.json');
 
 function parseArgs(): IngestConfig {
   const args = process.argv.slice(2);
@@ -82,7 +87,9 @@ function parseArgs(): IngestConfig {
     resume: false,
     resetCursor: false,
     replayFailures: false,
-    replayLimit: 0
+    replayOnly: false,
+    replayLimit: 0,
+    replayBatchSize: 25
   };
 
   for (const arg of args) {
@@ -110,8 +117,14 @@ function parseArgs(): IngestConfig {
       config.resetCursor = true;
     } else if (arg === '--replay-failures') {
       config.replayFailures = true;
+      config.replayOnly = true;
+    } else if (arg === '--replay-after-ingest') {
+      config.replayFailures = true;
+      config.replayOnly = false;
     } else if (arg.startsWith('--replay-limit=')) {
       config.replayLimit = parseInt(arg.split('=')[1], 10);
+    } else if (arg.startsWith('--replay-batch-size=')) {
+      config.replayBatchSize = parseInt(arg.split('=')[1], 10);
     }
   }
 
@@ -146,6 +159,35 @@ function loadCursor(): IngestCursor | null {
     return JSON.parse(readFileSync(CURSOR_FILE, 'utf-8')) as IngestCursor;
   } catch {
     return null;
+  }
+}
+
+type ReplayCursor = {
+  processed: number;
+  updatedAt: string;
+};
+
+function saveReplayCursor(cursor: ReplayCursor): void {
+  if (!existsSync(join(process.cwd(), 'output'))) {
+    mkdirSync(join(process.cwd(), 'output'), { recursive: true });
+  }
+  writeFileSync(REPLAY_CURSOR_FILE, JSON.stringify(cursor, null, 2));
+}
+
+function loadReplayCursor(): ReplayCursor | null {
+  if (!existsSync(REPLAY_CURSOR_FILE)) {
+    return null;
+  }
+  try {
+    return JSON.parse(readFileSync(REPLAY_CURSOR_FILE, 'utf-8')) as ReplayCursor;
+  } catch {
+    return null;
+  }
+}
+
+function clearReplayCursor(): void {
+  if (existsSync(REPLAY_CURSOR_FILE)) {
+    unlinkSync(REPLAY_CURSOR_FILE);
   }
 }
 
@@ -251,25 +293,69 @@ async function processBatch(params: {
   }
 }
 
-async function replayFailedSignals(config: IngestConfig, runId: string): Promise<{ attempted: number; recovered: number }> {
+async function replayFailedSignals(config: IngestConfig, runId: string): Promise<{
+  attempted: number;
+  recovered: number;
+  stillFailed: number;
+  skippedAlreadyExtracted: number;
+}> {
   const pool = getDbPool();
   const pipeline = new IngestionPipelineService();
+  const replayCursor = config.resume ? loadReplayCursor() : null;
+  const replayOffset = replayCursor?.processed || 0;
   const replayRows = await pool.query(
     `
-      SELECT f.signal_id, s.source, s.content, s.normalized_content, s.metadata, s.created_at
+      SELECT
+        f.signal_id,
+        s.source,
+        s.content,
+        s.normalized_content,
+        s.metadata,
+        s.created_at,
+        se.signal_id AS has_extraction
       FROM failed_signal_attempts f
       JOIN signals s ON s.id = f.signal_id
       LEFT JOIN signal_extractions se ON se.signal_id = s.id
-      WHERE f.status = 'pending' AND se.signal_id IS NULL
+      WHERE f.status = 'pending'
       ORDER BY f.failed_at ASC
-      ${config.replayLimit > 0 ? 'LIMIT $1' : ''}
+      ${config.replayLimit > 0 ? 'LIMIT $1 OFFSET $2' : 'OFFSET $1'}
     `,
-    config.replayLimit > 0 ? [config.replayLimit] : []
+    config.replayLimit > 0 ? [config.replayLimit, replayOffset] : [replayOffset]
   );
 
   let attempted = 0;
   let recovered = 0;
+  let stillFailed = 0;
+  let skippedAlreadyExtracted = 0;
+  let processed = 0;
+  const replayBatchSize = Math.max(1, config.replayBatchSize || config.batchSize || 25);
+
+  logger.info('Starting failed-signal replay', {
+    stage: 'failed_signal_replay',
+    status: 'start',
+    runId,
+    replayOffset,
+    replayLimit: config.replayLimit || null,
+    replayBatchSize,
+    rowsSelected: replayRows.rows.length
+  });
+
   for (const row of replayRows.rows) {
+    processed += 1;
+    if (row.has_extraction) {
+      skippedAlreadyExtracted += 1;
+      try {
+        await markFailedSignalRecovered(row.signal_id);
+      } catch (recoveredError: any) {
+        logger.warn('Failed to mark already-extracted signal as recovered', {
+          stage: 'failed_signal_replay',
+          signalId: row.signal_id,
+          error: recoveredError.message
+        });
+      }
+      continue;
+    }
+
     attempted += 1;
     const rawSignal: RawSignal = {
       id: row.signal_id,
@@ -285,6 +371,7 @@ async function replayFailedSignals(config: IngestConfig, runId: string): Promise
       await markFailedSignalRecovered(rawSignal.id);
       recovered += 1;
     } catch (error: any) {
+      stillFailed += 1;
       try {
         await recordFailedSignalAttempt({
           signalId: rawSignal.id,
@@ -301,21 +388,62 @@ async function replayFailedSignals(config: IngestConfig, runId: string): Promise
         });
       }
     }
+
+    if (processed % replayBatchSize === 0) {
+      saveReplayCursor({
+        processed: replayOffset + processed,
+        updatedAt: new Date().toISOString()
+      });
+      logger.info('Failed-signal replay progress', {
+        stage: 'failed_signal_replay',
+        status: 'in_progress',
+        processed,
+        selected: replayRows.rows.length,
+        attempted,
+        recovered,
+        stillFailed,
+        skippedAlreadyExtracted
+      });
+    }
   }
 
-  return { attempted, recovered };
+  if (config.replayLimit > 0 && processed > 0) {
+    saveReplayCursor({
+      processed: replayOffset + processed,
+      updatedAt: new Date().toISOString()
+    });
+  } else {
+    clearReplayCursor();
+  }
+
+  logger.info('Failed-signal replay complete', {
+    stage: 'failed_signal_replay',
+    status: 'success',
+    selected: replayRows.rows.length,
+    attempted,
+    recovered,
+    stillFailed,
+    skippedAlreadyExtracted
+  });
+
+  return { attempted, recovered, stillFailed, skippedAlreadyExtracted };
 }
 
 async function ingestCommunityForumsV2() {
   const config = parseArgs();
   const runId = `forum_ingest_${Date.now()}`;
-  const files = readdirSync(DATA_DIR).filter((file) => file.endsWith('.json'));
+  const files = config.replayOnly
+    ? []
+    : readdirSync(DATA_DIR).filter((file) => file.endsWith('.json'));
 
   if (config.resetCursor && existsSync(CURSOR_FILE)) {
     unlinkSync(CURSOR_FILE);
   }
+  if (config.resetCursor && existsSync(REPLAY_CURSOR_FILE)) {
+    unlinkSync(REPLAY_CURSOR_FILE);
+  }
 
-  if (files.length === 0) {
+  if (!config.replayOnly && files.length === 0) {
     throw new Error(`No JSON files found in ${DATA_DIR}`);
   }
 
@@ -339,11 +467,13 @@ async function ingestCommunityForumsV2() {
     batches: 0,
     replayAttempted: 0,
     replayRecovered: 0,
+    replayStillFailed: 0,
+    replaySkippedAlreadyExtracted: 0,
     runId,
     startedAt: new Date().toISOString()
   };
 
-  console.log('\n📥 Ingesting community forums via V2 pipeline');
+  console.log(`\n📥 ${config.replayOnly ? 'Replaying failed forum signals via V2 pipeline' : 'Ingesting community forums via V2 pipeline'}`);
   console.log('='.repeat(70));
   const commentMode = config.includeComments
     ? config.maxCommentsPerThread !== undefined
@@ -357,7 +487,9 @@ async function ingestCommunityForumsV2() {
       config.skipShort ? `yes (min ${config.minLength})` : 'no'
     } | Skip boilerplate: ${
       config.skipBoilerplate ? 'yes' : 'no'
-    } | Resume: ${config.resume ? 'yes' : 'no'}\n`
+    } | Replay mode: ${config.replayFailures ? (config.replayOnly ? 'only' : 'after-ingest') : 'off'} | Resume: ${
+      config.resume ? 'yes' : 'no'
+    }\n`
   );
 
   const threadCapLabel = config.limitThreads ?? 'unbounded';
@@ -367,6 +499,21 @@ async function ingestCommunityForumsV2() {
     `threads=${stats.threads}/${threadCapLabel}, signals=${stats.signals}/${signalCapLabel}, ingested=${stats.ingested}, errors=${stats.errors}`;
 
   console.log(`Caps: threads=${threadCapLabel}, signals=${signalCapLabel}, comments=${commentCapLabel}`);
+
+  if (config.replayOnly) {
+    const replayResult = await replayFailedSignals(config, runId);
+    stats.replayAttempted = replayResult.attempted;
+    stats.replayRecovered = replayResult.recovered;
+    stats.replayStillFailed = replayResult.stillFailed;
+    stats.replaySkippedAlreadyExtracted = replayResult.skippedAlreadyExtracted;
+    stats.completedAt = new Date().toISOString();
+    writeFileSync(OUTPUT_FILE, JSON.stringify(stats, null, 2));
+    getRunMetrics().exportToFile(join(process.cwd(), 'output', 'run_metrics.json'));
+    console.log('\n✅ Failed-signal replay complete');
+    console.log(`Replay attempted/recovered/still_failed/skipped_already_extracted: ${stats.replayAttempted}/${stats.replayRecovered}/${stats.replayStillFailed}/${stats.replaySkippedAlreadyExtracted}`);
+    console.log(`Summary written to: ${OUTPUT_FILE}`);
+    return;
+  }
 
   let batch: RawSignal[] = [];
   let batchIndex = cursor?.batchIndex || 0;
@@ -498,6 +645,8 @@ async function ingestCommunityForumsV2() {
     const replayResult = await replayFailedSignals(config, runId);
     stats.replayAttempted = replayResult.attempted;
     stats.replayRecovered = replayResult.recovered;
+    stats.replayStillFailed = replayResult.stillFailed;
+    stats.replaySkippedAlreadyExtracted = replayResult.skippedAlreadyExtracted;
   }
 
   stats.completedAt = new Date().toISOString();
@@ -513,7 +662,7 @@ async function ingestCommunityForumsV2() {
   console.log(`Skipped (duplicate): ${stats.skippedDuplicate}`);
   console.log(`Skipped (invalid): ${stats.skippedInvalid}`);
   console.log(`Errors: ${stats.errors}`);
-  console.log(`Replay attempted/recovered: ${stats.replayAttempted}/${stats.replayRecovered}`);
+  console.log(`Replay attempted/recovered/still_failed/skipped_already_extracted: ${stats.replayAttempted}/${stats.replayRecovered}/${stats.replayStillFailed}/${stats.replaySkippedAlreadyExtracted}`);
   console.log(`Summary written to: ${OUTPUT_FILE}`);
   console.log(`Cursor written to: ${CURSOR_FILE}\n`);
 }

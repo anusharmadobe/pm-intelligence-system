@@ -197,11 +197,14 @@ Ask ChatGPT Enterprise, the UI, or Claude: "Are there any failed processing item
 
 **Replay failed forum signals:**
 ```bash
-# Re-run only failed signals still missing extraction
+# Replay-only mode: re-run failed signals without full ingest
 npx ts-node --transpile-only scripts/ingest_community_forums_v2.ts --replay-failures
 
 # Use a bounded retry window first
 npx ts-node --transpile-only scripts/ingest_community_forums_v2.ts --replay-failures --replay-limit=200
+
+# Optional: ingest then replay in one run
+npx ts-node --transpile-only scripts/ingest_community_forums_v2.ts --limit=100 --replay-after-ingest
 ```
 
 **Inspect failed ledger:**
@@ -209,6 +212,10 @@ npx ts-node --transpile-only scripts/ingest_community_forums_v2.ts --replay-fail
 SELECT status, COUNT(*) FROM failed_signal_attempts GROUP BY status;
 SELECT * FROM failed_signal_attempts WHERE status = 'pending' ORDER BY failed_at DESC LIMIT 20;
 ```
+
+**Readiness summary failure gates:**
+- Configure `READINESS_MAX_REMAINING_FAILED` and `READINESS_MAX_REMAINING_FAILED_RATE`
+- Check `READINESS_SUMMARY.json` for `failure_metrics` and `remaining_failed_sample`
 
 ---
 
