@@ -131,7 +131,8 @@ export class Neo4jSyncService {
     METHOD: 'RELATES_TO',
     FUNCTION_CALL: 'RELATES_TO',
     CREATES: 'RELATES_TO',
-    COMPARISON: 'RELATES_TO'
+    COMPARISON: 'RELATES_TO',
+    'NOT SUPPORT': 'RELATES_TO'
   };
 
   private mapEntityLabel(entityType: string): string {

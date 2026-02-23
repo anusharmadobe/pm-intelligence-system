@@ -1967,6 +1967,15 @@ const DEFAULT_EMBEDDING_CLUSTER_CONFIG: EmbeddingClusterConfig = {
   overlapMergeThreshold: 0.5
 };
 
+const DEFAULT_MAX_REFINEMENT_CLUSTERS = 1500;
+const MAX_REFINEMENT_CLUSTERS = (() => {
+  const parsed = Number.parseInt(
+    process.env.OPPORTUNITY_MAX_REFINEMENT_CLUSTERS || `${DEFAULT_MAX_REFINEMENT_CLUSTERS}`,
+    10
+  );
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : DEFAULT_MAX_REFINEMENT_CLUSTERS;
+})();
+
 /**
  * Gets signals with their embeddings from the database
  */
@@ -2254,8 +2263,19 @@ function refineEmbeddingClusters(
   const overlapThreshold = config.overlapMergeThreshold ?? 0.5;
   const minAverageQuality = config.minAverageQuality ?? 0.35;
 
-  let refined = mergeOverlappingClusters(clusters, overlapThreshold);
-  refined = reassignSignalsToBestCluster(refined, config);
+  let refined = clusters;
+  if (MAX_REFINEMENT_CLUSTERS > 0 && clusters.length > MAX_REFINEMENT_CLUSTERS) {
+    logger.warn('Skipping expensive overlap/reassignment refinement for large cluster set', {
+      stage: 'opportunity_clustering',
+      status: 'degraded',
+      clusterCount: clusters.length,
+      maxRefinementClusters: MAX_REFINEMENT_CLUSTERS,
+      overlapThreshold
+    });
+  } else {
+    refined = mergeOverlappingClusters(clusters, overlapThreshold);
+    refined = reassignSignalsToBestCluster(refined, config);
+  }
   refined = refined.filter(cluster => calculateAverageSignalQuality(cluster) >= minAverageQuality);
   return refined;
 }

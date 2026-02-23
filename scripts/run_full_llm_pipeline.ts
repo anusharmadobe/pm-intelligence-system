@@ -152,6 +152,9 @@ class LLMPipeline {
   private updateStage(name: string, updates: Partial<PipelineStage>) {
     const stage = this.stages.get(name);
     if (stage) {
+      if (updates.status && updates.status !== 'failed' && !Object.prototype.hasOwnProperty.call(updates, 'error')) {
+        delete stage.error;
+      }
       Object.assign(stage, updates);
     }
     this.persistRunState();
