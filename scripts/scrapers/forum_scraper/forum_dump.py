@@ -654,13 +654,16 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    max_pages = args.max_pages if args.max_pages and args.max_pages > 0 else None
+    test_limit = args.test if args.test and args.test > 0 else None
+
     dumper = ForumDumper(
         forum_key=args.forum,
         config_path=args.config,
-        max_pages=args.max_pages,
+        max_pages=max_pages,
         headless=not args.no_headless,
         delay=args.delay,
-        test_limit=args.test,
+        test_limit=test_limit,
         since=args.since,
     )
     dumper.run(args.output)

@@ -200,9 +200,15 @@ function runForumScrape(
   return { outputFile: outputPath, threadCount: parsed.length };
 }
 
-function runIngestion(): void {
-  console.log('\n[forum-scraper] Triggering ingestion: npm run ingest-forums');
-  const proc = spawnSync('npm', ['run', 'ingest-forums'], {
+function runIngestion(opts: CliOptions): void {
+  const ingestArgs = ['run', 'ingest-forums'];
+  if (opts.test !== undefined) {
+    // Keep scrape+ingest smoke runs bounded when --test is provided.
+    const limitSignals = Math.max(opts.test, 10);
+    ingestArgs.push('--', `--limit-signals=${limitSignals}`, '--no-comments');
+  }
+  console.log(`\n[forum-scraper] Triggering ingestion: npm ${ingestArgs.join(' ')}`);
+  const proc = spawnSync('npm', ingestArgs, {
     stdio: 'inherit',
     cwd: process.cwd(),
     env: process.env
@@ -251,7 +257,7 @@ function main(): void {
   console.log(`\n[forum-scraper] Scraping complete. Total threads written: ${totalThreads}`);
 
   if (opts.ingest) {
-    runIngestion();
+    runIngestion(opts);
   }
 }
 

@@ -60,6 +60,7 @@ const PROVIDER_DEFAULTS: Record<string, Partial<EmbeddingProviderConfig>> = {
  * Creates an embedding provider based on configuration
  */
 export function createEmbeddingProvider(config: EmbeddingProviderConfig): EmbeddingProvider {
+  const azureApiKey = process.env.AZURE_OPENAI_API_KEY || process.env.AZURE_OPENAI_KEY;
   const fullConfig = {
     ...PROVIDER_DEFAULTS[config.provider],
     ...config
@@ -76,7 +77,7 @@ export function createEmbeddingProvider(config: EmbeddingProviderConfig): Embedd
     case 'azure_openai':
       return createAzureOpenAIEmbeddingProvider(
         fullConfig.endpoint || process.env.AZURE_OPENAI_ENDPOINT || '',
-        fullConfig.apiKey || process.env.AZURE_OPENAI_KEY || '',
+        fullConfig.apiKey || azureApiKey || '',
         fullConfig.deployment || process.env.AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT || 'text-embedding-ada-002',
         fullConfig.apiVersion || process.env.AZURE_OPENAI_EMBEDDINGS_API_VERSION || '2023-05-15'
       );
@@ -556,11 +557,12 @@ export function createEmbeddingProviderFromEnv(): EmbeddingProvider {
   const provider = (process.env.EMBEDDING_PROVIDER || 'mock') as EmbeddingProviderConfig['provider'];
   const model = process.env.EMBEDDING_MODEL;
   const dimensions = process.env.EMBEDDING_DIMENSIONS ? parseInt(process.env.EMBEDDING_DIMENSIONS) : undefined;
+  const azureApiKey = process.env.AZURE_OPENAI_API_KEY || process.env.AZURE_OPENAI_KEY;
   
   // Determine API key based on provider
   let apiKey: string | undefined;
   if (provider === 'azure_openai') {
-    apiKey = process.env.AZURE_OPENAI_KEY;
+    apiKey = azureApiKey;
   } else if (provider === 'openai') {
     apiKey = process.env.OPENAI_API_KEY;
   } else if (provider === 'cohere') {

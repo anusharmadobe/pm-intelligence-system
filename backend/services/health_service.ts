@@ -6,12 +6,14 @@ import { logger } from '../utils/logger';
 import { getSharedRedis } from '../config/redis';
 
 export async function getSystemHealth() {
-  const pool = getDbPool();
+  let pool: ReturnType<typeof getDbPool> | null = null;
   let pgStatus = 'healthy';
   try {
+    pool = getDbPool();
     await pool.query('SELECT 1');
   } catch {
     pgStatus = 'unhealthy';
+    pool = null;
   }
 
   let redisStatus = 'healthy';
@@ -29,26 +31,34 @@ export async function getSystemHealth() {
   }
 
   let neo4jStatus = 'healthy';
+  let neo4jSession: any = null;
   try {
-    const session = getNeo4jDriver().session({ database: config.neo4j.database });
-    await session.run('RETURN 1');
-    await session.close();
+    neo4jSession = getNeo4jDriver().session({ database: config.neo4j.database });
+    await neo4jSession.run('RETURN 1');
   } catch {
     neo4jStatus = 'unhealthy';
+  } finally {
+    try {
+      await neo4jSession?.close();
+    } catch {
+      // no-op
+    }
   }
 
   let backlogPending = 0;
   let lastPipelineRun: string | null = null;
-  try {
-    const backlogResult = await pool.query(
-      `SELECT COUNT(*)::int AS count FROM neo4j_sync_backlog WHERE status = 'pending'`
-    );
-    backlogPending = backlogResult.rows[0]?.count || 0;
+  if (pool) {
+    try {
+      const backlogResult = await pool.query(
+        `SELECT COUNT(*)::int AS count FROM neo4j_sync_backlog WHERE status = 'pending'`
+      );
+      backlogPending = backlogResult.rows[0]?.count || 0;
 
-    const lastRun = await pool.query(`SELECT MAX(created_at) AS last_run FROM signal_extractions`);
-    lastPipelineRun = lastRun.rows[0]?.last_run || null;
-  } catch (error) {
-    logger.warn('Health aggregation query failed', { error });
+      const lastRun = await pool.query(`SELECT MAX(created_at) AS last_run FROM signal_extractions`);
+      lastPipelineRun = lastRun.rows[0]?.last_run || null;
+    } catch (error) {
+      logger.warn('Health aggregation query failed', { error });
+    }
   }
 
   return {

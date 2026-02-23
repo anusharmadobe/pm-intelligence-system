@@ -11,6 +11,11 @@ const MIN_NEO4J_TIMEOUT_MS = 1000;
 const DEFAULT_CIRCUIT_TIMEOUT_THRESHOLD = 50;
 const DEFAULT_CIRCUIT_OPEN_MS = 120000;
 const MIN_CIRCUIT_OPEN_MS = 1000;
+const DEFAULT_BACKLOG_MAX_RETRIES = 5;
+const BACKLOG_MAX_RETRIES = Math.max(
+  1,
+  parsePositiveInt(process.env.NEO4J_BACKLOG_MAX_RETRIES, DEFAULT_BACKLOG_MAX_RETRIES)
+);
 
 // Hardened parsing accepts values like "1e4" and prevents unusably small timeouts.
 const NEO4J_TIMEOUT_MS = Math.max(
@@ -190,13 +195,22 @@ export class Neo4jSyncService {
     }
   }
 
-  async syncEntity(entity: { id: string; entity_type: string; canonical_name: string }): Promise<void> {
+  async syncEntity(
+    entity: { id: string; entity_type: string; canonical_name: string },
+    options: { fromBacklog?: boolean } = {}
+  ): Promise<void> {
+    const fromBacklog = Boolean(options.fromBacklog);
     if (!config.featureFlags.neo4jSync) {
-      await this.enqueue('signal_sync', { entity });
+      if (!fromBacklog) {
+        await this.enqueue('signal_sync', { entity });
+      }
       return;
     }
 
     if (this.isCircuitOpen()) {
+      if (fromBacklog) {
+        throw new Error('Neo4j sync circuit is open');
+      }
       this.circuitBypassCount += 1;
       if (
         this.circuitBypassCount === 1 ||
@@ -248,6 +262,9 @@ export class Neo4jSyncService {
         operation: 'syncEntity',
         nextAction: 'enqueue_backlog'
       });
+      if (fromBacklog) {
+        throw error;
+      }
       try {
         await this.enqueue('signal_sync', { entity });
       } catch (enqueueError) {
@@ -268,15 +285,21 @@ export class Neo4jSyncService {
     }
   }
 
-  async syncRelationship(params: {
-    fromId: string;
-    fromType: string;
-    toId: string;
-    toType: string;
-    relationship: string;
-  }): Promise<void> {
+  async syncRelationship(
+    params: {
+      fromId: string;
+      fromType: string;
+      toId: string;
+      toType: string;
+      relationship: string;
+    },
+    options: { fromBacklog?: boolean } = {}
+  ): Promise<void> {
+    const fromBacklog = Boolean(options.fromBacklog);
     if (!config.featureFlags.neo4jSync) {
-      await this.enqueue('relationship_add', params);
+      if (!fromBacklog) {
+        await this.enqueue('relationship_add', params);
+      }
       return;
     }
 
@@ -302,6 +325,9 @@ export class Neo4jSyncService {
     }
 
     if (this.isCircuitOpen()) {
+      if (fromBacklog) {
+        throw new Error('Neo4j sync circuit is open');
+      }
       this.circuitBypassCount += 1;
       if (
         this.circuitBypassCount === 1 ||
@@ -359,6 +385,9 @@ export class Neo4jSyncService {
         operation: 'syncRelationship',
         nextAction: 'enqueue_backlog'
       });
+      if (fromBacklog) {
+        throw error;
+      }
       try {
         await this.enqueue('relationship_add', params as unknown as Record<string, unknown>);
       } catch (enqueueError) {
@@ -386,7 +415,7 @@ export class Neo4jSyncService {
     try {
       await client.query('BEGIN');
       const result = await client.query(
-        `SELECT id, operation, payload, status, retry_count, created_at, processed_at
+        `SELECT id, operation, payload, status, retry_count, error_message, created_at, processed_at
          FROM neo4j_sync_backlog
          WHERE status = 'pending'
          ORDER BY created_at ASC
@@ -399,23 +428,30 @@ export class Neo4jSyncService {
         try {
           const payload = row.payload || {};
           if (row.operation === 'signal_sync' && payload.entity) {
-            await this.syncEntity(payload.entity);
+            await this.syncEntity(payload.entity, { fromBacklog: true });
           }
           if (row.operation === 'relationship_add') {
-            await this.syncRelationship(payload);
+            await this.syncRelationship(payload, { fromBacklog: true });
           }
 
           await client.query(
-            `UPDATE neo4j_sync_backlog SET status = 'processed', processed_at = NOW() WHERE id = $1`,
+            `UPDATE neo4j_sync_backlog
+             SET status = 'processed', processed_at = NOW(), error_message = NULL
+             WHERE id = $1`,
             [row.id]
           );
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : String(error);
+          const nextRetryCount = Number(row.retry_count || 0) + 1;
+          const reachedRetryCap = nextRetryCount >= BACKLOG_MAX_RETRIES;
           await client.query(
             `UPDATE neo4j_sync_backlog
-             SET retry_count = retry_count + 1
+             SET retry_count = $2,
+                 status = CASE WHEN $3 THEN 'failed' ELSE status END,
+                 processed_at = CASE WHEN $3 THEN NOW() ELSE processed_at END,
+                 error_message = $4
              WHERE id = $1`,
-            [row.id]
+            [row.id, nextRetryCount, reachedRetryCap, errorMessage]
           );
           logger.warn('Neo4j backlog item processing failed', {
             stage: 'neo4j_backlog',
@@ -424,8 +460,9 @@ export class Neo4jSyncService {
             errorMessage,
             id: row.id,
             operation: row.operation,
-            retryCount: row.retry_count,
-            nextAction: 'retry_backlog'
+            retryCount: nextRetryCount,
+            maxRetries: BACKLOG_MAX_RETRIES,
+            nextAction: reachedRetryCap ? 'mark_failed' : 'retry_backlog'
           });
         }
       }

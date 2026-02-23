@@ -9,6 +9,7 @@ import { getDbPool, closeDbPool } from '../backend/db/connection';
 import { createLLMProviderFromEnv, LLMProvider } from '../backend/services/llm_service';
 import { createEmbeddingProviderFromEnv, EmbeddingProvider } from '../backend/services/embedding_provider';
 import { processEmbeddingQueue, getEmbeddingStats } from '../backend/services/embedding_service';
+import { shutdownCostTracking } from '../backend/services/cost_tracking_service';
 import { logger } from '../backend/utils/logger';
 
 // Configuration
@@ -132,6 +133,7 @@ async function main() {
     logger.error('Embedding processor failed', { error: error.message });
     throw error;
   } finally {
+    await shutdownCostTracking();
     await closeDbPool();
   }
 }

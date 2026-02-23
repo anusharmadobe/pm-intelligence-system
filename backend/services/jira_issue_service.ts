@@ -3,6 +3,7 @@
  * Uses LLM to generate well-structured JIRA issue templates from opportunities
  */
 
+import { createHash } from 'crypto';
 import { getDbPool } from '../db/connection';
 import { Signal } from '../processing/signal_extractor';
 import { LLMProvider, createLLMProviderFromEnv } from './llm_service';
@@ -18,6 +19,49 @@ import { logger as globalLogger, createModuleLogger } from '../utils/logger';
 
 // Create module-specific logger for JIRA operations
 const logger = createModuleLogger('jira', 'LOG_LEVEL_JIRA');
+
+type SignalCategory =
+  | 'community_forum_ux'
+  | 'product_bug'
+  | 'feature_request'
+  | 'documentation_gap'
+  | 'configuration_issue'
+  | 'integration_issue'
+  | 'licensing_portal'
+  | 'product_issue';
+
+const CATEGORY_ALIAS: Record<string, SignalCategory> = {
+  product_issue: 'product_bug'
+};
+
+const AREA_BY_CATEGORY: Record<string, JiraIssueTemplate['area']> = {
+  community_forum_ux: 'Community Forum',
+  product_bug: 'Product',
+  feature_request: 'Product',
+  documentation_gap: 'Documentation',
+  configuration_issue: 'Configuration',
+  integration_issue: 'Integration',
+  licensing_portal: 'Licensing Portal'
+};
+
+const LABELS_BY_CATEGORY: Record<string, string[]> = {
+  community_forum_ux: ['CommunityForumFixRequired'],
+  product_bug: ['ProductFixRequired'],
+  feature_request: ['ProductFixRequired'],
+  documentation_gap: ['DocumentationFixRequired'],
+  configuration_issue: ['ProductFixRequired', 'ConfigurationFixRequired'],
+  integration_issue: ['ProductFixRequired', 'IntegrationFixRequired'],
+  licensing_portal: ['LicensingPortalFixRequired']
+};
+
+const AREA_LABELS = new Set([
+  'CommunityForumFixRequired',
+  'ProductFixRequired',
+  'DocumentationFixRequired',
+  'ConfigurationFixRequired',
+  'IntegrationFixRequired',
+  'LicensingPortalFixRequired'
+]);
 
 /**
  * JIRA issue template structure
@@ -51,6 +95,9 @@ export interface JiraIssueTemplate {
   sourceSignalIds: string[];
   generatedAt: Date;
   confidenceScore: number;
+  area: 'Product' | 'Community Forum' | 'Licensing Portal' | 'Documentation' | 'Configuration' | 'Integration' | 'Unknown';
+  evidenceCount: number;
+  uniqueCustomers: number;
   
   // Raw data for inspection
   rawLLMResponse?: string;
@@ -277,6 +324,41 @@ function prepareIssueContext(
   };
 }
 
+function normalizeSignalCategory(rawCategory: unknown): SignalCategory | null {
+  if (typeof rawCategory !== 'string') {
+    return null;
+  }
+  const normalized = rawCategory.trim().toLowerCase();
+  if (!normalized) {
+    return null;
+  }
+  const aliased = CATEGORY_ALIAS[normalized] || (normalized as SignalCategory);
+  if (AREA_BY_CATEGORY[aliased]) {
+    return aliased;
+  }
+  return null;
+}
+
+function countUniqueReporters(signals: Signal[]): number {
+  const unique = new Set<string>();
+  for (const signal of signals) {
+    const candidates = [
+      ...(Array.isArray(signal.metadata?.customers) ? (signal.metadata?.customers as string[]) : []),
+      signal.metadata?.author as string | undefined,
+      signal.metadata?.comment_author as string | undefined,
+      signal.metadata?.answer_author as string | undefined,
+      signal.metadata?.customerName as string | undefined
+    ];
+    for (const candidate of candidates) {
+      if (typeof candidate !== 'string') continue;
+      const cleaned = candidate.trim();
+      if (!cleaned) continue;
+      unique.add(cleaned.toLowerCase());
+    }
+  }
+  return unique.size;
+}
+
 async function applySignalCategoryLabel(issue: JiraIssueTemplate, signals: Signal[]): Promise<void> {
   if (signals.length === 0) return;
   const pool = getDbPool();
@@ -289,19 +371,24 @@ async function applySignalCategoryLabel(issue: JiraIssueTemplate, signals: Signa
     `,
     [signalIds]
   );
-  const counts = new Map<string, number>();
+  const counts = new Map<SignalCategory, number>();
   result.rows.forEach((row) => {
-    const category = row.signal_category;
+    const category = normalizeSignalCategory(row.signal_category);
     if (!category) return;
     counts.set(category, (counts.get(category) || 0) + 1);
   });
-  const community = counts.get('community_forum_ux') || 0;
-  const product = counts.get('product_issue') || 0;
-  if (community === 0 && product === 0) return;
-  issue.labels = issue.labels.filter(
-    (label) => label !== 'CommunityForumFixRequired' && label !== 'ProductFixRequired'
-  );
-  issue.labels.push(community >= product ? 'CommunityForumFixRequired' : 'ProductFixRequired');
+  if (counts.size === 0) {
+    issue.area = 'Unknown';
+    return;
+  }
+
+  const dominantCategory = Array.from(counts.entries()).sort((a, b) => b[1] - a[1])[0][0];
+  issue.area = AREA_BY_CATEGORY[dominantCategory] || 'Unknown';
+
+  issue.labels = issue.labels.filter((label) => !AREA_LABELS.has(label));
+  const categoryLabels = LABELS_BY_CATEGORY[dominantCategory] || [];
+  issue.labels.push(...categoryLabels);
+  issue.labels = [...new Set(issue.labels)];
 }
 
 /**
@@ -508,13 +595,19 @@ function enhanceWithMetadata(
   context: IssueContext
 ): JiraIssueTemplate {
   const scored = opportunity as ScoredOpportunity;
+  const uniqueCustomers = countUniqueReporters(signals);
   
   // Calculate priority from impact score
   let priority: JiraIssueTemplate['priority'] = 'Medium';
   if (scored.roadmapScore?.impactScore) {
-    if (scored.roadmapScore.impactScore >= 70) priority = config.priorityMapping?.highImpact || 'High';
-    else if (scored.roadmapScore.impactScore >= 40) priority = config.priorityMapping?.mediumImpact || 'Medium';
+    if (scored.roadmapScore.impactScore >= 50) priority = config.priorityMapping?.highImpact || 'High';
+    else if (scored.roadmapScore.impactScore >= 25) priority = config.priorityMapping?.mediumImpact || 'Medium';
     else priority = config.priorityMapping?.lowImpact || 'Low';
+  }
+  if (uniqueCustomers >= 20 && (priority === 'Low' || priority === 'Medium')) {
+    priority = config.priorityMapping?.highImpact || 'High';
+  } else if (uniqueCustomers >= 10 && priority === 'Low') {
+    priority = config.priorityMapping?.mediumImpact || 'Medium';
   }
   
   // Generate labels
@@ -542,6 +635,7 @@ function enhanceWithMetadata(
 
 ## Customer Evidence
 - **Affected Customers**: ${context.customers.join(', ') || 'Various'}
+- **Unique Reporters**: ${uniqueCustomers}
 - **Total Signals**: ${context.totalSignals}
 - **Signal Types**: ${context.signalTypes.join(', ')}
 
@@ -574,7 +668,10 @@ ${partial.technicalNotes || 'No specific technical notes.'}
     sourceOpportunityId: opportunity.id,
     sourceSignalIds: signals.map(s => s.id),
     generatedAt: new Date(),
-    confidenceScore: scored.roadmapScore?.confidenceScore || 50
+    confidenceScore: scored.roadmapScore?.confidenceScore || 50,
+    area: 'Unknown',
+    evidenceCount: Math.max(1, context.totalSignals || signals.length),
+    uniqueCustomers
   };
 }
 
@@ -733,6 +830,17 @@ export async function generateJiraIssuesFromExtractions(
   return issues;
 }
 
+function normalizeSummaryForFingerprint(summary: string): string {
+  return summary.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function buildContentFingerprint(issue: JiraIssueTemplate): string {
+  const normalizedSummary = normalizeSummaryForFingerprint(issue.summary);
+  return createHash('sha256')
+    .update(`${issue.sourceOpportunityId}|${normalizedSummary}`)
+    .digest('hex');
+}
+
 /**
  * Stores generated JIRA issue templates
  */
@@ -757,27 +865,64 @@ export async function storeJiraIssueTemplate(issue: JiraIssueTemplate): Promise<
       estimated_complexity TEXT,
       confidence_score NUMERIC,
       signal_ids JSONB,
+      area TEXT,
+      content_fingerprint TEXT,
+      evidence_count INTEGER DEFAULT 1,
+      unique_customers INTEGER DEFAULT 0,
       raw_llm_response TEXT,
       created_at TIMESTAMP DEFAULT NOW(),
+      updated_at TIMESTAMP DEFAULT NOW(),
       exported_at TIMESTAMP
     )
   `);
 
-  const existing = await pool.query(
-    `SELECT id FROM jira_issue_templates WHERE opportunity_id = $1 ORDER BY created_at DESC LIMIT 1`,
-    [issue.sourceOpportunityId]
+  await pool.query(
+    `CREATE UNIQUE INDEX IF NOT EXISTS idx_jira_templates_fingerprint
+     ON jira_issue_templates(content_fingerprint)
+     WHERE content_fingerprint IS NOT NULL`
   );
-  if (existing.rows.length > 0) {
-    return existing.rows[0].id;
-  }
+
+  const contentFingerprint = buildContentFingerprint(issue);
+  const evidenceCount = Math.max(1, issue.evidenceCount || issue.sourceSignalIds.length || 1);
+  const uniqueCustomers = Math.max(0, issue.uniqueCustomers || 0);
   
   const result = await pool.query(`
     INSERT INTO jira_issue_templates (
       opportunity_id, summary, issue_type, priority, description,
       labels, components, acceptance_criteria, affected_customers,
       customer_impact, technical_notes, estimated_complexity,
-      confidence_score, signal_ids, raw_llm_response
-    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+      confidence_score, signal_ids, area, content_fingerprint,
+      evidence_count, unique_customers, raw_llm_response
+    ) VALUES (
+      $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19
+    )
+    ON CONFLICT (content_fingerprint) DO UPDATE
+    SET
+      opportunity_id = EXCLUDED.opportunity_id,
+      summary = EXCLUDED.summary,
+      issue_type = EXCLUDED.issue_type,
+      priority = EXCLUDED.priority,
+      description = EXCLUDED.description,
+      labels = EXCLUDED.labels,
+      components = EXCLUDED.components,
+      acceptance_criteria = EXCLUDED.acceptance_criteria,
+      affected_customers = EXCLUDED.affected_customers,
+      customer_impact = EXCLUDED.customer_impact,
+      technical_notes = EXCLUDED.technical_notes,
+      estimated_complexity = EXCLUDED.estimated_complexity,
+      confidence_score = GREATEST(
+        COALESCE(jira_issue_templates.confidence_score, 0),
+        COALESCE(EXCLUDED.confidence_score, 0)
+      ),
+      signal_ids = EXCLUDED.signal_ids,
+      area = EXCLUDED.area,
+      evidence_count = COALESCE(jira_issue_templates.evidence_count, 0) + COALESCE(EXCLUDED.evidence_count, 1),
+      unique_customers = GREATEST(
+        COALESCE(jira_issue_templates.unique_customers, 0),
+        COALESCE(EXCLUDED.unique_customers, 0)
+      ),
+      raw_llm_response = EXCLUDED.raw_llm_response,
+      updated_at = NOW()
     RETURNING id
   `, [
     issue.sourceOpportunityId,
@@ -794,6 +939,10 @@ export async function storeJiraIssueTemplate(issue: JiraIssueTemplate): Promise<
     issue.estimatedComplexity,
     issue.confidenceScore,
     JSON.stringify(issue.sourceSignalIds),
+    issue.area || 'Unknown',
+    contentFingerprint,
+    evidenceCount,
+    uniqueCustomers,
     issue.rawLLMResponse
   ]);
   
@@ -827,7 +976,10 @@ export async function getStoredJiraTemplates(): Promise<Array<JiraIssueTemplate 
     sourceOpportunityId: row.opportunity_id,
     sourceSignalIds: row.signal_ids || [],
     generatedAt: new Date(row.created_at),
-    confidenceScore: parseFloat(row.confidence_score),
+    confidenceScore: parseFloat(row.confidence_score || '0'),
+    area: row.area || 'Unknown',
+    evidenceCount: parseInt(row.evidence_count || '1', 10),
+    uniqueCustomers: parseInt(row.unique_customers || '0', 10),
     rawLLMResponse: row.raw_llm_response
   }));
 }
@@ -858,12 +1010,18 @@ export function exportJiraTemplatesToJson(templates: JiraIssueTemplate[]): strin
       acceptanceCriteria: t.acceptanceCriteria.join('\n'),
       customerImpact: t.customerImpact,
       estimatedComplexity: t.estimatedComplexity,
-      affectedCustomers: t.affectedCustomers.join(', ')
+      affectedCustomers: t.affectedCustomers.join(', '),
+      area: t.area,
+      evidenceCount: t.evidenceCount,
+      uniqueCustomers: t.uniqueCustomers
     },
     metadata: {
       sourceOpportunityId: t.sourceOpportunityId,
       generatedAt: t.generatedAt.toISOString(),
-      confidenceScore: t.confidenceScore
+      confidenceScore: t.confidenceScore,
+      area: t.area,
+      evidenceCount: t.evidenceCount,
+      uniqueCustomers: t.uniqueCustomers
     }
   }));
   

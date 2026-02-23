@@ -520,14 +520,21 @@ async function ingestCommunityForumsV2() {
 
 if (require.main === module) {
   ingestCommunityForumsV2()
+    .then(() => 0)
     .catch((error) => {
       console.error('❌ Community forums ingestion failed:', error.message);
-      process.exitCode = 1;
+      return 1;
     })
-    .finally(async () => {
-      await shutdownCostTracking();
-      await closeNeo4jDriver();
-      await closeDbPool();
+    .then(async (exitCode) => {
+      try {
+        await shutdownCostTracking();
+        await closeNeo4jDriver();
+        await closeDbPool();
+      } catch (cleanupError: any) {
+        console.error('❌ Community forums ingestion cleanup failed:', cleanupError?.message || cleanupError);
+        exitCode = 1;
+      }
+      process.exit(exitCode);
     });
 }
 

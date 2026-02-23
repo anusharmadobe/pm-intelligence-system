@@ -393,29 +393,37 @@ class CostTrackingService {
       const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
       const result = await this.pool.query(`
-        SELECT
-          SUM(cost_usd) AS total_cost_usd,
-          COUNT(*) AS total_operations,
-          SUM(tokens_input) AS total_input_tokens,
-          SUM(tokens_output) AS total_output_tokens,
-          MIN(created_at) AS period_start,
-          MAX(created_at) AS period_end,
-          jsonb_object_agg(operation, operation_cost) AS by_operation,
-          jsonb_object_agg(model, model_cost) AS by_model
-        FROM (
-          SELECT
-            cost_usd,
-            tokens_input,
-            tokens_output,
-            created_at,
-            operation,
-            model,
-            SUM(cost_usd) OVER (PARTITION BY operation) AS operation_cost,
-            SUM(cost_usd) OVER (PARTITION BY model) AS model_cost
+        WITH filtered AS (
+          SELECT cost_usd, tokens_input, tokens_output, created_at, operation, model
           FROM llm_cost_log
           ${whereClause}
-        ) subquery
-        GROUP BY by_operation, by_model
+        ),
+        operation_totals AS (
+          SELECT COALESCE(jsonb_object_agg(operation, total_cost), '{}'::jsonb) AS by_operation
+          FROM (
+            SELECT operation, SUM(cost_usd) AS total_cost
+            FROM filtered
+            GROUP BY operation
+          ) ops
+        ),
+        model_totals AS (
+          SELECT COALESCE(jsonb_object_agg(model, total_cost), '{}'::jsonb) AS by_model
+          FROM (
+            SELECT model, SUM(cost_usd) AS total_cost
+            FROM filtered
+            GROUP BY model
+          ) models
+        )
+        SELECT
+          COALESCE(SUM(filtered.cost_usd), 0) AS total_cost_usd,
+          COUNT(filtered.*) AS total_operations,
+          COALESCE(SUM(filtered.tokens_input), 0) AS total_input_tokens,
+          COALESCE(SUM(filtered.tokens_output), 0) AS total_output_tokens,
+          MIN(filtered.created_at) AS period_start,
+          MAX(filtered.created_at) AS period_end,
+          (SELECT by_operation FROM operation_totals) AS by_operation,
+          (SELECT by_model FROM model_totals) AS by_model
+        FROM filtered
       `, values);
 
       if (result.rows.length === 0) {

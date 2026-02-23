@@ -1,7 +1,5 @@
 # PM Intelligence System V2 — Infrastructure Services
 # Usage: docker compose up -d
-version: '3.8'
-
 services:
   postgres:
     image: pgvector/pgvector:pg15
@@ -79,16 +77,19 @@ services:
       - ./data/raw/community_forums:/app/output
     environment:
       FORUM_KEY: ${FORUM_SCRAPER_FORUM:-aem-forms}
-      SCRAPER_MAX_PAGES: ${FORUM_SCRAPER_MAX_PAGES:-}
+      SCRAPER_MAX_PAGES: ${FORUM_SCRAPER_MAX_PAGES:-0}
       SCRAPER_DELAY: ${FORUM_SCRAPER_DELAY:-2}
-      SCRAPER_SINCE: ${FORUM_SCRAPER_SINCE:-}
-      SCRAPER_TEST_LIMIT: ${FORUM_SCRAPER_TEST_LIMIT:-}
+      SCRAPER_SINCE: ${FORUM_SCRAPER_SINCE:-1970-01-01}
+      SCRAPER_TEST_LIMIT: ${FORUM_SCRAPER_TEST_LIMIT:-0}
     command: >
       python forum_dump.py
       --forum ${FORUM_SCRAPER_FORUM:-aem-forms}
       --config /app/config/forum_sources.json
       --output /app/output/${FORUM_SCRAPER_FORUM:-aem-forms}_dump.json
       --delay ${FORUM_SCRAPER_DELAY:-2}
+      --max-pages ${FORUM_SCRAPER_MAX_PAGES:-0}
+      --test ${FORUM_SCRAPER_TEST_LIMIT:-0}
+      --since ${FORUM_SCRAPER_SINCE:-1970-01-01}
 
 volumes:
   pgdata:

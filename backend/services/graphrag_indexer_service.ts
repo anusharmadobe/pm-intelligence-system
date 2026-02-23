@@ -30,6 +30,9 @@ export interface GraphRAGIndexResult {
 }
 
 export class GraphRAGIndexerService {
+  private static readonly INDEXER_TIMEOUT_MS = 10000;
+  private static readonly INDEXER_MAX_ATTEMPTS = 2;
+
   async indexSignals(signalIds?: string[], limit = 200): Promise<GraphRAGIndexResult> {
     const signals = await this.fetchSignals(signalIds, limit);
     if (!signals.length) {
@@ -97,18 +100,46 @@ export class GraphRAGIndexerService {
       };
     }
     const url = `${indexerUrl.replace(/\/$/, '')}/index`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    if (!response.ok) {
-      const text = await response.text();
-      logger.warn('GraphRAG indexer failed', { status: response.status, text });
-      throw new Error(`GraphRAG indexer failed: ${response.status}`);
+    let lastError: string | null = null;
+
+    for (let attempt = 1; attempt <= GraphRAGIndexerService.INDEXER_MAX_ATTEMPTS; attempt++) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), GraphRAGIndexerService.INDEXER_TIMEOUT_MS);
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(`GraphRAG indexer failed: ${response.status} ${text}`);
+        }
+        const data = (await response.json()) as GraphRAGIndexResult;
+        return data;
+      } catch (error: any) {
+        lastError = error?.message || String(error);
+        logger.warn('GraphRAG indexer call attempt failed', {
+          attempt,
+          maxAttempts: GraphRAGIndexerService.INDEXER_MAX_ATTEMPTS,
+          timeoutMs: GraphRAGIndexerService.INDEXER_TIMEOUT_MS,
+          error: lastError
+        });
+      } finally {
+        clearTimeout(timeout);
+      }
     }
-    const data = (await response.json()) as GraphRAGIndexResult;
-    return data;
+
+    logger.warn('GraphRAG indexer unreachable after retries; skipping indexing', {
+      url,
+      lastError
+    });
+    return {
+      run_id: randomUUID(),
+      communities: [],
+      stats: { signal_count: payload.signals.length, community_count: 0 }
+    };
   }
 
   private async persistCommunities(runId: string, communities: GraphRAGCommunity[]): Promise<void> {

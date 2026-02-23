@@ -96,12 +96,14 @@ export class DocumentAdapter {
   }
 
   private async parseWithPython(input: DocumentInput): Promise<ParsedSegment[]> {
+    const fallbackSegments = this.extractFallbackSegments(input);
     try {
       const parserUrl = process.env.DOCUMENT_PARSER_URL;
       if (!parserUrl) {
-        throw new Error(
-          'Document parser is not configured. Set DOCUMENT_PARSER_URL to enable document ingestion.'
-        );
+        logger.warn('Document parser URL not configured; using fallback parser', {
+          filename: input.filename
+        });
+        return fallbackSegments;
       }
       const form: any = new (global as any).FormData();
       const blob: any = new (global as any).Blob([input.buffer]);
@@ -123,8 +125,11 @@ export class DocumentAdapter {
       const data = (await response.json()) as { segments?: ParsedSegment[] };
       return data.segments || [];
     } catch (error) {
-      logger.error('Document parser request failed', { error, filename: input.filename });
-      throw error;
+      logger.warn('Document parser request failed; using fallback parser', {
+        error,
+        filename: input.filename
+      });
+      return fallbackSegments;
     }
   }
 
@@ -136,7 +141,10 @@ export class DocumentAdapter {
       segments = this.applyLimits(segments, extension);
 
       if (!segments.length || segments.every((segment) => !segment.text || !segment.text.trim())) {
-        throw new Error('File contains no extractable text content');
+        logger.warn('Document has no extractable text content; returning empty signal set', {
+          filename: input.filename
+        });
+        return [];
       }
 
       return segments.map((segment) =>
@@ -214,5 +222,24 @@ export class DocumentAdapter {
     }
 
     return segments;
+  }
+
+  private extractFallbackSegments(input: DocumentInput): ParsedSegment[] {
+    const extension = extname(input.filename).replace('.', '').toLowerCase();
+    if (extension !== 'txt' && extension !== 'csv') {
+      return [];
+    }
+    const text = input.buffer.toString('utf-8').trim();
+    if (!text) {
+      return [];
+    }
+    return [
+      {
+        text,
+        metadata: {
+          parser: 'fallback_utf8'
+        }
+      }
+    ];
   }
 }

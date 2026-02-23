@@ -1322,8 +1322,40 @@ async function calculateImpactScore(
   
   // Add signal volume boost (more signals = more validation)
   const volumeBoost = Math.min(signals.length * 2, 10); // Cap at 10
-  
-  return Math.min(customerScore + tierBoost + volumeBoost, 100);
+
+  // Add forum engagement boost (views/likes/replies as impact proxies).
+  const engagementBoost = calculateEngagementBoost(signals);
+
+  return Math.min(customerScore + tierBoost + volumeBoost + engagementBoost, 100);
+}
+
+function toFiniteNumber(value: unknown): number {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+  return 0;
+}
+
+function calculateEngagementBoost(signals: Signal[]): number {
+  let totalViews = 0;
+  let totalLikes = 0;
+  let totalReplies = 0;
+
+  for (const signal of signals) {
+    totalViews += toFiniteNumber(signal.metadata?.views);
+    totalLikes += toFiniteNumber(signal.metadata?.likes) + toFiniteNumber(signal.metadata?.comment_likes);
+    totalReplies += toFiniteNumber(signal.metadata?.replies_count);
+  }
+
+  const viewScore = Math.min(Math.log10(totalViews + 1) * 15, 30);
+  const likeScore = Math.min(totalLikes * 5, 20);
+  const replyScore = Math.min(totalReplies * 3, 15);
+
+  return Math.min(viewScore + likeScore + replyScore, 50);
 }
 
 /**
@@ -1504,8 +1536,25 @@ async function calculateUrgencyScore(signals: Signal[], themes: string[]): Promi
   
   // Volume acceleration (are signals coming in faster?)
   const volumeScore = Math.min(recentSignals.length * 6, 20);
-  
-  return Math.min(recencyScore + trendScore + volumeScore, 100);
+
+  // Unresolved threads without accepted answers should be prioritized.
+  const statusValues = signals
+    .map((signal) => String(signal.metadata?.status || '').toLowerCase().trim())
+    .filter(Boolean);
+  const unresolvedCount = statusValues.filter((status) =>
+    status.includes('unresolved') || status.includes('open')
+  ).length;
+  const unresolvedBoost =
+    statusValues.length > 0 && unresolvedCount >= Math.ceil(statusValues.length / 2) ? 15 : 0;
+
+  const hasAcceptedAnswer = signals.some((signal) => {
+    if (signal.metadata?.is_accepted === true) return true;
+    const acceptedAnswer = signal.metadata?.accepted_answer;
+    return Boolean(acceptedAnswer);
+  });
+  const acceptedAnswerBoost = hasAcceptedAnswer ? 0 : 10;
+
+  return Math.min(recencyScore + trendScore + volumeScore + unresolvedBoost + acceptedAnswerBoost, 100);
 }
 
 /**
@@ -1575,6 +1624,19 @@ async function extractUniqueCustomers(signals: Signal[]): Promise<string[]> {
     if (metaCustomers.length === 0) {
       const extracted = extractCustomerNames(signal.content, signal.metadata);
       extracted.forEach(addCustomer);
+
+      // For community forum signals, use author handles as pseudo-customers
+      // when no structured customer entity is available.
+      if (extracted.length === 0) {
+        const pseudoCustomer = [
+          signal.metadata?.author,
+          signal.metadata?.comment_author,
+          signal.metadata?.answer_author
+        ].find((value) => typeof value === 'string' && value.trim().length > 0);
+        if (typeof pseudoCustomer === 'string') {
+          addCustomer(pseudoCustomer);
+        }
+      }
     }
   }
 
@@ -1636,37 +1698,47 @@ export async function getOpportunitiesWithScores(
   config: Partial<RoadmapScoringConfig> = {},
   queryOptions: OpportunityQueryOptions = {}
 ): Promise<ScoredOpportunity[]> {
-  const opportunities = await getOpportunities(queryOptions);
-  const scoredOpportunities: ScoredOpportunity[] = [];
-  const { signalSource, requireExclusiveSource = false } = queryOptions;
-  
-  for (const opp of opportunities) {
-    const signals = await getSignalsForOpportunity(opp.id);
-    const filteredSignals = signalSource
-      ? signals.filter(signal => signal.source === signalSource)
-      : signals;
-
-    if (filteredSignals.length === 0) {
-      continue;
-    }
-    if (signalSource && requireExclusiveSource && filteredSignals.length !== signals.length) {
-      continue;
-    }
-
-    const roadmapScore = await calculateRoadmapScore(opp, filteredSignals, config);
-    const customers = await extractUniqueCustomers(filteredSignals);
-    const themes = extractUniqueThemes(filteredSignals);
+  try {
+    const opportunities = await getOpportunities(queryOptions);
+    const scoredOpportunities: ScoredOpportunity[] = [];
+    const { signalSource, requireExclusiveSource = false } = queryOptions;
     
-    scoredOpportunities.push({
-      ...opp,
-      roadmapScore,
-      signals: filteredSignals,
-      themes,
-      customers
+    for (const opp of opportunities) {
+      const signals = await getSignalsForOpportunity(opp.id);
+      const filteredSignals = signalSource
+        ? signals.filter(signal => signal.source === signalSource)
+        : signals;
+
+      if (filteredSignals.length === 0) {
+        continue;
+      }
+      if (signalSource && requireExclusiveSource && filteredSignals.length !== signals.length) {
+        continue;
+      }
+
+      const roadmapScore = await calculateRoadmapScore(opp, filteredSignals, config);
+      const customers = await extractUniqueCustomers(filteredSignals);
+      const themes = extractUniqueThemes(filteredSignals);
+      
+      scoredOpportunities.push({
+        ...opp,
+        roadmapScore,
+        signals: filteredSignals,
+        themes,
+        customers
+      });
+    }
+    
+    return scoredOpportunities;
+  } catch (error: any) {
+    logger.error('Failed to score opportunities', {
+      stage: 'roadmap_scoring',
+      status: 'error',
+      error: error?.message || String(error),
+      signalSource: queryOptions.signalSource || 'all'
     });
+    throw error;
   }
-  
-  return scoredOpportunities;
 }
 
 /**
@@ -1781,44 +1853,54 @@ export async function getRoadmapSummary(
     urgency: number;
   };
 }> {
-  const scoredOpportunities = await getOpportunitiesWithScores(config, queryOptions);
-  
-  const byImpact = {
-    high: scoredOpportunities.filter(o => o.roadmapScore.impactScore >= 70).length,
-    medium: scoredOpportunities.filter(o => o.roadmapScore.impactScore >= 40 && o.roadmapScore.impactScore < 70).length,
-    low: scoredOpportunities.filter(o => o.roadmapScore.impactScore < 40).length
-  };
-  
-  const byConfidence = {
-    high: scoredOpportunities.filter(o => o.roadmapScore.confidenceScore >= 70).length,
-    medium: scoredOpportunities.filter(o => o.roadmapScore.confidenceScore >= 40 && o.roadmapScore.confidenceScore < 70).length,
-    low: scoredOpportunities.filter(o => o.roadmapScore.confidenceScore < 40).length
-  };
-  
-  const averageScores = {
-    impact: average(scoredOpportunities.map(o => o.roadmapScore.impactScore)),
-    confidence: average(scoredOpportunities.map(o => o.roadmapScore.confidenceScore)),
-    effort: average(scoredOpportunities.map(o => o.roadmapScore.effortScore)),
-    strategic: average(scoredOpportunities.map(o => o.roadmapScore.strategicScore)),
-    urgency: average(scoredOpportunities.map(o => o.roadmapScore.urgencyScore))
-  };
-  
-  return {
-    totalOpportunities: scoredOpportunities.length,
-    topPriorities: scoredOpportunities
-      .sort((a, b) => b.roadmapScore.overallScore - a.roadmapScore.overallScore)
-      .slice(0, 5),
-    quickWins: scoredOpportunities
-      .filter(o => o.roadmapScore.effortScore >= 60)
-      .sort((a, b) => (b.roadmapScore.impactScore + b.roadmapScore.effortScore) - (a.roadmapScore.impactScore + a.roadmapScore.effortScore))
-      .slice(0, 5),
-    emerging: scoredOpportunities
-      .filter(o => o.roadmapScore.breakdown.trendDirection === 'emerging' || o.roadmapScore.breakdown.trendDirection === 'growing')
-      .slice(0, 5),
-    byImpact,
-    byConfidence,
-    averageScores
-  };
+  try {
+    const scoredOpportunities = await getOpportunitiesWithScores(config, queryOptions);
+    
+    const byImpact = {
+      high: scoredOpportunities.filter(o => o.roadmapScore.impactScore >= 70).length,
+      medium: scoredOpportunities.filter(o => o.roadmapScore.impactScore >= 40 && o.roadmapScore.impactScore < 70).length,
+      low: scoredOpportunities.filter(o => o.roadmapScore.impactScore < 40).length
+    };
+    
+    const byConfidence = {
+      high: scoredOpportunities.filter(o => o.roadmapScore.confidenceScore >= 70).length,
+      medium: scoredOpportunities.filter(o => o.roadmapScore.confidenceScore >= 40 && o.roadmapScore.confidenceScore < 70).length,
+      low: scoredOpportunities.filter(o => o.roadmapScore.confidenceScore < 40).length
+    };
+    
+    const averageScores = {
+      impact: average(scoredOpportunities.map(o => o.roadmapScore.impactScore)),
+      confidence: average(scoredOpportunities.map(o => o.roadmapScore.confidenceScore)),
+      effort: average(scoredOpportunities.map(o => o.roadmapScore.effortScore)),
+      strategic: average(scoredOpportunities.map(o => o.roadmapScore.strategicScore)),
+      urgency: average(scoredOpportunities.map(o => o.roadmapScore.urgencyScore))
+    };
+    
+    return {
+      totalOpportunities: scoredOpportunities.length,
+      topPriorities: scoredOpportunities
+        .sort((a, b) => b.roadmapScore.overallScore - a.roadmapScore.overallScore)
+        .slice(0, 5),
+      quickWins: scoredOpportunities
+        .filter(o => o.roadmapScore.effortScore >= 60)
+        .sort((a, b) => (b.roadmapScore.impactScore + b.roadmapScore.effortScore) - (a.roadmapScore.impactScore + a.roadmapScore.effortScore))
+        .slice(0, 5),
+      emerging: scoredOpportunities
+        .filter(o => o.roadmapScore.breakdown.trendDirection === 'emerging' || o.roadmapScore.breakdown.trendDirection === 'growing')
+        .slice(0, 5),
+      byImpact,
+      byConfidence,
+      averageScores
+    };
+  } catch (error: any) {
+    logger.error('Failed to build roadmap summary', {
+      stage: 'roadmap_summary',
+      status: 'error',
+      error: error?.message || String(error),
+      signalSource: queryOptions.signalSource || 'all'
+    });
+    throw error;
+  }
 }
 
 function average(numbers: number[]): number {

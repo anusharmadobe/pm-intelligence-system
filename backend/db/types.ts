@@ -211,8 +211,9 @@ export interface Neo4jSyncBacklog {
   id: string;
   operation: 'signal_sync' | 'entity_merge' | 'entity_split' | 'relationship_add';
   payload: Record<string, any>;
-  status: 'pending' | 'processed';
+  status: 'pending' | 'processed' | 'failed';
   retry_count: number;
+  error_message: string | null;
   created_at: Date;
   processed_at: Date | null;
 }
@@ -410,6 +411,7 @@ export const Neo4jSyncBacklogColumns: ColumnNames<Neo4jSyncBacklog>[] = [
   'payload',
   'status',
   'retry_count',
+  'error_message',
   'created_at',
   'processed_at'
 ];

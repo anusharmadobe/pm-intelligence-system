@@ -183,7 +183,7 @@ echo "=========================================="
 # Check required environment variables
 REQUIRED_VARS=(
     "AZURE_OPENAI_ENDPOINT"
-    "AZURE_OPENAI_KEY"
+    "AZURE_OPENAI_API_KEY"
     "AZURE_OPENAI_CHAT_DEPLOYMENT"
     "AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT"
     "DB_HOST"
@@ -194,6 +194,14 @@ REQUIRED_VARS=(
 )
 
 for var in "${REQUIRED_VARS[@]}"; do
+    if [ "$var" = "AZURE_OPENAI_API_KEY" ]; then
+        if [ -n "$AZURE_OPENAI_API_KEY" ] || [ -n "$AZURE_OPENAI_KEY" ]; then
+            check_result 0 "$var is set"
+        else
+            check_result 1 "$var is not set"
+        fi
+        continue
+    fi
     if [ -n "${!var}" ]; then
         check_result 0 "$var is set"
     else

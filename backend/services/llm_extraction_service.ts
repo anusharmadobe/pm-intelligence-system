@@ -8,6 +8,16 @@ const DEFAULT_BATCH_CONCURRENCY = 5;
 const DEFAULT_BATCH_ITEM_TIMEOUT_MS = 30000;
 const DEFAULT_BATCH_TIMEOUT_MS = 300000;
 const MIN_BATCH_TIMEOUT_MS = 1000;
+const SIGNAL_CATEGORIES = [
+  'community_forum_ux',
+  'product_bug',
+  'feature_request',
+  'documentation_gap',
+  'configuration_issue',
+  'integration_issue',
+  'licensing_portal'
+] as const;
+const LEGACY_SIGNAL_CATEGORIES = ['product_issue'] as const;
 
 const ExtractionSchema = z.object({
   entities: z.object({
@@ -29,7 +39,7 @@ const ExtractionSchema = z.object({
   sentiment: z.string().optional(),
   urgency: z.string().optional(),
   summary: z.string().optional(),
-  signal_category: z.enum(['community_forum_ux', 'product_issue']).optional()
+  signal_category: z.enum([...SIGNAL_CATEGORIES, ...LEGACY_SIGNAL_CATEGORIES]).optional()
 });
 
 export type ExtractionOutput = z.infer<typeof ExtractionSchema>;
@@ -39,11 +49,12 @@ export class LLMExtractionService {
   private slowProvider: LLMProvider;
 
   constructor() {
+    const azureApiKey = process.env.AZURE_OPENAI_API_KEY || process.env.AZURE_OPENAI_KEY;
     // Fast provider uses Azure OpenAI fast deployment when configured, otherwise env provider
-    if (process.env.AZURE_OPENAI_ENDPOINT && process.env.AZURE_OPENAI_KEY) {
+    if (process.env.AZURE_OPENAI_ENDPOINT && azureApiKey) {
       this.fastProvider = createAzureOpenAIProvider(
         process.env.AZURE_OPENAI_ENDPOINT,
-        process.env.AZURE_OPENAI_KEY,
+        azureApiKey,
         config.llm.fastDeployment,
         process.env.AZURE_OPENAI_CHAT_API_VERSION || '2024-08-01-preview',
         { temperature: config.llm.fastTemperature, maxTokens: config.llm.fastMaxTokens }
@@ -71,19 +82,34 @@ export class LLMExtractionService {
           sentiment: 'string',
           urgency: 'string',
           summary: 'string',
-          signal_category: 'community_forum_ux|product_issue'
+          signal_category: SIGNAL_CATEGORIES.join('|')
         },
         null,
         2
       ),
       '',
       'Classify the signal as one of:',
-      '- community_forum_ux: forum/process/community interaction issue (moderation, docs discoverability, forum usability)',
-      '- product_issue: product feature, defect, capability gap, or product behavior issue',
+      '- community_forum_ux: forum process, moderation, discoverability, or community experience issue',
+      '- product_bug: product defect, broken workflow, or reliability issue',
+      '- feature_request: missing capability or enhancement request for the product',
+      '- documentation_gap: missing, unclear, or inaccurate product documentation',
+      '- configuration_issue: setup, environment, permission, or configuration blockers',
+      '- integration_issue: interoperability problems across systems/APIs/connectors',
+      '- licensing_portal: licensing, entitlement, subscription, or account portal issue',
       '',
       'Signal:',
       content
     ].join('\n');
+  }
+
+  private normalizeSignalCategory(output: ExtractionOutput): ExtractionOutput {
+    if (output.signal_category === 'product_issue') {
+      return {
+        ...output,
+        signal_category: 'product_bug'
+      };
+    }
+    return output;
   }
 
   private parseJson(text: string): ExtractionOutput | null {
@@ -94,7 +120,7 @@ export class LLMExtractionService {
       if (start === -1 || end === -1) return null;
       const jsonText = trimmed.slice(start, end + 1);
       const parsed = JSON.parse(jsonText);
-      return ExtractionSchema.parse(parsed);
+      return this.normalizeSignalCategory(ExtractionSchema.parse(parsed));
     } catch (error) {
       logger.warn('LLM extraction JSON parse failed', { error });
       return null;
@@ -153,7 +179,7 @@ export class LLMExtractionService {
       },
       relationships: [],
       summary: '',
-      signal_category: 'product_issue'
+      signal_category: 'product_bug'
     };
   }
 

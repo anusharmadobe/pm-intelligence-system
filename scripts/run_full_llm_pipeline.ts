@@ -25,6 +25,7 @@ import {
   exportJiraTemplatesToJson,
   JiraIssueTemplate
 } from '../backend/services/jira_issue_service';
+import { EmailNotificationService } from '../backend/services/email_notification_service';
 import { logger } from '../backend/utils/logger';
 import { getRunMetrics } from '../backend/utils/run_metrics';
 
@@ -34,6 +35,7 @@ const TIMESTAMP = new Date().toISOString().replace(/[:.]/g, '-');
 const PIPELINE_SIGNAL_SOURCE = process.env.PIPELINE_SIGNAL_SOURCE;
 const RUN_STATE_PREFIX = 'pipeline_run_';
 const RUN_STATE_EXT = '.json';
+const CHECKPOINT_RETENTION_DAYS = parseInt(process.env.PIPELINE_CHECKPOINT_RETENTION_DAYS || '30', 10);
 
 interface PipelineStage {
   name: string;
@@ -49,6 +51,7 @@ interface PipelineConfig {
   skipEmbeddings?: boolean;
   skipClustering?: boolean;
   skipJiraGeneration?: boolean;
+  noEmail?: boolean;
   embeddingBatchSize?: number;
   maxJiraIssues?: number;
   outputDir?: string;
@@ -81,6 +84,7 @@ const DEFAULT_CONFIG: PipelineConfig = {
   skipEmbeddings: false,
   skipClustering: false,
   skipJiraGeneration: false,
+  noEmail: false,
   embeddingBatchSize: 10,
   maxJiraIssues: 10,
   outputDir: OUTPUT_DIR
@@ -110,6 +114,8 @@ class LLMPipeline {
   private resumeEnabled: boolean;
   private resumeFromStage: string | null;
   private signatureMatches: boolean = false;
+  private latestRoadmapSummary: any = null;
+  private emailService = new EmailNotificationService();
 
   constructor(config: Partial<PipelineConfig> = {}) {
     this.config = { ...DEFAULT_CONFIG, ...config };
@@ -171,12 +177,124 @@ class LLMPipeline {
       this.config.outputDir = state.outputDir;
     }
     Object.entries(state.stages).forEach(([name, stage]) => {
+      const normalizedStage = this.normalizeStageFromPersisted(stage);
       if (this.stages.has(name)) {
-        Object.assign(this.stages.get(name)!, stage);
+        Object.assign(this.stages.get(name)!, normalizedStage);
       } else {
-        this.stages.set(name, stage);
+        this.stages.set(name, normalizedStage);
       }
     });
+  }
+
+  private normalizeStageFromPersisted(stage: PipelineStage): PipelineStage {
+    const normalized = { ...stage };
+    const start = stage.startTime ? new Date(stage.startTime) : undefined;
+    const end = stage.endTime ? new Date(stage.endTime) : undefined;
+    return {
+      ...normalized,
+      startTime: start && !Number.isNaN(start.getTime()) ? start : undefined,
+      endTime: end && !Number.isNaN(end.getTime()) ? end : undefined
+    };
+  }
+
+  private async ensureCheckpointTable(): Promise<void> {
+    const pool = getDbPool();
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS pipeline_checkpoints (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        run_id TEXT NOT NULL,
+        stage TEXT NOT NULL,
+        status TEXT NOT NULL,
+        started_at TIMESTAMP,
+        completed_at TIMESTAMP,
+        signature JSONB,
+        result JSONB,
+        error TEXT,
+        created_at TIMESTAMP DEFAULT NOW(),
+        UNIQUE(run_id, stage)
+      )
+    `);
+  }
+
+  private async cleanupOldCheckpoints(): Promise<void> {
+    const pool = getDbPool();
+    await pool.query(
+      `DELETE FROM pipeline_checkpoints
+       WHERE created_at < NOW() - ($1::int * INTERVAL '1 day')`,
+      [CHECKPOINT_RETENTION_DAYS]
+    );
+  }
+
+  private async loadRunStateFromDb(): Promise<void> {
+    const pool = getDbPool();
+    const runRow = this.config.runId
+      ? await pool.query(
+          `
+            SELECT run_id, MIN(started_at) AS started_at, MAX(created_at) AS updated_at
+            FROM pipeline_checkpoints
+            WHERE run_id = $1
+            GROUP BY run_id
+            LIMIT 1
+          `,
+          [this.config.runId]
+        )
+      : await pool.query(
+          `
+            SELECT run_id, MIN(started_at) AS started_at, MAX(created_at) AS updated_at
+            FROM pipeline_checkpoints
+            GROUP BY run_id
+            ORDER BY MAX(created_at) DESC
+            LIMIT 1
+          `
+        );
+    if (runRow.rows.length === 0) {
+      return;
+    }
+    const loadedRunId = runRow.rows[0].run_id as string;
+    const checkpoints = await pool.query(
+      `
+        SELECT stage, status, started_at, completed_at, signature, result, error
+        FROM pipeline_checkpoints
+        WHERE run_id = $1
+      `,
+      [loadedRunId]
+    );
+
+    this.runId = loadedRunId;
+    this.runStatePath = join(this.config.outputDir!, `${RUN_STATE_PREFIX}${this.runId}${RUN_STATE_EXT}`);
+    this.startTime = runRow.rows[0].started_at
+      ? new Date(runRow.rows[0].started_at)
+      : new Date();
+
+    checkpoints.rows.forEach((row) => {
+      const stage: PipelineStage = {
+        name: row.stage,
+        status: row.status,
+        startTime: row.started_at ? new Date(row.started_at) : undefined,
+        endTime: row.completed_at ? new Date(row.completed_at) : undefined,
+        result: row.result || undefined,
+        error: row.error || undefined
+      };
+      if (this.stages.has(row.stage)) {
+        Object.assign(this.stages.get(row.stage)!, stage);
+      } else {
+        this.stages.set(row.stage, stage);
+      }
+      if (row.signature && !this.runSignature) {
+        this.runSignature = row.signature;
+      }
+    });
+
+    this.runState = {
+      runId: this.runId,
+      startedAt: this.startTime.toISOString(),
+      updatedAt: (runRow.rows[0].updated_at ? new Date(runRow.rows[0].updated_at) : new Date()).toISOString(),
+      signature: this.runSignature,
+      stages: Object.fromEntries(this.stages),
+      config: this.config,
+      outputDir: this.config.outputDir || OUTPUT_DIR,
+      resumeFrom: this.resumeFromStage
+    };
   }
 
   private ensureRunStateInitialized(): void {
@@ -206,6 +324,49 @@ class LLMPipeline {
     this.runState.config = this.config;
     this.runState.stages = Object.fromEntries(this.stages);
     writeFileSync(this.runStatePath, JSON.stringify(this.runState, null, 2));
+    void this.persistRunStateToDb();
+  }
+
+  private async persistRunStateToDb(): Promise<void> {
+    try {
+      const pool = getDbPool();
+      await this.ensureCheckpointTable();
+      const stageEntries = Array.from(this.stages.values());
+      for (const stage of stageEntries) {
+        await pool.query(
+          `
+            INSERT INTO pipeline_checkpoints (
+              run_id, stage, status, started_at, completed_at, signature, result, error
+            )
+            VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7::jsonb, $8)
+            ON CONFLICT (run_id, stage) DO UPDATE
+            SET
+              status = EXCLUDED.status,
+              started_at = EXCLUDED.started_at,
+              completed_at = EXCLUDED.completed_at,
+              signature = EXCLUDED.signature,
+              result = EXCLUDED.result,
+              error = EXCLUDED.error,
+              created_at = NOW()
+          `,
+          [
+            this.runId,
+            stage.name,
+            stage.status,
+            stage.startTime ? new Date(stage.startTime) : null,
+            stage.endTime ? new Date(stage.endTime) : null,
+            JSON.stringify(this.runSignature || null),
+            JSON.stringify(stage.result || null),
+            stage.error || null
+          ]
+        );
+      }
+    } catch (error: any) {
+      logger.warn('Failed to persist pipeline checkpoints to DB', {
+        runId: this.runId,
+        error: error?.message || String(error)
+      });
+    }
   }
 
   private async computeRunSignature(): Promise<PipelineRunSignature> {
@@ -352,6 +513,12 @@ class LLMPipeline {
       const pool = getDbPool();
       await pool.query('SELECT 1');
       console.log('   ✓ Database connection OK');
+
+      await this.ensureCheckpointTable();
+      await this.cleanupOldCheckpoints();
+      if (this.resumeEnabled && !this.runState) {
+        await this.loadRunStateFromDb();
+      }
 
       this.runSignature = await this.computeRunSignature();
       if (this.resumeEnabled && this.runState?.signature) {
@@ -839,6 +1006,7 @@ class LLMPipeline {
         signalSource: PIPELINE_SIGNAL_SOURCE,
         requireExclusiveSource: Boolean(PIPELINE_SIGNAL_SOURCE)
       });
+      this.latestRoadmapSummary = summary;
       const summaryPath = join(this.config.outputDir!, `roadmap_summary_${TIMESTAMP}.json`);
       writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
       console.log(`   ✓ Exported roadmap summary to: ${summaryPath}`);
@@ -1089,8 +1257,10 @@ Total: ${jiraIssues.length}
 
 - **Type**: ${issue.issueType}
 - **Priority**: ${issue.priority}
+- **Area**: ${issue.area}
 - **Impact**: ${issue.customerImpact}
 - **Complexity**: ${issue.estimatedComplexity}
+- **Unique Reporters**: ${issue.uniqueCustomers}
 - **Affected Customers**: ${issue.affectedCustomers.join(', ') || 'Various'}
 
 **Acceptance Criteria:**
@@ -1141,6 +1311,20 @@ ${issue.acceptanceCriteria.map(ac => `- ${ac}`).join('\n')}
     });
   }
 
+  private async sendCompletionEmail(jiraIssues: JiraIssueTemplate[]): Promise<void> {
+    if (this.config.noEmail) {
+      logger.info('Email notification suppressed by CLI flag', { runId: this.runId, stage: 'email' });
+      return;
+    }
+    const durationSeconds = Math.round((Date.now() - this.startTime.getTime()) / 1000);
+    await this.emailService.sendJiraSummary(jiraIssues, {
+      runId: this.runId,
+      durationSeconds,
+      totalSignals: this.runSignature?.signalsCount || 0,
+      opportunitiesDetected: this.latestRoadmapSummary?.totalOpportunities || 0
+    });
+  }
+
   async run(): Promise<void> {
     this.printBanner();
     
@@ -1153,6 +1337,7 @@ ${issue.acceptanceCriteria.map(ac => `- ${ac}`).join('\n')}
       await this.runOpportunityMerge();
       const jiraIssues = await this.runJiraGeneration();
       await this.runExport(jiraIssues);
+      await this.sendCompletionEmail(jiraIssues);
       await this.writeReadinessSummary();
       
       this.printSummary();
@@ -1181,6 +1366,7 @@ function parseArgs(): Partial<PipelineConfig> {
     if (arg === '--skip-embeddings') config.skipEmbeddings = true;
     if (arg === '--skip-clustering') config.skipClustering = true;
     if (arg === '--skip-jira') config.skipJiraGeneration = true;
+    if (arg === '--no-email') config.noEmail = true;
     if (arg === '--resume') config.resume = true;
     if (arg.startsWith('--resume-from=')) {
       config.resumeFrom = arg.split('=')[1];
@@ -1207,6 +1393,7 @@ function printUsage() {
   console.log('  --skip-embeddings          Skip embedding generation stage');
   console.log('  --skip-clustering          Skip opportunity clustering stage');
   console.log('  --skip-jira                Skip JIRA generation stage');
+  console.log('  --no-email                 Disable completion email notification');
   console.log('  --max-jira=<n>             Max JIRA issues to generate');
   console.log('  --output=<dir>             Output directory');
   console.log('  --resume                   Resume using last checkpoint');

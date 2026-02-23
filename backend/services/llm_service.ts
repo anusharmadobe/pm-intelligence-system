@@ -282,6 +282,7 @@ export function createMockLLMProvider(mockResponse?: string): LLMProvider {
  */
 export function validateLLMProviderEnv(): void {
   const provider = process.env.LLM_PROVIDER || 'mock';
+  const azureApiKey = process.env.AZURE_OPENAI_API_KEY || process.env.AZURE_OPENAI_KEY;
   if (provider === 'mock') return;
 
   switch (provider) {
@@ -293,8 +294,8 @@ export function validateLLMProviderEnv(): void {
       return;
     }
     case 'azure_openai': {
-      if (!process.env.AZURE_OPENAI_ENDPOINT || !process.env.AZURE_OPENAI_KEY) {
-        throw new Error('AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_KEY are required for azure_openai');
+      if (!process.env.AZURE_OPENAI_ENDPOINT || !azureApiKey) {
+        throw new Error('AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY are required for azure_openai');
       }
       return;
     }
@@ -311,6 +312,7 @@ export function validateLLMProviderEnv(): void {
 
 export function createLLMProviderFromEnv(): LLMProvider {
   const provider = process.env.LLM_PROVIDER || 'mock';
+  const azureApiKey = process.env.AZURE_OPENAI_API_KEY || process.env.AZURE_OPENAI_KEY;
 
   if (process.env.NODE_ENV === 'production') {
     validateLLMProviderEnv();
@@ -330,7 +332,7 @@ export function createLLMProviderFromEnv(): LLMProvider {
     case 'azure_openai':
       return createAzureOpenAIProvider(
         process.env.AZURE_OPENAI_ENDPOINT || '',
-        process.env.AZURE_OPENAI_KEY || '',
+        azureApiKey || '',
         process.env.AZURE_OPENAI_CHAT_DEPLOYMENT || 'gpt-4o',
         process.env.AZURE_OPENAI_CHAT_API_VERSION || '2024-08-01-preview',
         {

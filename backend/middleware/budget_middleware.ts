@@ -51,7 +51,7 @@ export async function budgetCheckMiddleware(req: Request, res: Response, next: N
           remaining: cached.remaining
         });
 
-        return res.status(429).json({
+        res.status(429).json({
           success: false,
           error: 'Monthly budget exceeded',
           details: {
@@ -59,6 +59,7 @@ export async function budgetCheckMiddleware(req: Request, res: Response, next: N
             message: 'Agent has been auto-paused due to budget exceeded. Contact admin to reset budget or increase limit.'
           }
         });
+        return;
       }
 
       // Budget OK from cache - proceed
@@ -91,7 +92,7 @@ export async function budgetCheckMiddleware(req: Request, res: Response, next: N
         utilization_pct: budgetStatus.utilization_pct
       });
 
-      return res.status(429).json({
+      res.status(429).json({
         success: false,
         error: 'Monthly budget exceeded',
         details: {
@@ -102,6 +103,7 @@ export async function budgetCheckMiddleware(req: Request, res: Response, next: N
           message: 'Agent has been auto-paused due to budget exceeded. Contact admin to reset budget or increase limit.'
         }
       });
+      return;
     }
 
     // Budget check passed

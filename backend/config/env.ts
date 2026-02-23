@@ -99,6 +99,13 @@ function getEnvFloat(key: string, defaultValue: number): number {
 }
 
 export function loadConfig(): Config {
+  if (!process.env.AZURE_OPENAI_API_KEY && process.env.AZURE_OPENAI_KEY) {
+    process.env.AZURE_OPENAI_API_KEY = process.env.AZURE_OPENAI_KEY;
+  }
+  if (!process.env.AZURE_OPENAI_KEY && process.env.AZURE_OPENAI_API_KEY) {
+    process.env.AZURE_OPENAI_KEY = process.env.AZURE_OPENAI_API_KEY;
+  }
+
   const host = getEnvVar('DB_HOST', 'localhost');
   const port = getEnvNumber('DB_PORT', 5432);
   const database = getEnvVar('DB_NAME', 'pm_intelligence');

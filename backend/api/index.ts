@@ -25,6 +25,22 @@ function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> {
+  let timeoutHandle: NodeJS.Timeout | null = null;
+  const timeoutPromise = new Promise<T>((_, reject) => {
+    timeoutHandle = setTimeout(() => {
+      reject(new Error(`${label} timed out after ${timeoutMs}ms`));
+    }, timeoutMs);
+  });
+  try {
+    return await Promise.race([promise, timeoutPromise]);
+  } finally {
+    if (timeoutHandle) {
+      clearTimeout(timeoutHandle);
+    }
+  }
+}
+
 async function waitForDatabase() {
   let attempts = 0;
   while (true) {
@@ -129,12 +145,16 @@ async function shutdown(signal: string) {
     // Step 1: Stop accepting new requests
     if (server) {
       logger.info('Stopping HTTP server from accepting new connections');
-      await new Promise((resolve, reject) => {
-        server?.close((err) => {
-          if (err) reject(err);
-          else resolve(true);
-        });
-      });
+      await withTimeout(
+        new Promise((resolve, reject) => {
+          server?.close((err) => {
+            if (err) reject(err);
+            else resolve(true);
+          });
+        }),
+        5000,
+        'http_server_close'
+      );
       logger.info('HTTP server stopped accepting connections');
     }
 
@@ -142,7 +162,7 @@ async function shutdown(signal: string) {
     try {
       const { IngestionPipelineService } = await import('../services/ingestion_pipeline_service');
       const pipeline = new IngestionPipelineService();
-      await pipeline.cleanup();
+      await withTimeout(pipeline.cleanup(), 5000, 'ingestion_pipeline_cleanup');
       logger.info('Ingestion pipeline cleaned up');
     } catch (error: any) {
       logger.warn('Failed to cleanup ingestion pipeline', {
@@ -154,7 +174,7 @@ async function shutdown(signal: string) {
     try {
       const { WebsiteCrawlerService } = await import('../services/website_crawler_service');
       const crawler = new WebsiteCrawlerService();
-      await crawler.close();
+      await withTimeout(crawler.close(), 5000, 'website_crawler_cleanup');
       logger.info('Website crawler cleaned up');
     } catch (error: any) {
       logger.warn('Failed to cleanup website crawler', {
@@ -165,7 +185,7 @@ async function shutdown(signal: string) {
     // Step 4: Shutdown cost tracking (flush remaining buffer)
     try {
       stopCostMonitoringJobs();
-      await shutdownCostTracking();
+      await withTimeout(shutdownCostTracking(), 5000, 'cost_tracking_shutdown');
       logger.info('Cost tracking shutdown complete');
     } catch (error: any) {
       logger.warn('Failed to shutdown cost tracking', {
@@ -175,7 +195,7 @@ async function shutdown(signal: string) {
 
     // Step 5: Close Redis connection
     try {
-      await closeSharedRedis();
+      await withTimeout(closeSharedRedis(), 5000, 'redis_close');
       logger.info('Redis connection closed');
     } catch (error: any) {
       logger.warn('Failed to close Redis connection', {
@@ -185,7 +205,7 @@ async function shutdown(signal: string) {
 
     // Step 6: Close database pool
     try {
-      await closeDbPool();
+      await withTimeout(closeDbPool(), 5000, 'db_pool_close');
       logger.info('Database pool closed');
     } catch (error: any) {
       logger.warn('Failed to close database pool', {
@@ -195,7 +215,7 @@ async function shutdown(signal: string) {
 
     // Step 7: Close Neo4j driver
     try {
-      await closeNeo4jDriver();
+      await withTimeout(closeNeo4jDriver(), 5000, 'neo4j_close');
       logger.info('Neo4j driver closed');
     } catch (error: any) {
       logger.warn('Failed to close Neo4j driver', {

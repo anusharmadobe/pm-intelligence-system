@@ -21,6 +21,10 @@ const createMockLLMProvider = (responses: string[]): LLMProvider => {
 };
 
 describe('LLMEntityMatcher', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('matchEntity', () => {
     it('should match entity with high confidence', async () => {
       const mockResponse = JSON.stringify({
