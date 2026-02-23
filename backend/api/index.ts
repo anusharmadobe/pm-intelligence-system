@@ -12,6 +12,8 @@ import { startIngestionScheduler } from '../services/ingestion_scheduler_service
 import { closeNeo4jDriver } from '../neo4j/client';
 import { closeSharedRedis } from '../config/redis';
 import { validateLLMProviderEnv } from '../services/llm_service';
+import { startCostMonitoringJobs, stopCostMonitoringJobs } from '../jobs/cost_monitoring_jobs';
+import { shutdownCostTracking } from '../services/cost_tracking_service';
 
 const RETRY_DELAY_MS = 5000;
 const MAX_DB_RETRIES = parseInt(process.env.DB_CONNECT_MAX_RETRIES || '10', 10);
@@ -86,6 +88,12 @@ async function startServer() {
     logger.info('Ingestion scheduler started');
   }
 
+  // Start cost monitoring jobs (refresh views, check budgets, emit metrics)
+  if (process.env.FF_COST_TRACKING !== 'false') {
+    startCostMonitoringJobs();
+    logger.info('Cost monitoring jobs started');
+  }
+
   server = app.listen(config.api.port, config.api.host, () => {
     logger.info('PM Intelligence API server started', {
       host: config.api.host,
@@ -154,7 +162,18 @@ async function shutdown(signal: string) {
       });
     }
 
-    // Step 4: Close Redis connection
+    // Step 4: Shutdown cost tracking (flush remaining buffer)
+    try {
+      stopCostMonitoringJobs();
+      await shutdownCostTracking();
+      logger.info('Cost tracking shutdown complete');
+    } catch (error: any) {
+      logger.warn('Failed to shutdown cost tracking', {
+        error: error?.message || error
+      });
+    }
+
+    // Step 5: Close Redis connection
     try {
       await closeSharedRedis();
       logger.info('Redis connection closed');
@@ -164,7 +183,7 @@ async function shutdown(signal: string) {
       });
     }
 
-    // Step 5: Close database pool
+    // Step 6: Close database pool
     try {
       await closeDbPool();
       logger.info('Database pool closed');
@@ -174,7 +193,7 @@ async function shutdown(signal: string) {
       });
     }
 
-    // Step 6: Close Neo4j driver
+    // Step 7: Close Neo4j driver
     try {
       await closeNeo4jDriver();
       logger.info('Neo4j driver closed');

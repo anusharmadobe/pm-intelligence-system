@@ -14,6 +14,7 @@ export interface RelationshipExtractionInput {
     };
     relationships?: Array<{ from: string; to: string; type: string }>;
   };
+  resolvedEntities?: Array<{ id: string; type: string; name: string }>;
 }
 
 export interface ResolvedRelationship {
@@ -28,12 +29,23 @@ export class RelationshipExtractionService {
   private resolver = new EntityResolutionService();
 
   async extractRelationships(input: RelationshipExtractionInput): Promise<ResolvedRelationship[]> {
-    const { signalId, signalText, extraction } = input;
+    const { signalId, signalText, extraction, resolvedEntities = [] } = input;
     const startTime = Date.now();
     const output: ResolvedRelationship[] = [];
     const seen = new Set<string>();
+    const resolutionCache = new Map<string, Promise<{ entity_id: string }>>();
     let skippedSelfRefs = 0;
     let skippedDuplicates = 0;
+    let preResolvedCacheHits = 0;
+
+    // Seed cache from already resolved entities from the prior stage.
+    for (const resolved of resolvedEntities) {
+      if (!resolved?.id || !resolved?.type || !resolved?.name) continue;
+      const key = `${resolved.type}:${resolved.name}`.toLowerCase();
+      if (!resolutionCache.has(key)) {
+        resolutionCache.set(key, Promise.resolve({ entity_id: resolved.id }));
+      }
+    }
 
     logger.debug('Relationship extraction start', {
       stage: 'relationship_extraction',
@@ -49,6 +61,29 @@ export class RelationshipExtractionService {
       explicitRelationships: extraction.relationships?.length || 0
     });
 
+    const resolveEntityCached = async (mention: string, entityType: string) => {
+      const key = `${entityType}:${mention}`.toLowerCase();
+      let pending = resolutionCache.get(key);
+      if (!pending) {
+        pending = this.resolver
+          .resolveEntityMention({
+            mention,
+            entityType,
+            signalId,
+            signalText
+          })
+          .catch((error) => {
+            // Avoid permanently caching failed lookups.
+            resolutionCache.delete(key);
+            throw error;
+          });
+        resolutionCache.set(key, pending);
+      } else {
+        preResolvedCacheHits++;
+      }
+      return pending;
+    };
+
     const addRelationship = async (
       fromName: string,
       fromType: string,
@@ -57,18 +92,8 @@ export class RelationshipExtractionService {
       relationship: string
     ) => {
       if (!fromName || !toName) return;
-      const fromResolved = await this.resolver.resolveEntityMention({
-        mention: fromName,
-        entityType: fromType,
-        signalId,
-        signalText
-      });
-      const toResolved = await this.resolver.resolveEntityMention({
-        mention: toName,
-        entityType: toType,
-        signalId,
-        signalText
-      });
+      const fromResolved = await resolveEntityCached(fromName, fromType);
+      const toResolved = await resolveEntityCached(toName, toType);
       if (fromResolved.entity_id === toResolved.entity_id) {
         skippedSelfRefs++;
         return;
@@ -152,6 +177,8 @@ export class RelationshipExtractionService {
         explicit: extraction.relationships?.length || 0,
         inferred: output.length - (extraction.relationships?.length || 0)
       },
+      uniqueEntityResolutions: resolutionCache.size,
+      preResolvedCacheHits,
       elapsedMs: Date.now() - startTime
     });
 

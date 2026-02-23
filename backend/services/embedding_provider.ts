@@ -143,12 +143,46 @@ export function createOpenAIEmbeddingProvider(
         throw new Error(`OpenAI API error: ${response.status} - ${error}`);
       }
 
-      const data = await response.json() as { data: Array<{ embedding: number[] }> };
+      const data = await response.json() as {
+        data: Array<{ embedding: number[] }>;
+        usage?: { prompt_tokens: number; total_tokens: number };
+      };
       const embedding = data.data[0].embedding;
-      
+
+      // Capture token usage from API response (or fallback to estimation)
+      const tokensIn = data.usage?.prompt_tokens ?? Math.ceil(text.length / 4);
+      metrics.addEmbeddingTokens(tokensIn);
+
+      // Record cost asynchronously (non-blocking)
+      const { getCostTrackingService } = require('./cost_tracking_service');
+      const { getCorrelationContext } = require('../utils/correlation');
+      const costService = getCostTrackingService();
+      const context = getCorrelationContext();
+
+      costService.recordCost({
+        correlation_id: context?.correlationId || 'unknown',
+        signal_id: context?.signalId,
+        agent_id: context?.agentId,
+        operation: 'embedding',
+        provider: 'openai',
+        model,
+        tokens_input: tokensIn,
+        tokens_output: 0,
+        cost_usd: costService.calculateCostForEmbedding('openai', model, tokensIn),
+        response_time_ms: Date.now() - startTime,
+        timestamp: new Date()
+      }).catch((err: any) => {
+        logger.warn('Cost recording failed (non-blocking)', {
+          error: err.message,
+          model,
+          correlation_id: context?.correlationId
+        });
+      });
+
       logger.debug('OpenAI embedding generated', {
         model,
         dimensions: embedding.length,
+        tokensIn,
         durationMs: Date.now() - startTime
       });
 

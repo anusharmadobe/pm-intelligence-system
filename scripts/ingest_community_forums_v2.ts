@@ -22,6 +22,8 @@ import {
   markFailedSignalRecovered
 } from '../backend/services/failed_signal_service';
 import { getRunMetrics } from '../backend/utils/run_metrics';
+import { shutdownCostTracking } from '../backend/services/cost_tracking_service';
+import { closeNeo4jDriver } from '../backend/neo4j/client';
 
 type IngestConfig = {
   limitThreads?: number;
@@ -523,6 +525,8 @@ if (require.main === module) {
       process.exitCode = 1;
     })
     .finally(async () => {
+      await shutdownCostTracking();
+      await closeNeo4jDriver();
       await closeDbPool();
     });
 }

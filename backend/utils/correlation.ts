@@ -36,6 +36,8 @@ export interface CorrelationContext {
   sessionId?: string;
   operation?: string;
   startTime?: number;
+  agentId?: string;                  // Agent ID for cost attribution
+  costTrackingEnabled?: boolean;     // Feature flag for cost tracking
 }
 
 // AsyncLocalStorage provides automatic context propagation across async boundaries

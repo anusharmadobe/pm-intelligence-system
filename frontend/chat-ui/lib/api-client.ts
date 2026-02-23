@@ -192,4 +192,207 @@ export class PMIntelligenceClient {
       return false;
     }
   }
+
+  // ============ Cost Tracking Methods ============
+
+  /**
+   * Get dashboard overview with current month costs and top agents/models
+   */
+  async getCostDashboard(): Promise<any> {
+    const response = await fetch(`${this.baseUrl}/api/cost/dashboard`, {
+      headers: { 'X-API-Key': this.apiKey }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to get cost dashboard: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Get cost summary with optional filtering
+   */
+  async getCostSummary(options?: {
+    agent_id?: string;
+    signal_id?: string;
+    date_from?: string;
+    date_to?: string;
+    group_by?: 'day' | 'week' | 'month';
+  }): Promise<any> {
+    const params = new URLSearchParams();
+    if (options?.agent_id) params.append('agent_id', options.agent_id);
+    if (options?.signal_id) params.append('signal_id', options.signal_id);
+    if (options?.date_from) params.append('date_from', options.date_from);
+    if (options?.date_to) params.append('date_to', options.date_to);
+    if (options?.group_by) params.append('group_by', options.group_by);
+
+    const response = await fetch(`${this.baseUrl}/api/cost/summary?${params}`, {
+      headers: { 'X-API-Key': this.apiKey }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to get cost summary: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Get all agents with budget status
+   */
+  async getAgentBudgets(month?: string): Promise<any> {
+    const params = month ? `?month=${month}` : '';
+    const response = await fetch(`${this.baseUrl}/api/cost/agents${params}`, {
+      headers: { 'X-API-Key': this.apiKey }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to get agent budgets: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Get cost breakdown by model
+   */
+  async getCostByModel(dateFrom?: string, dateTo?: string): Promise<any> {
+    const params = new URLSearchParams();
+    if (dateFrom) params.append('date_from', dateFrom);
+    if (dateTo) params.append('date_to', dateTo);
+
+    const response = await fetch(`${this.baseUrl}/api/cost/models?${params}`, {
+      headers: { 'X-API-Key': this.apiKey }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to get cost by model: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Get cost breakdown by operation type
+   */
+  async getCostByOperation(dateFrom?: string, dateTo?: string): Promise<any> {
+    const params = new URLSearchParams();
+    if (dateFrom) params.append('date_from', dateFrom);
+    if (dateTo) params.append('date_to', dateTo);
+
+    const response = await fetch(`${this.baseUrl}/api/cost/operations?${params}`, {
+      headers: { 'X-API-Key': this.apiKey }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to get cost by operation: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Get cost trends with projection
+   */
+  async getCostTrends(days: number = 30): Promise<any> {
+    const response = await fetch(`${this.baseUrl}/api/cost/trends?days=${days}`, {
+      headers: { 'X-API-Key': this.apiKey }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to get cost trends: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  // ============ Admin Cost Management Methods ============
+
+  /**
+   * Get detailed cost information for an agent
+   */
+  async getAgentCost(agentId: string): Promise<any> {
+    const response = await fetch(`${this.baseUrl}/api/admin/agents/${agentId}/cost`, {
+      headers: { 'X-API-Key': this.apiKey }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to get agent cost: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Update agent budget limit
+   */
+  async updateAgentBudget(agentId: string, maxMonthlyCostUsd: number): Promise<any> {
+    const response = await fetch(`${this.baseUrl}/api/admin/agents/${agentId}/budget`, {
+      method: 'POST',
+      headers: {
+        'X-API-Key': this.apiKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ max_monthly_cost_usd: maxMonthlyCostUsd })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update agent budget: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Reset agent monthly cost counter
+   */
+  async resetAgentBudget(agentId: string): Promise<any> {
+    const response = await fetch(`${this.baseUrl}/api/admin/agents/${agentId}/budget/reset`, {
+      method: 'POST',
+      headers: { 'X-API-Key': this.apiKey }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to reset agent budget: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Pause an agent
+   */
+  async pauseAgent(agentId: string, reason?: string): Promise<any> {
+    const response = await fetch(`${this.baseUrl}/api/admin/agents/${agentId}/pause`, {
+      method: 'POST',
+      headers: {
+        'X-API-Key': this.apiKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ reason })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to pause agent: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Unpause an agent
+   */
+  async unpauseAgent(agentId: string): Promise<any> {
+    const response = await fetch(`${this.baseUrl}/api/admin/agents/${agentId}/unpause`, {
+      method: 'POST',
+      headers: { 'X-API-Key': this.apiKey }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to unpause agent: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
 }

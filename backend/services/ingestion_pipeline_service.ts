@@ -16,11 +16,12 @@ import { eventBus } from '../agents/event_bus';
 import { getSharedRedis } from '../config/redis';
 import { getRunMetrics } from '../utils/run_metrics';
 import { AutoCorrectionService } from './auto_correction_service';
+import { parsePositiveInt } from '../utils/env_parsing';
 
 export class IngestionPipelineService {
-  private static readonly SIGNAL_TIMEOUT_MS = parseInt(
-    process.env.INGESTION_SIGNAL_TIMEOUT_MS || '60000',
-    10
+  private static readonly SIGNAL_TIMEOUT_MS = Math.max(
+    5000,
+    parsePositiveInt(process.env.INGESTION_SIGNAL_TIMEOUT_MS, 60000)
   );
   private extractionService = new LLMExtractionService();
   private entityResolutionService = new EntityResolutionService();
@@ -415,28 +416,39 @@ export class IngestionPipelineService {
 
             // Non-transactional operations (Neo4j sync, embeddings) happen outside transaction
             currentStage = 'sync_neo4j_entities';
-            await this.runStage('sync_neo4j_entities', context, async () => {
-              if (!resolvedEntities.length) return;
-              for (const resolved of resolvedEntities) {
-                await this.neo4jSyncService.syncEntity({
-                  id: resolved.id,
-                  entity_type: resolved.type,
-                  canonical_name: resolved.name
-                });
-              }
-            });
+            await this.runStage(
+              'sync_neo4j_entities',
+              context,
+              async () => {
+                if (!resolvedEntities.length) return;
+                for (const resolved of resolvedEntities) {
+                  await this.neo4jSyncService.syncEntity({
+                    id: resolved.id,
+                    entity_type: resolved.type,
+                    canonical_name: resolved.name
+                  });
+                }
+              },
+              { allowFailure: true, nextAction: 'skip_neo4j_entities' }
+            );
 
             currentStage = 'sync_neo4j_relationships';
-            await this.runStage('sync_neo4j_relationships', context, async () => {
-              const relationships = await this.relationshipExtractionService.extractRelationships({
-                signalId: signal.id,
-                signalText: signal.content,
-                extraction
-              });
-              for (const rel of relationships) {
-                await this.neo4jSyncService.syncRelationship(rel);
-              }
-            });
+            await this.runStage(
+              'sync_neo4j_relationships',
+              context,
+              async () => {
+                const relationships = await this.relationshipExtractionService.extractRelationships({
+                  signalId: signal.id,
+                  signalText: signal.content,
+                  extraction,
+                  resolvedEntities
+                });
+                for (const relationship of relationships) {
+                  await this.neo4jSyncService.syncRelationship(relationship);
+                }
+              },
+              { allowFailure: true, nextAction: 'skip_neo4j_relationships' }
+            );
           }
           } catch (transactionError: any) {
             // ROLLBACK on any error - ensure client is ALWAYS released, even if rollback fails

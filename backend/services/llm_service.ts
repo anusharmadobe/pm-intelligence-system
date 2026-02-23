@@ -92,14 +92,49 @@ export function createAzureOpenAIProvider(
         throw new Error(`Azure OpenAI API error: ${response.status} - ${error}`);
       }
 
-      const data = await response.json() as { choices: Array<{ message?: { content?: string } }> };
+      const data = await response.json() as {
+        choices: Array<{ message?: { content?: string } }>;
+        usage?: { prompt_tokens: number; completion_tokens: number; total_tokens: number };
+      };
       const content = data.choices[0]?.message?.content || '';
-      metrics.addTokenUsage(Math.ceil(prompt.length / 4), Math.ceil(content.length / 4));
-      
+
+      // Capture actual token usage from API response (or fallback to estimation)
+      const tokensIn = data.usage?.prompt_tokens ?? Math.ceil(prompt.length / 4);
+      const tokensOut = data.usage?.completion_tokens ?? Math.ceil(content.length / 4);
+      metrics.addTokenUsage(tokensIn, tokensOut);
+
+      // Record cost asynchronously (non-blocking)
+      const { getCostTrackingService } = require('./cost_tracking_service');
+      const { getCorrelationContext } = require('../utils/correlation');
+      const costService = getCostTrackingService();
+      const context = getCorrelationContext();
+
+      costService.recordCost({
+        correlation_id: context?.correlationId || 'unknown',
+        signal_id: context?.signalId,
+        agent_id: context?.agentId,
+        operation: 'llm_chat',
+        provider: 'azure_openai',
+        model: deployment,
+        tokens_input: tokensIn,
+        tokens_output: tokensOut,
+        cost_usd: costService.calculateCostForLLM('azure_openai', deployment, tokensIn, tokensOut),
+        response_time_ms: Date.now() - startTime,
+        timestamp: new Date()
+      }).catch((err: any) => {
+        logger.warn('Cost recording failed (non-blocking)', {
+          error: err.message,
+          deployment,
+          correlation_id: context?.correlationId
+        });
+      });
+
       logger.debug('Azure OpenAI LLM response', {
         deployment,
         promptLength: prompt.length,
         responseLength: content.length,
+        tokensIn,
+        tokensOut,
         durationMs: Date.now() - startTime
       });
 
@@ -162,14 +197,49 @@ export function createOpenAIProvider(
         throw new Error(`OpenAI API error: ${response.status} - ${error}`);
       }
 
-      const data = await response.json() as { choices: Array<{ message?: { content?: string } }> };
+      const data = await response.json() as {
+        choices: Array<{ message?: { content?: string } }>;
+        usage?: { prompt_tokens: number; completion_tokens: number; total_tokens: number };
+      };
       const content = data.choices[0]?.message?.content || '';
-      metrics.addTokenUsage(Math.ceil(prompt.length / 4), Math.ceil(content.length / 4));
-      
+
+      // Capture actual token usage from API response (or fallback to estimation)
+      const tokensIn = data.usage?.prompt_tokens ?? Math.ceil(prompt.length / 4);
+      const tokensOut = data.usage?.completion_tokens ?? Math.ceil(content.length / 4);
+      metrics.addTokenUsage(tokensIn, tokensOut);
+
+      // Record cost asynchronously (non-blocking)
+      const { getCostTrackingService } = require('./cost_tracking_service');
+      const { getCorrelationContext } = require('../utils/correlation');
+      const costService = getCostTrackingService();
+      const context = getCorrelationContext();
+
+      costService.recordCost({
+        correlation_id: context?.correlationId || 'unknown',
+        signal_id: context?.signalId,
+        agent_id: context?.agentId,
+        operation: 'llm_chat',
+        provider: 'openai',
+        model,
+        tokens_input: tokensIn,
+        tokens_output: tokensOut,
+        cost_usd: costService.calculateCostForLLM('openai', model, tokensIn, tokensOut),
+        response_time_ms: Date.now() - startTime,
+        timestamp: new Date()
+      }).catch((err: any) => {
+        logger.warn('Cost recording failed (non-blocking)', {
+          error: err.message,
+          model,
+          correlation_id: context?.correlationId
+        });
+      });
+
       logger.debug('OpenAI LLM response', {
         model,
         promptLength: prompt.length,
         responseLength: content.length,
+        tokensIn,
+        tokensOut,
         durationMs: Date.now() - startTime
       });
 

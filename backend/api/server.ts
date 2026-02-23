@@ -40,6 +40,8 @@ import { DocumentAdapter } from '../ingestion/document_adapter';
 import { WebScrapeAdapter } from '../ingestion/web_scrape_adapter';
 import { IngestionPipelineService } from '../services/ingestion_pipeline_service';
 import { validateFileUpload, sanitizeFilename, ALLOWED_MIME_TYPES, ALLOWED_EXTENSIONS } from '../services/file_validation_service';
+import costRoutes from './cost_routes';
+import adminCostRoutes from './admin_cost_routes';
 
 const app = express();
 
@@ -1865,6 +1867,10 @@ app.post('/webhooks/slack', createRateLimitMiddleware(rateLimiters.webhooks), cr
 app.post('/webhooks/teams', createRateLimitMiddleware(rateLimiters.webhooks), createTeamsWebhookHandler());
 app.post('/webhooks/grafana', createRateLimitMiddleware(rateLimiters.webhooks), createGrafanaWebhookHandler());
 app.post('/webhooks/splunk', createRateLimitMiddleware(rateLimiters.webhooks), createSplunkWebhookHandler());
+
+// Cost Tracking & Monitoring API
+app.use('/api/cost', costRoutes);
+app.use('/api/admin', requireAdmin, adminCostRoutes);
 
 // Agent Gateway (V2)
 if (config.featureFlags.agentGateway) {

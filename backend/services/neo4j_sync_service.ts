@@ -2,15 +2,37 @@ import { getDbPool } from '../db/connection';
 import { config } from '../config/env';
 import { logger } from '../utils/logger';
 import { getNeo4jDriver } from '../neo4j/client';
+import { parsePositiveInt } from '../utils/env_parsing';
 
 type Neo4jOperation = 'signal_sync' | 'entity_merge' | 'entity_split' | 'relationship_add';
 
-// Timeout for Neo4j operations (10 seconds default)
-const NEO4J_TIMEOUT_MS = parseInt(process.env.NEO4J_TIMEOUT_MS || '10000', 10);
+const DEFAULT_NEO4J_TIMEOUT_MS = 10000;
+const MIN_NEO4J_TIMEOUT_MS = 1000;
+const DEFAULT_CIRCUIT_TIMEOUT_THRESHOLD = 50;
+const DEFAULT_CIRCUIT_OPEN_MS = 120000;
+const MIN_CIRCUIT_OPEN_MS = 1000;
+
+// Hardened parsing accepts values like "1e4" and prevents unusably small timeouts.
+const NEO4J_TIMEOUT_MS = Math.max(
+  MIN_NEO4J_TIMEOUT_MS,
+  parsePositiveInt(process.env.NEO4J_TIMEOUT_MS, DEFAULT_NEO4J_TIMEOUT_MS)
+);
 
 export class Neo4jSyncService {
   private unsupportedRelationshipCounts = new Map<string, number>();
   private backlogFailureCount = 0;
+  private consecutiveTimeouts = 0;
+  private circuitOpenUntilMs = 0;
+  private static readonly CIRCUIT_TIMEOUT_THRESHOLD = parsePositiveInt(
+    process.env.NEO4J_CIRCUIT_TIMEOUT_THRESHOLD,
+    DEFAULT_CIRCUIT_TIMEOUT_THRESHOLD
+  );
+  private static readonly CIRCUIT_OPEN_MS = Math.max(
+    MIN_CIRCUIT_OPEN_MS,
+    parsePositiveInt(process.env.NEO4J_CIRCUIT_OPEN_MS, DEFAULT_CIRCUIT_OPEN_MS)
+  );
+  private static readonly CIRCUIT_LOG_EVERY = 100;
+  private circuitBypassCount = 0;
   /**
    * Executes a Neo4j query with timeout protection
    */
@@ -118,6 +140,33 @@ export class Neo4jSyncService {
     }
   }
 
+  private isCircuitOpen(): boolean {
+    return Date.now() < this.circuitOpenUntilMs;
+  }
+
+  private noteTimeout(operation: 'syncEntity' | 'syncRelationship'): void {
+    this.consecutiveTimeouts += 1;
+    if (
+      this.consecutiveTimeouts >= Neo4jSyncService.CIRCUIT_TIMEOUT_THRESHOLD &&
+      !this.isCircuitOpen()
+    ) {
+      this.circuitOpenUntilMs = Date.now() + Neo4jSyncService.CIRCUIT_OPEN_MS;
+      logger.warn('Neo4j sync circuit opened after consecutive timeouts', {
+        stage: 'neo4j_sync_circuit',
+        status: 'open',
+        operation,
+        consecutiveTimeouts: this.consecutiveTimeouts,
+        openForMs: Neo4jSyncService.CIRCUIT_OPEN_MS,
+        threshold: Neo4jSyncService.CIRCUIT_TIMEOUT_THRESHOLD,
+        nextAction: 'enqueue_only_until_recovery'
+      });
+    }
+  }
+
+  private noteSuccess(): void {
+    this.consecutiveTimeouts = 0;
+  }
+
   private async enqueue(operation: Neo4jOperation, payload: Record<string, unknown>): Promise<void> {
     const pool = getDbPool();
     try {
@@ -147,6 +196,26 @@ export class Neo4jSyncService {
       return;
     }
 
+    if (this.isCircuitOpen()) {
+      this.circuitBypassCount += 1;
+      if (
+        this.circuitBypassCount === 1 ||
+        this.circuitBypassCount % Neo4jSyncService.CIRCUIT_LOG_EVERY === 0
+      ) {
+        logger.warn('Neo4j sync circuit active; enqueueing entity without live sync', {
+          stage: 'neo4j_sync_circuit',
+          status: 'open',
+          operation: 'syncEntity',
+          entityId: entity.id,
+          bypassCount: this.circuitBypassCount,
+          remainingOpenMs: Math.max(0, this.circuitOpenUntilMs - Date.now()),
+          nextAction: 'enqueue_only'
+        });
+      }
+      await this.enqueue('signal_sync', { entity });
+      return;
+    }
+
     const driver = getNeo4jDriver();
     const session = driver.session({ database: config.neo4j.database });
     const label = this.mapEntityLabel(entity.entity_type);
@@ -159,10 +228,14 @@ export class Neo4jSyncService {
           { id: entity.id, name: entity.canonical_name }
         )
       );
+      this.noteSuccess();
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       const errorClass = error instanceof Error ? error.name : 'Error';
       const isTimeout = errorMessage.toLowerCase().includes('timeout');
+      if (isTimeout) {
+        this.noteTimeout('syncEntity');
+      }
       logger.warn('Neo4j entity sync failed, enqueueing to backlog', {
         stage: 'neo4j_entity_sync',
         status: 'error',
@@ -228,6 +301,28 @@ export class Neo4jSyncService {
       logger.debug('Canonicalized relationship type', { rawRelationship, relationship });
     }
 
+    if (this.isCircuitOpen()) {
+      this.circuitBypassCount += 1;
+      if (
+        this.circuitBypassCount === 1 ||
+        this.circuitBypassCount % Neo4jSyncService.CIRCUIT_LOG_EVERY === 0
+      ) {
+        logger.warn('Neo4j sync circuit active; enqueueing relationship without live sync', {
+          stage: 'neo4j_sync_circuit',
+          status: 'open',
+          operation: 'syncRelationship',
+          fromId: params.fromId,
+          toId: params.toId,
+          relationship,
+          bypassCount: this.circuitBypassCount,
+          remainingOpenMs: Math.max(0, this.circuitOpenUntilMs - Date.now()),
+          nextAction: 'enqueue_only'
+        });
+      }
+      await this.enqueue('relationship_add', params as unknown as Record<string, unknown>);
+      return;
+    }
+
     const driver = getNeo4jDriver();
     const session = driver.session({ database: config.neo4j.database });
     const fromLabel = this.mapEntityLabel(params.fromType);
@@ -243,10 +338,14 @@ export class Neo4jSyncService {
           { fromId: params.fromId, toId: params.toId }
         )
       );
+      this.noteSuccess();
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       const errorClass = error instanceof Error ? error.name : 'Error';
       const isTimeout = errorMessage.toLowerCase().includes('timeout');
+      if (isTimeout) {
+        this.noteTimeout('syncRelationship');
+      }
       logger.warn('Neo4j relationship sync failed, enqueueing to backlog', {
         stage: 'neo4j_relationship_sync',
         status: 'error',
@@ -348,7 +447,9 @@ export class Neo4jSyncService {
       const pgResult = await pool.query(
         `SELECT COUNT(*)::int AS count FROM entity_registry WHERE is_active = true`
       );
-      const neo4jResult = await session.run('MATCH (n) RETURN count(n) AS count');
+      const neo4jResult = await this.runWithTimeout(() =>
+        session.run('MATCH (n) RETURN count(n) AS count')
+      );
       const neo4jCount = neo4jResult.records[0]?.get('count')?.toInt?.() || 0;
       return { pgCount: pgResult.rows[0].count, neo4jCount };
     } finally {

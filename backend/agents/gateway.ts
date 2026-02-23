@@ -21,6 +21,7 @@ import { config } from '../config/env';
 import { eventBus } from './event_bus';
 import { AgentRequest, createAgentAuthMiddleware, createAgentRateLimitMiddleware, getApiKey } from './auth_middleware';
 import { createEventStreamHandler } from './event_stream';
+import { budgetCheckMiddleware } from '../middleware/budget_middleware';
 
 const registerSchema = z.object({
   agent_name: z.string().min(1),
@@ -476,7 +477,7 @@ export function createAgentGatewayRouter(): express.Router {
     }
   });
 
-  router.post('/query', async (req: AgentRequest, res) => {
+  router.post('/query', budgetCheckMiddleware, async (req: AgentRequest, res) => {
     try {
       const parsed = querySchema.parse(req.body);
       const result = await queryEngine.answerQuery(parsed);
@@ -515,7 +516,7 @@ export function createAgentGatewayRouter(): express.Router {
     }
   });
 
-  router.post('/ingest', async (req: AgentRequest, res) => {
+  router.post('/ingest', budgetCheckMiddleware, async (req: AgentRequest, res) => {
     if (!req.agent?.permissions?.write) {
       return res.status(403).json({ error: 'Write permission required' });
     }
@@ -652,7 +653,7 @@ export function createAgentGatewayRouter(): express.Router {
     }
   });
 
-  router.post('/reports/generate', async (req: AgentRequest, res) => {
+  router.post('/reports/generate', budgetCheckMiddleware, async (req: AgentRequest, res) => {
     if (!req.agent?.permissions?.write) {
       return res.status(403).json({ error: 'Write permission required' });
     }

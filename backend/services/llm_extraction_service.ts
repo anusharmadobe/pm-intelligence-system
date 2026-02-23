@@ -2,6 +2,12 @@ import { z } from 'zod';
 import { config } from '../config/env';
 import { logger } from '../utils/logger';
 import { createAzureOpenAIProvider, createLLMProviderFromEnv, LLMProvider } from './llm_service';
+import { parsePositiveInt } from '../utils/env_parsing';
+
+const DEFAULT_BATCH_CONCURRENCY = 5;
+const DEFAULT_BATCH_ITEM_TIMEOUT_MS = 30000;
+const DEFAULT_BATCH_TIMEOUT_MS = 300000;
+const MIN_BATCH_TIMEOUT_MS = 1000;
 
 const ExtractionSchema = z.object({
   entities: z.object({
@@ -234,53 +240,125 @@ export class LLMExtractionService {
     const startTime = Date.now();
     const concurrency = Math.max(
       1,
-      parseInt(process.env.LLM_EXTRACTION_BATCH_CONCURRENCY || '5', 10)
+      parsePositiveInt(process.env.LLM_EXTRACTION_BATCH_CONCURRENCY, DEFAULT_BATCH_CONCURRENCY)
+    );
+    const itemTimeoutMs = Math.max(
+      MIN_BATCH_TIMEOUT_MS,
+      parsePositiveInt(process.env.LLM_EXTRACTION_TIMEOUT_MS, DEFAULT_BATCH_ITEM_TIMEOUT_MS)
+    );
+    const batchTimeoutMs = Math.max(
+      itemTimeoutMs,
+      parsePositiveInt(process.env.LLM_EXTRACTION_BATCH_TIMEOUT_MS, DEFAULT_BATCH_TIMEOUT_MS)
     );
 
     logger.info('LLM batch extraction start', {
       stage: 'llm_batch_extraction',
       status: 'start',
       batchSize: contents.length,
-      concurrency
+      concurrency,
+      itemTimeoutMs,
+      batchTimeoutMs
     });
 
-    const results: ExtractionOutput[] = new Array(contents.length);
+    const results: Array<ExtractionOutput | undefined> = new Array(contents.length);
     let index = 0;
     let successCount = 0;
     let failureCount = 0;
+    let fallbackCount = 0;
+    let timedOutCount = 0;
+    let batchTimedOut = false;
 
     const workers = Array.from({ length: Math.min(concurrency, contents.length) }).map(async () => {
-      while (index < contents.length) {
+      while (!batchTimedOut && index < contents.length) {
         const current = index;
         index += 1;
+        let timeoutHandle: NodeJS.Timeout | null = null;
         try {
-          results[current] = await this.extract(contents[current]);
+          const timeoutPromise = new Promise<ExtractionOutput>((_, reject) => {
+            timeoutHandle = setTimeout(() => {
+              reject(new Error(`LLM batch extraction item timeout after ${itemTimeoutMs}ms`));
+            }, itemTimeoutMs);
+          });
+          results[current] = await Promise.race([this.extract(contents[current]), timeoutPromise]);
           successCount++;
         } catch (error) {
           failureCount++;
-          logger.error('Batch extraction item failed', {
+          fallbackCount++;
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          const errorClass = error instanceof Error ? error.name : 'Error';
+          const isTimeout = errorMessage.toLowerCase().includes('timeout');
+          if (isTimeout) {
+            timedOutCount++;
+          }
+          logger.warn('Batch extraction item failed, using heuristic fallback', {
             stage: 'llm_batch_extraction',
-            status: 'error',
+            status: 'degraded',
             itemIndex: current,
-            error: error instanceof Error ? error.message : String(error)
+            errorClass,
+            errorMessage,
+            isTimeout,
+            fallback: 'heuristic'
           });
-          throw error;
+          results[current] = this.heuristicExtract(contents[current]);
+        } finally {
+          if (timeoutHandle) {
+            clearTimeout(timeoutHandle);
+          }
         }
       }
     });
 
-    await Promise.all(workers);
+    const batchResult = await Promise.race([
+      Promise.all(workers).then(() => 'completed' as const),
+      new Promise<'timed_out'>((resolve) => {
+        setTimeout(() => {
+          resolve('timed_out');
+        }, batchTimeoutMs);
+      })
+    ]);
+
+    if (batchResult === 'timed_out') {
+      batchTimedOut = true;
+      let remainingFallbackCount = 0;
+      for (let i = 0; i < contents.length; i++) {
+        if (!results[i]) {
+          results[i] = this.heuristicExtract(contents[i]);
+          remainingFallbackCount++;
+        }
+      }
+      if (remainingFallbackCount > 0) {
+        failureCount += remainingFallbackCount;
+        fallbackCount += remainingFallbackCount;
+      }
+      logger.warn('LLM batch extraction timed out, using heuristic fallback for remaining items', {
+        stage: 'llm_batch_extraction',
+        status: 'timeout',
+        elapsedMs: Date.now() - startTime,
+        batchSize: contents.length,
+        concurrency,
+        batchTimeoutMs,
+        remainingFallbackCount
+      });
+    }
+
+    const finalResults = results.map(
+      (extraction, i) => extraction || this.heuristicExtract(contents[i])
+    );
 
     logger.info('LLM batch extraction complete', {
       stage: 'llm_batch_extraction',
-      status: 'success',
+      status: failureCount > 0 ? 'degraded' : 'success',
       elapsedMs: Date.now() - startTime,
       batchSize: contents.length,
       successCount,
       failureCount,
-      concurrency
+      fallbackCount,
+      timedOutCount,
+      concurrency,
+      itemTimeoutMs,
+      batchTimeoutMs
     });
 
-    return results;
+    return finalResults;
   }
 }
