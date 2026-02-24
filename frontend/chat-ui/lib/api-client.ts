@@ -1,4 +1,5 @@
 import { QueryResponse, QueryFilters, SupportingSignal, Conversation } from './types';
+import { safeGetJSON, safeSetJSON } from './safe-storage';
 
 export class PMIntelligenceClient {
   private apiKey: string;
@@ -100,18 +101,20 @@ export class PMIntelligenceClient {
       conversations.push(conversation);
     }
 
-    localStorage.setItem('pm_conversations', JSON.stringify(conversations));
+    const result = safeSetJSON('pm_conversations', conversations);
+    if (!result.success) {
+      console.error('Failed to save conversation:', result.errorMessage);
+    }
   }
 
   /**
    * Get all conversations from local storage
    */
   getConversations(): Conversation[] {
-    const stored = localStorage.getItem('pm_conversations');
-    if (!stored) return [];
+    const conversations = safeGetJSON<any[]>('pm_conversations', []);
 
     try {
-      return JSON.parse(stored).map((c: any) => ({
+      return conversations.map((c: any) => ({
         ...c,
         created_at: new Date(c.created_at),
         updated_at: new Date(c.updated_at),
@@ -120,7 +123,8 @@ export class PMIntelligenceClient {
           timestamp: new Date(m.timestamp)
         }))
       }));
-    } catch {
+    } catch (error) {
+      console.error('Failed to parse conversations:', error);
       return [];
     }
   }
@@ -139,7 +143,10 @@ export class PMIntelligenceClient {
   deleteConversation(id: string): void {
     const conversations = this.getConversations();
     const filtered = conversations.filter(c => c.id !== id);
-    localStorage.setItem('pm_conversations', JSON.stringify(filtered));
+    const result = safeSetJSON('pm_conversations', filtered);
+    if (!result.success) {
+      console.error('Failed to delete conversation:', result.errorMessage);
+    }
   }
 
   /**

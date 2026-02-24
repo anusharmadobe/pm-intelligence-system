@@ -902,8 +902,16 @@ export async function mergeOpportunities(
     secondary_id: secondaryOpportunityId
   });
 
+  const pool = getDbPool();
+  const client = await pool.connect();
+
   try {
-    const pool = getDbPool();
+    // Start transaction
+    await client.query('BEGIN');
+    logger.debug('Transaction started for opportunity merge', {
+      stage: 'opportunity_merge',
+      status: 'transaction_begin'
+    });
 
     // Get signals from both opportunities
     logger.debug('Fetching signals for merge', {
@@ -935,56 +943,65 @@ export async function mergeOpportunities(
 
     const allSignals = [...primarySignals, ...secondarySignals];
 
-  logger.debug('Signals fetched for merge', {
-    stage: 'opportunity_merge',
-    primary_signal_count: primarySignals.length,
-    secondary_signal_count: secondarySignals.length,
-    total_signals: allSignals.length
-  });
+    logger.debug('Signals fetched for merge', {
+      stage: 'opportunity_merge',
+      primary_signal_count: primarySignals.length,
+      secondary_signal_count: secondarySignals.length,
+      total_signals: allSignals.length
+    });
 
-  // Create merged opportunity
-  const merged = await createOpportunityFromCluster(allSignals);
+    // Create merged opportunity
+    const merged = await createOpportunityFromCluster(allSignals);
 
-  // Update primary opportunity
-  logger.debug('Updating primary opportunity', {
-    stage: 'opportunity_merge',
-    primary_id: primaryOpportunityId,
-    new_title: merged.title,
-    new_description: merged.description?.substring(0, 100)
-  });
+    // Update primary opportunity
+    logger.debug('Updating primary opportunity', {
+      stage: 'opportunity_merge',
+      primary_id: primaryOpportunityId,
+      new_title: merged.title,
+      new_description: merged.description?.substring(0, 100)
+    });
 
-  await pool.query(
-    `UPDATE opportunities
-     SET title = $1, description = $2
-     WHERE id = $3`,
-    [merged.title, merged.description, primaryOpportunityId]
-  );
+    await client.query(
+      `UPDATE opportunities
+       SET title = $1, description = $2
+       WHERE id = $3`,
+      [merged.title, merged.description, primaryOpportunityId]
+    );
 
-  // Move all signals from secondary to primary
-  logger.debug('Migrating signals to primary opportunity', {
-    stage: 'opportunity_merge',
-    from: secondaryOpportunityId,
-    to: primaryOpportunityId,
-    signal_count: secondarySignals.length
-  });
+    // Move all signals from secondary to primary
+    logger.debug('Migrating signals to primary opportunity', {
+      stage: 'opportunity_merge',
+      from: secondaryOpportunityId,
+      to: primaryOpportunityId,
+      signal_count: secondarySignals.length
+    });
 
-  await pool.query(
-    `UPDATE opportunity_signals
-     SET opportunity_id = $1
-     WHERE opportunity_id = $2`,
-    [primaryOpportunityId, secondaryOpportunityId]
-  );
+    await client.query(
+      `UPDATE opportunity_signals
+       SET opportunity_id = $1
+       WHERE opportunity_id = $2`,
+      [primaryOpportunityId, secondaryOpportunityId]
+    );
 
-  // Delete secondary opportunity
-  logger.debug('Deleting secondary opportunity', {
-    stage: 'opportunity_merge',
-    secondary_id: secondaryOpportunityId
-  });
+    // Delete secondary opportunity
+    logger.debug('Deleting secondary opportunity', {
+      stage: 'opportunity_merge',
+      secondary_id: secondaryOpportunityId
+    });
 
-  await pool.query(
-    `DELETE FROM opportunities WHERE id = $1`,
-    [secondaryOpportunityId]
-  );
+    await client.query(
+      `DELETE FROM opportunities WHERE id = $1`,
+      [secondaryOpportunityId]
+    );
+
+    // Commit transaction
+    await client.query('COMMIT');
+    logger.info('Opportunity merge transaction committed successfully', {
+      stage: 'opportunity_merge',
+      status: 'transaction_commit',
+      primary_id: primaryOpportunityId,
+      secondary_id: secondaryOpportunityId
+    });
 
     logger.info('Opportunities merged successfully', {
       stage: 'opportunity_merge',
@@ -1002,15 +1019,33 @@ export async function mergeOpportunities(
       created_at: new Date(result.rows[0].created_at)
     };
   } catch (error: any) {
-    logger.error('Opportunity merge failed', {
-      stage: 'opportunity_merge',
-      status: 'error',
-      primary_id: primaryOpportunityId,
-      secondary_id: secondaryOpportunityId,
-      error: error.message,
-      stack: error.stack
-    });
+    // Rollback transaction on error
+    try {
+      await client.query('ROLLBACK');
+      logger.error('Opportunity merge failed, transaction rolled back', {
+        stage: 'opportunity_merge',
+        status: 'rollback',
+        primary_id: primaryOpportunityId,
+        secondary_id: secondaryOpportunityId,
+        error: error.message,
+        stack: error.stack
+      });
+    } catch (rollbackError: any) {
+      logger.error('Rollback failed during opportunity merge', {
+        stage: 'opportunity_merge',
+        status: 'rollback_error',
+        rollbackError: rollbackError.message,
+        originalError: error.message
+      });
+    }
     throw error;
+  } finally {
+    // Always release the client
+    client.release();
+    logger.debug('Transaction client released', {
+      stage: 'opportunity_merge',
+      status: 'cleanup'
+    });
   }
 }
 

@@ -3,6 +3,7 @@
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 import { PMIntelligenceClient } from '@/lib/api-client';
 import { Key, Loader2 } from 'lucide-react';
+import { safeGetItem, safeSetItem, safeRemoveItem } from '@/lib/safe-storage';
 
 interface ApiKeyContextValue {
   apiClient: PMIntelligenceClient | null;
@@ -34,10 +35,10 @@ export function ApiKeyProvider({ children }: ApiKeyProviderProps) {
 
   useEffect(() => {
     // Check for stored API key
-    const stored = localStorage.getItem('pm_api_key');
-    if (stored) {
-      setApiKeyState(stored);
-      const client = new PMIntelligenceClient(stored);
+    const result = safeGetItem('pm_api_key');
+    if (result.success && result.data) {
+      setApiKeyState(result.data);
+      const client = new PMIntelligenceClient(result.data);
       setApiClient(client);
 
       // Test connection
@@ -48,12 +49,20 @@ export function ApiKeyProvider({ children }: ApiKeyProviderProps) {
         setIsLoading(false);
       });
     } else {
+      if (!result.success && result.error !== 'not_available') {
+        console.error('Failed to load API key from storage:', result.errorMessage);
+      }
       setIsLoading(false);
     }
   }, []);
 
   const setApiKey = (key: string) => {
-    localStorage.setItem('pm_api_key', key);
+    const result = safeSetItem('pm_api_key', key);
+    if (!result.success) {
+      console.error('Failed to save API key:', result.errorMessage);
+      setError('Failed to save API key. Storage may be full or unavailable.');
+      return;
+    }
     setApiKeyState(key);
     const client = new PMIntelligenceClient(key);
     setApiClient(client);
@@ -61,7 +70,10 @@ export function ApiKeyProvider({ children }: ApiKeyProviderProps) {
   };
 
   const clearApiKey = () => {
-    localStorage.removeItem('pm_api_key');
+    const result = safeRemoveItem('pm_api_key');
+    if (!result.success) {
+      console.error('Failed to clear API key:', result.errorMessage);
+    }
     setApiKeyState(null);
     setApiClient(null);
   };

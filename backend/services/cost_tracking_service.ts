@@ -15,6 +15,7 @@ import { logger } from '../utils/logger';
 import { calculateLLMCost, calculateEmbeddingCost, getPricingTier } from '../config/pricing';
 import { getRunMetrics } from '../utils/run_metrics';
 import { LRUCache } from '../utils/lru_cache';
+import { createCircuitBreaker, CircuitBreaker, CircuitState } from '../utils/circuit_breaker';
 
 /**
  * Cost record for a single LLM or embedding operation
@@ -68,15 +69,35 @@ class CostTrackingService {
   private readonly FLUSH_INTERVAL_MS: number;
   private flushTimer: NodeJS.Timeout | null = null;
   private shutdownInProgress = false;
+  private flushInProgress = false; // Prevent concurrent flushes
+  private flushPromise: Promise<void> | null = null; // Track in-flight flush
 
   // Budget cache to avoid DB queries on every request (5 minute TTL)
-  private budgetCache = new LRUCache<string, BudgetStatus & { cachedAt: number }>(100);
+  private budgetCache = new LRUCache<string, BudgetStatus & { cachedAt: number}>(100);
   private readonly BUDGET_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+  // Circuit breaker for budget checks (prevents cascading failures)
+  private budgetCheckBreaker: CircuitBreaker<BudgetStatus>;
 
   constructor() {
     this.pool = getDbPool();
     this.BATCH_SIZE = parseInt(process.env.COST_BATCH_SIZE || '50', 10);
     this.FLUSH_INTERVAL_MS = parseInt(process.env.COST_FLUSH_INTERVAL_MS || '5000', 10);
+
+    // Initialize circuit breaker for budget checks
+    this.budgetCheckBreaker = createCircuitBreaker<BudgetStatus>({
+      name: 'budget_check',
+      failureThreshold: 5,        // Open after 5 failures
+      successThreshold: 2,         // Close after 2 successes in half-open
+      timeout: 3000,               // 3 second timeout for budget checks
+      resetTimeout: 30000,         // Try again after 30 seconds
+      onStateChange: (oldState, newState) => {
+        logger.warn('Budget check circuit breaker state changed', {
+          old_state: oldState,
+          new_state: newState
+        });
+      }
+    });
 
     // Start periodic flush timer
     this.startFlushTimer();
@@ -85,8 +106,61 @@ class CostTrackingService {
     logger.info('Cost Tracking Service initialized', {
       batch_size: this.BATCH_SIZE,
       flush_interval_ms: this.FLUSH_INTERVAL_MS,
-      pricing_tier: getPricingTier()
+      pricing_tier: getPricingTier(),
+      circuit_breaker: 'enabled'
     });
+  }
+
+  /**
+   * Validate cost record inputs
+   */
+  private validateCostRecord(record: CostRecord): void {
+    // Validate cost_usd
+    if (typeof record.cost_usd !== 'number' || !isFinite(record.cost_usd)) {
+      throw new Error(`Invalid cost_usd: ${record.cost_usd} (must be a finite number)`);
+    }
+    if (record.cost_usd < 0) {
+      throw new Error(`Invalid cost_usd: ${record.cost_usd} (cannot be negative)`);
+    }
+    if (record.cost_usd > 1000000) {
+      // Sanity check: reject costs > $1M
+      throw new Error(`Invalid cost_usd: ${record.cost_usd} (exceeds maximum of $1M)`);
+    }
+
+    // Validate tokens_input
+    if (typeof record.tokens_input !== 'number' || !isFinite(record.tokens_input)) {
+      throw new Error(`Invalid tokens_input: ${record.tokens_input} (must be a finite number)`);
+    }
+    if (record.tokens_input < 0) {
+      throw new Error(`Invalid tokens_input: ${record.tokens_input} (cannot be negative)`);
+    }
+
+    // Validate tokens_output
+    if (typeof record.tokens_output !== 'number' || !isFinite(record.tokens_output)) {
+      throw new Error(`Invalid tokens_output: ${record.tokens_output} (must be a finite number)`);
+    }
+    if (record.tokens_output < 0) {
+      throw new Error(`Invalid tokens_output: ${record.tokens_output} (cannot be negative)`);
+    }
+
+    // Validate required string fields
+    if (!record.correlation_id || typeof record.correlation_id !== 'string') {
+      throw new Error('correlation_id is required and must be a string');
+    }
+    if (!record.operation || typeof record.operation !== 'string') {
+      throw new Error('operation is required and must be a string');
+    }
+    if (!record.provider || typeof record.provider !== 'string') {
+      throw new Error('provider is required and must be a string');
+    }
+    if (!record.model || typeof record.model !== 'string') {
+      throw new Error('model is required and must be a string');
+    }
+
+    // Validate timestamp
+    if (!(record.timestamp instanceof Date) || isNaN(record.timestamp.getTime())) {
+      throw new Error('timestamp must be a valid Date object');
+    }
   }
 
   /**
@@ -99,6 +173,9 @@ class CostTrackingService {
       if (process.env.FF_COST_TRACKING === 'false') {
         return;
       }
+
+      // CRITICAL: Validate all inputs before recording
+      this.validateCostRecord(record);
 
       // Add to buffer
       this.costBuffer.push(record);
@@ -146,8 +223,60 @@ class CostTrackingService {
   }
 
   /**
+   * Internal method to check budget from database
+   * Used by circuit breaker wrapper
+   */
+  private async checkAgentBudgetInternal(agentId: string): Promise<BudgetStatus> {
+    // Query database
+    const result = await this.pool.query(`
+      SELECT
+        ar.max_monthly_cost_usd AS budget_limit,
+        COALESCE(acs.total_cost_usd, 0) AS current_cost,
+        ar.cost_reset_at
+      FROM agent_registry ar
+      LEFT JOIN agent_cost_summary acs
+        ON ar.id = acs.agent_id
+        AND acs.month = date_trunc('month', NOW())
+      WHERE ar.id = $1
+    `, [agentId]);
+
+    if (result.rows.length === 0) {
+      throw new Error(`Agent not found: ${agentId}`);
+    }
+
+    const { budget_limit, current_cost, cost_reset_at } = result.rows[0];
+
+    // Check if we need to reset monthly counter
+    const now = new Date();
+    const resetAt = new Date(cost_reset_at);
+    if (now > resetAt) {
+      await this.resetAgentMonthlyCost(agentId);
+      return {
+        allowed: true,
+        remaining: budget_limit,
+        limit: budget_limit,
+        current_cost: 0,
+        utilization_pct: 0
+      };
+    }
+
+    const remaining = budget_limit - current_cost;
+    const gracePeriod = budget_limit * 0.1; // 10% grace period
+    const allowed = remaining > -gracePeriod;
+    const utilization_pct = budget_limit > 0 ? (current_cost / budget_limit) * 100 : 0;
+
+    return {
+      allowed,
+      remaining,
+      limit: budget_limit,
+      current_cost,
+      utilization_pct
+    };
+  }
+
+  /**
    * Check if agent has budget remaining
-   * Uses cache to avoid frequent DB queries
+   * Uses cache, circuit breaker, and fails open on errors
    */
   async checkAgentBudget(agentId: string): Promise<BudgetStatus> {
     try {
@@ -168,73 +297,43 @@ class CostTrackingService {
         };
       }
 
-      // Query database
-      const result = await this.pool.query(`
-        SELECT
-          ar.max_monthly_cost_usd AS budget_limit,
-          COALESCE(acs.total_cost_usd, 0) AS current_cost,
-          ar.cost_reset_at
-        FROM agent_registry ar
-        LEFT JOIN agent_cost_summary acs
-          ON ar.id = acs.agent_id
-          AND acs.month = date_trunc('month', NOW())
-        WHERE ar.id = $1
-      `, [agentId]);
-
-      if (result.rows.length === 0) {
-        throw new Error(`Agent not found: ${agentId}`);
-      }
-
-      const { budget_limit, current_cost, cost_reset_at } = result.rows[0];
-
-      // Check if we need to reset monthly counter
-      const now = new Date();
-      const resetAt = new Date(cost_reset_at);
-      if (now > resetAt) {
-        await this.resetAgentMonthlyCost(agentId);
-        const status: BudgetStatus = {
-          allowed: true,
-          remaining: budget_limit,
-          limit: budget_limit,
-          current_cost: 0,
-          utilization_pct: 0
-        };
-        this.budgetCache.set(agentId, { ...status, cachedAt: Date.now() });
-        return status;
-      }
-
-      const remaining = budget_limit - current_cost;
-      const gracePeriod = budget_limit * 0.1; // 10% grace period
-      const allowed = remaining > -gracePeriod;
-      const utilization_pct = budget_limit > 0 ? (current_cost / budget_limit) * 100 : 0;
-
-      const status: BudgetStatus = {
-        allowed,
-        remaining,
-        limit: budget_limit,
-        current_cost,
-        utilization_pct
-      };
+      // Use circuit breaker to protect against database failures
+      const status = await this.budgetCheckBreaker.execute(
+        () => this.checkAgentBudgetInternal(agentId)
+      );
 
       // Cache the status
       this.budgetCache.set(agentId, { ...status, cachedAt: Date.now() });
 
       logger.debug('Agent budget check (from DB)', {
         agent_id: agentId,
-        allowed,
-        remaining,
-        limit: budget_limit,
-        current_cost,
-        utilization_pct: utilization_pct.toFixed(2)
+        allowed: status.allowed,
+        remaining: status.remaining,
+        limit: status.limit,
+        current_cost: status.current_cost,
+        utilization_pct: status.utilization_pct.toFixed(2),
+        circuit_state: this.budgetCheckBreaker.getState()
       });
 
       return status;
     } catch (error: any) {
-      // Fail open on errors - don't block operations
-      logger.error('Budget check failed (allowing request)', {
-        error: error.message,
-        agent_id: agentId
-      });
+      // Check if circuit breaker is open
+      if (error.circuitBreakerOpen) {
+        logger.warn('Budget check blocked by circuit breaker (failing open)', {
+          agent_id: agentId,
+          circuit_state: this.budgetCheckBreaker.getState()
+        });
+      } else {
+        logger.error('Budget check failed (failing open)', {
+          error: error.message,
+          agent_id: agentId,
+          circuit_state: this.budgetCheckBreaker.getState()
+        });
+      }
+
+      // CRITICAL DECISION: Fail open (allow request) vs fail closed (deny request)
+      // We fail OPEN to prevent blocking legitimate operations during outages
+      // Budget reconciliation will catch overspend in background jobs
       return {
         allowed: true,
         remaining: 0,
@@ -461,53 +560,78 @@ class CostTrackingService {
 
   /**
    * Flush buffered cost records to database (batched)
+   * CRITICAL: Uses mutex pattern to prevent concurrent flushes and pool-after-end errors
    */
   private async flushCostBuffer(): Promise<void> {
+    // Skip if no records or shutdown in progress
     if (this.costBuffer.length === 0 || this.shutdownInProgress) {
       return;
     }
 
-    const batch = this.costBuffer.splice(0, this.BATCH_SIZE);
-
-    try {
-      // Batch insert using unnest for performance
-      const correlationIds = batch.map(r => r.correlation_id);
-      const signalIds = batch.map(r => r.signal_id || null);
-      const agentIds = batch.map(r => r.agent_id || null);
-      const operations = batch.map(r => r.operation);
-      const providers = batch.map(r => r.provider);
-      const models = batch.map(r => r.model);
-      const tokensInput = batch.map(r => r.tokens_input);
-      const tokensOutput = batch.map(r => r.tokens_output);
-      const costs = batch.map(r => r.cost_usd);
-      const responseTimes = batch.map(r => r.response_time_ms || null);
-
-      await this.pool.query(`
-        INSERT INTO llm_cost_log
-          (correlation_id, signal_id, agent_id, operation, provider, model,
-           tokens_input, tokens_output, cost_usd, response_time_ms)
-        SELECT * FROM unnest(
-          $1::text[], $2::uuid[], $3::uuid[], $4::text[], $5::text[], $6::text[],
-          $7::int[], $8::int[], $9::numeric[], $10::int[]
-        )
-      `, [
-        correlationIds, signalIds, agentIds, operations, providers, models,
-        tokensInput, tokensOutput, costs, responseTimes
-      ]);
-
-      logger.debug('Cost batch flushed', {
-        count: batch.length,
-        total_cost: costs.reduce((sum, cost) => sum + cost, 0).toFixed(6)
-      });
-    } catch (error: any) {
-      logger.error('Cost batch flush failed', {
-        error: error.message,
-        batch_size: batch.length
-      });
-
-      // Put failed records back in buffer for retry
-      this.costBuffer.unshift(...batch);
+    // Prevent concurrent flushes - wait for existing flush to complete
+    if (this.flushInProgress) {
+      logger.debug('Flush already in progress, skipping');
+      return;
     }
+
+    // Set mutex and create promise for tracking
+    this.flushInProgress = true;
+    this.flushPromise = (async () => {
+      const batch = this.costBuffer.splice(0, this.BATCH_SIZE);
+
+      // Double-check buffer isn't empty after splice
+      if (batch.length === 0) {
+        return;
+      }
+
+      try {
+        // Batch insert using unnest for performance
+        const correlationIds = batch.map(r => r.correlation_id);
+        const signalIds = batch.map(r => r.signal_id || null);
+        const agentIds = batch.map(r => r.agent_id || null);
+        const operations = batch.map(r => r.operation);
+        const providers = batch.map(r => r.provider);
+        const models = batch.map(r => r.model);
+        const tokensInput = batch.map(r => r.tokens_input);
+        const tokensOutput = batch.map(r => r.tokens_output);
+        const costs = batch.map(r => r.cost_usd);
+        const responseTimes = batch.map(r => r.response_time_ms || null);
+
+        await this.pool.query(`
+          INSERT INTO llm_cost_log
+            (correlation_id, signal_id, agent_id, operation, provider, model,
+             tokens_input, tokens_output, cost_usd, response_time_ms)
+          SELECT * FROM unnest(
+            $1::text[], $2::uuid[], $3::uuid[], $4::text[], $5::text[], $6::text[],
+            $7::int[], $8::int[], $9::numeric[], $10::int[]
+          )
+        `, [
+          correlationIds, signalIds, agentIds, operations, providers, models,
+          tokensInput, tokensOutput, costs, responseTimes
+        ]);
+
+        logger.debug('Cost batch flushed', {
+          count: batch.length,
+          total_cost: costs.reduce((sum, cost) => sum + cost, 0).toFixed(6)
+        });
+      } catch (error: any) {
+        logger.error('Cost batch flush failed', {
+          error: error.message,
+          batch_size: batch.length
+        });
+
+        // Put failed records back in buffer for retry (unless shutting down)
+        if (!this.shutdownInProgress) {
+          this.costBuffer.unshift(...batch);
+        }
+      } finally {
+        // Release mutex
+        this.flushInProgress = false;
+        this.flushPromise = null;
+      }
+    })();
+
+    return this.flushPromise;
   }
 
   /**
@@ -523,24 +647,39 @@ class CostTrackingService {
 
   /**
    * Graceful shutdown - flush remaining buffer
+   * CRITICAL: Waits for in-flight flush to complete before shutdown
    */
   async shutdown(): Promise<void> {
     if (this.shutdownInProgress) {
       return;
     }
 
-    this.shutdownInProgress = true;
-
     logger.info('Cost Tracking Service shutting down...');
 
-    // Stop flush timer
+    // Stop flush timer FIRST to prevent new flushes
     if (this.flushTimer) {
       clearInterval(this.flushTimer);
       this.flushTimer = null;
+      logger.debug('Flush timer stopped');
     }
 
-    // Flush remaining buffer
-    await this.flushCostBuffer();
+    // CRITICAL: Wait for any in-flight flush to complete before proceeding
+    if (this.flushPromise) {
+      logger.debug('Waiting for in-flight flush to complete...');
+      await this.flushPromise;
+      logger.debug('In-flight flush completed');
+    }
+
+    // Now set shutdown flag (after in-flight flush completes)
+    this.shutdownInProgress = true;
+
+    // Flush remaining buffer one last time
+    if (this.costBuffer.length > 0) {
+      logger.info('Flushing remaining cost buffer', {
+        buffer_size: this.costBuffer.length
+      });
+      await this.flushCostBuffer();
+    }
 
     logger.info('Cost Tracking Service shutdown complete');
   }

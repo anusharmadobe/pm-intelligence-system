@@ -269,9 +269,20 @@ router.get('/operations', async (req: Request, res: Response) => {
  */
 router.get('/trends', async (req: Request, res: Response) => {
   try {
-    const days = parseInt(req.query.days as string) || 30;
+    // SECURITY: Validate and sanitize days parameter to prevent SQL injection
+    const daysRaw = req.query.days as string;
+    const days = parseInt(daysRaw) || 30;
 
-    // Get daily cost for last N days
+    // Validate days is within acceptable range
+    if (isNaN(days) || days < 1 || days > 365) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid days parameter',
+        message: 'days must be a number between 1 and 365'
+      });
+    }
+
+    // Get daily cost for last N days using parameterized query
     const result = await pool.query(`
       SELECT
         date_trunc('day', created_at) AS day,
@@ -279,10 +290,10 @@ router.get('/trends', async (req: Request, res: Response) => {
         COUNT(*) AS operation_count,
         SUM(tokens_input + tokens_output) AS total_tokens
       FROM llm_cost_log
-      WHERE created_at >= NOW() - INTERVAL '${days} days'
+      WHERE created_at >= NOW() - INTERVAL '1 day' * $1
       GROUP BY day
       ORDER BY day ASC
-    `);
+    `, [days]);
 
     const dailyTrend = result.rows.map(row => ({
       day: row.day,

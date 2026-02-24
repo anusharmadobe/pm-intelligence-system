@@ -1,0 +1,409 @@
+# Monitoring and Alerting Configuration
+# For use with Prometheus, Grafana, PagerDuty, or similar
+
+---
+# Alert Rules
+groups:
+  - name: system_health
+    interval: 30s
+    rules:
+      # Critical: System Down
+      - alert: SystemDown
+        expr: up{job="pm-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "PM Intelligence system is down"
+          description: "Backend service has been down for more than 1 minute"
+          runbook: "https://docs.your-domain.com/runbooks/system-down"
+
+      # Critical: High Error Rate
+      - alert: HighErrorRate
+        expr: pm_error_rate > 0.05
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Error rate above 5%"
+          description: "Error rate is {{ $value | humanizePercentage }} (threshold: 5%)"
+          runbook: "https://docs.your-domain.com/runbooks/high-error-rate"
+
+      # Critical: Database Connection Failures
+      - alert: DatabaseConnectionFailure
+        expr: rate(database_connection_errors_total[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Database connection failures detected"
+          description: "Database connection error rate is {{ $value }}/min"
+
+  - name: performance
+    interval: 1m
+    rules:
+      # Warning: Slow Response Time
+      - alert: SlowResponseTime
+        expr: histogram_quantile(0.95, pm_request_duration_ms) > 2000
+        for: 10m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "P95 response time above 2 seconds"
+          description: "P95 response time is {{ $value }}ms (threshold: 2000ms)"
+
+      # Critical: Very Slow Response Time
+      - alert: VerySlowResponseTime
+        expr: histogram_quantile(0.95, pm_request_duration_ms) > 5000
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "P95 response time above 5 seconds"
+          description: "P95 response time is {{ $value }}ms (threshold: 5000ms)"
+          runbook: "https://docs.your-domain.com/runbooks/slow-performance"
+
+      # Warning: High Request Count
+      - alert: HighRequestVolume
+        expr: rate(pm_requests_total[5m]) > 1000
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "High request volume detected"
+          description: "Request rate is {{ $value }}/s (threshold: 1000/s)"
+
+  - name: resources
+    interval: 1m
+    rules:
+      # Critical: High CPU Usage
+      - alert: HighCPUUsage
+        expr: cpu_usage_percent > 90
+        for: 5m
+        labels:
+          severity: critical
+          team: infra
+        annotations:
+          summary: "CPU usage above 90%"
+          description: "CPU usage is {{ $value }}%"
+
+      # Critical: High Memory Usage
+      - alert: HighMemoryUsage
+        expr: memory_usage_percent > 90
+        for: 5m
+        labels:
+          severity: critical
+          team: infra
+        annotations:
+          summary: "Memory usage above 90%"
+          description: "Memory usage is {{ $value }}%"
+
+      # Critical: Disk Space Low
+      - alert: DiskSpaceLow
+        expr: disk_free_percent < 10
+        for: 5m
+        labels:
+          severity: critical
+          team: infra
+        annotations:
+          summary: "Disk space below 10%"
+          description: "Disk space is {{ $value }}% free"
+          runbook: "https://docs.your-domain.com/runbooks/disk-space"
+
+  - name: application
+    interval: 1m
+    rules:
+      # Warning: Dead Letter Queue Growing
+      - alert: DeadLetterQueueGrowing
+        expr: neo4j_dead_letter_queue_size > 100
+        for: 30m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Dead letter queue has {{ $value }} items"
+          description: "Neo4j sync dead letter queue is growing"
+          runbook: "https://docs.your-domain.com/runbooks/dead-letter-queue"
+
+      # Warning: Many Unresolved Errors
+      - alert: ManyUnresolvedErrors
+        expr: unresolved_error_groups > 10
+        for: 1h
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "{{ $value }} unresolved error groups"
+          description: "Error aggregation has many unresolved groups"
+
+      # Critical: API Key Cache Miss Rate High
+      - alert: HighCacheMissRate
+        expr: api_key_cache_miss_rate > 0.5
+        for: 15m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "API key cache miss rate above 50%"
+          description: "Cache miss rate is {{ $value | humanizePercentage }}"
+
+  - name: database
+    interval: 1m
+    rules:
+      # Warning: Slow Queries
+      - alert: SlowDatabaseQueries
+        expr: rate(slow_query_count[5m]) > 10
+        for: 10m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Slow database queries detected"
+          description: "{{ $value }} slow queries per second"
+          runbook: "https://docs.your-domain.com/runbooks/slow-queries"
+
+      # Critical: Database Connection Pool Exhausted
+      - alert: DatabasePoolExhausted
+        expr: database_connection_pool_usage > 0.95
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Database connection pool above 95%"
+          description: "Connection pool usage is {{ $value | humanizePercentage }}"
+
+      # Warning: Long Running Transactions
+      - alert: LongRunningTransactions
+        expr: database_long_running_transactions > 5
+        for: 15m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "{{ $value }} long-running transactions"
+          description: "Transactions running for more than 15 minutes"
+
+---
+# Notification Channels
+notification_channels:
+  - name: pagerduty_critical
+    type: pagerduty
+    settings:
+      integration_key: ${PAGERDUTY_INTEGRATION_KEY}
+      severity: critical
+    filters:
+      - severity: critical
+
+  - name: slack_alerts
+    type: slack
+    settings:
+      webhook_url: ${SLACK_WEBHOOK_URL}
+      channel: "#alerts"
+      username: "PM Intelligence Alerts"
+    filters:
+      - severity: [critical, warning]
+
+  - name: email_alerts
+    type: email
+    settings:
+      to: ["team@your-domain.com"]
+      from: "alerts@your-domain.com"
+    filters:
+      - severity: [critical, warning]
+
+  - name: slack_warnings
+    type: slack
+    settings:
+      webhook_url: ${SLACK_WEBHOOK_URL}
+      channel: "#warnings"
+      username: "PM Intelligence Warnings"
+    filters:
+      - severity: warning
+
+---
+# Dashboards Configuration
+dashboards:
+  - name: system_overview
+    title: "PM Intelligence - System Overview"
+    panels:
+      - title: "Request Rate"
+        type: graph
+        query: rate(pm_requests_total[5m])
+        unit: "req/s"
+
+      - title: "P95 Latency"
+        type: graph
+        query: histogram_quantile(0.95, pm_request_duration_ms)
+        unit: "ms"
+        thresholds:
+          - value: 2000
+            color: yellow
+          - value: 5000
+            color: red
+
+      - title: "Error Rate"
+        type: graph
+        query: pm_error_rate
+        unit: "%"
+        thresholds:
+          - value: 0.02
+            color: yellow
+          - value: 0.05
+            color: red
+
+      - title: "System Health"
+        type: singlestat
+        query: pm_system_health
+        mapping:
+          1: "Healthy"
+          0.5: "Degraded"
+          0: "Critical"
+
+  - name: performance_details
+    title: "PM Intelligence - Performance Details"
+    panels:
+      - title: "Response Time Percentiles"
+        type: graph
+        queries:
+          - name: P50
+            query: histogram_quantile(0.50, pm_request_duration_ms)
+          - name: P95
+            query: histogram_quantile(0.95, pm_request_duration_ms)
+          - name: P99
+            query: histogram_quantile(0.99, pm_request_duration_ms)
+
+      - title: "Slow Operations"
+        type: table
+        query: topk(10, rate(pm_request_duration_ms[5m]))
+
+      - title: "Database Query Performance"
+        type: graph
+        query: histogram_quantile(0.95, database_query_duration_ms)
+
+  - name: errors_and_reliability
+    title: "PM Intelligence - Errors & Reliability"
+    panels:
+      - title: "Error Count by Type"
+        type: graph
+        query: sum by (error_type) (rate(pm_errors_total[5m]))
+
+      - title: "Unresolved Error Groups"
+        type: singlestat
+        query: unresolved_error_groups
+
+      - title: "Dead Letter Queue Size"
+        type: graph
+        query: neo4j_dead_letter_queue_size
+
+      - title: "Circuit Breaker Status"
+        type: table
+        query: circuit_breaker_state
+
+---
+# Health Check Configuration
+health_checks:
+  - name: api_endpoint
+    type: http
+    url: https://your-domain.com/api/health
+    interval: 30s
+    timeout: 5s
+    expected_status: 200
+
+  - name: database
+    type: postgres
+    connection_string: ${DATABASE_URL}
+    query: "SELECT 1"
+    interval: 30s
+    timeout: 5s
+
+  - name: observability_api
+    type: http
+    url: https://your-domain.com/api/admin/observability/health
+    headers:
+      Authorization: "Bearer ${HEALTH_CHECK_API_KEY}"
+    interval: 60s
+    timeout: 10s
+    expected_status: 200
+
+---
+# Uptime Monitoring
+uptime_checks:
+  - name: main_site
+    url: https://your-domain.com
+    interval: 60s
+    locations: ["us-east", "us-west", "eu-west", "ap-southeast"]
+    expected_status: [200, 301, 302]
+
+  - name: api
+    url: https://api.your-domain.com/health
+    interval: 30s
+    locations: ["us-east", "us-west", "eu-west"]
+    expected_status: 200
+
+---
+# SLA Configuration
+sla_targets:
+  - name: availability
+    target: 99.9
+    measurement_window: 30d
+    exclude_maintenance: true
+
+  - name: latency_p95
+    target: 2000ms
+    measurement_window: 24h
+
+  - name: latency_p99
+    target: 5000ms
+    measurement_window: 24h
+
+  - name: error_rate
+    target: 1%
+    measurement_window: 24h
+
+---
+# Incident Response
+incident_response:
+  escalation_policy:
+    - level: 1
+      delay: 0m
+      notify: ["oncall_primary"]
+
+    - level: 2
+      delay: 15m
+      notify: ["oncall_secondary", "engineering_lead"]
+
+    - level: 3
+      delay: 30m
+      notify: ["engineering_manager"]
+
+    - level: 4
+      delay: 60m
+      notify: ["cto"]
+
+  severity_definitions:
+    critical:
+      description: "System down or severe functionality impaired"
+      response_time: 15m
+      resolution_time: 4h
+
+    high:
+      description: "Major feature impaired"
+      response_time: 30m
+      resolution_time: 8h
+
+    medium:
+      description: "Minor feature impaired or degraded performance"
+      response_time: 2h
+      resolution_time: 24h
+
+    low:
+      description: "Minor issues with workarounds available"
+      response_time: 8h
+      resolution_time: 72h

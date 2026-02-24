@@ -3,6 +3,7 @@ import { config } from '../config/env';
 import { logger } from '../utils/logger';
 import { getNeo4jDriver } from '../neo4j/client';
 import { parsePositiveInt } from '../utils/env_parsing';
+import { CircuitBreaker, createCircuitBreaker } from '../utils/circuit_breaker';
 
 type Neo4jOperation = 'signal_sync' | 'entity_merge' | 'entity_split' | 'relationship_add';
 
@@ -26,18 +27,8 @@ const NEO4J_TIMEOUT_MS = Math.max(
 export class Neo4jSyncService {
   private unsupportedRelationshipCounts = new Map<string, number>();
   private backlogFailureCount = 0;
-  private consecutiveTimeouts = 0;
-  private circuitOpenUntilMs = 0;
-  private static readonly CIRCUIT_TIMEOUT_THRESHOLD = parsePositiveInt(
-    process.env.NEO4J_CIRCUIT_TIMEOUT_THRESHOLD,
-    DEFAULT_CIRCUIT_TIMEOUT_THRESHOLD
-  );
-  private static readonly CIRCUIT_OPEN_MS = Math.max(
-    MIN_CIRCUIT_OPEN_MS,
-    parsePositiveInt(process.env.NEO4J_CIRCUIT_OPEN_MS, DEFAULT_CIRCUIT_OPEN_MS)
-  );
-  private static readonly CIRCUIT_LOG_EVERY = 100;
-  private circuitBypassCount = 0;
+  private entitySyncBreaker: CircuitBreaker<void>;
+  private relationshipSyncBreaker: CircuitBreaker<void>;
   /**
    * Executes a Neo4j query with timeout protection
    */
@@ -182,6 +173,37 @@ export class Neo4jSyncService {
   private async enqueue(operation: Neo4jOperation, payload: Record<string, unknown>): Promise<void> {
     const pool = getDbPool();
     try {
+      // Check backlog size before enqueueing
+      const sizeCheck = await pool.query(
+        `SELECT COUNT(*)::int AS count FROM neo4j_sync_backlog WHERE status = 'pending'`
+      );
+      const currentSize = sizeCheck.rows[0]?.count || 0;
+
+      if (currentSize >= BACKLOG_MAX_SIZE) {
+        logger.error('Neo4j backlog size limit exceeded', {
+          stage: 'neo4j_backlog',
+          status: 'size_limit_exceeded',
+          current_size: currentSize,
+          max_size: BACKLOG_MAX_SIZE,
+          operation,
+          nextAction: 'drop_item'
+        });
+        throw new Error(
+          `Backlog size limit exceeded (${currentSize}/${BACKLOG_MAX_SIZE}). Item dropped.`
+        );
+      }
+
+      // Warn when approaching limit
+      if (currentSize > BACKLOG_MAX_SIZE * 0.8) {
+        logger.warn('Neo4j backlog approaching size limit', {
+          stage: 'neo4j_backlog',
+          status: 'size_warning',
+          current_size: currentSize,
+          max_size: BACKLOG_MAX_SIZE,
+          utilization_pct: Math.round((currentSize / BACKLOG_MAX_SIZE) * 100)
+        });
+      }
+
       await pool.query(
         `INSERT INTO neo4j_sync_backlog (id, operation, payload, status)
          VALUES (gen_random_uuid(), $1, $2, 'pending')`,
@@ -451,26 +473,58 @@ export class Neo4jSyncService {
           const errorMessage = error instanceof Error ? error.message : String(error);
           const nextRetryCount = Number(row.retry_count || 0) + 1;
           const reachedRetryCap = nextRetryCount >= BACKLOG_MAX_RETRIES;
-          await client.query(
-            `UPDATE neo4j_sync_backlog
-             SET retry_count = $2,
-                 status = CASE WHEN $3 THEN 'failed' ELSE status END,
-                 processed_at = CASE WHEN $3 THEN NOW() ELSE processed_at END,
-                 error_message = $4
-             WHERE id = $1`,
-            [row.id, nextRetryCount, reachedRetryCap, errorMessage]
-          );
-          logger.warn('Neo4j backlog item processing failed', {
-            stage: 'neo4j_backlog',
-            status: 'error',
-            errorClass: error instanceof Error ? error.name : 'Error',
-            errorMessage,
-            id: row.id,
-            operation: row.operation,
-            retryCount: nextRetryCount,
-            maxRetries: BACKLOG_MAX_RETRIES,
-            nextAction: reachedRetryCap ? 'mark_failed' : 'retry_backlog'
-          });
+
+          if (reachedRetryCap) {
+            // Move to dead letter queue
+            await client.query(
+              `INSERT INTO neo4j_sync_dead_letter
+                 (id, operation, payload, retry_count, error_message, original_created_at, failed_at)
+               VALUES ($1, $2, $3, $4, $5, $6, NOW())
+               ON CONFLICT (id) DO UPDATE
+                 SET error_message = EXCLUDED.error_message,
+                     failed_at = EXCLUDED.failed_at`,
+              [row.id, row.operation, row.payload, nextRetryCount, errorMessage, row.created_at]
+            );
+
+            // Delete from backlog
+            await client.query(
+              `DELETE FROM neo4j_sync_backlog WHERE id = $1`,
+              [row.id]
+            );
+
+            logger.warn('Neo4j backlog item moved to dead letter queue', {
+              stage: 'neo4j_backlog',
+              status: 'dead_letter',
+              errorClass: error instanceof Error ? error.name : 'Error',
+              errorMessage,
+              id: row.id,
+              operation: row.operation,
+              retryCount: nextRetryCount,
+              maxRetries: BACKLOG_MAX_RETRIES,
+              nextAction: 'moved_to_dlq'
+            });
+          } else {
+            // Still has retries left - update retry count
+            await client.query(
+              `UPDATE neo4j_sync_backlog
+               SET retry_count = $2,
+                   error_message = $3
+               WHERE id = $1`,
+              [row.id, nextRetryCount, errorMessage]
+            );
+
+            logger.warn('Neo4j backlog item processing failed', {
+              stage: 'neo4j_backlog',
+              status: 'error',
+              errorClass: error instanceof Error ? error.name : 'Error',
+              errorMessage,
+              id: row.id,
+              operation: row.operation,
+              retryCount: nextRetryCount,
+              maxRetries: BACKLOG_MAX_RETRIES,
+              nextAction: 'retry_backlog'
+            });
+          }
         }
       }
       await client.query('COMMIT');
@@ -499,5 +553,285 @@ export class Neo4jSyncService {
     } finally {
       await session.close();
     }
+  }
+
+  /**
+   * Query dead letter queue items
+   */
+  async getDeadLetterItems(options: {
+    limit?: number;
+    unresolvedOnly?: boolean;
+    operation?: Neo4jOperation;
+  } = {}): Promise<any[]> {
+    const { limit = 100, unresolvedOnly = true, operation } = options;
+    const pool = getDbPool();
+
+    let query = `
+      SELECT id, operation, payload, retry_count, error_message,
+             original_created_at, failed_at, last_retry_at,
+             reprocess_count, resolved, resolved_at, resolved_by, notes
+      FROM neo4j_sync_dead_letter
+      WHERE 1=1
+    `;
+    const params: any[] = [];
+    let paramIndex = 1;
+
+    if (unresolvedOnly) {
+      query += ` AND resolved = FALSE`;
+    }
+
+    if (operation) {
+      query += ` AND operation = $${paramIndex}`;
+      params.push(operation);
+      paramIndex++;
+    }
+
+    query += ` ORDER BY failed_at DESC LIMIT $${paramIndex}`;
+    params.push(limit);
+
+    const result = await pool.query(query, params);
+    return result.rows;
+  }
+
+  /**
+   * Reprocess an item from the dead letter queue
+   */
+  async reprocessDeadLetterItem(itemId: string): Promise<{ success: boolean; error?: string }> {
+    const pool = getDbPool();
+    const client = await pool.connect();
+
+    try {
+      await client.query('BEGIN');
+
+      // Fetch the item
+      const result = await client.query(
+        `SELECT id, operation, payload, reprocess_count
+         FROM neo4j_sync_dead_letter
+         WHERE id = $1 AND resolved = FALSE
+         FOR UPDATE`,
+        [itemId]
+      );
+
+      if (result.rows.length === 0) {
+        await client.query('ROLLBACK');
+        return { success: false, error: 'Item not found or already resolved' };
+      }
+
+      const item = result.rows[0];
+      const payload = item.payload || {};
+
+      // Attempt to sync
+      try {
+        if (item.operation === 'signal_sync' && payload.entity) {
+          await this.syncEntity(payload.entity, { fromBacklog: true });
+        } else if (item.operation === 'relationship_add') {
+          await this.syncRelationship(payload, { fromBacklog: true });
+        }
+
+        // Success - remove from dead letter queue
+        await client.query(
+          `DELETE FROM neo4j_sync_dead_letter WHERE id = $1`,
+          [itemId]
+        );
+
+        await client.query('COMMIT');
+
+        logger.info('Dead letter item successfully reprocessed', {
+          stage: 'neo4j_dead_letter',
+          status: 'success',
+          id: itemId,
+          operation: item.operation,
+          reprocessCount: item.reprocess_count
+        });
+
+        return { success: true };
+      } catch (error) {
+        // Update retry info
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        await client.query(
+          `UPDATE neo4j_sync_dead_letter
+           SET last_retry_at = NOW(),
+               reprocess_count = reprocess_count + 1,
+               error_message = $2
+           WHERE id = $1`,
+          [itemId, errorMessage]
+        );
+
+        await client.query('COMMIT');
+
+        logger.warn('Dead letter item reprocess failed', {
+          stage: 'neo4j_dead_letter',
+          status: 'retry_failed',
+          errorClass: error instanceof Error ? error.name : 'Error',
+          errorMessage,
+          id: itemId,
+          operation: item.operation,
+          reprocessCount: item.reprocess_count + 1
+        });
+
+        return { success: false, error: errorMessage };
+      }
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  /**
+   * Mark a dead letter item as resolved
+   */
+  async resolveDeadLetterItem(
+    itemId: string,
+    resolvedBy: string,
+    notes?: string
+  ): Promise<boolean> {
+    const pool = getDbPool();
+    const result = await pool.query(
+      `UPDATE neo4j_sync_dead_letter
+       SET resolved = TRUE,
+           resolved_at = NOW(),
+           resolved_by = $2,
+           notes = COALESCE($3, notes)
+       WHERE id = $1 AND resolved = FALSE`,
+      [itemId, resolvedBy, notes]
+    );
+
+    const updated = result.rowCount > 0;
+    if (updated) {
+      logger.info('Dead letter item marked as resolved', {
+        stage: 'neo4j_dead_letter',
+        status: 'resolved',
+        id: itemId,
+        resolvedBy,
+        notes
+      });
+    }
+
+    return updated;
+  }
+
+  /**
+   * Get dead letter queue statistics
+   */
+  async getDeadLetterStats(): Promise<{
+    total: number;
+    unresolved: number;
+    byOperation: Record<string, number>;
+  }> {
+    const pool = getDbPool();
+
+    const [totalResult, unresolvedResult, byOpResult] = await Promise.all([
+      pool.query(`SELECT COUNT(*)::int AS count FROM neo4j_sync_dead_letter`),
+      pool.query(
+        `SELECT COUNT(*)::int AS count FROM neo4j_sync_dead_letter WHERE resolved = FALSE`
+      ),
+      pool.query(`
+        SELECT operation, COUNT(*)::int AS count
+        FROM neo4j_sync_dead_letter
+        WHERE resolved = FALSE
+        GROUP BY operation
+      `)
+    ]);
+
+    const byOperation: Record<string, number> = {};
+    for (const row of byOpResult.rows) {
+      byOperation[row.operation] = row.count;
+    }
+
+    return {
+      total: totalResult.rows[0]?.count || 0,
+      unresolved: unresolvedResult.rows[0]?.count || 0,
+      byOperation
+    };
+  }
+
+  /**
+   * Clean up old processed and failed backlog items
+   * Removes items older than BACKLOG_CLEANUP_DAYS
+   */
+  async cleanupOldBacklogItems(): Promise<{ deleted: number }> {
+    const pool = getDbPool();
+
+    try {
+      const result = await pool.query(
+        `DELETE FROM neo4j_sync_backlog
+         WHERE status IN ('processed', 'failed')
+           AND processed_at < NOW() - INTERVAL '1 day' * $1
+         RETURNING id`,
+        [BACKLOG_CLEANUP_DAYS]
+      );
+
+      const deleted = result.rowCount || 0;
+
+      if (deleted > 0) {
+        logger.info('Cleaned up old Neo4j backlog items', {
+          stage: 'neo4j_backlog',
+          status: 'cleanup',
+          deleted_count: deleted,
+          older_than_days: BACKLOG_CLEANUP_DAYS
+        });
+      }
+
+      return { deleted };
+    } catch (error: any) {
+      logger.error('Failed to clean up old backlog items', {
+        error: error.message
+      });
+      throw error;
+    }
+  }
+
+  /**
+   * Get backlog statistics
+   */
+  async getBacklogStats(): Promise<{
+    pending: number;
+    processed: number;
+    failed: number;
+    total: number;
+    maxSize: number;
+    utilizationPct: number;
+    oldestPending: Date | null;
+  }> {
+    const pool = getDbPool();
+
+    const [statusResult, oldestResult] = await Promise.all([
+      pool.query(`
+        SELECT
+          status,
+          COUNT(*)::int AS count
+        FROM neo4j_sync_backlog
+        GROUP BY status
+      `),
+      pool.query(`
+        SELECT created_at
+        FROM neo4j_sync_backlog
+        WHERE status = 'pending'
+        ORDER BY created_at ASC
+        LIMIT 1
+      `)
+    ]);
+
+    const byStatus: Record<string, number> = {};
+    for (const row of statusResult.rows) {
+      byStatus[row.status] = row.count;
+    }
+
+    const pending = byStatus.pending || 0;
+    const processed = byStatus.processed || 0;
+    const failed = byStatus.failed || 0;
+    const total = pending + processed + failed;
+
+    return {
+      pending,
+      processed,
+      failed,
+      total,
+      maxSize: BACKLOG_MAX_SIZE,
+      utilizationPct: Math.round((pending / BACKLOG_MAX_SIZE) * 100),
+      oldestPending: oldestResult.rows[0]?.created_at || null
+    };
   }
 }

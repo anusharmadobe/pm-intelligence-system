@@ -158,9 +158,37 @@ export class IngestionPipelineService {
 
     try {
       const useBatchExtraction = process.env.INGESTION_BATCH_EXTRACTION !== 'false';
-      const precomputedExtractions = useBatchExtraction
-        ? await this.extractionService.extractBatch(rawSignals.map((signal) => signal.content))
-        : [];
+      let precomputedExtractions: any[] = [];
+
+      // CRITICAL: Wrap batch extraction in try-catch with fallback to individual extraction
+      if (useBatchExtraction) {
+        try {
+          precomputedExtractions = await this.extractionService.extractBatch(
+            rawSignals.map((signal) => signal.content)
+          );
+          logger.info('Batch extraction succeeded', {
+            signal_count: rawSignals.length,
+            extraction_count: precomputedExtractions.length
+          });
+        } catch (batchError: any) {
+          // Log batch extraction failure but continue with individual extraction
+          logger.error('Batch extraction failed, falling back to individual extraction', {
+            error: batchError.message,
+            stack: batchError.stack,
+            signal_count: rawSignals.length
+          });
+
+          // Fallback: Individual extraction per signal (slower but more resilient)
+          // Set empty array so processSignalWithGuards will extract individually
+          precomputedExtractions = [];
+
+          logger.warn('Pipeline will use individual extraction fallback', {
+            signal_count: rawSignals.length,
+            fallback_reason: 'batch_extraction_failed'
+          });
+        }
+      }
+
       const concurrency = Math.max(1, config.ingestion.concurrency || 1);
       let index = 0;
       let completed = 0;
@@ -380,22 +408,39 @@ export class IngestionPipelineService {
             const resolvedEntities =
               (await this.runStage('resolve_entities', context, async () => {
                 const resolved: Array<{ id: string; type: string; name: string }> = [];
+
+                // CRITICAL: Resolve entities sequentially within transaction to avoid race conditions
+                // Using transaction client (passed to resolveEntityMentionWithClient) ensures:
+                // 1. Read Committed isolation level prevents dirty reads
+                // 2. Row-level locks prevent concurrent entity creation for same name
+                // 3. ON CONFLICT clauses in entity resolution handle duplicates safely
                 for (const mention of entityMentions) {
-                  // Use transaction-aware entity resolution
-                  const resolvedEntity = await this.entityResolutionService.resolveEntityMentionWithClient(
-                    client,
-                    {
+                  try {
+                    // Use transaction-aware entity resolution
+                    const resolvedEntity = await this.entityResolutionService.resolveEntityMentionWithClient(
+                      client,
+                      {
+                        mention: mention.name,
+                        entityType: mention.type,
+                        signalId: signal.id,
+                        signalText: signal.content
+                      }
+                    );
+                    resolved.push({
+                      id: resolvedEntity.entity_id,
+                      type: mention.type,
+                      name: mention.name
+                    });
+                  } catch (entityError: any) {
+                    // Log entity resolution failure but continue with other entities
+                    logger.warn('Entity resolution failed for mention, skipping', {
+                      ...context,
                       mention: mention.name,
-                      entityType: mention.type,
-                      signalId: signal.id,
-                      signalText: signal.content
-                    }
-                  );
-                  resolved.push({
-                    id: resolvedEntity.entity_id,
-                    type: mention.type,
-                    name: mention.name
-                  });
+                      type: mention.type,
+                      error: entityError.message
+                    });
+                    // Continue processing other entities
+                  }
                 }
                 return resolved;
               })) || [];
@@ -410,46 +455,6 @@ export class IngestionPipelineService {
               status: 'commit',
               elapsedMs: Date.now() - signalStartedAt
             });
-
-            // Release client back to pool
-            client.release();
-
-            // Non-transactional operations (Neo4j sync, embeddings) happen outside transaction
-            currentStage = 'sync_neo4j_entities';
-            await this.runStage(
-              'sync_neo4j_entities',
-              context,
-              async () => {
-                if (!resolvedEntities.length) return;
-                for (const resolved of resolvedEntities) {
-                  await this.neo4jSyncService.syncEntity({
-                    id: resolved.id,
-                    entity_type: resolved.type,
-                    canonical_name: resolved.name
-                  });
-                }
-              },
-              { allowFailure: true, nextAction: 'skip_neo4j_entities' }
-            );
-
-            currentStage = 'sync_neo4j_relationships';
-            await this.runStage(
-              'sync_neo4j_relationships',
-              context,
-              async () => {
-                const relationships = await this.relationshipExtractionService.extractRelationships({
-                  signalId: signal.id,
-                  signalText: signal.content,
-                  extraction,
-                  resolvedEntities
-                });
-                for (const relationship of relationships) {
-                  await this.neo4jSyncService.syncRelationship(relationship);
-                }
-              },
-              { allowFailure: true, nextAction: 'skip_neo4j_relationships' }
-            );
-          }
           } catch (transactionError: any) {
             // ROLLBACK on any error - ensure client is ALWAYS released, even if rollback fails
             try {
@@ -474,7 +479,79 @@ export class IngestionPipelineService {
               client.release();
             }
             throw transactionError;
+          } finally {
+            // CRITICAL: Always release client after transaction completes (success or failure)
+            // This ensures no connection leak even if COMMIT succeeds but we haven't released yet
+            // Check if client is already released to avoid "client has been released" error
+            try {
+              if (!client['_ending']) {
+                client.release();
+              }
+            } catch (releaseError: any) {
+              // Client may already be released by catch block - that's OK
+              logger.debug('Client release in finally block handled', {
+                ...context,
+                releaseError: releaseError.message
+              });
+            }
           }
+
+          // Non-transactional operations (Neo4j sync, embeddings) happen outside transaction
+          // These are wrapped in try-catch with allowFailure so they don't crash the pipeline
+          currentStage = 'sync_neo4j_entities';
+          await this.runStage(
+            'sync_neo4j_entities',
+            context,
+            async () => {
+              if (!resolvedEntities.length) return;
+              // Use backlog for Neo4j sync with compensating transaction support
+              for (const resolved of resolvedEntities) {
+                try {
+                  await this.neo4jSyncService.syncEntity({
+                    id: resolved.id,
+                    entity_type: resolved.type,
+                    canonical_name: resolved.name
+                  });
+                } catch (neo4jError: any) {
+                  // Log but don't fail - Neo4j backlog will retry
+                  logger.warn('Neo4j entity sync failed, will retry via backlog', {
+                    ...context,
+                    entity_id: resolved.id,
+                    entity_type: resolved.type,
+                    error: neo4jError.message
+                  });
+                }
+              }
+            },
+            { allowFailure: true, nextAction: 'skip_neo4j_entities' }
+          );
+
+          currentStage = 'sync_neo4j_relationships';
+          await this.runStage(
+            'sync_neo4j_relationships',
+            context,
+            async () => {
+              const relationships = await this.relationshipExtractionService.extractRelationships({
+                signalId: signal.id,
+                signalText: signal.content,
+                extraction,
+                resolvedEntities
+              });
+              for (const relationship of relationships) {
+                try {
+                  await this.neo4jSyncService.syncRelationship(relationship);
+                } catch (neo4jError: any) {
+                  // Log but don't fail - Neo4j backlog will retry
+                  logger.warn('Neo4j relationship sync failed, will retry via backlog', {
+                    ...context,
+                    relationship,
+                    error: neo4jError.message
+                  });
+                }
+              }
+            },
+            { allowFailure: true, nextAction: 'skip_neo4j_relationships' }
+          );
 
           currentStage = 'graphrag_index';
           await this.runStage(

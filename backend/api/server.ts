@@ -42,6 +42,8 @@ import { IngestionPipelineService } from '../services/ingestion_pipeline_service
 import { validateFileUpload, sanitizeFilename, ALLOWED_MIME_TYPES, ALLOWED_EXTENSIONS } from '../services/file_validation_service';
 import costRoutes from './cost_routes';
 import adminCostRoutes from './admin_cost_routes';
+import adminNeo4jRoutes from './admin_neo4j_routes';
+import adminObservabilityRoutes from './admin_observability_routes';
 
 const app = express();
 
@@ -1874,6 +1876,12 @@ app.post('/webhooks/splunk', createRateLimitMiddleware(rateLimiters.webhooks), c
 // Cost Tracking & Monitoring API
 app.use('/api/cost', costRoutes);
 app.use('/api/admin', requireAdmin, adminCostRoutes);
+
+// Neo4j Admin API
+app.use('/api/admin', requireAdmin, adminNeo4jRoutes);
+
+// Observability & Monitoring API
+app.use('/api/admin', requireAdmin, adminObservabilityRoutes);
 
 // Agent Gateway (V2)
 if (config.featureFlags.agentGateway) {

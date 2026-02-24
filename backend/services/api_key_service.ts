@@ -1,7 +1,8 @@
-import { randomBytes, randomUUID } from 'crypto';
+import { randomBytes, randomUUID, createHash } from 'crypto';
 import bcrypt from 'bcryptjs';
 import { getDbPool } from '../db/connection';
 import { logger } from '../utils/logger';
+import { apiKeyCache } from '../utils/api_key_cache';
 
 export interface ApiKey {
   id: string;
@@ -107,9 +108,58 @@ export class ApiKeyService {
   }
 
   /**
+   * Generate a fast hash of the API key for cache lookup
+   */
+  private hashForCache(apiKey: string): string {
+    return createHash('sha256').update(apiKey).digest('hex');
+  }
+
+  /**
+   * Update last_used_at asynchronously (fire-and-forget)
+   */
+  private updateLastUsed(apiKeyId: string): void {
+    const pool = getDbPool();
+    pool
+      .query(
+        `UPDATE api_keys SET last_used_at = NOW(), updated_at = NOW() WHERE id = $1`,
+        [apiKeyId]
+      )
+      .catch((error) => {
+        logger.error('Failed to update API key last_used_at', {
+          error: error.message,
+          api_key_id: apiKeyId
+        });
+      });
+  }
+
+  /**
    * Validate an API key and return the key record if valid
+   * Uses in-memory cache with TTL to avoid database queries on every request
    */
   async validateApiKey(apiKey: string): Promise<ApiKey | null> {
+    const keyHash = this.hashForCache(apiKey);
+
+    // Check cache first
+    const cached = apiKeyCache.get(keyHash);
+    if (cached) {
+      // Check expiration (even for cached keys)
+      if (cached.expires_at && new Date(cached.expires_at) < new Date()) {
+        apiKeyCache.invalidate(keyHash);
+        logger.warn('Expired API key used (from cache)', {
+          api_key_id: cached.id,
+          name: cached.name,
+          expires_at: cached.expires_at
+        });
+        return null;
+      }
+
+      // Update last_used_at asynchronously
+      this.updateLastUsed(cached.id);
+
+      return cached;
+    }
+
+    // Cache miss - validate from database
     const pool = getDbPool();
 
     try {
@@ -133,11 +183,11 @@ export class ApiKeyService {
             return null;
           }
 
-          // Update last_used_at
-          await pool.query(
-            `UPDATE api_keys SET last_used_at = NOW(), updated_at = NOW() WHERE id = $1`,
-            [keyRecord.id]
-          );
+          // Cache the validated key
+          apiKeyCache.set(keyHash, keyRecord);
+
+          // Update last_used_at asynchronously
+          this.updateLastUsed(keyRecord.id);
 
           return keyRecord;
         }
@@ -173,6 +223,9 @@ export class ApiKeyService {
       );
 
       if (result.rows.length > 0) {
+        // Invalidate cache
+        apiKeyCache.invalidateById(apiKeyId);
+
         logger.info('API key revoked', {
           api_key_id: apiKeyId,
           name: result.rows[0].name,
@@ -292,6 +345,9 @@ export class ApiKeyService {
       );
 
       if (result.rows.length > 0) {
+        // Invalidate cache when key is updated
+        apiKeyCache.invalidateById(apiKeyId);
+
         logger.info('API key updated', {
           api_key_id: apiKeyId,
           updates: Object.keys(updates)

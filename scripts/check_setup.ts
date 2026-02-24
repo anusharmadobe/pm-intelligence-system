@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { getDbPool } from '../backend/db/connection';
+import { getDbPool, closeDbPool } from '../backend/db/connection';
 import { getAllSignals } from '../backend/processing/signal_extractor';
 import { getAllOpportunities } from '../backend/services/opportunity_service';
 
@@ -115,7 +115,16 @@ async function checkSetup() {
   process.exit(0);
 }
 
-checkSetup().catch((error) => {
-  console.error('Setup check failed:', error);
-  process.exit(1);
-});
+async function main() {
+  try {
+    await checkSetup();
+  } catch (error: any) {
+    console.error('Setup check failed:', error);
+    process.exitCode = 1;
+  } finally {
+    // CRITICAL: Always close DB pool to prevent connection leaks
+    await closeDbPool();
+  }
+}
+
+main();
